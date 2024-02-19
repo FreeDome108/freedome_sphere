@@ -13,7 +13,8 @@ services:
       - "./hummingbot_files/scripts:/home/hummingbot/scripts"
       - "./hummingbot_files/certs:/home/hummingbot/certs"
       - "./connector/exchange/whitebit:/home/hummingbot/hummingbot/connector/exchange/whitebit"
-    #environment:
+      - "./strategy/get_order_book:/home/hummingbot/hummingbot/strategy/get_order_book"
+    environment:
       - CONFIG_PASSWORD=password4385
     logging:
       driver: "json-file"
