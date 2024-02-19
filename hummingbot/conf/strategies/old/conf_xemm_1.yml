@@ -1,0 +1,57 @@
+#######################
+###   None config   ###
+#######################
+
+strategy: cross_exchange_market_making
+
+# The name of the maker exchange connector.
+maker_market: whitebit
+
+# The name of the taker exchange connector.
+taker_market: binance
+
+# The name of the maker trading pair.
+maker_market_trading_pair: XMR-USDT
+
+# The name of the taker trading pair.
+taker_market_trading_pair: XMR-USDT
+
+# The minimum estimated profitability required to open a position.
+min_profitability: 0.2
+
+# The strategy order amount.
+# min 0.05 for whitebit?
+order_amount: 0.5
+
+# Adjust order price to be one tick above the top bid or below the top ask.
+adjust_order_enabled: true
+
+# Refresh orders by cancellation or by letting them expire.
+order_refresh_mode: {}
+
+# Volume requirement for determining a possible top bid or ask price from the order book.
+top_depth_tolerance: 0.0
+
+# Minimum time limit between two subsequent order adjustments.
+anti_hysteresis_duration: 60.0
+
+# Taker order size as a percentage of volume.
+order_size_taker_volume_factor: 25.0
+
+# Taker order size as a percentage of the available balance.
+order_size_taker_balance_factor: 99.5
+
+# Order size as a maker and taker account balance ratio.
+order_size_portfolio_ratio_limit: 16.67
+
+# Convert between different trading pairs using fixed conversion rates or using the rate oracle.
+conversion_rate_mode: {}
+
+# Allowed slippage to fill ensure taker orders are filled.
+slippage_buffer: 3.0
+
+# Usd the debug price shim to mock gateway price.
+debug_price_shim: false
+
+# Gateway transaction cancellation timeout.
+gateway_transaction_cancel_interval: 600

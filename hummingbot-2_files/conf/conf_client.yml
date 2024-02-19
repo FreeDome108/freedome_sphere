@@ -48,7 +48,7 @@ mqtt_bridge:
 send_error_logs: true
 
 # Can store the previous strategy ran for quick retrieval.
-previous_strategy: conf_cross_exchange_mining_1.yml
+previous_strategy: conf_spot_perpetual_arbitrage_1.yml
 
 # Advanced database options, currently supports SQLAlchemy's included dialects
 # Reference: https://docs.sqlalchemy.org/en/13/dialects/
