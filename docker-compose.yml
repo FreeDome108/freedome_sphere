@@ -29,15 +29,17 @@ services:
     container_name: hummingbot-2
     image: hummingbot/hummingbot:latest
     volumes:
-      - "./hummingbot_files/conf:/home/hummingbot/conf"
-      - "./hummingbot_files/conf/connectors:/home/hummingbot/conf/connectors"
-      - "./hummingbot_files/conf/strategies:/home/hummingbot/conf/strategies"
-      - "./hummingbot_files/logs:/home/hummingbot/logs"
-      - "./hummingbot_files/data:/home/hummingbot/data"
-      - "./hummingbot_files/scripts:/home/hummingbot/scripts"
-      - "./hummingbot_files/certs:/home/hummingbot/certs"
+      - "./hummingbot-2_files/conf:/home/hummingbot/conf"
+      - "./hummingbot-2_files/conf/connectors:/home/hummingbot/conf/connectors"
+      - "./hummingbot-2_files/conf/strategies:/home/hummingbot/conf/strategies"
+      - "./hummingbot-2_files/logs:/home/hummingbot/logs"
+      - "./hummingbot-2_files/data:/home/hummingbot/data"
+      - "./hummingbot-2_files/scripts:/home/hummingbot/scripts"
+      - "./hummingbot-2_files/certs:/home/hummingbot/certs"
+      - "./connector/exchange/whitebit:/home/hummingbot/hummingbot/connector/exchange/whitebit"
+      - "./strategy/get_order_book:/home/hummingbot/hummingbot/strategy/get_order_book"
     environment:
-      - CONFIG_PASSWORD=a
+      - CONFIG_PASSWORD=password4385
     logging:
       driver: "json-file"
       options:

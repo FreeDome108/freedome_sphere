@@ -38,7 +38,7 @@ WHITEBIT_WS_PRIVATE_ORDERS_CHANNEL = "ordersPending_update"
 
 MINUTE = 60
 NO_LIMIT = sys.maxsize
-MAX_REQUESTS_LIMIT = 100
+MAX_REQUESTS_LIMIT = 10
 WHITEBIT_GENERAL_RATE_LIMIT = "HTTPRequestGlobalLimit"
 
 RATE_LIMITS = [
@@ -113,8 +113,8 @@ RATE_LIMITS = [
     ),
     RateLimit(
         WHITEBIT_WS_AUTHENTICATION_TOKEN_PATH,
-        limit=NO_LIMIT,
-        time_interval=1,
+        limit=1,
+        time_interval=10,
         linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
     ),
 ]

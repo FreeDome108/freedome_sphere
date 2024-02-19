@@ -6,5 +6,6 @@
 
 #screen -S gateway -m
 
+#docker start hummingbot-1
 docker start hummingbot-1
-docker start gateway
+#docker start gateway

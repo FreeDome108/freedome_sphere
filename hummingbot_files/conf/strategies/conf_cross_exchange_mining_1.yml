@@ -5,10 +5,10 @@
 strategy: cross_exchange_mining
 
 # The name of the maker exchange connector.
-maker_market: whitebit
+maker_market: binance
 
 # The name of the taker exchange connector.
-taker_market: binance
+taker_market: whitebit
 
 # The name of the maker trading pair.
 maker_market_trading_pair: XMR-USDT
@@ -41,7 +41,7 @@ volatility_buffer_size: 120
 min_prof_adj_timer: 3600.0
 
 # What is the minimum order amount required for bid or ask orders?: 
-min_order_amount: 0.0
+min_order_amount: 0.05
 
 # Multiplier for rate curve for the adjustment of min profitability based on previous trades over last 24 hrs: 
 rate_curve: 1.0

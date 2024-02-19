@@ -8,13 +8,13 @@ strategy: spot_perpetual_arbitrage
 # The following configurations are only required for the AMM arbitrage trading strategy
 
 # Connectors and markets parameters
-spot_connector: whitebit
+spot_connector: binance
 spot_market: XMR-USDT
 perpetual_connector: binance_perpetual
 perpetual_market: XMR-USDT
 
 # Order amount to submit orders on both spot and perpetual markets
-order_amount: 0.01
+order_amount: 0.05
 
 perpetual_leverage: 1
 

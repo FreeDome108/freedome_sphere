@@ -1,0 +1,362 @@
+2024-02-17 09:10:13,728 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-17 09:10:42,399 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-17 09:19:55,895 - 15 - hummingbot.core.gateway.gateway_http_client - WARNING - Call to https://localhost:15888/wallet/add failed. See logs for more details.
+2024-02-17 09:19:55,896 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: Error on POST https://localhost:15888/wallet/add Error: {'message': 'The request is missing the key: privateKey', 'httpErrorCode': 404, 'errorCode': -1, 'stack': 'Error: The request is missing the key: privateKey\n    at throwIfErrorsExist (/home/gateway/dist/src/services/validators.js:38:15)\n    at /home/gateway/dist/src/services/validators.js:103:40\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:25:58\n    at Generator.next (<anonymous>)\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (/home/gateway/dist/src/services/wallet/wallet.routes.js:4:12)\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:24:86\n    at /home/gateway/dist/src/services/error-handler.js:37:28\n    at Layer.handle [as handle_request] (/home/gateway/node_modules/express/lib/router/layer.js:95:5)'}
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/client/command/gateway_command.py", line 304, in _gateway_connect
+    wallet_address, additional_prompt_values = await self._prompt_for_wallet_address(
+  File "/home/hummingbot/hummingbot/client/command/gateway_command.py", line 442, in _prompt_for_wallet_address
+    response: Dict[str, Any] = await self._get_gateway_instance().add_wallet(
+  File "/home/hummingbot/hummingbot/core/gateway/gateway_http_client.py", line 269, in add_wallet
+    return await self.api_request(method="post", path_url="wallet/add", params=request)
+  File "/home/hummingbot/hummingbot/core/gateway/gateway_http_client.py", line 222, in api_request
+    raise e
+  File "/home/hummingbot/hummingbot/core/gateway/gateway_http_client.py", line 210, in api_request
+    raise ValueError(f"Error on {method.upper()} {url} Error: {parsed_response}")
+ValueError: Error on POST https://localhost:15888/wallet/add Error: {'message': 'The request is missing the key: privateKey', 'httpErrorCode': 404, 'errorCode': -1, 'stack': 'Error: The request is missing the key: privateKey\n    at throwIfErrorsExist (/home/gateway/dist/src/services/validators.js:38:15)\n    at /home/gateway/dist/src/services/validators.js:103:40\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:25:58\n    at Generator.next (<anonymous>)\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (/home/gateway/dist/src/services/wallet/wallet.routes.js:4:12)\n    at /home/gateway/dist/src/services/wallet/wallet.routes.js:24:86\n    at /home/gateway/dist/src/services/error-handler.js:37:28\n    at Layer.handle [as handle_request] (/home/gateway/node_modules/express/lib/router/layer.js:95:5)'}
+2024-02-18 05:19:12,440 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-18 05:20:10,538 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-18 05:25:40,437 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: Non-hexadecimal digit found
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 59, in decrypt_secret_value
+    value = binascii.unhexlify(value)
+binascii.Error: Non-hexadecimal digit found
+2024-02-18 05:25:40,507 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-18 05:27:20,428 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: Can't instantiate abstract class WhitebitExchange with abstract methods _is_order_not_found_during_cancelation_error, _is_order_not_found_during_status_update_error
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/client/command/connect_command.py", line 63, in connect_exchange
+    await self._perform_connect(connector_config)
+  File "/home/hummingbot/hummingbot/client/command/connect_command.py", line 144, in _perform_connect
+    err_msg = await self.validate_n_connect_connector(connector_name)
+  File "/home/hummingbot/hummingbot/client/command/connect_command.py", line 122, in validate_n_connect_connector
+    err_msg = await asyncio.wait_for(
+  File "/opt/conda/envs/hummingbot/lib/python3.10/asyncio/tasks.py", line 445, in wait_for
+    return fut.result()
+  File "/home/hummingbot/hummingbot/user/user_balances.py", line 89, in add_exchange
+    market = UserBalances.connect_market(exchange, client_config_map, **api_details)
+  File "/home/hummingbot/hummingbot/user/user_balances.py", line 46, in connect_market
+    connector = connector_class(**init_params)
+TypeError: Can't instantiate abstract class WhitebitExchange with abstract methods _is_order_not_found_during_cancelation_error, _is_order_not_found_during_status_update_error
+2024-02-18 05:32:03,483 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-18 05:32:21,507 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 05:29:45,149 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 05:46:31,755 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 05:46:55,830 - 15 - hummingbot.client.ui.hummingbot_cli - ERROR - Unhandled error in prompt_toolkit: 
+    Pyperclip could not find a copy/paste mechanism for your system.
+    For more information, please visit https://pyperclip.readthedocs.io/en/latest/introduction.html#not-implemented-error 
+Traceback (most recent call last):
+  File "/opt/conda/envs/hummingbot/lib/python3.10/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/input/vt100.py", line 168, in callback_wrapper
+    callback()
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/application/application.py", line 691, in read_from_input
+    self.key_processor.process_keys()
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/key_processor.py", line 274, in process_keys
+    self._process_coroutine.send(key_press)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/key_processor.py", line 186, in _process
+    self._call_handler(matches[-1], key_sequence=buffer[:])
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/key_processor.py", line 329, in _call_handler
+    handler.call(event)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/key_bindings.py", line 102, in call
+    result = self.handler(event)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/bindings/named_commands.py", line 420, in backward_kill_word
+    unix_word_rubout(event, WORD=False)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/key_binding/bindings/named_commands.py", line 408, in unix_word_rubout
+    event.app.clipboard.set_text(deleted)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/clipboard/base.py", line 52, in set_text
+    self.set_data(ClipboardData(text))
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/prompt_toolkit/clipboard/pyperclip.py", line 25, in set_data
+    pyperclip.copy(data.text)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/pyperclip/__init__.py", line 616, in lazy_load_stub_copy
+    return copy(text)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/site-packages/pyperclip/__init__.py", line 301, in __call__
+    raise PyperclipException(EXCEPT_MSG)
+pyperclip.PyperclipException: 
+    Pyperclip could not find a copy/paste mechanism for your system.
+    For more information, please visit https://pyperclip.readthedocs.io/en/latest/introduction.html#not-implemented-error 
+2024-02-19 06:07:37,549 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 06:07:37,616 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 06:15:25,313 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 06:15:45,131 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 06:15:45,199 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 06:19:11,775 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 06:19:11,891 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 06:21:15,173 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 06:21:15,256 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 06:27:24,538 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: Non-hexadecimal digit found
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 59, in decrypt_secret_value
+    value = binascii.unhexlify(value)
+binascii.Error: Non-hexadecimal digit found
+2024-02-19 06:27:24,656 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 06:34:04,863 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 06:34:04,935 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 07:08:37,978 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 07:08:38,051 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 07:21:39,569 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 07:46:19,656 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 07:46:40,102 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 127, in call_async
+    return await self.schedule_async_call(coro, timeout_seconds, app_warning_msg=app_warning_msg)
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 116, in schedule_async_call
+    return await fut
+  File "/home/hummingbot/hummingbot/core/utils/async_call_scheduler.py", line 79, in _coro_scheduler
+    fut.set_result(await coro)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 65, in decrypt_all
+    cls.decrypt_connector_config(file)
+  File "/home/hummingbot/hummingbot/client/config/security.py", line 71, in decrypt_connector_config
+    cls._secure_configs[connector_name] = load_connector_config_map_from_file(file_path)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 668, in load_connector_config_map_from_file
+    _load_yml_data_into_map(config_data, config_map)
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 750, in _load_yml_data_into_map
+    config_validation_errors = cm.validate_model()  # try coercing values to appropriate type
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 199, in validate_model
+    self.decrypt_all_secure_data()
+  File "/home/hummingbot/hummingbot/client/config/config_helpers.py", line 237, in decrypt_all_secure_data
+    decrypted_value = Security.secrets_manager.decrypt_secret_value(attr=traversal_item.attr, value=value)
+  File "/home/hummingbot/hummingbot/client/config/config_crypt.py", line 60, in decrypt_secret_value
+    decrypted_value = Account.decrypt(value.decode(), self._password).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x85 in position 0: invalid start byte
+2024-02-19 07:46:40,169 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 08:59:04,038 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 09:47:12,001 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 09:47:57,868 - 15 - hummingbot.core.utils.async_utils - ERROR - Unhandled error in background task: [Errno 2] No such file or directory: '/home/hummingbot/hummingbot/templates/conf_get_order_book_strategy_TEMPLATE.yml'
+Traceback (most recent call last):
+  File "/home/hummingbot/hummingbot/core/utils/async_utils.py", line 9, in safe_wrapper
+    return await c
+  File "/home/hummingbot/hummingbot/client/command/create_command.py", line 120, in prompt_for_configuration
+    file_name = await self.prompt_for_configuration_legacy(strategy, config_map)
+  File "/home/hummingbot/hummingbot/client/command/create_command.py", line 197, in prompt_for_configuration_legacy
+    shutil.copy(template, strategy_path)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/shutil.py", line 417, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/opt/conda/envs/hummingbot/lib/python3.10/shutil.py", line 254, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/home/hummingbot/hummingbot/templates/conf_get_order_book_strategy_TEMPLATE.yml'
+2024-02-19 09:55:00,384 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 09:55:15,757 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 10:05:11,596 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 10:05:27,489 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 10:13:45,074 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 10:16:29,651 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 10:19:05,702 - 16 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:19:50,868 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:21:42,198 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:28:26,402 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:29:09,839 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-19 11:30:00,655 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:32:53,940 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:43:43,568 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:47:22,982 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:50:03,930 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:51:51,008 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-19 11:53:25,737 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
