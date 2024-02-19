@@ -45,16 +45,6 @@ class WhitebitExchange(ExchangePyBase):
         self._trading_pairs = trading_pairs
         super().__init__(client_config_map)
 
-    def _is_order_not_found_during_cancelation_error(self, error):
-        # Implement logic to determine if the error is an "order not found" error during cancellation
-        # Return True if it is, False otherwise
-        pass
-
-    def _is_order_not_found_during_status_update_error(self, error):
-        # Implement logic to determine if the error is an "order not found" error during status update
-        # Return True if it is, False otherwise
-        pass
-
     @property
     def authenticator(self):
         return WhitebitAuth(api_key=self._api_key, secret_key=self._secret_key, time_provider=self._time_synchronizer)
@@ -126,6 +116,20 @@ class WhitebitExchange(ExchangePyBase):
 
     def _is_request_exception_related_to_time_synchronizer(self, request_exception: Exception):
         # Not required for this connectors
+        return False
+
+    def _is_order_not_found_during_status_update_error(self, status_update_exception: Exception) -> bool:
+        # TODO: implement this method correctly for the connector
+        # The default implementation was added when the functionality to detect not found orders was introduced in the
+        # ExchangePyBase class. Also fix the unit test test_lost_order_removed_if_not_found_during_order_status_update
+        # when replacing the dummy implementation
+        return False
+
+    def _is_order_not_found_during_cancelation_error(self, cancelation_exception: Exception) -> bool:
+        # TODO: implement this method correctly for the connector
+        # The default implementation was added when the functionality to detect not found orders was introduced in the
+        # ExchangePyBase class. Also fix the unit test test_cancel_order_not_found_in_the_exchange when replacing the
+        # dummy implementation
         return False
 
     async def _place_cancel(self, order_id: str, tracked_order: InFlightOrder):
