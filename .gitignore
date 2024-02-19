@@ -1,0 +1,13 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+/gateway_files/conf/wallets
+/gateway_files/db
+
+
+/hummingbot_files/conf/connectors
+/hummingbot_files/conf/.password_verification
+/hummingbot_files/conf/conf_client.yml
+/hummingbot_files/certs
+
+/hummingbot_files/data
+/hummingbot_files/logs

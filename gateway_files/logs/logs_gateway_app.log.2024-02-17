@@ -1,0 +1,31 @@
+2024-02-17 09:52:57 | info | 	Gateway Version: 1.24.0 | undefined
+2024-02-17 09:52:57 | info | 	⚡️ Starting Gateway API on port 15888... | undefined
+2024-02-17 09:52:57 | info | 	The gateway server is secured behind HTTPS. | undefined
+2024-02-17 09:52:57 | info | 	⚡️ Swagger listening on port 8080. Read the Gateway API documentation at 127.0.0.1:8080 | undefined
+2024-02-17 10:03:18 | info | 	Gateway Version: 1.24.0 | undefined
+2024-02-17 10:03:18 | info | 	⚡️ Starting Gateway API on port 15888... | undefined
+2024-02-17 10:03:18 | info | 	The gateway server is secured behind HTTPS. | undefined
+2024-02-17 10:03:18 | info | 	⚡️ Swagger listening on port 8080. Read the Gateway API documentation at 127.0.0.1:8080 | undefined
+2024-02-17 10:15:44 | info | 	Gateway Version: 1.24.0 | undefined
+2024-02-17 10:15:44 | info | 	⚡️ Starting Gateway API on port 15888... | undefined
+2024-02-17 10:15:44 | info | 	The gateway server is secured behind HTTPS. | undefined
+2024-02-17 10:15:44 | info | 	⚡️ Swagger listening on port 8080. Read the Gateway API documentation at 127.0.0.1:8080 | undefined
+2024-02-17 10:21:05 | info | 	Gateway Version: 1.24.0 | undefined
+2024-02-17 10:21:05 | info | 	⚡️ Starting Gateway API on port 15888... | undefined
+2024-02-17 10:21:05 | info | 	The gateway server is secured behind HTTPS. | undefined
+2024-02-17 10:21:05 | info | 	⚡️ Swagger listening on port 8080. Read the Gateway API documentation at 127.0.0.1:8080 | undefined
+2024-02-17 10:30:24 | info | 	Gateway Version: 1.24.0 | undefined
+2024-02-17 10:30:24 | info | 	⚡️ Starting Gateway API on port 15888... | undefined
+2024-02-17 10:30:24 | info | 	The gateway server is secured behind HTTPS. | undefined
+2024-02-17 10:30:24 | info | 	⚡️ Swagger listening on port 8080. Read the Gateway API documentation at 127.0.0.1:8080 | undefined
+2024-02-17 10:39:55 | error | 	The request is missing the key: privateKey | Error: The request is missing the key: privateKey
+    at throwIfErrorsExist (/home/gateway/dist/src/services/validators.js:38:15)
+    at /home/gateway/dist/src/services/validators.js:103:40
+    at /home/gateway/dist/src/services/wallet/wallet.routes.js:25:58
+    at Generator.next (<anonymous>)
+    at /home/gateway/dist/src/services/wallet/wallet.routes.js:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (/home/gateway/dist/src/services/wallet/wallet.routes.js:4:12)
+    at /home/gateway/dist/src/services/wallet/wallet.routes.js:24:86
+    at /home/gateway/dist/src/services/error-handler.js:37:28
+    at Layer.handle [as handle_request] (/home/gateway/node_modules/express/lib/router/layer.js:95:5)
