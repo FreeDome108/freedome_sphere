@@ -8,22 +8,22 @@ strategy: spot_perpetual_arbitrage
 # The following configurations are only required for the AMM arbitrage trading strategy
 
 # Connectors and markets parameters
-spot_connector: okx
+spot_connector: whitebit
 spot_market: XRP-USDT
 perpetual_connector: binance_perpetual
 perpetual_market: XRP-USDT
 
 # Order amount to submit orders on both spot and perpetual markets
-order_amount: 20
+order_amount: 40
 
 perpetual_leverage: 1
 
 # Minimum profit percentage required before opening an arbitrage position, expressed in percentage value, e.g. 1 = 1%
 # The profitability is calculated from the gap between sell and buy price, it does not account for fees and slippages
-min_opening_arbitrage_pct: 0.15
+min_opening_arbitrage_pct: 0.4
 
 # Minimum profit percentage required before closing the arbitrage position, expressed in percentage value, e.g. 1 = 1%
-min_closing_arbitrage_pct: 0.05
+min_closing_arbitrage_pct: 0.0
 
 # A buffer for which to adjust order price for higher chance of the order getting filled.
 # This is important for AMM which transaction takes a long time where a slippage is acceptable rather having
@@ -37,4 +37,4 @@ perpetual_market_slippage_buffer: 0.05
 
 # cool off period between arbitrage cycles
 #default:120
-next_arbitrage_opening_delay: 30
+next_arbitrage_opening_delay: 1
