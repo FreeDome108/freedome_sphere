@@ -379,3 +379,6 @@ FileNotFoundError: [Errno 2] No such file or directory: '/home/hummingbot/hummin
 2024-02-19 15:04:12,729 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
 2024-02-19 15:04:45,260 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
 2024-02-19 15:34:50,251 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-20 08:07:53,645 - 15 - hummingbot.client.hummingbot_application - ERROR - MQTT is already stopped!
+2024-02-20 08:08:11,361 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-02-20 09:51:37,394 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.

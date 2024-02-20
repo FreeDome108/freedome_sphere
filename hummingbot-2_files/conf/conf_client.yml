@@ -25,9 +25,7 @@ kill_switch_mode: {}
 # What to auto-fill in the prompt after each import command (start/config)
 autofill_import: disabled
 
-telegram_mode:
-  telegram_token: 6287836751:AAHRwKE8ELnZ7kzUlOj-fFIWogZoKnJaVm4
-  telegram_chat_id: '238560779'
+telegram_mode: {}
 
 # MQTT Bridge configuration.
 mqtt_bridge:

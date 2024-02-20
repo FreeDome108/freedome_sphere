@@ -14,7 +14,7 @@ perpetual_connector: binance_perpetual
 perpetual_market: XRP-USDT
 
 # Order amount to submit orders on both spot and perpetual markets
-order_amount: 0.05
+order_amount: 20
 
 perpetual_leverage: 1
 
@@ -23,13 +23,13 @@ perpetual_leverage: 1
 min_opening_arbitrage_pct: 0.15
 
 # Minimum profit percentage required before closing the arbitrage position, expressed in percentage value, e.g. 1 = 1%
-min_closing_arbitrage_pct: 0.1
+min_closing_arbitrage_pct: 0.05
 
 # A buffer for which to adjust order price for higher chance of the order getting filled.
 # This is important for AMM which transaction takes a long time where a slippage is acceptable rather having
 # the transaction get rejected. The submitted order price will be adjust higher (by percentage value) for buy order
 # and lower for sell order. (Enter 1 for 1%)
-spot_market_slippage_buffer: 0.05
+spot_market_slippage_buffer: 0.03
 
 # A buffer to add to the price to account for slippage when buying/selling on second connector market
 # (Enter 1 for 1%)

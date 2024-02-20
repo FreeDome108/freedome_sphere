@@ -5,22 +5,22 @@
 strategy: cross_exchange_mining
 
 # The name of the maker exchange connector.
-maker_market: binance
+maker_market: whitebit
 
 # The name of the taker exchange connector.
-taker_market: whitebit
+taker_market: okx
 
 # The name of the maker trading pair.
-maker_market_trading_pair: XMR-USDT
+maker_market_trading_pair: XRP-USDT
 
 # The name of the taker trading pair.
-taker_market_trading_pair: XMR-USDT
+taker_market_trading_pair: XRP-USDT
 
 # The minimum estimated profitability required to open a position.
-min_profitability: 0.1
+min_profitability: 1
 
 # The amount of base currency for the strategy to maintain over exchanges.
-order_amount: 0.05
+order_amount: 20
 
 # Time interval to rebalance portfolio >>> 
 balance_adjustment_duration: 5.0
@@ -41,7 +41,7 @@ volatility_buffer_size: 120
 min_prof_adj_timer: 3600.0
 
 # What is the minimum order amount required for bid or ask orders?: 
-min_order_amount: 0.05
+min_order_amount: 2
 
 # Multiplier for rate curve for the adjustment of min profitability based on previous trades over last 24 hrs: 
 rate_curve: 1.0
