@@ -1,0 +1,19 @@
+chains:
+  arbitrum:
+    chain_id: 42161
+    rpc_url: "https://arb1.arbitrum.io/rpc"
+    gas_station: "https://gasstation.arbitrum.io/gas"
+    explorer:
+      address: "https://arbiscan.io/address"
+      tx: "https://arbiscan.io/tx"
+    wallets:
+      - private_key_env: ARBITRUM_PRIVATE_KEY
+        trading_pairs:
+          - USDT-ETH
+          - USDC-ETH
+    gas_limits:
+      default: 21000
+      erc20: 60000
+    gas_price:
+      max_price: 100
+      max_priority_fee_per_gas: 5
