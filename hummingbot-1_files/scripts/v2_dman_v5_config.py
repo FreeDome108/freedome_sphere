@@ -18,11 +18,8 @@ from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuil
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
 
-class DManV1ScriptConfig(BaseClientModel):
+class DManV5ScriptConfig(BaseClientModel):
     script_file_name: str = Field(default_factory=lambda: os.path.basename(__file__))
-
-
-
 
     # Maker exchange configuration
     maker_exchange: str = Field("whitebit", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the name of the exchange where the bot will open limit orders (e.g., whitebit):"))
@@ -42,14 +39,16 @@ class DManV1ScriptConfig(BaseClientModel):
     # Account configuration
     exchange: str = Field("binance_perpetual", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the name of the exchange where the bot will operate (e.g., binance_perpetual):"))
     trading_pairs: str = Field("DOGE-USDT", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "List the trading pairs for the bot to trade on, separated by commas (e.g., BTC-USDT,ETH-USDT):"))
-    leverage: int = Field(20, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Set the leverage to use for trading (e.g., 20 for 20x leverage):"))
+    candles_exchange: str = Field("binance_perpetual", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the exchange name to fetch candle data from (e.g., binance_perpetual):"))
+    '''
+
+    leverage: int = Field(1, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Set the leverage to use for trading (e.g., 2 for 2x leverage):"))
 
     # Candles configuration
-    candles_exchange: str = Field("binance_perpetual", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the exchange name to fetch candle data from (e.g., binance_perpetual):"))
-    candles_interval: str = Field("3m", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Set the time interval for candles (e.g., 1m, 5m, 1h):"))
+    candles_interval: str = Field("1m", client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Set the time interval for candles (e.g., 1m, 5m, 1h):"))
 
 
-    n_levels: int = Field(5, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Specify the number of order levels (e.g., 5):"))
+    n_levels: int = Field(3, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Specify the number of order levels (e.g., 3):"))
     start_spread: float = Field(1.0, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Set the start spread as a multiple of the NATR (e.g., 1.0 for 1x NATR):"))
     step_between_orders: float = Field(0.8, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Define the step between orders as a multiple of the NATR (e.g., 0.8 for 0.8x NATR):"))
     order_refresh_time: int = Field(60 * 45, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the refresh time in seconds for orders (e.g., 900 for 15 minutes):"))
@@ -64,17 +63,17 @@ class DManV1ScriptConfig(BaseClientModel):
 
     # Advanced configurations
     natr_length: int = Field(100, client_data=ClientFieldData(prompt_on_new=True, prompt=lambda mi: "Enter the NATR (Normalized Average True Range) length (e.g., 100):"))
-    '''
 
 
-class DManV1MultiplePairs(ScriptStrategyBase):
+class DManV5MultiplePairs(ScriptStrategyBase):
     @classmethod
-    def init_markets(cls, config: DManV1ScriptConfig):
-        cls.markets = {config.exchange: set(config.trading_pairs.split(","))}
+    def init_markets(cls, config: DManV5ScriptConfig):
+        cls.markets = {config.maker_exchange: set(config.maker_pair.split(",")),config.taker_exchange: set(config.taker_pair.split(","))}
 
-    def __init__(self, connectors: Dict[str, ConnectorBase], config: DManV1ScriptConfig):
+    def __init__(self, connectors: Dict[str, ConnectorBase], config: DManV5ScriptConfig):
         super().__init__(connectors)
         self.config = config
+
 
         # Initialize order level builder
         order_level_builder = OrderLevelBuilder(n_levels=config.n_levels)
@@ -91,21 +90,23 @@ class DManV1MultiplePairs(ScriptStrategyBase):
             order_refresh_time=config.order_refresh_time,
             cooldown_time=config.cooldown_time,
         )
+        
 
         # Initialize controllers and executor handlers
         self.controllers = {}
         self.executor_handlers = {}
         self.markets = {}
+        
         candles_max_records = config.natr_length + 100  # We need to get more candles than the indicators need
 
         for trading_pair in config.trading_pairs.split(","):
             # Configure the strategy for each trading pair
-            dman_config = DManV1Config(
-                exchange=config.exchange,
-                trading_pair=trading_pair,
+            dman_config = DManV5Config(
+                exchange=config.maker_exchange,
+                trading_pair=maker_pair,
                 order_levels=order_levels,
                 candles_config=[
-                    CandlesConfig(connector=config.candles_exchange, trading_pair=trading_pair,
+                    CandlesConfig(connector=config.taker_exchange, trading_pair=trading_pair,
                                   interval=config.candles_interval, max_records=candles_max_records),
                 ],
                 leverage=config.leverage,
@@ -119,16 +120,25 @@ class DManV1MultiplePairs(ScriptStrategyBase):
 
             # Create and store the executor handler for each trading pair
             self.executor_handlers[trading_pair] = MarketMakingExecutorHandler(strategy=self, controller=controller)
+        
 
     @property
-    def is_perpetual(self):
+    def is_maker_perpetual(self):
         """
-        Checks if the exchange is a perpetual market.
+        Checks if the maker_exchange is a perpetual market.
         """
-        return "perpetual" in self.config.exchange
+        return "perpetual" in self.config.maker_exchange
 
+    @property
+    def is_taker_perpetual(self):
+        """
+        Checks if the taker_exchange is a perpetual market.
+        """
+        return "perpetual" in self.config.taker_exchange
+
+    '''
     def on_stop(self):
-        if self.is_perpetual:
+        if self.is_maker_perpetual:
             self.close_open_positions()
 
     def close_open_positions(self):
@@ -150,6 +160,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
                                  order_type=OrderType.MARKET,
                                  price=connector.get_mid_price(position.trading_pair),
                                  position_action=PositionAction.CLOSE)
+    '''
 
     def on_tick(self):
         """
@@ -159,13 +170,14 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         for executor_handler in self.executor_handlers.values():
             if executor_handler.status == ExecutorHandlerStatus.NOT_STARTED:
                 executor_handler.start()
+        
 
     def format_status(self) -> str:
         if not self.ready_to_trade:
             return "Market connectors are not ready."
         lines = []
-        for trading_pair, executor_handler in self.executor_handlers.items():
+        for maker_pair, executor_handler in self.executor_handlers.items():
             lines.extend(
-                [f"Strategy: {executor_handler.controller.config.strategy_name} | Trading Pair: {trading_pair}",
+                [f"Strategy: {executor_handler.controller.config.strategy_name} | Trading Pair: {maker_pair}",
                  executor_handler.to_format_status()])
         return "\n".join(lines)
