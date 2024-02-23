@@ -8,6 +8,7 @@ services:
       - "./hummingbot/conf/strategies:/home/hummingbot/conf/strategies"
       - "./hummingbot/connector/exchange/whitebit:/home/hummingbot/hummingbot/connector/exchange/whitebit"
       - "./hummingbot/strategy/get_order_book:/home/hummingbot/hummingbot/strategy/get_order_book"
+      - "./hummingbot/strategy/xemm:/home/hummingbot/hummingbot/strategy/xemm"
       - "./hummingbot/core/web_assistant/rest_assistant.py:/home/hummingbot/hummingbot/core/web_assistant/rest_assistant.py"
       - "./hummingbot-1_files/conf:/home/hummingbot/conf"
       - "./hummingbot-1_files/conf/connectors:/home/hummingbot/conf/connectors"

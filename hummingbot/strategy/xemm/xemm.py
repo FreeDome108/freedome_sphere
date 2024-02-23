@@ -15,7 +15,7 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
     Описание алгоритма:
     1. Стратегия начинается с мониторинга цен на taker рынке для заданной торговой пары.
     2. На основе полученных данных, стратегия рассчитывает цены покупки и продажи на maker рынке,
-       используя заданную целевую прибыльность (profit_set).
+       используя заданную целевую прибыльность (profit_targer).
     3. Стратегия создает лимитные ордера на покупку и продажу на maker рынке с учетом рассчитанных цен
        и объема, который не превышает доступный объем на taker рынке.
     4. Стратегия постоянно мониторит изменения в прибыльности. Если прибыльность выходит за пределы
@@ -38,7 +38,7 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
     - maker_pair: Торговая пара на maker рынке.
     - taker_pair: Торговая пара на taker рынке.
     - order_amount: Объем ордера.
-    - profit_min, profit_set, profit_max: Минимальная, целевая и максимальная прибыльность для сделок в процентах. Например 0.5 - означает 0.5%
+    - profit_min, profit_targer, profit_max: Минимальная, целевая и максимальная прибыльность для сделок в процентах. Например 0.5 - означает 0.5%
     """
 
     base = "XMR"
@@ -51,13 +51,13 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
 
     order_amount = 10 
     profit_min = 0.5
-    profit_set = 0.6
+    profit_targer = 0.6
     profit_max = 0.7
 
     markets = {maker_exchange: {maker_pair}, taker_exchange: {taker_pair}}
 
-    #buy_order_placed = False
-    #sell_order_placed = False
+    buy_order_placed = False
+    sell_order_placed = False
 
     # Подписываемся на событие исполнения ордера на maker_exchange
     # self.add_event_listener(MarketEvent.OrderFilled, self.did_fill_maker_order)
@@ -80,9 +80,9 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
         # Идентифицируем текущий ордер для данного типа сделки
         current_order = self.get_current_order(trade_type)
         
-        # 1. Если ордер отсутствует, то рассчитываем цену с учетом profit_set и ставим ордер
+        # 1. Если ордер отсутствует, то рассчитываем цену с учетом profit_targer и ставим ордер
         if current_order is None:
-            maker_price_set = self.calculate_order_price(trade_type, taker_price, self.profit_set)
+            maker_price_set = self.calculate_order_price(trade_type, taker_price, self.profit_targer)
             order_id = self.place_order(trade_type, maker_price_set)
             if order_id:
                 self.order_ids[trade_type.name] = order_id 
@@ -122,6 +122,7 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
     
 
     def place_order(self, trade_type, price):
+        '''
         order_result = self.connectors[self.maker_exchange].place_limit_order(self.maker_pair, trade_type, price, self.order_amount)
         
         # Проверяем, успешно ли был размещен ордер, и если да, возвращаем id ордера
@@ -129,6 +130,34 @@ class CrossExchangeMarketMakingSpotPerpClobAmmStrategy(ScriptStrategyBase):
             return order_result['id']
         else:
             # Если ордер не был успешно размещен, возвращаем None или выбрасываем исключение
+            return None
+        '''
+
+        order_candidate = OrderCandidate(
+            trading_pair=self.maker_pair,
+            is_maker=True,
+            order_type=OrderType.LIMIT,
+            order_side=trade_type,
+            amount=Decimal(self.order_amount),
+            price=Decimal(price)
+        )
+        
+        # Корректируем ордер с учетом бюджета и других ограничений
+        order_adjusted = self.connectors[self.maker_exchange].budget_checker.adjust_candidate(order_candidate, all_or_none=False)
+        
+        # Размещаем скорректированный ордер
+        order_result = None
+        if trade_type == TradeType.BUY:
+            order_result = self.buy(self.maker_exchange, self.maker_pair, order_adjusted.amount, order_adjusted.order_type, order_adjusted.price)
+            self.buy_order_placed = order_result is not None
+        else:  # TradeType.SELL
+            order_result = self.sell(self.maker_exchange, self.maker_pair, order_adjusted.amount, order_adjusted.order_type, order_adjusted.price)
+            self.sell_order_placed = order_result is not None
+
+        # Проверяем результат и возвращаем id ордера, если он успешно размещен
+        if order_result and 'id' in order_result:
+            return order_result['id']
+        else:
             return None
 
     def cancel_order(self, order):
