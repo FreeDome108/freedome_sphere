@@ -13,6 +13,8 @@ from hummingbot.smart_components.utils.distributions import Distributions
 from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
+from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
+from hummingbot.core.event.event_listener import EventListener
 
 
 class DManV1MultiplePairs(ScriptStrategyBase):
@@ -80,6 +82,12 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         super().__init__(connectors)
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = MarketMakingExecutorHandler(strategy=self, controller=controller)
+        
+        self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
+
+    @EventListener
+    def on_order_filled(self, event: OrderFilledEvent):
+        self.logger().info(f"Order filled: {event.order_id}, {event.trade_type}, {event.amount}, {event.price}")
 
     @property
     def is_perpetual(self):
