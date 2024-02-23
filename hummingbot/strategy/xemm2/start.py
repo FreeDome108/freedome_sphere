@@ -1,7 +1,7 @@
 from typing import List, Tuple
 
-from hummingbot.strategy.cross_exchange_mining.cross_exchange_mining import CrossExchangeMiningStrategy
-from hummingbot.strategy.cross_exchange_mining.cross_exchange_mining_pair import CrossExchangeMiningPair
+from hummingbot.strategy.xemm.xemm import CrossExchangeMarketMakingSpotPerpClobAmmStrategy
+from hummingbot.strategy.xemm.cross_exchange_mining_pair import CrossExchangeMiningPair
 from hummingbot.strategy.market_trading_pair_tuple import MarketTradingPairTuple
 
 
@@ -36,14 +36,14 @@ def start(self):
     self.market_pair = CrossExchangeMiningPair(maker=maker_market_trading_pair_tuple, taker=taker_market_trading_pair_tuple)
 
     strategy_logging_options = (
-        CrossExchangeMiningStrategy.OPTION_LOG_CREATE_ORDER
-        | CrossExchangeMiningStrategy.OPTION_LOG_ADJUST_ORDER
-        | CrossExchangeMiningStrategy.OPTION_LOG_MAKER_ORDER_FILLED
-        | CrossExchangeMiningStrategy.OPTION_LOG_REMOVING_ORDER
-        | CrossExchangeMiningStrategy.OPTION_LOG_STATUS_REPORT
-        | CrossExchangeMiningStrategy.OPTION_LOG_MAKER_ORDER_HEDGED
+        CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_CREATE_ORDER
+        | CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_ADJUST_ORDER
+        | CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_MAKER_ORDER_FILLED
+        | CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_REMOVING_ORDER
+        | CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_STATUS_REPORT
+        | CrossExchangeMarketMakingSpotPerpClobAmmStrategy.OPTION_LOG_MAKER_ORDER_HEDGED
     )
-    self.strategy = CrossExchangeMiningStrategy()
+    self.strategy = CrossExchangeMarketMakingSpotPerpClobAmmStrategy()
     self.strategy.init_params(
         config_map=c_map,
         market_pairs=[self.market_pair],
