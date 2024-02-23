@@ -2,7 +2,7 @@ from decimal import Decimal
 from typing import Dict
 
 from hummingbot.connector.connector_base import ConnectorBase
-from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide
+from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
 from hummingbot.smart_components.controllers.dman_v1 import DManV1, DManV1Config
 from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
@@ -20,7 +20,8 @@ from hummingbot.core.event.event_listener import EventListener
 class DManV1MultiplePairs(ScriptStrategyBase):
     # Account configuration
     exchange = "whitebit"
-    trading_pairs = ["ETH-USDT"]
+    trading_pairs = ["XMR-USDT"]
+    trading_pair1 = "XMR-USDT"
     leverage = 1
 
     # Candles configuration
@@ -83,11 +84,28 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = MarketMakingExecutorHandler(strategy=self, controller=controller)
         
-        self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
+        # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 
-    @EventListener
-    def on_order_filled(self, event: OrderFilledEvent):
-        self.logger().info(f"Order filled: {event.order_id}, {event.trade_type}, {event.amount}, {event.price}")
+    #def on_order_filled(self, event: OrderFilledEvent):
+    def did_fill_order(self, event: OrderFilledEvent):    
+        self.logger().info(f"Order {event.order_id} filled, {event.trade_type}, {event.amount} @ {event.price}")
+        
+        # [TODO] Если ордер не создан именно этим ботом, то игнорировать
+        # if event.exchange == self.maker_exchange and event.trading_pair == self.maker_pair:
+
+        # Исполняем арбитражную позицию на taker рынке
+        taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
+        order_type = OrderType.MARKET
+        self.execute_taker_trade(taker_action, event.amount, order_type)
+        
+    def execute_taker_trade(self, trade_type, amount, order_type):
+        # Выполнение торговой операции на taker рынке
+        # [TODO] fix self.trading_pair1
+        if trade_type == TradeType.BUY:
+            self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
+        else:
+            self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)
+
 
     @property
     def is_perpetual(self):
