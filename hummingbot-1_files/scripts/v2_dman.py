@@ -19,6 +19,73 @@ from hummingbot.core.event.event_listener import EventListener
 
 class DManV1MultiplePairs(ScriptStrategyBase):
     # Account configuration
+    
+    # Develop config
+    exchange = "okx"
+    trading_pairs = ["XRP-USDT"]
+    trading_pair1 = "XRP-USDT"
+    candles_exchange = "binance_perpetual"
+
+    # Production config
+    '''
+    exchange = "whitebit"
+    trading_pairs = ["XMR-USDT"]
+    trading_pair1 = "XMR-USDT"
+    candles_exchange = "binance_perpetual"
+    '''
+
+    order_amount = Decimal("10")
+    candles_interval = "1m"
+    candles_max_records = 300
+
+    # Orders configuration
+    leverage = 1
+    n_levels = 3
+    
+    
+    #Develop TO Fast order 
+    start_spread = 0.0006
+    step_between_orders = 0.009
+    '''
+    #Production profit
+    start_spread = 4
+    step_between_orders = 6
+    '''
+
+    #Test
+    order_refresh_time = 10 
+    #Original
+    #order_refresh_time = 60 * 15  # 15 minutes
+    
+    cooldown_time = 5
+
+    # Triple barrier configuration
+    stop_loss = Decimal("0.2")
+    # Without arbitrage
+    
+    # Test profit, don't live or minus all finanecs
+    take_profit = Decimal("0.003")
+    # Standart
+    # take_profit = Decimal("0.06")
+    time_limit = 60 * 60 * 12
+    trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
+    trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
+
+    '''
+    #Original    
+    stop_loss = Decimal("0.2")
+    take_profit = Decimal("0.06")
+    time_limit = 60 * 60 * 12
+    trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
+    trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
+    '''
+
+    # Advanced configurations
+    natr_length = 100
+    
+    '''
+    # Production config
+    # Account configuration
     exchange = "whitebit"
     trading_pairs = ["XMR-USDT"]
     trading_pair1 = "XMR-USDT"
@@ -46,6 +113,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
 
     # Advanced configurations
     natr_length = 100
+    '''    
 
     # Applying the configuration
     order_level_builder = OrderLevelBuilder(n_levels=n_levels)
@@ -77,6 +145,8 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         )
         controller = DManV1(config=config)
         markets = controller.update_strategy_markets_dict(markets)
+        markets[candles_exchange]={trading_pair}
+
         controllers[trading_pair] = controller
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
@@ -94,14 +164,15 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         # if event.exchange == self.maker_exchange and event.trading_pair == self.maker_pair:
 
         # Исполняем арбитражную позицию на taker рынке
-        taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
-        order_type = OrderType.MARKET
-        self.execute_taker_trade(taker_action, event.amount, order_type)
+        # taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
+        # self.execute_taker_trade(taker_action, event.amount)
         
-    def execute_taker_trade(self, trade_type, amount, order_type):
+    def execute_taker_trade(self, trade_type, amount):
         # Выполнение торговой операции на taker рынке
         # [TODO] fix self.trading_pair1
+        order_type = OrderType.MARKET
         if trade_type == TradeType.BUY:
+            self.connectors[self.candles_exchange]
             self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
         else:
             self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)

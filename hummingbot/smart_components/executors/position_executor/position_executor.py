@@ -21,68 +21,29 @@ from hummingbot.smart_components.executors.position_executor.data_types import (
     PositionExecutorStatus,
     TrackedOrder,
 )
-from hummingbot.smart_components.smart_component_base import SmartComponentBase
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
+from hummingbot.smart_components.executors.position_executor.base_position_execcutor import PositionExecutor As BasePositionExecutor
 
 
-class PositionExecutor(SmartComponentBase):
-    _logger = None
+class PositionExecutor(BasePositionExecutor):
 
-    @classmethod
-    def logger(cls) -> HummingbotLogger:
-        if cls._logger is None:
-            cls._logger = logging.getLogger(__name__)
-        return cls._logger
 
     def __init__(self, strategy: ScriptStrategyBase, position_config: PositionConfig, update_interval: float = 1.0):
-        if not (position_config.take_profit or position_config.stop_loss or position_config.time_limit):
-            error = "At least one of take_profit, stop_loss or time_limit must be set"
-            self.logger().error(error)
-            raise ValueError(error)
-        if position_config.time_limit_order_type != OrderType.MARKET or position_config.stop_loss_order_type != OrderType.MARKET:
-            error = "Only market orders are supported for time_limit and stop_loss"
-            self.logger().error(error)
-            raise ValueError(error)
-        self._position_config: PositionConfig = position_config
-        self.close_type = None
-        self.close_timestamp = None
-        self._executor_status: PositionExecutorStatus = PositionExecutorStatus.NOT_STARTED
-
-        # Order tracking
-        self._open_order: TrackedOrder = TrackedOrder()
-        self._close_order: TrackedOrder = TrackedOrder()
-        self._take_profit_order: TrackedOrder = TrackedOrder()
-        self._trailing_stop_price = Decimal("0")
-        self._trailing_stop_activated = False
-        super().__init__(strategy=strategy, connectors=[position_config.exchange], update_interval=update_interval)
+        # Taker order tracking
+        self._taker_order: TrackedOrder = TrackedOrder()
+        super().__init__(strategy=strategy, position_config=position_config, update_interval=update_interval)
 
     @property
-    def executor_status(self):
-        return self._executor_status
-
-    @executor_status.setter
-    def executor_status(self, status: PositionExecutorStatus):
-        self._executor_status = status
+    def taker_is_perpetual(self):
+        return "perpetual" in self.taker_exchange
 
     @property
-    def is_closed(self):
-        return self.executor_status == PositionExecutorStatus.COMPLETED
+    def taker_exchange(self):
+        return self.position_config.taker_exchange
 
     @property
-    def is_perpetual(self):
-        return "perpetual" in self.exchange
-
-    @property
-    def position_config(self):
-        return self._position_config
-
-    @property
-    def exchange(self):
-        return self.position_config.exchange
-
-    @property
-    def trading_pair(self):
-        return self.position_config.trading_pair
+    def taker_pair(self):
+        return self.position_config.taker_pair
 
     @property
     def amount(self):
@@ -91,304 +52,147 @@ class PositionExecutor(SmartComponentBase):
     @property
     def filled_amount(self):
         return self.open_order.executed_amount_base
+        # - taker_amount
 
     @property
-    def entry_price(self):
-        if self.open_order.executed_price:
-            return self.open_order.executed_price
-        elif self.position_config.entry_price:
-            return self.position_config.entry_price
-        else:
-            price_type = PriceType.BestAsk if self.side == TradeType.BUY else PriceType.BestBid
-            return self.get_price(self.exchange, self.trading_pair, price_type=price_type)
+    def taker_order_type(self):
+        return self.position_config.taker_order_type
 
     @property
-    def trailing_stop_config(self):
-        return self.position_config.trailing_stop
+    def taker_order(self):
+        return self._taker_order
 
-    @property
-    def close_price(self):
-        if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type not in [CloseType.EXPIRED,
-                                                                                                CloseType.INSUFFICIENT_BALANCE]:
-            return self.close_order.executed_price
-        elif self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
-            price_type = PriceType.BestBid if self.side == TradeType.BUY else PriceType.BestAsk
-            return self.get_price(self.exchange, self.trading_pair, price_type=price_type)
-        else:
-            return self.entry_price
+    def taker_profit_condition(self):
+        # Todo later: profit check, may be don't need
+        return true
 
-    @property
-    def trade_pnl(self):
-        if self.side == TradeType.BUY:
-            return (self.close_price - self.entry_price) / self.entry_price
-        else:
-            return (self.entry_price - self.close_price) / self.entry_price
 
-    @property
-    def trade_pnl_quote(self):
-        return self.trade_pnl * self.filled_amount * self.entry_price
-
-    @property
-    def net_pnl_quote(self):
-        return self.trade_pnl_quote - self.cum_fee_quote
-
-    @property
-    def net_pnl(self):
-        if self.filled_amount == Decimal("0"):
-            return Decimal("0")
-        else:
-            return self.net_pnl_quote / (self.filled_amount * self.entry_price)
-
-    @property
-    def cum_fee_quote(self):
-        return self.open_order.cum_fees + self.close_order.cum_fees
-
-    @property
-    def end_time(self):
-        if not self.position_config.time_limit:
-            return None
-        return self.position_config.timestamp + self.position_config.time_limit
-
-    @property
-    def side(self):
-        return self.position_config.side
-
-    @property
-    def open_order_type(self):
-        return self.position_config.open_order_type
-
-    @property
-    def take_profit_order_type(self):
-        return self.position_config.take_profit_order_type
-
-    @property
-    def stop_loss_order_type(self):
-        return self.position_config.stop_loss_order_type
-
-    @property
-    def time_limit_order_type(self):
-        return self.position_config.time_limit_order_type
-
-    @property
-    def stop_loss_price(self):
-        stop_loss_price = self.entry_price * (1 - self._position_config.stop_loss) if self.side == TradeType.BUY else \
-            self.entry_price * (1 + self._position_config.stop_loss)
-        return stop_loss_price
-
-    @property
-    def take_profit_price(self):
-        take_profit_price = self.entry_price * (1 + self._position_config.take_profit) if self.side == TradeType.BUY else \
-            self.entry_price * (1 - self._position_config.take_profit)
-        return take_profit_price
-
-    @property
-    def open_order(self):
-        return self._open_order
-
-    @property
-    def close_order(self):
-        return self._close_order
-
-    @property
-    def take_profit_order(self):
-        return self._take_profit_order
-
-    def take_profit_condition(self):
-        if self.side == TradeType.BUY:
-            return self.close_price >= self.take_profit_price
-        else:
-            return self.close_price <= self.take_profit_price
-
-    def stop_loss_condition(self):
-        if self.side == TradeType.BUY:
-            return self.close_price <= self.stop_loss_price
-        else:
-            return self.close_price >= self.stop_loss_price
-
-    def time_limit_condition(self):
-        return self._strategy.current_timestamp >= self.end_time
-
-    def on_start(self):
-        self.check_budget()
-
-    def on_stop(self):
-        if self.take_profit_order.order and self.take_profit_order.order.is_open:
-            self.logger().info(f"Take profit order status: {self.take_profit_order.order.current_state}")
-            self.remove_take_profit()
+    #def on_stop(self):
+    #Подумать
 
     async def control_task(self):
         if self.executor_status == PositionExecutorStatus.NOT_STARTED:
             self.control_open_order()
         elif self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
             self.control_barriers()
+        elif self.executor_status == PositionExecutorStatus.ACTIVE_TAKER:
+            #???self.control_()
 
-    def control_open_order(self):
-        if not self.open_order.order_id:
-            if not self.end_time or self.end_time >= self._strategy.current_timestamp:
-                self.place_open_order()
-            else:
-                self.executor_status = PositionExecutorStatus.COMPLETED
-                self.close_type = CloseType.EXPIRED
-                self.terminate_control_loop()
-        else:
-            self.control_open_order_expiration()
+    def control_taker(self):
+        # TODO
 
-    def place_open_order(self):
-        order_id = self.place_order(
-            connector_name=self.exchange,
-            trading_pair=self.trading_pair,
-            order_type=self.open_order_type,
-            amount=self.amount,
-            price=self.entry_price,
-            side=self.side,
-            position_action=PositionAction.OPEN,
-        )
-        self._open_order.order_id = order_id
-        self.logger().info("Placing open order")
 
-    def control_open_order_expiration(self):
-        if self.end_time and self.end_time <= self._strategy.current_timestamp:
-            self._strategy.cancel(
-                connector_name=self.exchange,
-                trading_pair=self.trading_pair,
-                order_id=self._open_order.order_id
-            )
-            self.logger().info("Removing open order by time limit")
 
-    def control_barriers(self):
-        if not self.close_order.order_id:
-            if self.position_config.stop_loss:
-                self.control_stop_loss()
-            if self.position_config.take_profit:
-                self.control_take_profit()
-            if self.position_config.time_limit:
-                self.control_time_limit()
+
+
+
+
 
     def place_close_order(self, close_type: CloseType, price: Decimal = Decimal("NaN")):
+        # MOD -taker_partial_execution  (taker_amount)
         tp_partial_execution = self.take_profit_order.executed_amount_base if self.take_profit_order.executed_amount_base else Decimal("0")
+        taker_partial_execution = self.take_profit_order.taker_executed_amount_base if self.take_profit_order.taker_executed_amount_base else Decimal("0")
+
         order_id = self.place_order(
             connector_name=self.exchange,
             trading_pair=self.trading_pair,
             order_type=OrderType.MARKET,
-            amount=self.filled_amount - tp_partial_execution,
+            amount=self.filled_amount - tp_partial_execution-taker_partial_execution,
             price=price,
             side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY,
             position_action=PositionAction.CLOSE,
         )
         self.close_type = close_type
         self._close_order.order_id = order_id
-        self.logger().info(f"Placing close order --> Filled amount: {self.filled_amount} | TP Partial execution: {tp_partial_execution}")
+        self.logger().info(f"Placing close order --> Filled amount: {self.filled_amount} | TP Partial execution: {tp_partial_execution} | Taker Partial execution: {taker_partial_execution}")
 
-    def control_stop_loss(self):
-        if self.stop_loss_condition():
-            self.place_close_order(close_type=CloseType.STOP_LOSS)
-        elif self.trailing_stop_condition():
-            self.place_close_order(close_type=CloseType.TRAILING_STOP)
 
-    def control_take_profit(self):
-        if self.take_profit_order_type.is_limit_type():
-            if not self.take_profit_order.order_id:
-                self.place_take_profit_limit_order()
+    #from control_take_profit
+    def control_taker(self):
+        if self.taker_order_type.is_limit_type():
+            if not self.taker_order.order_id:
+                self.place_taker_limit_order()
             elif not math.isclose(self.take_profit_order.order.amount, self.open_order.executed_amount_base):
-                self.renew_take_profit_order()
-        elif self.take_profit_condition():
-            self.place_close_order(close_type=CloseType.TAKE_PROFIT)
+                self.renew_taker_order()
+        elif self.taker_condition():
+            self.place_taker_close_order(close_type=CloseType.TAKER)
+            #self.place_close_order(close_type=CloseType.TAKER)
 
-    def control_time_limit(self):
-        if self.time_limit_condition():
-            self.place_close_order(close_type=CloseType.TIME_LIMIT)
 
-    def place_take_profit_limit_order(self):
+    def place_taker_limit_order(self):
         order_id = self.place_order(
-            connector_name=self._position_config.exchange,
-            trading_pair=self._position_config.trading_pair,
+            connector_name=self._position_config.taker_exchange,
+            trading_pair=self._position_config.taker_pair,
             amount=self.filled_amount,
-            price=self.take_profit_price,
-            order_type=self.take_profit_order_type,
+            price=self.take_profit_price,#!!!!!
+            order_type=self.taker_order_type,
             position_action=PositionAction.CLOSE,
             side=TradeType.BUY if self.side == TradeType.SELL else TradeType.SELL,
         )
-        self.take_profit_order.order_id = order_id
-        self.logger().info("Placing take profit order")
+        self.taker_order.order_id = order_id
+        self.logger().info("Placing taker order")
 
-    def renew_take_profit_order(self):
-        self.remove_take_profit()
-        self.place_take_profit_limit_order()
-        self.logger().info("Renewing take profit order")
+    def renew_taker_order(self):
+        self.remove_taker()
+        self.place_taker_limit_order()
+        self.logger().info("Renewing taker order")
 
-    def remove_take_profit(self):
+    def remove_taker(self):
         self._strategy.cancel(
-            connector_name=self.exchange,
-            trading_pair=self.trading_pair,
-            order_id=self._take_profit_order.order_id
+            connector_name=self.taker_exchange,
+            trading_pair=self.taker_pair,
+            order_id=self._taker_order.order_id
         )
-        self.logger().info("Removing take profit")
+        self.logger().info("Removing taker")
 
-    def early_stop(self):
-        if self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
-            self.place_close_order(close_type=CloseType.EARLY_STOP)
-        elif self.executor_status == PositionExecutorStatus.NOT_STARTED and self._open_order.order_id:
-            self._strategy.cancel(
-                connector_name=self.exchange,
-                trading_pair=self.trading_pair,
-                order_id=self._open_order.order_id
-            )
+
+
 
     def process_order_created_event(self, _, market, event: Union[BuyOrderCreatedEvent, SellOrderCreatedEvent]):
-        if self.open_order.order_id == event.order_id:
-            self.open_order.order = self.get_in_flight_order(self.exchange, event.order_id)
-            self.logger().info("Open Order Created")
-        elif self.close_order.order_id == event.order_id:
-            self.logger().info("Close Order Created")
-            self.close_order.order = self.get_in_flight_order(self.exchange, event.order_id)
-        elif self.take_profit_order.order_id == event.order_id:
-            self.take_profit_order.order = self.get_in_flight_order(self.exchange, event.order_id)
-            self.logger().info("Take profit Created")
+        super().process_order_created_event(_, market, event)
+        if self.taker_order.order_id == event.order_id:
+            self.taker_order.order = self.get_in_flight_order(self.exchange, event.order_id)
+            self.logger().info("Taker Order Created")
+
+
 
     def process_order_completed_event(self, _, market, event: Union[BuyOrderCompletedEvent, SellOrderCompletedEvent]):
-        if self.open_order.order_id == event.order_id:
-            self.logger().info("Open Order Completed")
-            self.executor_status = PositionExecutorStatus.ACTIVE_POSITION
-        elif self.close_order.order_id == event.order_id:
-            self.close_timestamp = event.timestamp
+        super().process_order_completed_event(_, market, event)
+        if self.taker_order.order_id == event.order_id:
+            #!!!!!
+            self.close_type = CloseType.TAKER #!!!!!
             self.executor_status = PositionExecutorStatus.COMPLETED
-            self.logger().info(f"Closed by {self.close_type}")
-            self.terminate_control_loop()
-        elif self.take_profit_order.order_id == event.order_id:
-            self.close_type = CloseType.TAKE_PROFIT
-            self.executor_status = PositionExecutorStatus.COMPLETED
-            self.close_timestamp = event.timestamp
+            self.close_timestamp = event.timestamp #!!!!!
             self.close_order.order_id = event.order_id
-            self.close_order.order = self.take_profit_order.order
+            self.close_order.order = self.taker_order.order
             self.logger().info(f"Closed by {self.close_type}")
-            self.terminate_control_loop()
+            self.terminate_control_loop() #!!!!!
 
-    def process_order_canceled_event(self, _, market, event: OrderCancelledEvent):
-        if self.open_order.order_id == event.order_id:
-            self.executor_status = PositionExecutorStatus.COMPLETED
-            self.close_type = CloseType.EXPIRED
-            self.close_timestamp = event.timestamp
 
+    
     def process_order_filled_event(self, _, market, event: OrderFilledEvent):
+        super().process_order_filled_event(_, market, event)
         if self.open_order.order_id == event.order_id:
-            if self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
-                self.logger().info("Position incremented, updating take profit next tick.")
-            else:
-                self.executor_status = PositionExecutorStatus.ACTIVE_POSITION
+            #!!!!!
+            #Do something!!! with PositionExecutorStatus.ACTIVE_TAKER
+
+            #if self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
+            #    self.logger().info("Position incremented, updating take profit next tick.")
+            #else:
+            #    self.executor_status = PositionExecutorStatus.ACTIVE_POSITION
 
     def process_order_failed_event(self, _, market, event: MarketOrderFailureEvent):
-        if self.open_order.order_id == event.order_id:
-            self.place_open_order()
-        elif self.close_order.order_id == event.order_id:
-            self.place_close_order(self.close_type)
-        elif self.take_profit_order.order_id == event.order_id:
-            self.take_profit_order.order_id = None
+        super().process_order_failed_event _, market, event)
+        if self.taker_order.order_id == event.order_id:
+            self.taker_order.order_id = None
 
     def to_json(self):
         return {
             "timestamp": self.position_config.timestamp,
             "exchange": self.exchange,
             "trading_pair": self.trading_pair,
+            "taker_exchange": self.taker_exchange,
+            "taker_pair": self.taker_pair,
             "side": self.side.name,
             "amount": self.filled_amount,
             "trade_pnl": self.trade_pnl,
@@ -405,6 +209,7 @@ class PositionExecutor(SmartComponentBase):
             "tp": self.position_config.take_profit,
             "tl": self.position_config.time_limit,
             "open_order_type": self.open_order_type.name,
+            "taker_order_type": self.taker_order_type.name,
             "take_profit_order_type": self.take_profit_order_type.name,
             "stop_loss_order_type": self.stop_loss_order_type.name,
             "time_limit_order_type": self.time_limit_order_type.name,
@@ -459,67 +264,40 @@ class PositionExecutor(SmartComponentBase):
             lines.extend(["-----------------------------------------------------------------------------------------------------------"])
         return lines
 
-    def trailing_stop_condition(self):
-        if self.trailing_stop_config:
-            price = self.close_price
-            if not self._trailing_stop_activated and self.activation_price_condition(price):
-                self._trailing_stop_activated = True
-                self._trailing_stop_price = price
-                self.logger().info(f"Trailing stop activated at {price}")
-            if self._trailing_stop_activated:
-                self.update_trailing_stop_price(price)
-                if self.side == TradeType.BUY:
-                    return price < self._trailing_stop_price
-                else:
-                    return price > self._trailing_stop_price
-            else:
-                return False
 
-    def activation_price_condition(self, price):
-        side = 1 if self.side == TradeType.BUY else -1
-        activation_price = self.entry_price * (1 + side * self.trailing_stop_config.activation_price_delta)
-        return price >= activation_price if self.side == TradeType.BUY \
-            else price <= activation_price
-
-    def update_trailing_stop_price(self, price):
-        if self.side == TradeType.BUY:
-            trailing_stop_price = price * (1 - self.trailing_stop_config.trailing_delta)
-            if trailing_stop_price > self._trailing_stop_price:
-                self._trailing_stop_price = trailing_stop_price
-        else:
-            trailing_stop_price = price * (1 + self.trailing_stop_config.trailing_delta)
-            if trailing_stop_price < self._trailing_stop_price:
-                self._trailing_stop_price = trailing_stop_price
 
     def check_budget(self):
-        if self.is_perpetual:
+        super().check_budget()
+        if self.taker_is_perpetual:
             order_candidate = PerpetualOrderCandidate(
-                trading_pair=self.trading_pair,
-                is_maker=self.open_order_type.is_limit_type(),
-                order_type=self.open_order_type,
-                order_side=self.side,
+                trading_pair=self.taker_pair,
+                is_maker=self.taker_order_type.is_limit_type(),
+                order_type=self.taker_order_type,
+                order_side=self.side, #change to opposite!!!
                 amount=self.amount,
                 price=self.entry_price,
                 leverage=Decimal(self.position_config.leverage),
             )
         else:
             order_candidate = OrderCandidate(
-                trading_pair=self.trading_pair,
-                is_maker=self.open_order_type.is_limit_type(),
-                order_type=self.open_order_type,
-                order_side=self.side,
+                trading_pair=self.taker_pair,
+                is_maker=self.taker_order_type.is_limit_type(),
+                order_type=self.taker_order_type,
+                order_side=self.side,  #change to opposite!!!
                 amount=self.amount,
                 price=self.entry_price,
             )
-        adjusted_order_candidate = self.adjust_order_candidate(order_candidate)
+        adjusted_order_candidate = self.taker_adjust_order_candidate(order_candidate)
         if not adjusted_order_candidate:
             self.terminate_control_loop()
-            self.close_type = CloseType.INSUFFICIENT_BALANCE
+            self.close_type = CloseType.INSUFFICIENT_BALANCE_TAKER
             self.executor_status = PositionExecutorStatus.COMPLETED
-            error = "Not enough budget to open position."
+            error = "Not enough budget on taker to open position in case need!"
             self.logger().error(error)
 
-    def adjust_order_candidate(self, order_candidate):
-        adjusted_order_candidate: OrderCandidate = self.connectors[self.exchange].budget_checker.adjust_candidate(order_candidate)
+
+
+    def taker_adjust_order_candidate(self, order_candidate):
+        adjusted_order_candidate: OrderCandidate = self.connectors[self.taker_exchange].budget_checker.adjust_candidate(order_candidate)
         if adjusted_order_candidate.amount > Decimal("0"):
             return adjusted_order_candidate
