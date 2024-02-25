@@ -194,17 +194,10 @@ class PositionExecutor(BasePositionExecutor):
             self.terminate_control_loop() #!!!!!
 
 
-    
-    def process_order_filled_event(self, _, market, event: OrderFilledEvent):
-        super().process_order_filled_event(_, market, event)
-        if self.open_order.order_id == event.order_id:
-            #!!!!!
-            #Do something!!! with PositionExecutorStatus.ACTIVE_TAKER
 
-            #if self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
-            #    self.logger().info("Position incremented, updating take profit next tick.")
-            #else:
-            #    self.executor_status = PositionExecutorStatus.ACTIVE_POSITION
+    def process_order_filled_event(self, _, market, event: OrderFilledEvent):
+        # На данный момент не видно доработок
+        super().process_order_filled_event(_, market, event)
 
     def process_order_failed_event(self, _, market, event: MarketOrderFailureEvent):
         super().process_order_failed_event _, market, event)
@@ -293,12 +286,15 @@ class PositionExecutor(BasePositionExecutor):
 
     def check_budget(self):
         super().check_budget()
+        check_taker_budget()
+
+    def check_taker_budget(self):
         if self.taker_is_perpetual:
             order_candidate = PerpetualOrderCandidate(
                 trading_pair=self.taker_pair,
                 is_maker=self.taker_order_type.is_limit_type(),
                 order_type=self.taker_order_type,
-                order_side=self.side, #change to opposite!!!
+                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY
                 amount=self.amount,
                 price=self.entry_price,
                 leverage=Decimal(self.position_config.leverage),
@@ -308,7 +304,7 @@ class PositionExecutor(BasePositionExecutor):
                 trading_pair=self.taker_pair,
                 is_maker=self.taker_order_type.is_limit_type(),
                 order_type=self.taker_order_type,
-                order_side=self.side,  #change to opposite!!!
+                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY
                 amount=self.amount,
                 price=self.entry_price,
             )
@@ -319,7 +315,6 @@ class PositionExecutor(BasePositionExecutor):
             self.executor_status = PositionExecutorStatus.COMPLETED
             error = "Not enough budget on taker to open position in case need!"
             self.logger().error(error)
-
 
 
     def taker_adjust_order_candidate(self, order_candidate):
