@@ -10,6 +10,7 @@ services:
       - "./hummingbot/strategy/get_order_book:/home/hummingbot/hummingbot/strategy/get_order_book"
       - "./hummingbot/strategy/xemm:/home/hummingbot/hummingbot/strategy/xemm"
       - "./hummingbot/templates/conf_xemm_strategy_TEMPLATE.yml:/home/hummingbot/hummingbot/templates/conf_xemm_strategy_TEMPLATE.yml"
+      - "./hummingbot/smart_components/executors/position_executor:/home/hummingbot/hummingbot/smart_components/executors/position_executor"
       - "./hummingbot/core/web_assistant/rest_assistant.py:/home/hummingbot/hummingbot/core/web_assistant/rest_assistant.py"
       - "./hummingbot-1_files/conf:/home/hummingbot/conf"
       - "./hummingbot-1_files/conf/connectors:/home/hummingbot/conf/connectors"
