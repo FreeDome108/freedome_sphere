@@ -9,9 +9,12 @@ class CloseType(PositionCloseType):
     TAKER = 9
     
 class PositionConfig(OriginalPositionConfig):
+    maker_perpetual_only_close: Optional[bool] = None
     taker_exchange: str
     taker_pair: str
+    taker_profitability: Optional[Decimal] = None
     taker_order_type OrderType = OrderType.MARKET
+    taker_perpetual_only_close: Optional[bool] = None
 
 class PositionExecutorStatus(OriginalPositionExecutorStatus):
-    ACTIVE_TAKER = 5
+    # ACTIVE_TAKER = 5

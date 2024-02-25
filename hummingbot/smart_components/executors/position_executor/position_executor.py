@@ -46,52 +46,41 @@ class PositionExecutor(BasePositionExecutor):
         return self.position_config.taker_pair
 
     @property
-    def amount(self):
-        return self.position_config.amount
-
-    @property
-    def filled_amount(self):
-        return self.open_order.executed_amount_base
-        # - taker_amount
-
-    @property
     def taker_order_type(self):
         return self.position_config.taker_order_type
+
+    def taker_price(self):
+        taker_price = self.entry_price * (1 + self._position_config.taker_profitability) if self.side == TradeType.BUY else \
+            self.entry_price * (1 - self._position_config.taker_profitability)
+        return take_profit_price
 
     @property
     def taker_order(self):
         return self._taker_order
 
-    def taker_profit_condition(self):
-        # Todo later: profit check, may be don't need
-        return true
 
+    def taker_condition(self):
+        if self.side == TradeType.BUY:
+            return self.close_price >= self.taker_price
+        else:
+            return self.close_price <= self.taker_price
 
-    #def on_stop(self):
-    #Подумать
+    def on_stop(self):
+        super().on_stop()
+        if self.taker_order.order and self.taker_order.order.is_open:
+            self.logger().info(f"Taker order status: {self.taker_.order.current_state}")
+            self.remove_taker()
 
-    async def control_task(self):
-        if self.executor_status == PositionExecutorStatus.NOT_STARTED:
-            self.control_open_order()
-        elif self.executor_status == PositionExecutorStatus.ACTIVE_POSITION:
-            self.control_barriers()
-        elif self.executor_status == PositionExecutorStatus.ACTIVE_TAKER:
-            #???self.control_()
-
-    def control_taker(self):
-        # TODO
-
-
-
-
-
-
+    def control_barriers(self):
+        super().control_barriers()
+        if not self.close_order.order_id:
+            if self.position_config.taker_profitability
+                self.control_taker()
 
 
     def place_close_order(self, close_type: CloseType, price: Decimal = Decimal("NaN")):
-        # MOD -taker_partial_execution  (taker_amount)
         tp_partial_execution = self.take_profit_order.executed_amount_base if self.take_profit_order.executed_amount_base else Decimal("0")
-        taker_partial_execution = self.take_profit_order.taker_executed_amount_base if self.take_profit_order.taker_executed_amount_base else Decimal("0")
+        taker_partial_execution = self.taker_order.executed_amount_base if self.taker_order.executed_amount_base else Decimal("0")
 
         order_id = self.place_order(
             connector_name=self.exchange,
@@ -107,17 +96,53 @@ class PositionExecutor(BasePositionExecutor):
         self.logger().info(f"Placing close order --> Filled amount: {self.filled_amount} | TP Partial execution: {tp_partial_execution} | Taker Partial execution: {taker_partial_execution}")
 
 
-    #from control_take_profit
+    def place_close_taker_order(self, close_type: CloseType, price: Decimal = Decimal("NaN")):
+        tp_partial_execution = self.take_profit_order.executed_amount_base if self.take_profit_order.executed_amount_base else Decimal("0")
+        taker_partial_execution = self.taker_order.executed_amount_base if self.taker_order.executed_amount_base else Decimal("0")
+
+        order_id = self.place_order(
+            connector_name=self.taker_exchange,
+            trading_pair=self.taker_pair,
+            order_type=OrderType.MARKET,
+            amount=self.filled_amount - tp_partial_execution-taker_partial_execution,
+            price=price,
+            side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY,
+            position_action=PositionAction.CLOSE,
+        )
+        self.close_type = close_type
+        self._close_order.order_id = order_id
+        self.logger().info(f"Placing close taker order --> Filled amount: {self.filled_amount} | TP Partial execution: {tp_partial_execution} | Taker Partial execution: {taker_partial_execution}")
+
+
+    def control_take_profit(self):
+        if self.take_profit_order_type.is_limit_type():
+            if not self.take_profit_order.order_id:
+                self.place_take_profit_limit_order()
+            else:
+                if self.taker_order.order_id and self.taker_order_type.is_limit_type():  
+                    if not math.isclose(self.taker_order.order.amount+self.take_profit_order.order.amount, self.open_order.executed_amount_base):
+                        self.renew_taker_order()
+                else:
+                    if not math.isclose(self.take_profit_order.order.amount, self.open_order.executed_amount_base):
+                        self.renew_take_profit_order()
+        elif self.take_profit_condition():
+            self.place_close_order(close_type=CloseType.TAKE_PROFIT)
+
+    
     def control_taker(self):
         if self.taker_order_type.is_limit_type():
             if not self.taker_order.order_id:
                 self.place_taker_limit_order()
-            elif not math.isclose(self.take_profit_order.order.amount, self.open_order.executed_amount_base):
-                self.renew_taker_order()
+            else:
+                if self.take_profit_order.order_id and self.take_profit_order_type.is_limit_type():  
+                    if not math.isclose(self.taker_order.order.amount+self.take_profit_order.order.amount, self.open_order.executed_amount_base):
+                        self.renew_taker_order()
+                else:
+                    if not math.isclose(self.taker_order.order.amount, self.open_order.executed_amount_base):
+                        self.renew_taker_order()
         elif self.taker_condition():
-            self.place_taker_close_order(close_type=CloseType.TAKER)
-            #self.place_close_order(close_type=CloseType.TAKER)
-
+            self.place_close_taker_order(close_type=CloseType.TAKER)
+            
 
     def place_taker_limit_order(self):
         order_id = self.place_order(

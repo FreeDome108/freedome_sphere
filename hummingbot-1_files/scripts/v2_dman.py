@@ -60,13 +60,15 @@ class DManV1MultiplePairs(ScriptStrategyBase):
     cooldown_time = 5
 
     # Triple barrier configuration
-    stop_loss = Decimal("0.2")
+    #stop_loss = Decimal("0.2")
+    # Disabled
+    stop_loss = None
     # Without arbitrage
     
-    # Test profit, don't live or minus all finanecs
-    take_profit = Decimal("0.003")
+    # Test profit, don't left or minus all finanecs because of fees?
+    # take_profit = Decimal("0.003")
     # Standart
-    # take_profit = Decimal("0.06")
+    take_profit = Decimal("0.06")
     time_limit = 60 * 60 * 12
     trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
     trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
