@@ -22,10 +22,10 @@ from hummingbot.smart_components.executors.position_executor.data_types import (
     TrackedOrder,
 )
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
-from hummingbot.smart_components.executors.position_executor.base_position_execcutor import PositionExecutor as BasePositionExecutor
+from hummingbot.smart_components.executors.position_executor.base_position_execcutor import PositionExecutor as PositionExecutorBase
 
 #TODO: отменять позицию, если вышли из profitability
-class PositionExecutor(BasePositionExecutor):
+class PositionExecutor(PositionExecutorBase):
 
 
     def __init__(self, strategy: ScriptStrategyBase, position_config: PositionConfig, update_interval: float = 1.0):
