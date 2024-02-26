@@ -17,7 +17,7 @@ from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
 from hummingbot.core.event.event_listener import EventListener
 
 
-class DManV1MultiplePairs(ScriptStrategyBase):
+class DManMultiplePairs(ScriptStrategyBase):
     # Account configuration
     
     # Develop config
@@ -150,7 +150,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
             taker_pair = trading_pair,
             taker_profitability = 0.6
         )
-        controller = DManV1(config=config)
+        controller = DMan(config=config)
         markets = controller.update_strategy_markets_dict(markets)
         markets[candles_exchange]={trading_pair}
 
