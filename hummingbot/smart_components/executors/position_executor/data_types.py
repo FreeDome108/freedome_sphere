@@ -8,8 +8,11 @@ from hummingbot.smart_components.executors.position_executor.data_types_base imp
     TrailingStop,
     TrackedOrder
 )
+from pydantic import BaseModel
+from pydantic.types import Decimal
 
-from hummingbot.core.data_type.common import OrderType
+from hummingbot.core.data_type.common import OrderType, TradeType
+from hummingbot.core.data_type.in_flight_order import InFlightOrder
 
 
 class CloseType(Enum):
