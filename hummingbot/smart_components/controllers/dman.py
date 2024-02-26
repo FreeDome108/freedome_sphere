@@ -5,25 +5,32 @@ import pandas_ta as ta  # noqa: F401
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.smart_components.executors.position_executor.data_types import PositionConfig, TrailingStop
-from hummingbot.smart_components.executors.position_executor.position_executor import PositionExecutor
+from hummingbot.smart_components.executors.position_executor.advanced_executor import PositionExecutor
 from hummingbot.smart_components.strategy_frameworks.data_types import OrderLevel
-from hummingbot.smart_components.strategy_frameworks.market_making.market_making_controller_base import (
-    MarketMakingControllerBase,
-    MarketMakingControllerConfigBase,
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controller_base import (
+    AdvancedControllerBase,
+    AdvancedControllerConfigBase,
 )
 
 
-class DManV1Config(MarketMakingControllerConfigBase):
-    strategy_name: str = "dman_v1"
+class DManConfig(AdvancedControllerConfigBase):
+    strategy_name: str = "dman"
     natr_length: int = 14
 
+    maker_perpetual_only_close: Optional[bool] = None
+    taker_exchange: str
+    taker_pair: str
+    taker_profitability: Optional[Decimal] = None
+    taker_order_type OrderType = OrderType.MARKET
+    taker_perpetual_only_close: Optional[bool] = None
 
-class DManV1(MarketMakingControllerBase):
+
+class DMan(AdvancedControllerBase):
     """
     Directional Market Making Strategy making use of NATR indicator to make spreads dynamic.
     """
 
-    def __init__(self, config: DManV1Config):
+    def __init__(self, config: DManConfig):
         super().__init__(config)
         self.config = config
 

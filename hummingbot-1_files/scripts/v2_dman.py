@@ -4,10 +4,10 @@ from typing import Dict
 from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
-from hummingbot.smart_components.controllers.dman_v1 import DManV1, DManV1Config
+from hummingbot.smart_components.controllers.dman import DMan, DManConfig
 from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
-from hummingbot.smart_components.strategy_frameworks.market_making.market_making_executor_handler import (
-    MarketMakingExecutorHandler,
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
+    AdvancedExecutorHandler,
 )
 from hummingbot.smart_components.utils.distributions import Distributions
 from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
@@ -134,7 +134,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
     executor_handlers = {}
 
     for trading_pair in trading_pairs:
-        config = DManV1Config(
+        config = DManConfig(
             exchange=exchange,
             trading_pair=trading_pair,
             order_levels=order_levels,
@@ -154,7 +154,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)
         for trading_pair, controller in self.controllers.items():
-            self.executor_handlers[trading_pair] = MarketMakingExecutorHandler(strategy=self, controller=controller)
+            self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
         # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 
