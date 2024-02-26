@@ -74,7 +74,7 @@ class PositionExecutor(BasePositionExecutor):
     def control_barriers(self):
         super().control_barriers()
         if not self.close_order.order_id:
-            if self.position_config.taker_profitability
+            if self.position_config.taker_profitability:
                 self.control_taker()
 
 
@@ -294,7 +294,7 @@ class PositionExecutor(BasePositionExecutor):
                 trading_pair=self.taker_pair,
                 is_maker=self.taker_order_type.is_limit_type(),
                 order_type=self.taker_order_type,
-                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY
+                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY,
                 amount=self.amount,
                 price=self.entry_price,
                 leverage=Decimal(self.position_config.leverage),
@@ -304,7 +304,7 @@ class PositionExecutor(BasePositionExecutor):
                 trading_pair=self.taker_pair,
                 is_maker=self.taker_order_type.is_limit_type(),
                 order_type=self.taker_order_type,
-                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY
+                order_side=TradeType.SELL if self.side == TradeType.BUY else TradeType.BUY,
                 amount=self.amount,
                 price=self.entry_price,
             )
