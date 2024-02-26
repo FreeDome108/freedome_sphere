@@ -7,7 +7,7 @@ from hummingbot.smart_components.executors.position_executor.position_executor i
 from hummingbot.smart_components.strategy_frameworks.controller_base import ControllerBase, ControllerConfigBase
 from hummingbot.smart_components.strategy_frameworks.data_types import OrderLevel
 
-from hummingbot.smart_components.strategy_frameworks.advanced.market_making_controller_base import (
+from hummingbot.smart_components.strategy_frameworks.market_making.market_making_controller_base import (
     MarketMakingControllerBase,
     MarketMakingControllerConfigBase,
 )
