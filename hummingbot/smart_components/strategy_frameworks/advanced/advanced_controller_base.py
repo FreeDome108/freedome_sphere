@@ -12,6 +12,8 @@ from hummingbot.smart_components.strategy_frameworks.market_making.market_making
     MarketMakingControllerConfigBase,
 )
 
+from hummingbot.core.data_type.common import OrderType
+
 class AdvancedControllerConfigBase(MarketMakingControllerConfigBase):
     maker_perpetual_only_close: Optional[bool] = None
     taker_exchange: str
