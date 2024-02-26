@@ -145,7 +145,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
             leverage=leverage,
             natr_length=natr_length,
             # Advanced
-            maker_perpetual_only_close = false,
+            maker_perpetual_only_close = False,
             taker_exchange = candles_exchange,
             taker_pair = trading_pair,
             taker_profitability = 0.6
