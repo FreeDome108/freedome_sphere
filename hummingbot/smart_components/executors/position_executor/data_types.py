@@ -1,7 +1,12 @@
+from enum import Enum
+from typing import Optional
+
 from hummingbot.smart_components.executors.position_executor.data_types_base import (
     CloseType as CloseTypeBase,
     PositionConfig as PositionConfigBase,
-    PositionExecutorStatus as PositionExecutorStatus,
+    PositionExecutorStatus,
+    TrailingStop,
+    TrackedOrder
 )
 
 from hummingbot.core.data_type.common import OrderType
