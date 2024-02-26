@@ -200,7 +200,7 @@ class PositionExecutor(BasePositionExecutor):
         super().process_order_filled_event(_, market, event)
 
     def process_order_failed_event(self, _, market, event: MarketOrderFailureEvent):
-        super().process_order_failed_event _, market, event)
+        super().process_order_failed_event (_, market, event)
         if self.taker_order.order_id == event.order_id:
             self.taker_order.order_id = None
 
