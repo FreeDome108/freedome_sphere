@@ -2,6 +2,7 @@ version: "3.9"
 services:
   hummingbot-1:
     container_name: hummingbot-1
+#23.10.0-1
     image: hummingbot/hummingbot:latest
     volumes:
       - "./hummingbot/certs:/home/hummingbot/certs"
@@ -119,6 +120,8 @@ services:
       - "./gateway_files/conf:/home/gateway/conf"
       - "./gateway_files/logs:/home/gateway/logs"
       - "./gateway_files/db:/home/gateway/db"
-      - "./hummingbot_files/certs:/home/gateway/certs"
+#      - "./hummingbot_files/certs:/home/gateway/certs"
+      - "./hummingbot/certs:/home/gateway/certs"
+
     environment:
        - GATEWAY_PASSPHRASE=password4385
