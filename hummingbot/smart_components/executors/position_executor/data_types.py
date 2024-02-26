@@ -1,5 +1,5 @@
 from hummingbot.smart_components.executors.position_executor.base_data_types import (
-    CloseType As OriginalCloseType,
+    CloseType as OriginalCloseType,
     PositionConfig as OriginalPositionConfig,
     PositionExecutorStatus as OriginalPositionExecutorStatus,
 )
