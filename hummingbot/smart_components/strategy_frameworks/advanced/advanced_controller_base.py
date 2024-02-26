@@ -12,7 +12,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.market_making_cont
     MarketMakingControllerConfigBase,
 )
 
-class AdvancedControllerConfigBase(MarketMakingControllerBase):
+class AdvancedControllerConfigBase(MarketMakingControllerConfigBase):
     maker_perpetual_only_close: Optional[bool] = None
     taker_exchange: str
     taker_pair: str
@@ -20,7 +20,7 @@ class AdvancedControllerConfigBase(MarketMakingControllerBase):
     taker_order_type OrderType = OrderType.MARKET
     taker_perpetual_only_close: Optional[bool] = None
 
-class AdvancedControllerBase(ControllerBase):
+class AdvancedControllerBase(MarketMakingControllerBase):
 
     def __init__(self,
                  config: AdvancedControllerConfigBase,

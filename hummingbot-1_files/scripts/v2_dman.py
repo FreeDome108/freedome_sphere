@@ -144,6 +144,11 @@ class DManV1MultiplePairs(ScriptStrategyBase):
             ],
             leverage=leverage,
             natr_length=natr_length,
+            # Advanced
+            maker_perpetual_only_close = false,
+            taker_exchange = candles_exchange,
+            taker_pair = trading_pair,
+            taker_profitability = 0.6
         )
         controller = DManV1(config=config)
         markets = controller.update_strategy_markets_dict(markets)
@@ -168,7 +173,8 @@ class DManV1MultiplePairs(ScriptStrategyBase):
         # Исполняем арбитражную позицию на taker рынке
         # taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
         # self.execute_taker_trade(taker_action, event.amount)
-        
+
+    '''        
     def execute_taker_trade(self, trade_type, amount):
         # Выполнение торговой операции на taker рынке
         # [TODO] fix self.trading_pair1
@@ -178,7 +184,7 @@ class DManV1MultiplePairs(ScriptStrategyBase):
             self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
         else:
             self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)
-
+    '''
 
     @property
     def is_perpetual(self):

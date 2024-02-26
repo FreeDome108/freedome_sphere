@@ -12,17 +12,11 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controlle
     AdvancedControllerConfigBase,
 )
 
+from hummingbot.core.data_type.common import OrderType
 
 class DManConfig(AdvancedControllerConfigBase):
     strategy_name: str = "dman"
     natr_length: int = 14
-
-    maker_perpetual_only_close: Optional[bool] = None
-    taker_exchange: str
-    taker_pair: str
-    taker_profitability: Optional[Decimal] = None
-    taker_order_type OrderType = OrderType.MARKET
-    taker_perpetual_only_close: Optional[bool] = None
 
 
 class DMan(AdvancedControllerBase):
