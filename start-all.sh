@@ -11,8 +11,5 @@ docker start hummingbot-2
 docker start hummingbot-3
 docker start hummingbot-4
 docker start gateway
-
 docker start hummingbot-1
-docker attach hummingbot-1
-docker logs hummingbot-1
 
