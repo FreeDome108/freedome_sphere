@@ -1,0 +1,1 @@
+docker cp hummingbot-1:/home/hummingbot/logs/errors.log hummingbot-1_files/logs/errors.log
