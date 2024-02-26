@@ -286,7 +286,7 @@ class PositionExecutor(PositionExecutorBase):
 
     def check_budget(self):
         super().check_budget()
-        check_taker_budget()
+        self.check_taker_budget()
 
     def check_taker_budget(self):
         if self.taker_is_perpetual:
