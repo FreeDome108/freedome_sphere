@@ -97,6 +97,12 @@ class DMan(AdvancedControllerBase):
             open_order_type=order_level.triple_barrier_conf.open_order_type,
             take_profit_order_type=order_level.triple_barrier_conf.take_profit_order_type,
             trailing_stop=trailing_stop,
-            leverage=self.config.leverage
+            leverage=self.config.leverage,
+
+            # Advanced
+            maker_perpetual_only_close = False,
+            taker_exchange = candles_exchange,
+            taker_pair = trading_pair,
+            taker_profitability = 0.6,
         )
         return position_config
