@@ -40,3 +40,6 @@
 /hummingbot-4_files/certs
 /hummingbot-4_files/data
 /hummingbot-4_files/logs
+
+__pycache__/
+*.pyc
