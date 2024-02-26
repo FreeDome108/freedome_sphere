@@ -101,8 +101,8 @@ class DMan(AdvancedControllerBase):
 
             # Advanced
             maker_perpetual_only_close = False,
-            taker_exchange = self.config.candles_exchange,
-            taker_pair = self.config.trading_pair,
+            taker_exchange = self.config.taker_exchange,
+            taker_pair = self.config.taker_pair,
             taker_profitability = self.config.taker_profitability,
         )
         return position_config
