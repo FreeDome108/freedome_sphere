@@ -1,4 +1,4 @@
-from hummingbot.smart_components.executors.position_executor.base_data_types import (
+from hummingbot.smart_components.executors.position_executor.data_types_base import (
     CloseType as CloseTypeBase,
     PositionConfig as PositionConfigBase,
     PositionExecutorStatus as PositionExecutorStatus,
