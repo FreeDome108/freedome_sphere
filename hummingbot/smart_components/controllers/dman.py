@@ -5,7 +5,7 @@ import pandas_ta as ta  # noqa: F401
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.smart_components.executors.position_executor.data_types import PositionConfig, TrailingStop
-from hummingbot.smart_components.executors.position_executor.advanced_executor import PositionExecutor
+from hummingbot.smart_components.executors.position_executor.position_executor import PositionExecutor
 from hummingbot.smart_components.strategy_frameworks.data_types import OrderLevel
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controller_base import (
     AdvancedControllerBase,
