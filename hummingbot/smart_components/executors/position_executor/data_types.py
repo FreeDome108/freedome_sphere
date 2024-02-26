@@ -1,12 +1,21 @@
 from hummingbot.smart_components.executors.position_executor.base_data_types import (
     CloseType as CloseTypeBase,
     PositionConfig as PositionConfigBase,
-    PositionExecutorStatus as PositionExecutorStatusBase,
+    PositionExecutorStatus as PositionExecutorStatus,
 )
 
 from hummingbot.core.data_type.common import OrderType
 
-class CloseType(CloseTypeBase):
+
+class CloseType(Enum):
+    TIME_LIMIT = 1
+    STOP_LOSS = 2
+    TAKE_PROFIT = 3
+    EXPIRED = 4
+    EARLY_STOP = 5
+    TRAILING_STOP = 6
+    INSUFFICIENT_BALANCE = 7
+    # Additional
     INSUFFICIENT_BALANCE_TAKER = 8
     TAKER = 9
     
@@ -18,6 +27,8 @@ class PositionConfig(PositionConfigBase):
     taker_order_type: OrderType = OrderType.MARKET
     taker_perpetual_only_close: Optional[bool] = None
 
+'''
+# Not use yet
 class PositionExecutorStatus(PositionExecutorStatusBase):
-    ACTIVE_TAKER = 5 #not use yet
-    
+    ACTIVE_TAKER = 5 
+'''
