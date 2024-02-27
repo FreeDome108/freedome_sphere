@@ -204,6 +204,8 @@ class PositionExecutor(PositionExecutorBase):
         if self.taker_order.order_id == event.order_id:
             self.taker_order.order_id = None
 
+    '''
+    # Not implement function because conflict inside smart_component_base <-
     def to_json(self):
         return {
             "timestamp": self.position_config.timestamp,
@@ -233,6 +235,7 @@ class PositionExecutor(PositionExecutorBase):
             "time_limit_order_type": self.time_limit_order_type.name,
             "leverage": self.position_config.leverage,
         }
+    '''
 
     def to_format_status(self, scale=1.0):
         lines = []
