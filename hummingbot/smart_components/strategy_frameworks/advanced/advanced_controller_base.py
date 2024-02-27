@@ -40,7 +40,7 @@ class AdvancedControllerBase(MarketMakingControllerBase):
     def update_strategy_markets_dict(self, markets_dict: dict[str, Set] = {}):
         super().update_strategy_markets_dict(markets_dict)
         if self.config.taker_exchange not in markets_dict:
-            markets_dict[self.config.taker_exchange] = {self.config.taking_pair}
+            markets_dict[self.config.taker_exchange] = {self.config.taker_pair}
         else:
-            markets_dict[self.config.taker_exchange].add(self.config.taking_pair)
+            markets_dict[self.config.taker_exchange].add(self.config.taker_pair)
         return markets_dict
