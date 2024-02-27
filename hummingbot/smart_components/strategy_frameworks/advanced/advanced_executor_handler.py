@@ -22,3 +22,13 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
                  update_interval: float = 1.0, executors_update_interval: float = 1.0):
         super().__init__(strategy, controller, update_interval, executors_update_interval)
         self.controller = controller
+
+    def on_start(self):
+        super().on_start()
+        if self.controller.taker_is_perpetual:
+            self.taker_set_leverage_and_position_mode()
+
+    def taker_set_leverage_and_position_mode(self):
+        connector = self.strategy.connectors[self.controller.config.exchange]
+        connector.set_position_mode(self.controller.config.position_mode)
+        connector.set_leverage(trading_pair=self.controller.config.trading_pair, leverage=self.controller.config.leverage)

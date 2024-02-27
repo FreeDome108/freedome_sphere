@@ -30,3 +30,9 @@ class AdvancedControllerBase(MarketMakingControllerBase):
         super().__init__(config, excluded_parameters)
         self.config = config  # this is only for type hints
 
+    @property
+    def taker_is_perpetual(self):
+        """
+        Checks if the exchange is a perpetual market.
+        """
+        return "perpetual" in self.config.exchange
