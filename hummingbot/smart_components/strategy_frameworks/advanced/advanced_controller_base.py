@@ -36,3 +36,11 @@ class AdvancedControllerBase(MarketMakingControllerBase):
         Checks if the exchange is a perpetual market.
         """
         return "perpetual" in self.config.exchange
+
+    def update_strategy_markets_dict(self, markets_dict: dict[str, Set] = {}):
+        super().update_strategy_markets_dict(markets_dict)
+        if self.config.taker_exchange not in markets_dict:
+            markets_dict[self.config.taker_exchange] = {self.config.taking_paig}
+        else:
+            markets_dict[self.config.taker_exchange].add(self.config.taking_pair)
+        return markets_dict

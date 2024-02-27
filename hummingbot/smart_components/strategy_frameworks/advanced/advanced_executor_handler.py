@@ -29,6 +29,6 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
             self.taker_set_leverage_and_position_mode()
 
     def taker_set_leverage_and_position_mode(self):
-        connector = self.strategy.connectors[self.controller.config.exchange]
+        connector = self.strategy.connectors[self.controller.config.taker_exchange]
         connector.set_position_mode(self.controller.config.position_mode)
-        connector.set_leverage(trading_pair=self.controller.config.trading_pair, leverage=self.controller.config.leverage)
+        connector.set_leverage(trading_pair=self.controller.config.taker_pair, leverage=self.controller.config.leverage)
