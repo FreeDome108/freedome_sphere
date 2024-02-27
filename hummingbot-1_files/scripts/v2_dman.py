@@ -42,6 +42,9 @@ class DManMultiplePairs(ScriptStrategyBase):
     leverage = 1
     n_levels = 3
     
+    profitability_min = 0.5
+    profitability_target = 0.6
+    
     
     #Develop TO Fast order 
     start_spread = 0.0006
