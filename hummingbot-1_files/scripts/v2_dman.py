@@ -35,8 +35,6 @@ class DManMultiplePairs(ScriptStrategyBase):
     '''
     order_amount = Decimal("10")
 
-    taker_profitability_min = 0.5 # При ниже - если лимитник не открыт - перепроставляется
-    taker_profitability_targer = 0.6 # - Минимальный начальный уровень
  
     candles_interval = "1m"
     candles_max_records = 300
@@ -53,6 +51,12 @@ class DManMultiplePairs(ScriptStrategyBase):
     #Production profit
     start_spread = 4
     step_between_orders = 6
+    '''
+    taker_profitability_min = 0.5 # При ниже - если лимитник не открыт - перепроставляется
+    taker_profitability_targer = 0.6 # - Минимальный начальный уровень естанавливается через start spread, может быть разным
+    Внутри spread
+    '''
+
 
     #Test
     order_refresh_time = 10 
@@ -150,10 +154,8 @@ class DManMultiplePairs(ScriptStrategyBase):
             maker_perpetual_only_close = False,
             taker_exchange = candles_exchange,
             taker_pair = trading_pair,
-            taker_profitability = 0.6,
+            taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
-            taker_profitability_targer = 0.6
-            
         )
         controller = DMan(config=config)
         markets = controller.update_strategy_markets_dict(markets)

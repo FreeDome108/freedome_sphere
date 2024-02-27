@@ -103,6 +103,7 @@ class DMan(AdvancedControllerBase):
             maker_perpetual_only_close = False,
             taker_exchange = self.config.taker_exchange,
             taker_pair = self.config.taker_pair,
+            #taker_order_type= self.config.taker_order_type
             taker_profitability = self.config.taker_profitability,
         )
         return position_config
