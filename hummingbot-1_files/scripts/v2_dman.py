@@ -151,7 +151,9 @@ class DManMultiplePairs(ScriptStrategyBase):
             maker_perpetual_only_close = False,
             taker_exchange = candles_exchange,
             taker_pair = trading_pair,
-            taker_profitability = 0.6
+            taker_profitability = 0.6,
+            # profitability_min = 0.5
+            # profitability_target = 0.6
         )
         controller = DMan(config=config)
         markets = controller.update_strategy_markets_dict(markets)
