@@ -62,7 +62,7 @@ class DManMultiplePairs(ScriptStrategyBase):
     # Triple barrier configuration
     #stop_loss = Decimal("0.2")
     # Disabled
-    stop_loss = False
+    stop_loss = 0
     # Without arbitrage
     
     # Test profit, don't left or minus all finanecs because of fees?
