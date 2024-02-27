@@ -227,7 +227,7 @@ class PositionExecutor(PositionExecutorBase):
             "tp": self.position_config.take_profit,
             "tl": self.position_config.time_limit,
             "open_order_type": self.open_order_type.name,
-            "taker_order_type": self.taker_order_type.name,
+            # "taker_order_type": self.taker_order_type.name,
             "take_profit_order_type": self.take_profit_order_type.name,
             "stop_loss_order_type": self.stop_loss_order_type.name,
             "time_limit_order_type": self.time_limit_order_type.name,
