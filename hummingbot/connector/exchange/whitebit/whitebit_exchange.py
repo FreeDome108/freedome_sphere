@@ -165,10 +165,15 @@ class WhitebitExchange(ExchangePyBase):
             "market": await self.exchange_symbol_associated_to_pair(trading_pair=trading_pair),
             "side": trade_type.name.lower(),
             "amount": str(amount),
-            "price": str(price),
+            # Для Market Order не указываем цену
             "clientOrderId": order_id,
         }
+        if order_type != OrderType.MARKET:
+            data["price"] = str(price)
 
+        # Указываем тип ордера в зависимости от order_type
+        data["type"] = "market" if order_type == OrderType.MARKET else "limit"
+        
         response = await self._api_post(
             path_url=CONSTANTS.WHITEBIT_ORDER_CREATION_PATH,
             data=data,
