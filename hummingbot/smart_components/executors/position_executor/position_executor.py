@@ -27,11 +27,31 @@ from hummingbot.smart_components.executors.position_executor.position_executor_b
 #TODO: отменять позицию, если вышли из profitability
 class PositionExecutor(PositionExecutorBase):
 
-
     def __init__(self, strategy: ScriptStrategyBase, position_config: PositionConfig, update_interval: float = 1.0):
+        if not (position_config.take_profit or position_config.stop_loss or position_config.time_limit):
+            error = "At least one of take_profit, stop_loss or time_limit must be set"
+            self.logger().error(error)
+            raise ValueError(error)
+        if position_config.time_limit_order_type != OrderType.MARKET or position_config.stop_loss_order_type != OrderType.MARKET:
+            error = "Only market orders are supported for time_limit and stop_loss"
+            self.logger().error(error)
+            raise ValueError(error)
+        self._position_config: PositionConfig = position_config
+        self.close_type = None
+        self.close_timestamp = None
+        self._executor_status: PositionExecutorStatus = PositionExecutorStatus.NOT_STARTED
+
+        # Order tracking
+        self._open_order: TrackedOrder = TrackedOrder()
+        self._close_order: TrackedOrder = TrackedOrder()
+        self._take_profit_order: TrackedOrder = TrackedOrder()
+        self._trailing_stop_price = Decimal("0")
+        self._trailing_stop_activated = False
+
         # Taker order tracking
         self._taker_order: TrackedOrder = TrackedOrder()
-        super().__init__(strategy=strategy, position_config=position_config, update_interval=update_interval)
+
+        super().__init__(strategy=strategy, connectors=[position_config.exchange,position_config.taker_exchange], update_interval=update_interval)
 
     @property
     def taker_is_perpetual(self):
