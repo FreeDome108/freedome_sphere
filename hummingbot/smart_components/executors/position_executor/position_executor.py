@@ -54,7 +54,7 @@ class PositionExecutor(PositionExecutorBase):
         # Taker order tracking
         self._taker_order: TrackedOrder = TrackedOrder()
 
-        SmartComponentBase.__init__(strategy=strategy, connectors=[position_config.exchange,position_config.taker_exchange], update_interval=update_interval)
+        SmartComponentBase.__init__(self, strategy=strategy, connectors=[position_config.exchange,position_config.taker_exchange], update_interval=update_interval)
 
     @property
     def taker_is_perpetual(self):
