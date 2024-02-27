@@ -24,6 +24,9 @@ from hummingbot.smart_components.executors.position_executor.data_types import (
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 from hummingbot.smart_components.executors.position_executor.position_executor_base import PositionExecutor as PositionExecutorBase
 
+from hummingbot.smart_components.smart_component_base import SmartComponentBase
+
+
 #TODO: отменять позицию, если вышли из profitability
 class PositionExecutor(PositionExecutorBase):
 
@@ -51,7 +54,7 @@ class PositionExecutor(PositionExecutorBase):
         # Taker order tracking
         self._taker_order: TrackedOrder = TrackedOrder()
 
-        super().__init__(strategy=strategy, connectors=[position_config.exchange,position_config.taker_exchange], update_interval=update_interval)
+        SmartComponentBase.__init__(strategy=strategy, connectors=[position_config.exchange,position_config.taker_exchange], update_interval=update_interval)
 
     @property
     def taker_is_perpetual(self):
