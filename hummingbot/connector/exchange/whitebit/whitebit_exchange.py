@@ -171,15 +171,28 @@ class WhitebitExchange(ExchangePyBase):
         if order_type != OrderType.MARKET:
             data["price"] = str(price)
 
+        if order_type == OrderType.LIMIT_MAKER:
+            data["postOnly"] = "true"
+
         # Указываем тип ордера в зависимости от order_type
         data["type"] = "market" if order_type == OrderType.MARKET else "limit"
         
-        response = await self._api_post(
-            path_url=CONSTANTS.WHITEBIT_ORDER_CREATION_PATH,
-            data=data,
-            is_auth_required=True,
-            limit_id=CONSTANTS.WHITEBIT_ORDER_CREATION_PATH,
-        )
+        if order_type != OrderType.MARKET:
+            response = await self._api_post(
+                path_url=CONSTANTS.WHITEBIT_LIMIT_ORDER_CREATION_PATH,
+                data=data,
+                is_auth_required=True,
+                limit_id=CONSTANTS.WHITEBIT_LIMIT_ORDER_CREATION_PATH,
+            )
+        else:
+            response = await self._api_post(
+                path_url=CONSTANTS.WHITEBIT_MARKET_ORDER_CREATION_PATH,
+                data=data,
+                is_auth_required=True,
+                limit_id=CONSTANTS.WHITEBIT_MARKET_ORDER_CREATION_PATH,
+            )
+
+
         return str(response["orderId"]), response.get("timestamp", self.current_timestamp)
 
     def _get_fee(
