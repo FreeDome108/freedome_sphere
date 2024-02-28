@@ -14,9 +14,18 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controlle
 
 from hummingbot.core.data_type.common import OrderType
 
+from enum import Enum
+
+class OrderPlacementStrategy(Enum):
+    TAKER_BSED = 1 # Основано на цене закрытия позиции по маркет цене на рынке taker_echange c таргетом на спред price_multiplier (например 0.006 - означает 0.6%) и шагом спреда spread_multiplier (например 0.001 - означает 0.1%)
+    NATR_BASED = 2
+    BOLLINGER_BANDS_BASED = 3
+
+
 class DManConfig(AdvancedControllerConfigBase):
     strategy_name: str = "dman"
     natr_length: int = 14
+    order_placement_strategy: OrderPlacementStrategy = OrderPlacementStrategy.TAKER_BSED
 
 
 class DMan(AdvancedControllerBase):
@@ -70,7 +79,15 @@ class DMan(AdvancedControllerBase):
         Here you can use technical indicators to determine the parameters of the position config.
         """
         close_price = self.get_close_price(self.close_price_trading_pair)
-        price_multiplier, spread_multiplier = self.get_price_and_spread_multiplier()
+        
+        if self.config.order_placement_strategy == OrderPlacementStrategy.NATR_BASED:
+            price_multiplier, spread_multiplier = self.get_price_and_spread_multiplier()
+        elif self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
+            price_multiplier = self.config.price_multiplier
+            spread_multiplier = self.config.spread_multiplier
+
+
+        
 
         price_adjusted = close_price * (1 + price_multiplier)
         side_multiplier = -1 if order_level.side == TradeType.BUY else 1
