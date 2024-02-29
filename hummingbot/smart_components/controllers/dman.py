@@ -80,7 +80,7 @@ class DMan(AdvancedControllerBase):
             else:
                 prices.append(weighted_price / total_volume)
 
-        self.taker_prices[trade_type] = prices  #-> List[Decimal]
+        self.taker_prices[trade_type] = prices
 
 
     def refresh_order_condition(self, executor: PositionExecutor, order_level: OrderLevel) -> bool:
