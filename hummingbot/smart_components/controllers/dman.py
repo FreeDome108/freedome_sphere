@@ -1,7 +1,8 @@
+from typing import List, Decimal
+from enum import Enum
 import time
-from decimal import Decimal
 
-import pandas_ta as ta  # noqa: F401
+import pandas_ta as ta 
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.smart_components.executors.position_executor.data_types import PositionConfig, TrailingStop
@@ -14,10 +15,9 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controlle
 
 from hummingbot.core.data_type.common import OrderType
 
-from enum import Enum
 
 class OrderPlacementStrategy(Enum):
-    TAKER_BSED = 1 # Основано на цене закрытия позиции по маркет цене на рынке taker_echange c таргетом на спред price_multiplier (например 0.006 - означает 0.6%) и шагом спреда spread_multiplier (например 0.001 - означает 0.1%)
+    TAKER_BASED = 1 # Основано на цене закрытия позиции по маркет цене на рынке taker_echange c таргетом на спред price_multiplier (например 0.006 - означает 0.6%) и шагом спреда spread_multiplier (например 0.001 - означает 0.1%)
     NATR_BASED = 2
     BOLLINGER_BANDS_BASED = 3
 
@@ -25,7 +25,7 @@ class OrderPlacementStrategy(Enum):
 class DManConfig(AdvancedControllerConfigBase):
     strategy_name: str = "dman"
     natr_length: int = 14
-    order_placement_strategy: OrderPlacementStrategy = OrderPlacementStrategy.TAKER_BSED
+    order_placement_strategy: OrderPlacementStrategy = OrderPlacementStrategy.TAKER_BASED
 
 
 class DMan(AdvancedControllerBase):
@@ -36,6 +36,42 @@ class DMan(AdvancedControllerBase):
     def __init__(self, config: DManConfig):
         super().__init__(config)
         self.config = config
+        self.taker_prices = {}
+        self.get_order_book(self.config.taker_exchange, self.config.taker_pair)
+        #Поже изменить на механизм подписки
+        #self.subscribe_to_order_book(self.config.taker_exchange, self.config.taker_pair)
+
+    def get_order_book(self, connector_exchange:str, connector_pair: str):
+        order_book=self.connectors[connector_exchange].get_order_book(connector_pair)
+        self.on_order_book_change(order_book,connector_exchange,connector_pair)
+
+    def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str, volumes: List[Decimal], trade_type: TradeType):        
+        prices = []
+
+        for volume in volumes:
+            total_volume = Decimal("0")
+            weighted_price = Decimal("0")
+            orders = order_book['asks'] if trade_type == TradeType.BUY else order_book['bids']
+
+            for price, volume in orders:
+                available_volume = Decimal(volume)
+                required_volume = volume - total_volume
+
+                if available_volume > required_volume:
+                    available_volume = required_volume
+
+                weighted_price += Decimal(price) * available_volume
+                total_volume += available_volume
+
+                if total_volume >= volume:
+                    break
+
+            if total_volume == 0:
+                prices.append(Decimal("0"))
+            else:
+                prices.append(weighted_price / total_volume)
+
+        self.taker_prices[trade_type]=prices  #-> List[Decimal]
 
     def refresh_order_condition(self, executor: PositionExecutor, order_level: OrderLevel) -> bool:
         """
@@ -73,21 +109,28 @@ class DMan(AdvancedControllerBase):
         candles_df["price_multiplier"] = 0.0
         return candles_df
 
+    def get_taker_price(self,trade_type,level) -> Decimal:
+        return self.taker_prices[trade_type][level]
+        
+
+
     def get_position_config(self, order_level: OrderLevel) -> PositionConfig:
         """
         Creates a PositionConfig object from an OrderLevel object.
         Here you can use technical indicators to determine the parameters of the position config.
         """
-        close_price = self.get_close_price(self.close_price_trading_pair)
         
-        if self.config.order_placement_strategy == OrderPlacementStrategy.NATR_BASED:
-            price_multiplier, spread_multiplier = self.get_price_and_spread_multiplier()
-        elif self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
+        if self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
+            [close_price_sell,close_price_buy] = self.get_taker_price(self.config.taker_pair,order_level.spread_factor)
+            
             price_multiplier = self.config.price_multiplier
             spread_multiplier = self.config.spread_multiplier
 
+        else:
+            close_price = self.get_close_price(self.close_price_trading_pair)
+            price_multiplier, spread_multiplier = self.get_price_and_spread_multiplier()
 
-        
+
 
         price_adjusted = close_price * (1 + price_multiplier)
         side_multiplier = -1 if order_level.side == TradeType.BUY else 1
