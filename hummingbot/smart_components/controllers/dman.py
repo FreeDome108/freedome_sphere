@@ -43,7 +43,7 @@ class DMan(AdvancedControllerBase):
         #self.subscribe_to_order_book(self.config.taker_exchange, self.config.taker_pair)
 
     def get_order_book(self, connector_exchange:str, connector_pair: str):
-        order_book=self.connectors[connector_exchange].get_order_book(connector_pair)
+        order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
         self.on_order_book_change(order_book,connector_exchange,connector_pair)
 
     def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
