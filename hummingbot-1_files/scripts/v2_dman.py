@@ -33,15 +33,19 @@ class DManMultiplePairs(ScriptStrategyBase):
     trading_pair1 = "XMR-USDT"
     candles_exchange = "binance_perpetual"
     '''
-    order_amount = Decimal("10")
+    
 
  
+    # Orders configuration
+    order_amount = Decimal("10")
+    n_levels = 3
+    leverage = 1
+
+    #candles
     candles_interval = "1m"
     candles_max_records = 300
 
-    # Orders configuration
-    leverage = 1
-    n_levels = 3
+
     
     '''   
     #Develop TO Fast order 

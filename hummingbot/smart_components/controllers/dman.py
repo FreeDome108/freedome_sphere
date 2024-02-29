@@ -1,6 +1,7 @@
-from typing import List, Decimal
-from enum import Enum
 import time
+from decimal import Decimal
+from typing import List
+from enum import Enum
 
 import pandas_ta as ta 
 
@@ -45,7 +46,15 @@ class DMan(AdvancedControllerBase):
         order_book=self.connectors[connector_exchange].get_order_book(connector_pair)
         self.on_order_book_change(order_book,connector_exchange,connector_pair)
 
-    def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str, volumes: List[Decimal], trade_type: TradeType):        
+    def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
+        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.SELL);
+        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.BUY);
+
+    def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
+        position_size = self.config.order_amount
+        positions_count = self.config.n_levels
+        volumes = [Decimal(position_size) for _ in range(positions_count)]
+
         prices = []
 
         for volume in volumes:
@@ -53,14 +62,14 @@ class DMan(AdvancedControllerBase):
             weighted_price = Decimal("0")
             orders = order_book['asks'] if trade_type == TradeType.BUY else order_book['bids']
 
-            for price, volume in orders:
-                available_volume = Decimal(volume)
+            for order_price, order_volume in orders:
+                available_volume = Decimal(order_volume)
                 required_volume = volume - total_volume
 
                 if available_volume > required_volume:
                     available_volume = required_volume
 
-                weighted_price += Decimal(price) * available_volume
+                weighted_price += Decimal(order_price) * available_volume
                 total_volume += available_volume
 
                 if total_volume >= volume:
@@ -71,7 +80,8 @@ class DMan(AdvancedControllerBase):
             else:
                 prices.append(weighted_price / total_volume)
 
-        self.taker_prices[trade_type]=prices  #-> List[Decimal]
+        self.taker_prices[trade_type] = prices  #-> List[Decimal]
+
 
     def refresh_order_condition(self, executor: PositionExecutor, order_level: OrderLevel) -> bool:
         """
@@ -111,7 +121,6 @@ class DMan(AdvancedControllerBase):
 
     def get_taker_price(self,trade_type,level) -> Decimal:
         return self.taker_prices[trade_type][level]
-        
 
 
     def get_position_config(self, order_level: OrderLevel) -> PositionConfig:
@@ -121,7 +130,7 @@ class DMan(AdvancedControllerBase):
         """
         
         if self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
-            [close_price_sell,close_price_buy] = self.get_taker_price(self.config.taker_pair,order_level.spread_factor)
+            close_price = self.get_taker_price(order_level.side,order_level.spread_factor)
             
             price_multiplier = self.config.price_multiplier
             spread_multiplier = self.config.spread_multiplier
