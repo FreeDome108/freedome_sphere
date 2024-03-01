@@ -203,9 +203,9 @@ class DManMultiplePairs(ScriptStrategyBase):
 
     #takersController=TakersController(config=taker_markets_config)
     #markets = controller.update_strategy_markets_dict(markets)
-    #Temporary here:
-    for conf in taker_markets_config:
-        markets[conf["exchange"]]={conf["trading_pair"]}
+    #This is wrong, because no add:
+    #for conf in taker_markets_config:
+    #    markets[conf["exchange"]]={conf["trading_pair"]}
     #controllers['TAKERS'] = TakersController(config=taker_markets_config)
 
 
