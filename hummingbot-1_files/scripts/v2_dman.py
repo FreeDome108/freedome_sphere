@@ -236,7 +236,7 @@ class DManMultiplePairs(ScriptStrategyBase):
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)        
 
-        self.executor_handlers["TAKERS"] = TakersExecutorHandler(strategy=self, controller=controller);
+        #self.executor_handlers["TAKERS"] = TakersExecutorHandler(strategy=self);
 
         for trading_pair, controller in self.controllers.items():
             if(trading_pair!="TAKERS"):
@@ -256,17 +256,7 @@ class DManMultiplePairs(ScriptStrategyBase):
         # taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
         # self.execute_taker_trade(taker_action, event.amount)
 
-    '''        
-    def execute_taker_trade(self, trade_type, amount):
-        # Выполнение торговой операции на taker рынке
-        # [TODO] fix self.trading_pair1
-        order_type = OrderType.MARKET
-        if trade_type == TradeType.BUY:
-            self.connectors[self.candles_exchange]
-            self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
-        else:
-            self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)
-    '''
+
 
     @property
     def is_perpetual(self):

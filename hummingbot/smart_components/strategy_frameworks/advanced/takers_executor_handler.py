@@ -95,3 +95,15 @@ class TakersExecutorHandler(ExecutorHandlerBase):
 
     def get_taker_price(self,trade_type,level) -> Decimal:
             return self.taker_prices[trade_type][level]
+
+    '''        
+    def execute_taker_trade(self, trade_type, amount):
+        # Выполнение торговой операции на taker рынке
+        # [TODO] fix self.trading_pair1
+        order_type = OrderType.MARKET
+        if trade_type == TradeType.BUY:
+            self.connectors[self.candles_exchange]
+            self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
+        else:
+            self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)
+    '''
