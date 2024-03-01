@@ -218,7 +218,7 @@ class DManMultiplePairs(ScriptStrategyBase):
                 CandlesConfig(connector=conf["exchange"], trading_pair=conf["trading_pair"],
                               interval=candles_interval, max_records=candles_max_records),
             ],
-            leverage=conf["leverage"],
+            leverage=conf.get("leverage", 1),
             natr_length=natr_length,
             # Advanced
             maker_perpetual_only_close = False,
