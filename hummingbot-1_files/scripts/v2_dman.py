@@ -223,8 +223,8 @@ class DManMultiplePairs(ScriptStrategyBase):
             natr_length=natr_length,
             # Advanced
             maker_perpetual_only_close = False,
-            taker_exchange = conf["exchange"],
-            taker_pair = conf["trading_pair"],
+            taker_exchange = candles_exchange,
+            taker_pair = candles_pair,
             taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
         )
