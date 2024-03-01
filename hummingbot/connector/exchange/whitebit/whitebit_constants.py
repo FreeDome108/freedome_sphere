@@ -17,8 +17,7 @@ WHITEBIT_ORDER_BOOK_PATH = "api/v4/public/orderbook"
 # Private Endpoints
 WHITEBIT_WS_AUTHENTICATION_TOKEN_PATH = "api/v4/profile/websocket_token"
 WHITEBIT_BALANCE_PATH = "api/v4/trade-account/balance"
-WHITEBIT_LIMIT_ORDER_CREATION_PATH = "api/v4/order/new"
-WHITEBIT_MARKET_ORDER_CREATION_PATH = "api/v4/order/market"
+WHITEBIT_ORDER_CREATION_PATH = "api/v4/order/new"
 WHITEBIT_ORDER_CANCEL_PATH = "api/v4/order/cancel"
 WHITEBIT_ACTIVE_ORDER_STATUS_PATH = "api/v4/orders"
 WHITEBIT_EXECUTED_ORDER_STATUS_PATH = "api/v4/trade-account/order/history"
@@ -83,13 +82,7 @@ RATE_LIMITS = [
         linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
     ),
     RateLimit(
-        WHITEBIT_MARKET_ORDER_CREATION_PATH,
-        limit=NO_LIMIT,
-        time_interval=1,
-        linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
-    ),
-    RateLimit(
-        WHITEBIT_LIMIT_ORDER_CREATION_PATH,
+        WHITEBIT_ORDER_CREATION_PATH,
         limit=NO_LIMIT,
         time_interval=1,
         linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
