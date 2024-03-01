@@ -13,7 +13,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
     AdvancedExecutorHandler,
 )
 
-from hummingbot.smart_components.strategy_frameworks.advanced.taker_executor_handler import TakerExecutorHandler
+from hummingbot.smart_components.strategy_frameworks.advanced.takers_executor_handler import TakersExecutorHandler
 
 
 from hummingbot.smart_components.utils.distributions import Distributions
@@ -201,12 +201,12 @@ class DManMultiplePairs(ScriptStrategyBase):
     markets = {}
     executor_handlers = {}
 
-    takersController=TakersController(config=taker_markets_config)
+    #takersController=TakersController(config=taker_markets_config)
     #markets = controller.update_strategy_markets_dict(markets)
     #Temporary here:
     for conf in taker_markets_config:
         markets[conf["exchange"]]={conf["trading_pair"]}
-    controllers['TAKERS'] = TakersController(config=taker_markets_config)
+    #controllers['TAKERS'] = TakersController(config=taker_markets_config)
 
 
     for conf in maker_markets_config:
