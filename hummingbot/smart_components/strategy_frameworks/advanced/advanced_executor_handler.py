@@ -29,7 +29,7 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
         super().on_start()
         if self.controller.taker_is_perpetual:
             self.taker_set_leverage_and_position_mode()
-        self.get_order_book(self.config.taker_exchange, self.config.taker_pair)
+        self.get_order_book(self.controller.config.taker_exchange, self.controller.config.taker_pair)
 
     def taker_set_leverage_and_position_mode(self):
         connector = self.strategy.connectors[self.controller.config.taker_exchange]
@@ -46,8 +46,8 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
         self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.BUY);
 
     def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
-        position_size = self.config.order_amount
-        positions_count = self.config.n_levels
+        position_size = self.controller.config.order_amount
+        positions_count = self.controller.config.n_levels
         volumes = [Decimal(position_size) for _ in range(positions_count)]
 
         prices = []
