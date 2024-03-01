@@ -29,7 +29,7 @@ class TakersExecutorHandler(ExecutorHandlerBase):
             cls._logger = logging.getLogger(__name__)
         return cls._logger
 
-    def __init__(self, strategy: ScriptStrategyBase)
+    def __init__(self, strategy: ScriptStrategyBase):
         #def __init__(self, strategy: ScriptStrategyBase, controller: TakersControllerBase,
         #         update_interval: float = 1.0, executors_update_interval: float = 1.0):
         #super().__init__(strategy, controller, update_interval, executors_update_interval)
