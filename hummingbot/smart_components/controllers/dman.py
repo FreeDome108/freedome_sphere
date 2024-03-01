@@ -14,8 +14,6 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controlle
     AdvancedControllerConfigBase,
 )
 
-from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller import TakerController
-
 
 from hummingbot.core.data_type.common import OrderType
 

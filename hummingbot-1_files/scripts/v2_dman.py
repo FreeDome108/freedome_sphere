@@ -5,6 +5,9 @@ from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
 from hummingbot.smart_components.controllers.dman import DMan, DManConfig
+#from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller import TakerController
+
+
 from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,

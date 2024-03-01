@@ -6,9 +6,9 @@ from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
 from hummingbot.smart_components.executors.position_executor.data_types import CloseType, PositionExecutorStatus
 from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
-from hummingbot.smart_components.strategy_frameworks.advanced.takers_controller_base import (
-    TakersControllerBase,
-)
+#from hummingbot.smart_components.strategy_frameworks.advanced.takers_controller_base import (
+#    TakersControllerBase,
+#)
 
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
