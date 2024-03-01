@@ -215,7 +215,7 @@ class DManMultiplePairs(ScriptStrategyBase):
             trading_pair=conf["trading_pair"],
             order_levels=order_levels,
             candles_config=[
-                CandlesConfig(connector=candles_exchange, trading_pair=trading_pair,
+                CandlesConfig(connector=conf["exchange"], trading_pair=conf["trading_pair"],
                               interval=candles_interval, max_records=candles_max_records),
             ],
             leverage=conf["leverage"],
