@@ -27,10 +27,10 @@ from hummingbot.core.event.event_listener import EventListener
 class DManMultiplePairs(ScriptStrategyBase):
     # Dev config
     maker_markets_config = [
-        {"exchange": "whitebit",
-         "trading_pair": "XRP-USDT"},
         {"exchange": "okx",
          "trading_pair": "XRP-USDT"},
+        #{"exchange": "whitebit",
+        # "trading_pair": "XRP-USDT"},
     ]
 
     taker_markets_config = [
