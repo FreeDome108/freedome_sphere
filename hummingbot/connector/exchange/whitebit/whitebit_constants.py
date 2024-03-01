@@ -83,7 +83,13 @@ RATE_LIMITS = [
         linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
     ),
     RateLimit(
-        WHITEBIT_ORDER_CREATION_PATH,
+        WHITEBIT_MARKET_ORDER_CREATION_PATH,
+        limit=NO_LIMIT,
+        time_interval=1,
+        linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
+    ),
+    RateLimit(
+        WHITEBIT_LIMIT_ORDER_CREATION_PATH,
         limit=NO_LIMIT,
         time_interval=1,
         linked_limits=[LinkedLimitWeightPair(WHITEBIT_GENERAL_RATE_LIMIT)],
