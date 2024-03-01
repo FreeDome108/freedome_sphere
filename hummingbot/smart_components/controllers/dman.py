@@ -78,14 +78,14 @@ class DMan(AdvancedControllerBase):
 
 
 
-    def get_position_config(self, order_level: OrderLevel) -> PositionConfig:
+    def get_position_config(self, taker_prices, order_level: OrderLevel) -> PositionConfig:
         """
         Creates a PositionConfig object from an OrderLevel object.
         Here you can use technical indicators to determine the parameters of the position config.
         """
         
         if self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
-            close_price = self.takers_executor.get_taker_price(order_level.side,order_level.spread_factor)
+            close_price = taker_prices[order_level.side][order_level.spread_factor]
             
             price_multiplier = self.config.price_multiplier
             spread_multiplier = self.config.spread_multiplier
