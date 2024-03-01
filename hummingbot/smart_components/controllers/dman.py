@@ -19,6 +19,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller i
 
 from hummingbot.core.data_type.common import OrderType
 
+#Если exchange и пара у taker и maker совпадает, то они обрабатываются по внутреннему правилу take_profit
 
 class OrderPlacementStrategy(Enum):
     TAKER_BASED = 1 # Основано на цене закрытия позиции по маркет цене на рынке taker_echange c таргетом на спред price_multiplier (например 0.006 - означает 0.6%) и шагом спреда spread_multiplier (например 0.001 - означает 0.1%)
@@ -40,7 +41,6 @@ class DMan(AdvancedControllerBase):
     def __init__(self, config: DManConfig):
         super().__init__(config)
         self.config = config
-        self.taker_controller=TakerController(self.strategy, position_config, update_interval=self.executors_update_interval);
 
     def refresh_order_condition(self, executor: PositionExecutor, order_level: OrderLevel) -> bool:
         """
@@ -87,7 +87,7 @@ class DMan(AdvancedControllerBase):
         """
         
         if self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
-            close_price = self.taker_controller.get_taker_price(order_level.side,order_level.spread_factor)
+            close_price = self.takers_executor.get_taker_price(order_level.side,order_level.spread_factor)
             
             price_multiplier = self.config.price_multiplier
             spread_multiplier = self.config.spread_multiplier

@@ -9,6 +9,10 @@ from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorH
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,
 )
+
+from hummingbot.smart_components.strategy_frameworks.advanced.taker_executor_handler import TakerExecutorHandler
+
+
 from hummingbot.smart_components.utils.distributions import Distributions
 from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
@@ -18,20 +22,69 @@ from hummingbot.core.event.event_listener import EventListener
 
 
 class DManMultiplePairs(ScriptStrategyBase):
+    # Dev config
+    maker_markets_config = [
+        {"exchange": "whitebit",
+         "trading_pair": "XRP-USDT"},
+        {"exchange": "okx",
+         "trading_pair": "XRP-USDT"},
+    ]
+
+    taker_markets_config = [
+        {"exchange": "binance_perpetual",
+         "trading_pair": "XRP-USDT",
+         "leverage": 1},
+    ]
+
+    # Later add dydx_perp to develop multitaker
+
+
+    '''
+    # Prod config
+    maker_markets_config = [
+        {"exchange": "whitebit",
+         "trading_pair": "XRP-USDT"},
+        {"exchange": "okx",
+         "trading_pair": "XRP-USDT"},
+        {"exchange": "binance_perpetual",
+         "trading_pair": "XRP-USDT",
+         "leverage": 1},
+        {"exchange": "dydx_perpetual",
+         "trading_pair": "XRP-USDT",
+         "leverage": 1},
+    ]
+
+    taker_markets_config = [
+        {"exchange": "whitebit",
+         "trading_pair": "XRP-USDT"},
+        {"exchange": "okx",
+         "trading_pair": "XRP-USDT"},
+        {"exchange": "binance_perpetual",
+         "trading_pair": "XRP-USDT",
+         "leverage": 1},
+        {"exchange": "dydx_perpetual",
+         "trading_pair": "XRP-USDT",
+         "leverage": 1},
+    ]
+    '''
+
+
+
     # Account configuration
     
+    '''
+    # Depreteated
     # Develop config
     exchange = "okx"
     trading_pairs = ["XRP-USDT"]
     trading_pair1 = "XRP-USDT"
-    candles_exchange = "binance_perpetual"
+    
 
-    # Production config
-    '''
+    # Production confiп
     exchange = "whitebit"
     trading_pairs = ["XMR-USDT"]
     trading_pair1 = "XMR-USDT"
-    candles_exchange = "binance_perpetual"
+    
     '''
     
 
@@ -41,7 +94,9 @@ class DManMultiplePairs(ScriptStrategyBase):
     n_levels = 3
     leverage = 1
 
-    #candles
+    #temporary for compatibility, to be depreceated or additional to taker....
+    #candles 
+    candles_exchange = "binance_perpetual"
     candles_interval = "1m"
     candles_max_records = 300
 
@@ -143,34 +198,47 @@ class DManMultiplePairs(ScriptStrategyBase):
     markets = {}
     executor_handlers = {}
 
-    for trading_pair in trading_pairs:
+    takersController=TakersController(config=taker_markets_config)
+    #markets = controller.update_strategy_markets_dict(markets)
+    #Temporary here:
+    for conf in taker_markets_config:
+        markets[conf["exchange"]]={conf["trading_pair"]}
+    controllers['TAKERS'] = TakersController(config=taker_markets_config)
+
+
+    for conf in maker_markets_config:
         config = DManConfig(
-            exchange=exchange,
-            trading_pair=trading_pair,
+            exchange=conf["exchange"],
+            trading_pair=conf["trading_pair"],
             order_levels=order_levels,
             candles_config=[
                 CandlesConfig(connector=candles_exchange, trading_pair=trading_pair,
                               interval=candles_interval, max_records=candles_max_records),
             ],
-            leverage=leverage,
+            leverage=conf["leverage"],
             natr_length=natr_length,
             # Advanced
             maker_perpetual_only_close = False,
-            taker_exchange = candles_exchange,
-            taker_pair = trading_pair,
+            taker_exchange = candles_exchange, #!!!!
+            taker_pair = trading_pair, #!!!!!
             taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
         )
         controller = DMan(config=config)
         markets = controller.update_strategy_markets_dict(markets)
-        markets[candles_exchange]={trading_pair}
+        controllers[conf["trading_pair"]] = controller
 
-        controllers[trading_pair] = controller
+
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
-        super().__init__(connectors)
+        super().__init__(connectors)        
+
+        self.executor_handlers["TAKERS"] = TakersExecutorHandler(strategy=self, controller=controller);
+
         for trading_pair, controller in self.controllers.items():
-            self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
+            if(trading_pair!="TAKERS"):
+                controller.takers_executor=self.executor_handlers["TAKERS"]
+                self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
         # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 

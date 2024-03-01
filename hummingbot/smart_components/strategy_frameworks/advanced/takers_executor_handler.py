@@ -1,3 +1,17 @@
+import logging
+from decimal import Decimal
+from typing import Dict, Optional
+
+from hummingbot.core.data_type.common import TradeType
+from hummingbot.logger import HummingbotLogger
+from hummingbot.smart_components.executors.position_executor.data_types import CloseType, PositionExecutorStatus
+from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
+from hummingbot.smart_components.strategy_frameworks.advanced.takers_controller_base import (
+    TakersControllerBase,
+)
+
+from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
+
 # Сюда вынесена вся логика по работе с рынком taker_exchange.
 # Обращения идут из:
 # 1. dman.py, для него выдается информация по цене выставления позиций
@@ -6,10 +20,37 @@
 # В текущей имплементации takers рынки состоят тоже из одного рынка.
 
 
+class TakersExecutorHandler(ExecutorHandlerBase):
+    _logger = None
+
+    @classmethod
+    def logger(cls) -> HummingbotLogger:
+        if cls._logger is None:
+            cls._logger = logging.getLogger(__name__)
+        return cls._logger
+
+    def __init__(self, strategy: ScriptStrategyBase)
+        #def __init__(self, strategy: ScriptStrategyBase, controller: TakersControllerBase,
+        #         update_interval: float = 1.0, executors_update_interval: float = 1.0):
+        #super().__init__(strategy, controller, update_interval, executors_update_interval)
+        #self.controller = controller
+        #self.global_trailing_stop_config = self.controller.config.global_trailing_stop_config
+        #self._trailing_stop_pnl_by_side: Dict[TradeType, Optional[Decimal]] = {TradeType.BUY: None, TradeType.SELL: None}
         self.taker_prices = {}
         self.get_order_book(self.config.taker_exchange, self.config.taker_pair)
         #Поже изменить на механизм подписки
         #self.subscribe_to_order_book(self.config.taker_exchange, self.config.taker_pair)
+
+    def on_stop(self):
+        #if self.controller.is_perpetual:
+        #    self.close_open_positions(connector_name=self.controller.config.exchange, trading_pair=self.controller.config.trading_pair)
+        super().on_stop()
+
+    def on_start(self):
+        super().on_start()
+        #if self.controller.is_perpetual:
+        #    self.set_leverage_and_position_mode()
+
 
     def get_order_book(self, connector_exchange:str, connector_pair: str):
         order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
@@ -52,5 +93,5 @@
         self.taker_prices[trade_type] = prices
 
 
-        def get_taker_price(self,trade_type,level) -> Decimal:
+    def get_taker_price(self,trade_type,level) -> Decimal:
             return self.taker_prices[trade_type][level]
