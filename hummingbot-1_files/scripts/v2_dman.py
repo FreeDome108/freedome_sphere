@@ -100,7 +100,7 @@ class DManMultiplePairs(ScriptStrategyBase):
     #temporary for compatibility, to be depreceated or additional to taker....
     #candles 
     candles_exchange = "binance_perpetual"
-    candles_pairs = "XRP-USDT"
+    candles_pair = "XRP-USDT"
     candles_interval = "1m"
     candles_max_records = 300
 
