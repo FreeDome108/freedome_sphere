@@ -241,7 +241,7 @@ class DManMultiplePairs(ScriptStrategyBase):
 
         for trading_pair, controller in self.controllers.items():
             if(trading_pair!="TAKERS"):
-                controller.takers_executor=self.executor_handlers["TAKERS"]
+                #controller.takers_executor=self.executor_handlers["TAKERS"]
                 self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
         # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
