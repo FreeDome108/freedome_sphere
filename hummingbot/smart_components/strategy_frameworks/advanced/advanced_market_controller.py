@@ -1,6 +1,7 @@
 import logging
 from decimal import Decimal
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Tuple, Union
+
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
