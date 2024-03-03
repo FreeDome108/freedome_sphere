@@ -31,7 +31,7 @@ class DManConfig(AdvancedControllerConfigBase):
     order_placement_strategy: OrderPlacementStrategy = OrderPlacementStrategy.TAKER_BASED
 
 
-class DMan(AdvancedControllerBase):
+class DManController(AdvancedControllerBase):
     """
     Directional Market Making Strategy making use of NATR indicator to make spreads dynamic.
     """

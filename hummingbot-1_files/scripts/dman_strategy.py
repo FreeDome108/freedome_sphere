@@ -4,7 +4,7 @@ from typing import Dict
 from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
-from hummingbot.smart_components.controllers.dman import DMan, DManConfig
+from hummingbot.smart_components.controllers.dman_controller import DManController, DManConfig
 #from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller import TakerController
 
 
@@ -24,167 +24,15 @@ from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
 from hummingbot.core.event.event_listener import EventListener
 
 
+
+
 class DManMultiplePairs(ScriptStrategyBase):
     # Dev config
-    maker_markets_config = [
-        {"exchange": "okx",
-         "trading_pair": "XRP-USDT"},
-        #{"exchange": "whitebit",
-        # "trading_pair": "XRP-USDT"},
-    ]
-
-    taker_markets_config = [
-        {"exchange": "binance_perpetual",
-         "trading_pair": "XRP-USDT",
-         "leverage": 1},
-    ]
-
-    # Later add dydx_perp to develop multitaker
-
-
-    '''
-    # Prod config
-    maker_markets_config = [
-        {"exchange": "whitebit",
-         "trading_pair": "XRP-USDT"},
-        {"exchange": "okx",
-         "trading_pair": "XRP-USDT"},
-        {"exchange": "binance_perpetual",
-         "trading_pair": "XRP-USDT",
-         "leverage": 1},
-        {"exchange": "dydx_perpetual",
-         "trading_pair": "XRP-USDT",
-         "leverage": 1},
-    ]
-
-    taker_markets_config = [
-        {"exchange": "whitebit",
-         "trading_pair": "XRP-USDT"},
-        {"exchange": "okx",
-         "trading_pair": "XRP-USDT"},
-        {"exchange": "binance_perpetual",
-         "trading_pair": "XRP-USDT",
-         "leverage": 1},
-        {"exchange": "dydx_perpetual",
-         "trading_pair": "XRP-USDT",
-         "leverage": 1},
-    ]
-    '''
-
-
-
-    # Account configuration
+    # Стратегия торгует над одним и тем же инструментом, названия торговых пар у разных exchanges нужны в случае отличий внутренних наименований
     
-    '''
-    # Depreteated
-    # Develop config
-    exchange = "okx"
-    trading_pairs = ["XRP-USDT"]
-    trading_pair1 = "XRP-USDT"
-    
+    # config_type="prod"
+    config_type="test_perp"
 
-    # Production confiп
-    exchange = "whitebit"
-    trading_pairs = ["XMR-USDT"]
-    trading_pair1 = "XMR-USDT"
-    
-    '''
-    
-
- 
-    # Orders configuration
-    order_amount = Decimal("10")
-    n_levels = 3
-    leverage = 1
-
-    #temporary for compatibility, to be depreceated or additional to taker....
-    #candles 
-    candles_exchange = "binance_perpetual"
-    candles_pair = "XRP-USDT"
-    candles_interval = "1m"
-    candles_max_records = 300
-
-
-    
-    '''   
-    #Develop TO Fast order 
-    start_spread = 0.0006
-    step_between_orders = 0.009
-    '''
-    #Production profit
-    start_spread = 4
-    step_between_orders = 6
-    '''
-    taker_profitability_min = 0.5 # При ниже - если лимитник не открыт - перепроставляется
-    taker_profitability_targer = 0.6 # - Минимальный начальный уровень естанавливается через start spread, может быть разным
-    Внутри spread
-    '''
-
-
-    #Test
-    order_refresh_time = 10 
-    #Original
-    #order_refresh_time = 60 * 15  # 15 minutes
-    
-    cooldown_time = 5
-
-    # Triple barrier configuration
-    #stop_loss = Decimal("0.2")
-    # Disabled
-    stop_loss = 0
-    # Without arbitrage
-    
-    # Test profit, don't left or minus all finanecs because of fees?
-    # take_profit = Decimal("0.003")
-    # Standart
-    take_profit = Decimal("0.06")
-    time_limit = 60 * 60 * 12
-    trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
-    trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
-
-    '''
-    #Original    
-    stop_loss = Decimal("0.2")
-    take_profit = Decimal("0.06")
-    time_limit = 60 * 60 * 12
-    trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
-    trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
-    '''
-
-    # Advanced configurations
-    natr_length = 100
-    
-    '''
-    # Production config
-    # Account configuration
-    exchange = "whitebit"
-    trading_pairs = ["XMR-USDT"]
-    trading_pair1 = "XMR-USDT"
-    leverage = 1
-
-    # Candles configuration
-    candles_exchange = "binance_perpetual"
-    candles_interval = "1m"
-    candles_max_records = 300
-
-    # Orders configuration
-    order_amount = Decimal("10")
-    n_levels = 3
-    start_spread = 0.0006
-    step_between_orders = 0.009
-    order_refresh_time = 60 # 1min # 60 * 15  # 15 minutes
-    cooldown_time = 5
-
-    # Triple barrier configuration
-    stop_loss = Decimal("0.2")
-    take_profit = Decimal("0.06")
-    time_limit = 60 * 60 * 12
-    trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
-    trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
-
-    # Advanced configurations
-    natr_length = 100
-    '''    
 
     # Applying the configuration
     order_level_builder = OrderLevelBuilder(n_levels=n_levels)
