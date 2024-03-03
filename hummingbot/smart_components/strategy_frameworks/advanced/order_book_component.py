@@ -59,6 +59,8 @@ class AccountEvent(Enum):
 
 class OrderBookComponent:
     def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 0.5):
+        self.order_book_changed=False
+        
         self._strategy: ScriptStrategyBase = strategy
         self.update_interval = update_interval
         self.connectors = {connector_name: connector for connector_name, connector in strategy.connectors.items() if
