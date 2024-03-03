@@ -35,9 +35,9 @@ class AdvancedMarketController(OrderBookComponent):
         super().__init__(strategy=strategy, connectors=connectors, update_interval=update_interval)
 
         self.taker_prices = {}
-        self.get_order_book(self.config.taker_exchange, self.config.taker_pair)
+        self.get_order_book(self.strategy.config.taker_exchange, self.strategy.config.taker_pair)
         #Поже изменить на механизм подписки
-        #self.subscribe_to_order_book(self.config.taker_exchange, self.config.taker_pair)
+        #self.subscribe_to_order_book(self.strategy.config.taker_exchange, self.strategy.config.taker_pair)
 
     def on_stop(self):
         #if self.controller.is_perpetual:
@@ -62,8 +62,8 @@ class AdvancedMarketController(OrderBookComponent):
         self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.BUY);
 
     def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
-        position_size = self.config.order_amount
-        positions_count = self.config.n_levels
+        position_size = self.strategy.config.order_amount
+        positions_count = self.strategy.config.n_levels
         volumes = [Decimal(position_size) for _ in range(positions_count)]
 
         prices = []
