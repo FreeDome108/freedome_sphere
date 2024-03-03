@@ -8,7 +8,6 @@ from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.core.event.event_forwarder import SourceInfoEventForwarder
 from hummingbot.core.event.events import OrderBookEvent, OrderBookTradeEvent
 
-)
 from hummingbot.core.utils.async_utils import safe_ensure_future
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
