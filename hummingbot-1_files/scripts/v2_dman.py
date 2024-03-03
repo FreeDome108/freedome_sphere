@@ -9,6 +9,10 @@ from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorH
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,
 )
+
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_market_controller import AdvancedMarketController
+
+
 from hummingbot.smart_components.utils.distributions import Distributions
 from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
@@ -163,6 +167,8 @@ class DManMultiplePairs(ScriptStrategyBase):
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)
+        
+        self.markets_controller = AdvancedMarketController(strategy=self,connectors);
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
