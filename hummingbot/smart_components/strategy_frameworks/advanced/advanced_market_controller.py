@@ -33,7 +33,7 @@ class AdvancedMarketController(OrderBookComponent):
 
     def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 1.0):
         super().__init__(strategy=strategy, connectors=connectors, update_interval=update_interval)
-
+        self.strategy=strategy
         self.taker_prices = {}
         self.get_order_book(self.strategy.config.taker_exchange, self.strategy.config.taker_pair)
         #Поже изменить на механизм подписки
