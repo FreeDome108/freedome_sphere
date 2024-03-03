@@ -14,6 +14,10 @@ from pydantic.types import Decimal
 from hummingbot.core.data_type.common import OrderType, TradeType
 from hummingbot.core.data_type.in_flight_order import InFlightOrder
 
+class PositionType(Enum):
+    MAKER = 1
+    TAKER = 2
+
 
 class CloseType(Enum):
     TIME_LIMIT = 1
@@ -26,6 +30,7 @@ class CloseType(Enum):
     # Additional
     INSUFFICIENT_BALANCE_TAKER = 8
     TAKER = 9
+    TAKE_OPPOSITE = 10
     
 class PositionConfig(PositionConfigBase):
     maker_perpetual_only_close: Optional[bool] = None

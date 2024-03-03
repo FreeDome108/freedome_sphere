@@ -9,6 +9,7 @@ from hummingbot.smart_components.strategy_frameworks.executor_handler_base impor
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controller_base import (
     AdvancedControllerBase,
 )
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_market_controller import AdvancedMarketController
 
 from hummingbot.smart_components.strategy_frameworks.market_making.market_making_executor_handler import (
     MarketMakingExecutorHandler,
@@ -23,6 +24,8 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
         super().__init__(strategy, controller, update_interval, executors_update_interval)
         self.controller = controller
         self.taker_prices = {}
+
+        # self.strategy.markets_controller -> вот здесь можно получить состояние маркета
         
 
     def on_start(self):

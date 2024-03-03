@@ -5,6 +5,7 @@ from hummingbot.connector.connector_base import ConnectorBase
 from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
 from hummingbot.smart_components.controllers.dman_controller import DManController, DManConfig
+from hummingbot.scripts.dman_strategy import DManStrategyConfig
 #from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller import TakerController
 
 
@@ -13,7 +14,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
     AdvancedExecutorHandler,
 )
 
-from hummingbot.smart_components.strategy_frameworks.advanced.takers_executor_handler import TakersExecutorHandler
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_market_controller import AdvancedMarketController
 
 
 from hummingbot.smart_components.utils.distributions import Distributions
@@ -26,46 +27,52 @@ from hummingbot.core.event.event_listener import EventListener
 
 
 
-class DManMultiplePairs(ScriptStrategyBase):
-    # Dev config
-    # Стратегия торгует над одним и тем же инструментом, названия торговых пар у разных exchanges нужны в случае отличий внутренних наименований
-    
+
+# Стратегия торгует над одним и тем же инструментом, названия торговых пар у разных exchanges нужны в случае отличий внутренних наименований
+class DManStrategy(ScriptStrategyBase):
     # config_type="prod"
+    
+    # Dev config
     config_type="test_perp"
 
+    def __init__(self, connectors: Dict[str, ConnectorBase],config: DManV1ScriptConfig):
+        super().__init__(connectors)        
+        self.config = config[config_type]
 
-    # Applying the configuration
-    order_level_builder = OrderLevelBuilder(n_levels=n_levels)
-    order_levels = order_level_builder.build_order_levels(
-        amounts=order_amount,
-        spreads=Distributions.arithmetic(n_levels=n_levels, start=start_spread, step=step_between_orders),
-        triple_barrier_confs=TripleBarrierConf(
-            stop_loss=stop_loss, take_profit=take_profit, time_limit=time_limit,
-            trailing_stop_activation_price_delta=trailing_stop_activation_price_delta,
-            trailing_stop_trailing_delta=trailing_stop_trailing_delta),
-        order_refresh_time=order_refresh_time,
-        cooldown_time=cooldown_time,
-    )
-    controllers = {}
-    markets = {}
-    executor_handlers = {}
+        # For maker
+        order_level_builder = OrderLevelBuilder(n_levels=n_levels)
+        order_levels = order_level_builder.build_order_levels(
+            amounts=order_amount,
+            spreads=Distributions.arithmetic(n_levels=n_levels, start=start_spread, step=step_between_orders),
+            triple_barrier_confs=TripleBarrierConf(
+                stop_loss=stop_loss, take_profit=take_profit, time_limit=time_limit,
+                trailing_stop_activation_price_delta=trailing_stop_activation_price_delta,
+                trailing_stop_trailing_delta=trailing_stop_trailing_delta),
+            order_refresh_time=order_refresh_time,
+            cooldown_time=cooldown_time,
+        )
 
-    #takersController=TakersController(config=taker_markets_config)
-    #markets = controller.update_strategy_markets_dict(markets)
-    #This is wrong, because no add:
-    #for conf in taker_markets_config:
-    #    markets[conf["exchange"]]={conf["trading_pair"]}
-    #controllers['TAKERS'] = TakersController(config=taker_markets_config)
+        # For taker are dynamical
+        self.controllers = {}
+        self.markets = {}
+        self.executor_handlers = {}
+
+        #takersController=TakersController(config=taker_markets_config)
+        #markets = controller.update_strategy_markets_dict(markets)
+        #This is wrong, because no add:
+        #for conf in taker_markets_config:
+        #    markets[conf["exchange"]]={conf["trading_pair"]}
+        #controllers['TAKERS'] = TakersController(config=taker_markets_config)
 
 
-    for conf in maker_markets_config:
+        
         config = DManConfig(
-            exchange=conf["exchange"],
+            config=self.config,
             trading_pair=conf["trading_pair"],
             order_levels=order_levels,
             candles_config=[
                 CandlesConfig(connector=candles_exchange, trading_pair=candles_pair,
-                              interval=candles_interval, max_records=candles_max_records),
+                            interval=candles_interval, max_records=candles_max_records),
             ],
             leverage=conf.get("leverage", 1),
             natr_length=natr_length,
@@ -76,21 +83,17 @@ class DManMultiplePairs(ScriptStrategyBase):
             taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
         )
-        controller = DMan(config=config)
+        controller = DManController(config=config)
+
+        
         markets = controller.update_strategy_markets_dict(markets)
         controllers[conf["trading_pair"]] = controller
 
-
-
-    def __init__(self, connectors: Dict[str, ConnectorBase]):
-        super().__init__(connectors)        
-
-        #self.executor_handlers["TAKERS"] = TakersExecutorHandler(strategy=self);
+    
+        self.markets_controller = AdvancedMarketController(strategy=self,connectors);
 
         for trading_pair, controller in self.controllers.items():
-            if(trading_pair!="TAKERS"):
-                #controller.takers_executor=self.executor_handlers["TAKERS"]
-                self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
+            self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
         # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 

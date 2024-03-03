@@ -17,7 +17,11 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controlle
 
 from hummingbot.core.data_type.common import OrderType
 
-#Если exchange и пара у taker и maker совпадает, то они обрабатываются по внутреннему правилу take_profit
+# Отличие от оригинального контроллера -
+# внутри обрабатываются несколько рынков (не один)
+# внутри обрабатываются позиции maker(как в оригинале) + taker (добавлено)
+
+# Если exchange и пара у taker и maker совпадает, то они обрабатываются по внутреннему правилу take_profit
 
 class OrderPlacementStrategy(Enum):
     TAKER_BASED = 1 # Основано на цене закрытия позиции по маркет цене на рынке taker_echange c таргетом на спред price_multiplier (например 0.006 - означает 0.6%) и шагом спреда spread_multiplier (например 0.001 - означает 0.1%)

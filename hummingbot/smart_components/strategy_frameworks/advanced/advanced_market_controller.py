@@ -4,8 +4,10 @@ from typing import Dict, Optional
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
-from hummingbot.smart_components.executors.position_executor.data_types import CloseType, PositionExecutorStatus
-from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
+
+#from hummingbot.smart_components.executors.position_executor.data_types import CloseType
+from hummingbot.smart_components.smart_component_base import SmartComponentBase
+#from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
 #from hummingbot.smart_components.strategy_frameworks.advanced.takers_controller_base import (
 #    TakersControllerBase,
 #)
@@ -20,7 +22,8 @@ from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 # В текущей имплементации takers рынки состоят тоже из одного рынка.
 
 
-class TakersExecutorHandler(ExecutorHandlerBase):
+class AdvancedMarketController(SmartComponentBase):
+    #(ExecutorHandlerBase):
     _logger = None
 
     @classmethod
@@ -29,13 +32,9 @@ class TakersExecutorHandler(ExecutorHandlerBase):
             cls._logger = logging.getLogger(__name__)
         return cls._logger
 
-    def __init__(self, strategy: ScriptStrategyBase):
-        #def __init__(self, strategy: ScriptStrategyBase, controller: TakersControllerBase,
-        #         update_interval: float = 1.0, executors_update_interval: float = 1.0):
-        #super().__init__(strategy, controller, update_interval, executors_update_interval)
-        #self.controller = controller
-        #self.global_trailing_stop_config = self.controller.config.global_trailing_stop_config
-        #self._trailing_stop_pnl_by_side: Dict[TradeType, Optional[Decimal]] = {TradeType.BUY: None, TradeType.SELL: None}
+    def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 1.0):
+        super().__init__(strategy=strategy, connectors=connectors, update_interval=update_interval)
+
         self.taker_prices = {}
         self.get_order_book(self.config.taker_exchange, self.config.taker_pair)
         #Поже изменить на механизм подписки
@@ -55,6 +54,16 @@ class TakersExecutorHandler(ExecutorHandlerBase):
     def get_order_book(self, connector_exchange:str, connector_pair: str):
         order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
         self.on_order_book_change(order_book,connector_exchange,connector_pair)
+
+
+    # такого события нет, но было бы разумно добавить его по подобию
+    '''
+    def process_order_book_event(self,
+                                      event_tag: int,
+                                      market: ConnectorBase,
+                                      event: Union[BuyOrderCompletedEvent, SellOrderCompletedEvent]):
+        pass
+    '''
 
     def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
         self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.SELL);
