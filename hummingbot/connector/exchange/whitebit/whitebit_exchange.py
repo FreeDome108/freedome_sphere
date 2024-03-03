@@ -112,7 +112,7 @@ class WhitebitExchange(ExchangePyBase):
         return last_prices
 
     def supported_order_types(self):
-        return [OrderType.LIMIT, OrderType.LIMIT_MAKER]
+        return [OrderType.LIMIT, OrderType.LIMIT_MAKER, OrderType.MARKET]
 
     def _is_request_exception_related_to_time_synchronizer(self, request_exception: Exception):
         # Not required for this connectors
@@ -165,16 +165,34 @@ class WhitebitExchange(ExchangePyBase):
             "market": await self.exchange_symbol_associated_to_pair(trading_pair=trading_pair),
             "side": trade_type.name.lower(),
             "amount": str(amount),
-            "price": str(price),
+            # Для Market Order не указываем цену
             "clientOrderId": order_id,
         }
+        if order_type != OrderType.MARKET:
+            data["price"] = str(price)
 
-        response = await self._api_post(
-            path_url=CONSTANTS.WHITEBIT_ORDER_CREATION_PATH,
-            data=data,
-            is_auth_required=True,
-            limit_id=CONSTANTS.WHITEBIT_ORDER_CREATION_PATH,
-        )
+        if order_type == OrderType.LIMIT_MAKER:
+            data["postOnly"] = "true"
+
+        # Указываем тип ордера в зависимости от order_type
+        data["type"] = "market" if order_type == OrderType.MARKET else "limit"
+        
+        if order_type != OrderType.MARKET:
+            response = await self._api_post(
+                path_url=CONSTANTS.WHITEBIT_LIMIT_ORDER_CREATION_PATH,
+                data=data,
+                is_auth_required=True,
+                limit_id=CONSTANTS.WHITEBIT_LIMIT_ORDER_CREATION_PATH,
+            )
+        else:
+            response = await self._api_post(
+                path_url=CONSTANTS.WHITEBIT_MARKET_ORDER_CREATION_PATH,
+                data=data,
+                is_auth_required=True,
+                limit_id=CONSTANTS.WHITEBIT_MARKET_ORDER_CREATION_PATH,
+            )
+
+
         return str(response["orderId"]), response.get("timestamp", self.current_timestamp)
 
     def _get_fee(
