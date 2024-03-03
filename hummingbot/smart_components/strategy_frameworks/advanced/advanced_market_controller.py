@@ -6,11 +6,7 @@ from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
 
 #from hummingbot.smart_components.executors.position_executor.data_types import CloseType
-from hummingbot.smart_components.smart_component_base import SmartComponentBase
-#from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
-#from hummingbot.smart_components.strategy_frameworks.advanced.takers_controller_base import (
-#    TakersControllerBase,
-#)
+from hummingbot.smart_components.strategy_frameworks.order_book_component import OrderBookComponent
 
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
@@ -22,8 +18,7 @@ from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 # В текущей имплементации takers рынки состоят тоже из одного рынка.
 
 
-class AdvancedMarketController(SmartComponentBase):
-    #(ExecutorHandlerBase):
+class AdvancedMarketController(OrderBookComponent):
     _logger = None
 
     @classmethod
