@@ -17,6 +17,9 @@ from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 # Для внешних источников taker - единый рынок сбыта, но по факту внутри логика реализована по закрытию на лучшем из рынков takers.
 # В текущей имплементации takers рынки состоят тоже из одного рынка.
 
+# Контролить:
+# 1. изменения книги
+# 2. изменения бюджетов и ассетов.
 
 class AdvancedMarketController(OrderBookComponent):
     _logger = None
@@ -51,14 +54,7 @@ class AdvancedMarketController(OrderBookComponent):
         self.on_order_book_change(order_book,connector_exchange,connector_pair)
 
 
-    # такого события нет, но было бы разумно добавить его по подобию
-    '''
-    def process_order_book_event(self,
-                                      event_tag: int,
-                                      market: ConnectorBase,
-                                      event: Union[BuyOrderCompletedEvent, SellOrderCompletedEvent]):
-        pass
-    '''
+
 
     def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
         self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.SELL);
