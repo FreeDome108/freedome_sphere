@@ -168,7 +168,7 @@ class DManMultiplePairs(ScriptStrategyBase):
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)
         
-        self.markets_controller = AdvancedMarketController(strategy=self,connectors);
+        self.markets_controller = AdvancedMarketController(strategy=self,connectors=connectors);
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
