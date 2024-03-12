@@ -8,7 +8,6 @@ from hummingbot.smart_components.controllers.dman import DMan, DManConfig
 # from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
 # FINISH HERE
 from hummingbot.smart_components.executors.position_executor.data_types import TripleBarrierConf
-from hummingbot.smart_components.models.base import SmartComponentStatus
 
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,
@@ -17,8 +16,11 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
 from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 
 
-from hummingbot.smart_components.utils.distributions import Distributions
-from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
+from hummingbot.smart_components.models.base import SmartComponentStatus
+from hummingbot.smart_components.order_level_distributions.distributions import Distributions
+from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevelBuilder
+
+
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
 from hummingbot.core.event.events import MarketEvent, OrderFilledEvent

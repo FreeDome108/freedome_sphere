@@ -4,7 +4,12 @@ from typing import Dict, Optional
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
-from hummingbot.smart_components.executors.position_executor.data_types import CloseType, PositionExecutorStatus
+from hummingbot.smart_components.executors.position_executor.data_types import (
+    PositionExecutorConfig,
+    PositionExecutorStatus,
+)
+from hummingbot.smart_components.models.executors import CloseType, TrackedOrder
+
 from hummingbot.smart_components.strategy_frameworks.executor_handler_base import ExecutorHandlerBase
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_controller_base import (
     AdvancedControllerBase,

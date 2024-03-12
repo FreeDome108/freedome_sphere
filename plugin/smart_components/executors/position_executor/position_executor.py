@@ -19,7 +19,6 @@ from hummingbot.smart_components.executors.position_executor.data_types import (
     PositionExecutorConfig,
     PositionExecutorStatus,
 )
-
 from hummingbot.smart_components.models.executors import CloseType, TrackedOrder
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 from hummingbot.smart_components.executors.position_executor.position_executor_base import PositionExecutor as PositionExecutorBase
