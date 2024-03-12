@@ -16,11 +16,11 @@ from hummingbot.core.event.events import (
 )
 from hummingbot.logger import HummingbotLogger
 from hummingbot.smart_components.executors.position_executor.data_types import (
-    CloseType,
-    PositionConfig,
+    PositionExecutorConfig,
     PositionExecutorStatus,
-    TrackedOrder,
 )
+
+from hummingbot.smart_components.models.executors import CloseType, TrackedOrder
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 from hummingbot.smart_components.executors.position_executor.position_executor_base import PositionExecutor as PositionExecutorBase
 
@@ -30,7 +30,7 @@ from hummingbot.smart_components.smart_component_base import SmartComponentBase
 #TODO: отменять позицию, если вышли из profitability
 class PositionExecutor(PositionExecutorBase):
 
-    def __init__(self, strategy: ScriptStrategyBase, position_config: PositionConfig, update_interval: float = 1.0):
+    def __init__(self, strategy: ScriptStrategyBase, position_config: PositionExecutorConfig, update_interval: float = 1.0):
         if not (position_config.take_profit or position_config.stop_loss or position_config.time_limit):
             error = "At least one of take_profit, stop_loss or time_limit must be set"
             self.logger().error(error)
@@ -39,7 +39,8 @@ class PositionExecutor(PositionExecutorBase):
             error = "Only market orders are supported for time_limit and stop_loss"
             self.logger().error(error)
             raise ValueError(error)
-        self._position_config: PositionConfig = position_config
+        #!! self._position_config: PositionExecutorConfig = position_config
+        self.config: PositionExecutorConfig = position_config
         self.close_type = None
         self.close_timestamp = None
         self._executor_status: PositionExecutorStatus = PositionExecutorStatus.NOT_STARTED
