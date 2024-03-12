@@ -95,6 +95,7 @@ class PositionExecutor(PositionExecutorBase):
         self.logger().info(f"self.close_type: {self.close_type}")
         self.logger().info(f"self.executor_status: {self.executor_status}")
         if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type in [CloseType.TAKER]:
+            self.logger().info(f"self.taker_order.executed_price: {self.taker_order.executed_price}")
             return self.taker_order.executed_price
         return super().close_price
 
