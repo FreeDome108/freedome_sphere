@@ -57,9 +57,9 @@ class MarketController(OrderBookComponent):
 
 
 
-    def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
-        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.SELL);
-        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.BUY);
+    def on_order_book_change(self, order_book, connector_name: str, trading_pair: str):
+        self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.SELL);
+        self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.BUY);
 
     def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
         position_size = self.strategy.order_amount
