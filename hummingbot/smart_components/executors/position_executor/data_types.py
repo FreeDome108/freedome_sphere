@@ -2,7 +2,6 @@ from enum import Enum
 from typing import Optional
 
 from hummingbot.smart_components.executors.position_executor.data_types_base import (
-    CloseType as CloseTypeBase,
     PositionExecutorConfig as PositionExecutorConfigBase,
     PositionExecutorStatus,
     TrailingStop,
