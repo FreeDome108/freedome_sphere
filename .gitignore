@@ -3,6 +3,7 @@
 /gateway_files/conf/wallets
 /gateway_files/db
 
+gateway_files/logs/
 
 /hummingbot/certs
 
