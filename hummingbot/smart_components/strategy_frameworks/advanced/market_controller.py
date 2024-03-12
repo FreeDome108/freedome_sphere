@@ -22,7 +22,7 @@ from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 # 1. изменения книги
 # 2. изменения бюджетов и ассетов.
 
-class AdvancedMarketController(OrderBookComponent):
+class MarketController(OrderBookComponent):
     _logger = None
 
     @classmethod

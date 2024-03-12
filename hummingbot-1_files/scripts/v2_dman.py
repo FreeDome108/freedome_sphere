@@ -10,7 +10,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
     AdvancedExecutorHandler,
 )
 
-from hummingbot.smart_components.strategy_frameworks.advanced.advanced_market_controller import AdvancedMarketController
+from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 
 
 from hummingbot.smart_components.utils.distributions import Distributions
@@ -173,7 +173,7 @@ class DManMultiplePairs(ScriptStrategyBase):
         self.taker_exchange = "binance_perpetual"
         self.taker_pair = "XRP-USDT"
         
-        self.markets_controller = AdvancedMarketController(strategy=self,connectors=connectors);
+        self.market_controller = MarketController(strategy=self,connectors=connectors);
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
