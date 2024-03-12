@@ -25,18 +25,19 @@ class DManMultiplePairs(ScriptStrategyBase):
     # Account configuration
     
     # Develop config
+    '''
     exchange = "okx"
     trading_pairs = ["XRP-USDT"]
     trading_pair1 = "XRP-USDT"
     candles_exchange = "binance_perpetual"
-
-    # Production config
     '''
+    # Production config
+    
     exchange = "whitebit"
     trading_pairs = ["XMR-USDT"]
     trading_pair1 = "XMR-USDT"
     candles_exchange = "binance_perpetual"
-    '''
+    
 
     order_amount = Decimal("10")
     candles_interval = "1m"
