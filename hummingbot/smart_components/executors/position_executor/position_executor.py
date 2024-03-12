@@ -92,12 +92,15 @@ class PositionExecutor(PositionExecutorBase):
 
     @property
     def close_price(self):
+        self.logger().info(f"self.close_type: {self.close_type}")
+        self.logger().info(f"self.executor_status: {self.executor_status}")
         if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type in [CloseType.TAKER]:
             return self.taker_order.executed_price
         return super().close_price
 
     @property
     def trade_pnl(self):
+        self.logger().info(f"self.close_price: {self.close_price}")
         if self.side == TradeType.BUY:
             return (self.close_price - self.entry_price) / self.entry_price
         else:
