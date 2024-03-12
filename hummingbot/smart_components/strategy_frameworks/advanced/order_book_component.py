@@ -109,6 +109,10 @@ class OrderBookComponent:
             connector_name=market.exchange
             trading_pair=market.trading_pai
             self.order_book[connector_name][trading_pair]=self.connectors[connector_name].get_order_book(connector_name, trading_pair)
+            self.on_order_book_change(self,order_book, connector_name, trading_pair)
+
+
+    def on_order_book_change(self, order_book, connector_name: str, trading_pair: str):
         pass
 
     def register_events(self):
