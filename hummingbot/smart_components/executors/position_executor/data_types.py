@@ -3,31 +3,20 @@ from typing import Optional
 
 from hummingbot.smart_components.executors.position_executor.data_types_base import (
     CloseType as CloseTypeBase,
-    PositionConfig as PositionConfigBase,
+    PositionExecutorConfig as PositionExecutorConfigBase,
     PositionExecutorStatus,
     TrailingStop,
-    TrackedOrder
+    TripleBarrierConf
 )
 from pydantic import BaseModel
 from pydantic.types import Decimal
 
 from hummingbot.core.data_type.common import OrderType, TradeType
-from hummingbot.core.data_type.in_flight_order import InFlightOrder
+from hummingbot.smart_components.executors.data_types import ExecutorConfigBase
 
 
-class CloseType(Enum):
-    TIME_LIMIT = 1
-    STOP_LOSS = 2
-    TAKE_PROFIT = 3
-    EXPIRED = 4
-    EARLY_STOP = 5
-    TRAILING_STOP = 6
-    INSUFFICIENT_BALANCE = 7
-    # Additional
-    INSUFFICIENT_BALANCE_TAKER = 8
-    TAKER = 9
     
-class PositionConfig(PositionConfigBase):
+class PositionExecutorConfig(PositionExecutorConfigBase):
     maker_perpetual_only_close: Optional[bool] = None
     taker_exchange: str
     taker_pair: str

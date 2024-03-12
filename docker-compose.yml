@@ -15,6 +15,8 @@ services:
       - "./hummingbot/smart_components/controllers/dman.py:/home/hummingbot/hummingbot/smart_components/controllers/dman.py"
       - "./hummingbot/smart_components/executors/position_executor:/home/hummingbot/hummingbot/smart_components/executors/position_executor"
       - "./hummingbot/smart_components/strategy_frameworks/advanced:/home/hummingbot/hummingbot/smart_components/strategy_frameworks/advanced"
+      - "./hummingbot/smart_components/models/executors_base.py:/home/hummingbot/hummingbot/smart_components/models/executors_base.py"
+      - "./hummingbot/smart_components/models/executors.py:/home/hummingbot/hummingbot/smart_components/models/executors.py"
       - "./hummingbot-1_files/conf:/home/hummingbot/conf"
       - "./hummingbot-1_files/conf/connectors:/home/hummingbot/conf/connectors"
       - "./hummingbot-1_files/conf/scripts:/home/hummingbot/conf/scripts"
