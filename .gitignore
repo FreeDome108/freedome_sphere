@@ -5,7 +5,7 @@
 
 gateway_files/logs/
 
-/hummingbot/certs
+/conf/certs
 
 /hummingbot_files/conf/.password_verification
 /hummingbot_files/conf/connectors
