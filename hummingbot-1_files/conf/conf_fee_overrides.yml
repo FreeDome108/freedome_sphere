@@ -302,3 +302,9 @@ whitebit_taker_percent_fee:
 whitebit_buy_percent_fee_deducted_from_returns:
 whitebit_maker_fixed_fees:
 whitebit_taker_fixed_fees:
+htx_percent_fee_token:
+htx_maker_percent_fee:
+htx_taker_percent_fee:
+htx_buy_percent_fee_deducted_from_returns:
+htx_maker_fixed_fees:
+htx_taker_fixed_fees:
