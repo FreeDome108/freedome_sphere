@@ -72,6 +72,7 @@ class PositionExecutor(PositionExecutorBase):
     def taker_order_type(self):
         return self.position_config.taker_order_type
 
+    @property
     def taker_price(self):
         taker_price = self.entry_price * (1 + self._position_config.taker_profitability) if self.side == TradeType.BUY else \
             self.entry_price * (1 - self._position_config.taker_profitability)
@@ -85,9 +86,23 @@ class PositionExecutor(PositionExecutorBase):
     def taker_condition(self):
         return True
         #if self.side == TradeType.BUY:
-        #    return self.close_price >= self.taker_price()
+        #    return self.close_price >= self.taker_price
         #else:
-        #    return self.close_price <= self.taker_price()
+        #    return self.close_price <= self.taker_price
+
+    @property
+    def close_price(self):
+        if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type in [CloseType.TAKER]:
+            return self.taker_order.executed_price
+        return super().close_price
+
+    @property
+    def trade_pnl(self):
+        if self.side == TradeType.BUY:
+            return (self.close_price - self.entry_price) / self.entry_price
+        else:
+            return (self.entry_price - self.close_price) / self.entry_price
+
 
     def on_stop(self):
         super().on_stop()
