@@ -83,7 +83,7 @@ class PositionExecutor(PositionExecutorBase):
 
 
     def taker_condition(self):
-        return true
+        return True
         #if self.side == TradeType.BUY:
         #    return self.close_price >= self.taker_price()
         #else:
