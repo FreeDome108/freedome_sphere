@@ -5,7 +5,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig, CandlesFactory
-from hummingbot.smart_components.strategy_frameworks.data_types import OrderLevel
+from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevel
 
 
 class ControllerConfigBase(BaseModel):

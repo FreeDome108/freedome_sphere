@@ -2,10 +2,10 @@ from decimal import Decimal
 from typing import Dict, List, Optional, Set
 
 from hummingbot.core.data_type.common import PositionMode, TradeType
-from hummingbot.smart_components.executors.position_executor.data_types import PositionConfig, TrailingStop
+from hummingbot.smart_components.executors.position_executor.data_types import PositionExecutorConfig, TrailingStop
 from hummingbot.smart_components.executors.position_executor.position_executor import PositionExecutor
 from hummingbot.smart_components.strategy_frameworks.controller_base import ControllerBase, ControllerConfigBase
-from hummingbot.smart_components.strategy_frameworks.data_types import OrderLevel
+from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevel
 
 
 class MarketMakingControllerConfigBase(ControllerConfigBase):
@@ -65,9 +65,9 @@ class MarketMakingControllerBase(ControllerBase):
     def cooldown_condition(self, executor: PositionExecutor, order_level: OrderLevel) -> bool:
         raise NotImplementedError
 
-    def get_position_config(self, order_level: OrderLevel) -> PositionConfig:
+    def get_position_config(self, order_level: OrderLevel) -> PositionExecutorConfig:
         """
-        Creates a PositionConfig object from an OrderLevel object.
+        Creates a PositionExecutorConfig object from an OrderLevel object.
         Here you can use technical indicators to determine the parameters of the position config.
         """
         raise NotImplementedError

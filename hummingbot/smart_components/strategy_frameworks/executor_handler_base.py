@@ -12,7 +12,7 @@ from hummingbot.core.data_type.common import OrderType, PositionAction, Position
 from hummingbot.core.utils.async_utils import safe_ensure_future
 from hummingbot.logger import HummingbotLogger
 from hummingbot.model.position_executors import PositionExecutors
-from hummingbot.smart_components.executors.position_executor.data_types import PositionConfig
+from hummingbot.smart_components.executors.position_executor.data_types import PositionExecutorConfig
 from hummingbot.smart_components.executors.position_executor.position_executor import PositionExecutor
 from hummingbot.smart_components.strategy_frameworks.controller_base import ControllerBase
 from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, OrderLevel
@@ -89,7 +89,7 @@ class ExecutorHandlerBase:
             MarketsRecorder.get_instance().store_executor(executor_data)
             self.level_executors[order_level.level_id] = None
 
-    def create_executor(self, position_config: PositionConfig, order_level: OrderLevel):
+    def create_executor(self, position_config: PositionExecutorConfig, order_level: OrderLevel):
         """
         Create an executor.
 
