@@ -13,7 +13,7 @@ services:
       - "./hummingbot/templates/conf_xemm_strategy_TEMPLATE.yml:/home/hummingbot/hummingbot/templates/conf_xemm_strategy_TEMPLATE.yml"
       - "./hummingbot/core/web_assistant/rest_assistant.py:/home/hummingbot/hummingbot/core/web_assistant/rest_assistant.py"
       - "./hummingbot/smart_components/controllers/dman.py:/home/hummingbot/hummingbot/smart_components/controllers/dman.py"
-#      - "./hummingbot/smart_components/executors/position_executor:/home/hummingbot/hummingbot/smart_components/executors/position_executor"
+      - "./hummingbot/smart_components/executors/position_executor:/home/hummingbot/hummingbot/smart_components/executors/position_executor"
       - "./hummingbot/smart_components/strategy_frameworks/advanced:/home/hummingbot/hummingbot/smart_components/strategy_frameworks/advanced"
       - "./hummingbot-1_files/conf:/home/hummingbot/conf"
       - "./hummingbot-1_files/conf/connectors:/home/hummingbot/conf/connectors"

@@ -1,0 +1,3 @@
+[submodule "submodule/hummingbot.git"]
+	path = submodule/hummingbot.git
+	url = git@github.com:hummingbot/hummingbot.git
