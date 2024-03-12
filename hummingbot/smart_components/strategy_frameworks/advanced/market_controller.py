@@ -35,7 +35,7 @@ class MarketController(OrderBookComponent):
         super().__init__(strategy=strategy, connectors=connectors, update_interval=update_interval)
         self.strategy=strategy
         self.taker_prices = {}
-        self.get_order_book(self.strategy.taker_exchange, self.strategy.taker_pair)
+        # self.get_order_book(self.strategy.taker_exchange, self.strategy.taker_pair)
         #Поже изменить на механизм подписки
         #self.subscribe_to_order_book(self.strategy.taker_exchange, self.strategy.taker_pair)
 
@@ -50,9 +50,9 @@ class MarketController(OrderBookComponent):
         #    self.set_leverage_and_position_mode()
 
 
-    def get_order_book(self, connector_exchange:str, connector_pair: str):
-        order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
-        self.on_order_book_change(order_book,connector_exchange,connector_pair)
+    #def get_order_book(self, connector_exchange:str, connector_pair: str):
+    #    order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
+    #    self.on_order_book_change(order_book,connector_exchange,connector_pair)
 
 
 
