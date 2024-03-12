@@ -1,4 +1,4 @@
-#git add .
-#git pull
+git add .
+git pull
 git commit -a -m "initial commit"
-#git push
+git push
