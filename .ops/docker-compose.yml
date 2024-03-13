@@ -13,6 +13,7 @@ services:
 # Custom plugin
       - "../plugin/smart_components/controllers/dman_controller.py:/home/hummingbot/hummingbot/smart_components/controllers/dman_controller.py"
       - "../plugin/smart_components/strategy_frameworks/advanced:/home/hummingbot/hummingbot/smart_components/strategy_frameworks/advanced"
+      - "../plugin/scripts:/home/hummingbot/scripts"
 # Replace files
       - "../plugin/smart_components/models/executors.py:/home/hummingbot/hummingbot/smart_components/models/executors.py"
       - "../plugin/smart_components/executors/position_executor/position_executor.py:/home/hummingbot/hummingbot/smart_components/executors/position_executor/position_executor.py"
@@ -29,7 +30,7 @@ services:
       - "../hummingbot-1_files/conf/scripts:/home/hummingbot/conf/scripts"
       - "../hummingbot-1_files/logs:/home/hummingbot/logs"
       - "../hummingbot-1_files/data:/home/hummingbot/data"
-      - "../hummingbot-1_files/scripts:/home/hummingbot/scripts"
+
     logging:
       driver: "json-file"
       options:
