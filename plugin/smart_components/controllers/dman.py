@@ -78,10 +78,12 @@ class DMan(AdvancedControllerBase):
         amount = order_level.order_amount_usd / order_price
 
         if order_level.triple_barrier_conf.trailing_stop_trailing_delta and order_level.triple_barrier_conf.trailing_stop_trailing_delta:
-            trailing_stop = TrailingStop(
-                activation_price=order_level.triple_barrier_conf.trailing_stop_activation_price,
-                trailing_delta=order_level.triple_barrier_conf.trailing_stop_trailing_delta,
-            )
+            trailing_stop = None
+            #STRANGE, FIX because was somw bug, cannot resolve
+            #trailing_stop = TrailingStop(
+            #    activation_price=order_level.triple_barrier_conf.trailing_stop_activation_price,
+            #    trailing_delta=order_level.triple_barrier_conf.trailing_stop_trailing_delta,
+            #)
         else:
             trailing_stop = None
         position_config = PositionExecutorConfig(
