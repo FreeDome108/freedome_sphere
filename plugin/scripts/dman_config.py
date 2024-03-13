@@ -78,7 +78,7 @@ class DManStrategyConfig(BaseClientModel):
                 {
                     "exchange": "dydx_perpetual",
                     "leverage": 1,
-                    "comment": "фьючерсы<=>спот 1:1"
+                    "comment": "фьючерсы<=>спот 1:1",
                     "perpetual_exclude_open": True,
                     # нужен для простого арбитража 1:1 фьючерсов к споту, поскольку возможны арбитражные варианты
                 },
