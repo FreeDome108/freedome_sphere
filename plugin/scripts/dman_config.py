@@ -34,18 +34,18 @@ class DManStrategyConfig(BaseClientModel):
             ],
             "maker_defaults":
             {
-                    "order_amount" = Decimal("10")
+                "order_amount": Decimal("10")
             },
             "taker_defaults":
             {
-                    "trading_pair": "XRP-USDT",
+                "trading_pair": "XRP-USDT",
             },
             "defaults":
             {
-                    "trading_pair": "XRP-USDT",
-                    "order_amount" = Decimal("10"),
-                    "n_levels" = 3,
-                    "leverage": 1
+                "trading_pair": "XRP-USDT",
+                "order_amount": Decimal("10"),
+                "n_levels": 3,
+                "leverage": 1
             },
         },
         "prod":
@@ -84,7 +84,7 @@ class DManStrategyConfig(BaseClientModel):
                 },
                 {
                     "exchange": "binance_perpetual",
-                    "spread_extra"= 0.05, # 5% - именно движение, 10% - уже что-то серьезное, важно учесть что при 20% изменения цены - уже margin call!
+                    "spread_extra": 0.05, # 5% - именно движение, 10% - уже что-то серьезное, важно учесть что при 20% изменения цены - уже margin call!
                     "weight": 6, # по количеству суммы весов рынков (чтобы было сбалансированно)
                     "leverage": 5, # поскольку пружинка
                     "comment": "фьючерсная пружинка"
@@ -109,7 +109,7 @@ class DManStrategyConfig(BaseClientModel):
                     "exchange": "whitebit",
                     "trading_pair": "XRP-PERP",
                     "leverage": 5,
-                    "spread_extra"= 0.05,
+                    "spread_extra": 0.05,
                     # в том числе, когда закрыться негде, закрываемся тут и потом откупимся или что-то в этом роде, продумать позже.
                     # или вынести это на объемную перпетуалку, а мелкие разницы - смотреть 1:1
                 },
@@ -134,8 +134,8 @@ class DManStrategyConfig(BaseClientModel):
             "defaults":
             {
                     "trading_pair": "XRP-USDT",
-                    "order_amount" = Decimal("10"),
-                    "n_levels" = 3,
+                    "order_amount": Decimal("10"),
+                    "n_levels": 3,
                     "leverage": 1
             },
         }
