@@ -1,28 +1,25 @@
+import os
 from decimal import Decimal
 from typing import Dict
 
+from pydantic import Field
+
+from hummingbot.client.config.config_data_types import BaseClientModel, ClientFieldData
 from hummingbot.connector.connector_base import ConnectorBase
-from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
+from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
 from hummingbot.smart_components.controllers.dman_controller import DManController, DManConfig
-from hummingbot.scripts.dman_strategy import DManStrategyConfig
-#from hummingbot.smart_components.strategy_frameworks.advanced.taker_controller import TakerController
-
-
-from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
+from hummingbot.smart_components.executors.position_executor.data_types import TrailingStop, TripleBarrierConf
+from hummingbot.smart_components.models.base import SmartComponentStatus
+from hummingbot.smart_components.order_level_distributions.distributions import Distributions
+from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevelBuilder
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,
 )
-
-from hummingbot.smart_components.strategy_frameworks.advanced.advanced_market_controller import AdvancedMarketController
-
-
-from hummingbot.smart_components.utils.distributions import Distributions
-from hummingbot.smart_components.utils.order_level_builder import OrderLevelBuilder
+from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
-from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
-from hummingbot.core.event.event_listener import EventListener
+
 
 
 
@@ -95,7 +92,6 @@ class DManStrategy(ScriptStrategyBase):
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
-        # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 
     #def on_order_filled(self, event: OrderFilledEvent):
     def did_fill_order(self, event: OrderFilledEvent):    
@@ -149,7 +145,7 @@ class DManStrategy(ScriptStrategyBase):
         market conditions, you can orchestrate from this script when to stop or start them.
         """
         for executor_handler in self.executor_handlers.values():
-            if executor_handler.status == ExecutorHandlerStatus.NOT_STARTED:
+            if executor_handler.status == SmartComponentStatus.NOT_STARTED:
                 executor_handler.start()
 
     def format_status(self) -> str:

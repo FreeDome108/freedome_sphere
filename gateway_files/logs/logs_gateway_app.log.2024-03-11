@@ -1,0 +1,22 @@
+2024-03-11 05:21:24 | error | 	uncaughtException: The configuration namespace carbon does not exist.
+Error: The configuration namespace carbon does not exist.
+    at ConfigManagerV2.unpackFullConfigPath (/home/gateway/dist/src/services/config-manager-v2.js:237:19)
+    at ConfigManagerV2.get (/home/gateway/dist/src/services/config-manager-v2.js:246:48)
+    at /home/gateway/dist/src/connectors/carbon/carbon.config.js:9:76
+    at Object.<anonymous> (/home/gateway/dist/src/connectors/carbon/carbon.config.js:29:3)
+    at Module._compile (node:internal/modules/cjs/loader:1149:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1203:10)
+    at Module.load (node:internal/modules/cjs/loader:1027:32)
+    at Module._load (node:internal/modules/cjs/loader:868:12)
+    at Module.require (node:internal/modules/cjs/loader:1051:19)
+    at require (node:internal/modules/cjs/helpers:103:18) | Error: The configuration namespace carbon does not exist.
+    at ConfigManagerV2.unpackFullConfigPath (/home/gateway/dist/src/services/config-manager-v2.js:237:19)
+    at ConfigManagerV2.get (/home/gateway/dist/src/services/config-manager-v2.js:246:48)
+    at /home/gateway/dist/src/connectors/carbon/carbon.config.js:9:76
+    at Object.<anonymous> (/home/gateway/dist/src/connectors/carbon/carbon.config.js:29:3)
+    at Module._compile (node:internal/modules/cjs/loader:1149:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1203:10)
+    at Module.load (node:internal/modules/cjs/loader:1027:32)
+    at Module._load (node:internal/modules/cjs/loader:868:12)
+    at Module.require (node:internal/modules/cjs/loader:1051:19)
+    at require (node:internal/modules/cjs/helpers:103:18)
