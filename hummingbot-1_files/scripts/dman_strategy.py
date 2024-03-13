@@ -19,7 +19,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
 from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
-
+from hummingbot.scripts.dman_config import DManStrategyConfig
 
 
 
@@ -30,11 +30,15 @@ class DManStrategy(ScriptStrategyBase):
     # config_type="prod"
     
     # Dev config
-    config_type="test_perp"
+    #config_type="test_perp"
 
-    def __init__(self, connectors: Dict[str, ConnectorBase],config: DManV1ScriptConfig):
+    controllers = {}
+    markets = {}
+    executor_handlers = {}
+
+    def __init__(self, connectors: Dict[str, ConnectorBase], config: DManStrategyConfig):
         super().__init__(connectors)        
-        self.config = config[config_type]
+        self.config = config
 
         # For maker
         order_level_builder = OrderLevelBuilder(n_levels=n_levels)
@@ -49,10 +53,6 @@ class DManStrategy(ScriptStrategyBase):
             cooldown_time=cooldown_time,
         )
 
-        # For taker are dynamical
-        self.controllers = {}
-        self.markets = {}
-        self.executor_handlers = {}
 
         #takersController=TakersController(config=taker_markets_config)
         #markets = controller.update_strategy_markets_dict(markets)
@@ -87,24 +87,10 @@ class DManStrategy(ScriptStrategyBase):
         controllers[conf["trading_pair"]] = controller
 
     
-        self.markets_controller = AdvancedMarketController(strategy=self,connectors);
+        self.markets_controller = MarketController(strategy=self,connectors=connectors);
 
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
-        
-
-    #def on_order_filled(self, event: OrderFilledEvent):
-    def did_fill_order(self, event: OrderFilledEvent):    
-        self.logger().info(f"Order {event.order_id} filled, {event.trade_type}, {event.amount} @ {event.price}")
-        
-        # [TODO] Если ордер не создан именно этим ботом, то игнорировать
-        # if event.exchange == self.maker_exchange and event.trading_pair == self.maker_pair:
-
-        # Исполняем арбитражную позицию на taker рынке
-        # taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
-        # self.execute_taker_trade(taker_action, event.amount)
-
-
 
     @property
     def is_perpetual(self):

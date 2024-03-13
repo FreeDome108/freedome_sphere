@@ -11,7 +11,7 @@ services:
 # Custom connectors
       - "../plugin/connector/exchange/whitebit:/home/hummingbot/hummingbot/connector/exchange/whitebit"
 # Custom plugin
-      - "../plugin/smart_components/controllers/dman.py:/home/hummingbot/hummingbot/smart_components/controllers/dman_controller.py"
+      - "../plugin/smart_components/controllers/dman_controller.py:/home/hummingbot/hummingbot/smart_components/controllers/dman_controller.py"
       - "../plugin/smart_components/strategy_frameworks/advanced:/home/hummingbot/hummingbot/smart_components/strategy_frameworks/advanced"
 # Replace files
       - "../plugin/smart_components/models/executors.py:/home/hummingbot/hummingbot/smart_components/models/executors.py"

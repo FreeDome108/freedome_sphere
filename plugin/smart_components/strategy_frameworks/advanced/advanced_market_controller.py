@@ -1,12 +1,12 @@
 import logging
 from decimal import Decimal
-from typing import Dict, Optional
+from typing import Dict, Optional, List
 
 from hummingbot.core.data_type.common import TradeType
 from hummingbot.logger import HummingbotLogger
 
 #from hummingbot.smart_components.executors.position_executor.data_types import CloseType
-from hummingbot.smart_components.strategy_frameworks.order_book_component import OrderBookComponent
+from hummingbot.smart_components.strategy_frameworks.advanced.order_book_component import OrderBookComponent
 
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
