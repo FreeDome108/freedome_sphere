@@ -65,7 +65,7 @@ class DManStrategyConfig(BaseClientModel):
                     "weight": 6,
                     "leverage": 5,
                     "perpetual_exclude_open": True,
-                    "spread_discount": 0.99, !!!!
+                    "spread_discount": 0.99, #!!!!
 
                     # обратная ситуация с гипотезой про движение лидера.
                     # фьючерсы небольшого рынка могут тоже обладать арбитражными возможностями
