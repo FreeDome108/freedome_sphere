@@ -1,30 +1,54 @@
+#from decimal import Decimal
+#from typing import Dict
+
+#from hummingbot.connector.connector_base import ConnectorBase
+#from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
+#from hummingbot.smart_components.controllers.dman import DMan, DManConfig
+## from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
+## FINISH HERE
+#from hummingbot.smart_components.executors.position_executor.data_types import TripleBarrierConf
+#
+#from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
+#    AdvancedExecutorHandler,
+#)
+
+#from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
+
+
+#from hummingbot.smart_components.models.base import SmartComponentStatus
+#from hummingbot.smart_components.order_level_distributions.distributions import Distributions
+#from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevelBuilder
+
+
+#from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
+
+#from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
+#from hummingbot.core.event.event_listener import EventListener
+
+
+
+
+import os
 from decimal import Decimal
 from typing import Dict
 
+from pydantic import Field
+
+from hummingbot.client.config.config_data_types import BaseClientModel, ClientFieldData
 from hummingbot.connector.connector_base import ConnectorBase
-from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide, TradeType
+from hummingbot.core.data_type.common import OrderType, PositionAction, PositionSide
 from hummingbot.data_feed.candles_feed.candles_factory import CandlesConfig
 from hummingbot.smart_components.controllers.dman import DMan, DManConfig
-# from hummingbot.smart_components.strategy_frameworks.data_types import ExecutorHandlerStatus, TripleBarrierConf
-# FINISH HERE
 from hummingbot.smart_components.executors.position_executor.data_types import TripleBarrierConf
-
-from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
-    AdvancedExecutorHandler,
-)
-
-from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
-
-
 from hummingbot.smart_components.models.base import SmartComponentStatus
 from hummingbot.smart_components.order_level_distributions.distributions import Distributions
 from hummingbot.smart_components.order_level_distributions.order_level_builder import OrderLevelBuilder
-
-
+from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
+    AdvancedExecutorHandler,
+)
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
-from hummingbot.core.event.events import MarketEvent, OrderFilledEvent
-from hummingbot.core.event.event_listener import EventListener
+
 
 
 class DManMultiplePairs(ScriptStrategyBase):
@@ -184,30 +208,7 @@ class DManMultiplePairs(ScriptStrategyBase):
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)
         
-        # self.add_listener(MarketEvent.OrderFilled, self.on_order_filled)
 
-    #def on_order_filled(self, event: OrderFilledEvent):
-    def did_fill_order(self, event: OrderFilledEvent):    
-        self.logger().info(f"Order {event.order_id} filled, {event.trade_type}, {event.amount} @ {event.price}")
-        
-        # [TODO] Если ордер не создан именно этим ботом, то игнорировать
-        # if event.exchange == self.maker_exchange and event.trading_pair == self.maker_pair:
-
-        # Исполняем арбитражную позицию на taker рынке
-        # taker_action = TradeType.SELL if event.trade_type == TradeType.BUY else TradeType.BUY
-        # self.execute_taker_trade(taker_action, event.amount)
-
-    '''        
-    def execute_taker_trade(self, trade_type, amount):
-        # Выполнение торговой операции на taker рынке
-        # [TODO] fix self.trading_pair1
-        order_type = OrderType.MARKET
-        if trade_type == TradeType.BUY:
-            self.connectors[self.candles_exchange]
-            self.buy(self.candles_exchange, self.trading_pair1, amount, order_type)
-        else:
-            self.sell(self.candles_exchange, self.trading_pair1, amount, order_type)
-    '''
 
     @property
     def is_perpetual(self):
