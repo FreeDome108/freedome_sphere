@@ -4,6 +4,8 @@ services:
     container_name: hummingbot-1
 #    image: hummingbot/hummingbot:latest
     image: hummingbot/hummingbot:version-1.25.0
+    env_file:
+      - .env
 #    build:
 #    context: ..
 #      dockerfile: .ops/Dockerfile
