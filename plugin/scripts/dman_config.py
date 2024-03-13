@@ -1,6 +1,6 @@
 from decimal import Decimal
 from hummingbot.client.config.config_data_types import BaseClientModel, ClientFieldData
-from hummingbot.scripts.dman_strategy import DManStrategy
+#from scripts.dman_strategy import DManStrategy
 
 class DManStrategyConfig(BaseClientModel):
     # параметры можно указать в maker_defaults и taker_defaults, и если нужно можно их прописать к конкретной бирже

@@ -19,9 +19,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
 from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
-from hummingbot.scripts.dman_config import DManStrategyConfig
-
-
+from scripts.dman_config import DManStrategyConfig
 
 
 
