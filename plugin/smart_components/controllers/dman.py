@@ -80,13 +80,7 @@ class DManController(AdvancedControllerBase):
         candles_df["price_multiplier"] = 0.0
         return candles_df
 
-<<<<<<<< HEAD:plugin/smart_components/controllers/dman.py
     def get_position_config(self, order_level: OrderLevel) -> PositionExecutorConfig:
-========
-
-
-    def get_position_config(self, taker_prices, order_level: OrderLevel) -> PositionConfig:
->>>>>>>> dev:plugin/smart_components/controllers/dman_controller.py
         """
         Creates a PositionExecutorConfig object from an OrderLevel object.
         Here you can use technical indicators to determine the parameters of the position config.
