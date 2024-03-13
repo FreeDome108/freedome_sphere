@@ -2,16 +2,20 @@ version: "3.9"
 services:
   hummingbot-1:
     container_name: hummingbot-1
+#    image: hummingbot/hummingbot:latest
     image: hummingbot/hummingbot:version-1.25.0
     env_file:
       - .env
+#    build:
+#    context: ..
+#      dockerfile: .ops/Dockerfile
     volumes:
       - "../conf/certs:/home/hummingbot/certs"
       - "../plugin/strategy/xemm:/home/hummingbot/hummingbot/strategy/xemm"
 # Custom connectors
       - "../plugin/connector/exchange/whitebit:/home/hummingbot/hummingbot/connector/exchange/whitebit"
 # Custom plugin
-      - "../plugin/smart_components/controllers/dman.py:/home/hummingbot/hummingbot/smart_components/controllers/dman_controller.py"
+      - "../plugin/smart_components/controllers/dman.py:/home/hummingbot/hummingbot/smart_components/controllers/dman.py"
       - "../plugin/smart_components/strategy_frameworks/advanced:/home/hummingbot/hummingbot/smart_components/strategy_frameworks/advanced"
 # Replace files
       - "../plugin/smart_components/models/executors.py:/home/hummingbot/hummingbot/smart_components/models/executors.py"
@@ -30,6 +34,10 @@ services:
       - "../hummingbot-1_files/logs:/home/hummingbot/logs"
       - "../hummingbot-1_files/data:/home/hummingbot/data"
       - "../hummingbot-1_files/scripts:/home/hummingbot/scripts"
+#      - "../plugin/templates/conf_xemm_strategy_TEMPLATE.yml:/home/hummingbot/hummingbot/templates/conf_xemm_strategy_TEMPLATE.yml"
+
+#      - "../conf/strategies:/home/hummingbot/conf/strategies"
+#      - "../plugin/strategy/get_order_book:/home/hummingbot/hummingbot/strategy/get_order_book"
     logging:
       driver: "json-file"
       options:
