@@ -105,7 +105,7 @@ class DManStrategyConfig(BaseClientModel):
                 {
                     "exchange": "whitebit",
                 },
-                            {
+                {
                     "exchange": "whitebit",
                     "trading_pair": "XRP-PERP",
                     "leverage": 5,
@@ -119,24 +119,24 @@ class DManStrategyConfig(BaseClientModel):
                 {
                     "exchange": "binance_perpetual",
                     "leverage": 5,
-                    "spread_discount": 0.99, !!!!
+                    "spread_discount": 0.99, # !!!!
                     "perpetual_exclude_open": True,
                 },
             ],
             "maker_defaults":
             {
-                    "order_amount" = Decimal("30"), # Лучше чтобы было больше чем на taker рынке минимум чем в количество рынков, на которое будет раскидано
+                "order_amount": Decimal("30"), # Лучше чтобы было больше чем на taker рынке минимум чем в количество рынков, на которое будет раскидано
             },
             "taker_defaults":
             {
-                    "trading_pair": "XRP-USDT",
+                "trading_pair": "XRP-USDT",
             },
             "defaults":
             {
-                    "trading_pair": "XRP-USDT",
-                    "order_amount": Decimal("10"),
-                    "n_levels": 3,
-                    "leverage": 1
+                "trading_pair": "XRP-USDT",
+                "order_amount": Decimal("10"),
+                "n_levels": 3,
+                "leverage": 1
             },
         }
     }
