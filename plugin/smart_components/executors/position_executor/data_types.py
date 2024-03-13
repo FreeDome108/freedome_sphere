@@ -13,7 +13,23 @@ from pydantic.types import Decimal
 from hummingbot.core.data_type.common import OrderType, TradeType
 from hummingbot.smart_components.executors.data_types import ExecutorConfigBase
 
+class PositionType(Enum):
+    MAKER = 1
+    TAKER = 2
 
+
+class CloseType(Enum):
+    TIME_LIMIT = 1
+    STOP_LOSS = 2
+    TAKE_PROFIT = 3
+    EXPIRED = 4
+    EARLY_STOP = 5
+    TRAILING_STOP = 6
+    INSUFFICIENT_BALANCE = 7
+    # Additional
+    INSUFFICIENT_BALANCE_TAKER = 8
+    TAKER = 9
+    TAKE_OPPOSITE = 10
     
 class PositionExecutorConfig(PositionExecutorConfigBase):
     maker_perpetual_only_close: Optional[bool] = None
