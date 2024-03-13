@@ -141,4 +141,4 @@ class DManStrategyConfig(BaseClientModel):
         }
     }
 
-    markets_config=markets_config[config_type]
+    markets_config=markets_configs[config_type]

@@ -19,7 +19,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
 from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
-from scripts.dman_config import DManStrategyConfig
+from scripts.dman_strategy_config import DManStrategyConfig
 
 
 
@@ -34,9 +34,11 @@ class DManStrategy(ScriptStrategyBase):
     markets = {}
     executor_handlers = {}
 
-    def __init__(self, connectors: Dict[str, ConnectorBase], config: DManStrategyConfig):
+    def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)        
-        self.config = config
+        
+        conf=DManStrategyConfig();
+        self.config=conf.markets_config
 
         # For maker
         order_level_builder = OrderLevelBuilder(n_levels=n_levels)
