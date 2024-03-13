@@ -31,7 +31,7 @@ class DManStrategyConfig(BaseClientModel):
                 {
                     "exchange": "binance_perpetual",
                 },       
-            ]
+            ],
             "maker_defaults":
             {
                     "order_amount" = Decimal("10")
@@ -142,4 +142,3 @@ class DManStrategyConfig(BaseClientModel):
     }
 
     markets_config=markets_config[config_type]
-    
