@@ -58,6 +58,14 @@ class AccountEvent(Enum):
 '''
 
 class OrderBookComponent:
+    _logger = None
+
+    @classmethod
+    def logger(cls) -> HummingbotLogger:
+        if cls._logger is None:
+            cls._logger = logging.getLogger(__name__)
+        return cls._logger
+
     def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 0.5):
         self.order_book_changed=False
         
@@ -133,6 +141,7 @@ class OrderBookComponent:
                                       market: ConnectorBase,
                                       event: Union[OrderBookEvent, OrderBookTradeEvent]):
         
+        self.logger().warning(f"process_order_book_data_event market={market}")
         self.order_book_changed=True
         pass
 
@@ -140,5 +149,7 @@ class OrderBookComponent:
                                       event_tag: int,
                                       market: ConnectorBase,
                                       event: Union[OrderBookEvent, OrderBookTradeEvent]):
+        self.logger().warning(f"process_order_book_trade_event market={market}")
+        self.order_book_changed=True
         pass
 

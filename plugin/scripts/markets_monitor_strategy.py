@@ -25,7 +25,7 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
     exchange="binance_perpetual"
     trading_pair="XRP-USDT"
     
-    markets={exchange:trading_pair}
+    markets={exchange:[trading_pair]}
 
     #@classmethod
     #def init_markets(cls, config: MarketsMonitorStrategyConfig):
@@ -40,7 +40,7 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
     
         self.markets_monitor = MarketsMonitor(strategy=self,connectors=connectors);
         
-        self.executor_handlers = {self.markets_monitor}
+        self.executor_handlers = {"markets_monitor":self.markets_monitor}
 
     def on_stop(self):
         pass
@@ -54,6 +54,9 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
         for executor_handler in self.executor_handlers.values():
             if executor_handler.status == SmartComponentStatus.NOT_STARTED:
                 executor_handler.start()
+            else:
+                takers_price=executor_handler.get_taker_prices();
+                self.logger().warning(f"takers_price={takers_price}")
 
     def format_status(self) -> str:
         if not self.ready_to_trade:
