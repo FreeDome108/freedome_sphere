@@ -58,6 +58,7 @@ class MarketsMonitor(OrderBookComponent):
 
 
     def on_order_book_change(self, order_book, connector_name: str, trading_pair: str):
+        self.logger().warning(f"on_order_book_change connector_name={connector_name}")
         self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.SELL);
         self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.BUY);
 

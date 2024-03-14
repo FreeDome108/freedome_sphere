@@ -21,6 +21,8 @@ from hummingbot.smart_components.strategy_frameworks.advanced.markets_monitor im
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 from hummingbot.logger import HummingbotLogger
 
+from hummingbot.core.event.events import OrderBookEvent, OrderBookTradeEvent
+
 #from scripts.markets_monitor_strategy_config import MarketsMonitorStrategyConfig
 
 class MarketsMonitorStrategy(ScriptStrategyBase):
@@ -52,6 +54,14 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
         self.markets_monitor = MarketsMonitor(strategy=self,connectors=connectors);
         
         self.executor_handlers = {"markets_monitor":self.markets_monitor}
+
+        for market in self.connectors.values():
+            for order_book in market.order_books.values():
+                order_book.add_listener(OrderBookEvent.TradeEvent, self.order_book_trade_event)
+
+
+    def order_book_trade_event(self):
+        self.logger().warning(f"order_book_trade_event")
 
     def on_stop(self):
         pass

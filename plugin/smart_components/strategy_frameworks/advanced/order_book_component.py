@@ -109,6 +109,13 @@ class OrderBookComponent:
         pass
 
     def on_start(self):
+        self.logger().warning(f"OrderBookComponent on_start")
+        #not ready
+        #connector_name="binance_perpetual"
+        #trading_pair="XRP-USDT"
+        #self.order_book[connector_name][trading_pair]=self.connectors[connector_name].get_order_book(trading_pair)
+        #self.on_order_book_change(self,order_book, connector_name, trading_pair)
+
         pass
 
     def terminate_control_loop(self):
@@ -116,12 +123,16 @@ class OrderBookComponent:
         self.unregister_events()
 
     async def control_task(self):
-        if(self.order_book_changed):
-            self.order_book_changed=False
-            connector_name=market.exchange
-            trading_pair=market.trading_pai
-            self.order_book[connector_name][trading_pair]=self.connectors[connector_name].get_order_book(connector_name, trading_pair)
+        self.logger().warning(f"control_task")
+        #if(self.order_book_changed):
+        #    self.order_book_changed=False
+        connector_name="binance_perpetual"
+        trading_pair="XRP-USDT"
+        try:
+            self.order_book[connector_name][trading_pair]=self.connectors[connector_name].get_order_book(trading_pair)
             self.on_order_book_change(self,order_book, connector_name, trading_pair)
+        except Exception as error:
+            self.logger().warning(f"OrderBook control_task {error}")
 
 
     def on_order_book_change(self, order_book, connector_name: str, trading_pair: str):
