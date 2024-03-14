@@ -1,2 +1,1 @@
-2024-02-26 06:15:33,137 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
-2024-02-26 06:27:55,831 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Gateway Service is ONLINE.
+2024-03-12 13:01:21,026 - 15 - hummingbot.core.gateway.gateway_status_monitor - INFO - Connection to Gateway container lost...
