@@ -30,14 +30,14 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
         self.controller = controller
         self.taker_prices = {}
 
-        # self.strategy.markets_controller -> вот здесь можно получить состояние маркета
+        self.markets_monitor=self.strategy.markets_monitor # -> вот здесь можно получить состояние маркета
         
 
     def on_start(self):
         super().on_start()
         if self.controller.taker_is_perpetual:
             self.taker_set_leverage_and_position_mode()
-        self.get_order_book(self.controller.config.taker_exchange, self.controller.config.taker_pair)
+        #self.get_order_book(self.controller.config.taker_exchange, self.controller.config.taker_pair)
 
     def taker_set_leverage_and_position_mode(self):
         connector = self.strategy.connectors[self.controller.config.taker_exchange]
@@ -45,45 +45,7 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
         connector.set_leverage(trading_pair=self.controller.config.taker_pair, leverage=self.controller.config.leverage)
 
 
-    def get_order_book(self, connector_exchange:str, connector_pair: str):
-        order_book=self.strategy.connectors[connector_exchange].get_order_book(connector_pair)
-        self.on_order_book_change(order_book,connector_exchange,connector_pair)
 
-    def on_order_book_change(self, order_book, connector_exchange: str, connector_pair: str):
-        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.SELL);
-        self.calculate_taker_prices(order_book, connector_exchange, connector_pair, TradeType.BUY);
-
-    def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
-        position_size = self.controller.config.order_amount
-        positions_count = self.controller.config.n_levels
-        volumes = [Decimal(position_size) for _ in range(positions_count)]
-
-        prices = []
-
-        for volume in volumes:
-            total_volume = Decimal("0")
-            weighted_price = Decimal("0")
-            orders = order_book['asks'] if trade_type == TradeType.BUY else order_book['bids']
-
-            for order_price, order_volume in orders:
-                available_volume = Decimal(order_volume)
-                required_volume = volume - total_volume
-
-                if available_volume > required_volume:
-                    available_volume = required_volume
-
-                weighted_price += Decimal(order_price) * available_volume
-                total_volume += available_volume
-
-                if total_volume >= volume:
-                    break
-
-            if total_volume == 0:
-                prices.append(Decimal("0"))
-            else:
-                prices.append(weighted_price / total_volume)
-
-        self.taker_prices[trade_type] = prices
 
     async def control_task(self):
         if self.controller.all_candles_ready:
@@ -91,7 +53,7 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
                 TradeType.BUY: self.empty_metrics_dict(),
                 TradeType.SELL: self.empty_metrics_dict()}
             for order_level in self.controller.config.order_levels:
-                current_executor = self.level_executors[order_level.level_id]
+                current_executor = self.position_executors[order_level.level_id]
                 if current_executor:
                     closed_and_not_in_cooldown = current_executor.is_closed and not self.controller.cooldown_condition(
                         current_executor, order_level) or current_executor.close_type == CloseType.EXPIRED
@@ -108,7 +70,10 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
                         current_metrics[current_executor.side]["net_pnl_quote"] += current_executor.net_pnl_quote
                         current_metrics[current_executor.side]["executors"].append(current_executor)
                 else:
-                    position_config = self.controller.get_position_config(self.taker_prices, order_level)
+                    # Вот именно здесь мы пытались слать цены taker рынков, но возможно нужно по другому.
+                    taker_prices=self.markets_monitor.get_taker_prices();
+                    position_config = self.controller.get_position_config(taker_prices, order_level)
+                    #position_config = self.controller.get_position_config(order_level)
                     if position_config:
                         self.create_executor(position_config, order_level)
             if self.global_trailing_stop_config:

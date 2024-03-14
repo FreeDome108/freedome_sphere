@@ -15,7 +15,50 @@ class DManStrategyConfig(BaseClientModel):
     
     # Dev config
     config_type="test"
+    
+    defaults_test = {
+        "trading_pair": "XRP-USDT",
+        
+        "order_amount": Decimal("10"), # Позже можно массивом уровни и спреды
+        "amount_ratio_increase": 1.5,
+        
+        "n_levels": 3,
+        "leverage": 1,
 
+        "profitability_min": 0.5, # вместо stoploss, есть механизм что если профильность ордера уменьшилась ниже минимума, то его нужно снять
+        #profitability_target: 0.6 # такого понятия не существует, т.к ордера выставились
+
+
+        "top_order_start_spread": 0.0002,
+        "start_spread": 0.002,
+        "spread_ratio_increase": 2.0,
+
+
+        "top_order_refresh_time": 15,
+        "order_refresh_time": 60,
+        "cooldown_time": 5,
+    }
+
+    defaults = {
+        "trading_pair": "XRP-USDT",
+        
+        "order_amount": Decimal("10"), # Позже можно массивом уровни и спреды
+        "amount_ratio_increase": 1.5,
+        
+        "n_levels": 3,
+        "leverage": 1,
+
+        "profitability_min": 0.5, # вместо stoploss, есть механизм что если профильность ордера уменьшилась ниже минимума, то его нужно снять
+        #profitability_target: 0.6 # такого понятия не существует, т.к ордера выставились
+
+        "top_order_start_spread": 0.0002,
+        "start_spread": 0.02,
+        "spread_ratio_increase": 2.0,
+
+        "top_order_refresh_time": 60, #!!!
+        "order_refresh_time": 60 * 60 * 2, #!!!
+        "cooldown_time": 5,
+    }
 
     markets_configs = {
         "test":
@@ -40,13 +83,7 @@ class DManStrategyConfig(BaseClientModel):
             {
                 "trading_pair": "XRP-USDT",
             },
-            "defaults":
-            {
-                "trading_pair": "XRP-USDT",
-                "order_amount": Decimal("10"),
-                "n_levels": 3,
-                "leverage": 1
-            },
+            "defaults": defaults_test
         },
         "prod":
         {
@@ -131,13 +168,7 @@ class DManStrategyConfig(BaseClientModel):
             {
                 "trading_pair": "XRP-USDT",
             },
-            "defaults":
-            {
-                "trading_pair": "XRP-USDT",
-                "order_amount": Decimal("10"),
-                "n_levels": 3,
-                "leverage": 1
-            },
+            "defaults":defaults
         }
     }
 

@@ -33,6 +33,16 @@ class DManConfig(AdvancedControllerConfigBase):
     strategy_name: str = "dman"
     natr_length: int = 14
     order_placement_strategy: OrderPlacementStrategy = OrderPlacementStrategy.TAKER_BASED
+    def get(self, param):
+        return self.config["defaults"].get(param);
+    def get_makers(self, param):
+        return self.config["maker_defaults"].get(param,self.config["defaults"].get(param));
+    def get_maker(self, param, maker):
+        return self.config["makers"][maker].get(param,self.config["maker_defaults"].get(param,self.config["defaults"].get(param)));
+    def get_takers(self, param):
+        return self.config["taker_defaults"].get(param,self.config["defaults"].get(param));
+    def get_taker(self, param, taker):
+        return self.config["takers"][taker].get(param,self.config["taker_defaults"].get(param,self.config["defaults"].get(param)));
 
 
 class DManController(AdvancedControllerBase):
@@ -80,7 +90,7 @@ class DManController(AdvancedControllerBase):
         candles_df["price_multiplier"] = 0.0
         return candles_df
 
-    def get_position_config(self, order_level: OrderLevel) -> PositionExecutorConfig:
+    def get_position_config(self, taker_prices, order_level: OrderLevel) -> PositionExecutorConfig:
         """
         Creates a PositionExecutorConfig object from an OrderLevel object.
         Here you can use technical indicators to determine the parameters of the position config.

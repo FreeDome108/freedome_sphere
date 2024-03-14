@@ -94,7 +94,7 @@ class PositionExecutor(PositionExecutorBase):
     def close_price(self):
         self.logger().info(f"self.close_type: {self.close_type}")
         self.logger().info(f"self.executor_status: {self.executor_status}")
-        if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type in [CloseType.TAKER]:
+        if self.executor_status == PositionExecutorStatus.COMPLETED and self.close_type in [CloseType.TAKER_SWAP]:
             self.logger().info(f"self.taker_order.average_executed_price: {self.taker_order.average_executed_price}")
             return self.taker_order.average_executed_price
         return super().close_price
@@ -184,7 +184,7 @@ class PositionExecutor(PositionExecutorBase):
                     if not math.isclose(self.taker_order.order.amount, self.open_order.executed_amount_base):
                         self.renew_taker_order()
         elif self.taker_condition():
-            self.place_close_taker_order(close_type=CloseType.TAKER)
+            self.place_close_taker_order(close_type=CloseType.TAKER_SWAP)
             
 
     def place_taker_limit_order(self):
@@ -228,7 +228,7 @@ class PositionExecutor(PositionExecutorBase):
         super().process_order_completed_event(_, market, event)
         if self.taker_order.order_id == event.order_id:
             #!!!!!
-            self.close_type = CloseType.TAKER #!!!!!
+            self.close_type = CloseType.TAKER_SWAP
             self.executor_status = PositionExecutorStatus.COMPLETED
             self.close_timestamp = event.timestamp #!!!!!
             self.close_order.order_id = event.order_id
@@ -357,7 +357,7 @@ class PositionExecutor(PositionExecutorBase):
         adjusted_order_candidate = self.taker_adjust_order_candidate(order_candidate)
         if not adjusted_order_candidate:
             self.terminate_control_loop()
-            self.close_type = CloseType.INSUFFICIENT_BALANCE_TAKER
+            self.close_type = CloseType.TAKER_INSUFFICIENT_BALANCE
             self.executor_status = PositionExecutorStatus.COMPLETED
             error = "Not enough budget on taker to open position in case need!"
             self.logger().error(error)

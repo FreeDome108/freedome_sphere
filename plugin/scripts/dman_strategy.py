@@ -16,7 +16,7 @@ from hummingbot.smart_components.order_level_distributions.order_level_builder i
 from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_handler import (
     AdvancedExecutorHandler,
 )
-from hummingbot.smart_components.strategy_frameworks.advanced.market_controller import MarketController
+from hummingbot.smart_components.strategy_frameworks.advanced.markets_monitor import MarketsMonitor
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
 from scripts.dman_strategy_config import DManStrategyConfig
@@ -40,54 +40,104 @@ class DManStrategy(ScriptStrategyBase):
         conf=DManStrategyConfig();
         self.config=conf.markets_config
 
+        n_levels=self.config["defaults"]["n_levels"]
+        order_amount=self.config["defaults"]["order_amount"]
+        amount_ratio_increase=self.config["defaults"]["amount_ratio_increase"]
+    
+        top_order_start_spread=self.config["defaults"]["top_order_start_spread"]
+        start_spread=self.config["defaults"]["start_spread"]
+        spread_ratio_increase=self.config["defaults"]["spread_ratio_increase"]
+
+        top_order_refresh_time=self.config["defaults"]["top_order_start_spread"]
+        order_refresh_time=self.config["defaults"]["order_refresh_time"]
+        cooldown_time=self.config["defaults"]["cooldown_time"]
+
+        maker_exchange=self.config["makers"][0].get("exchange")
+        taker_exchange=self.config["takers"][0].get("exchange")
+        trading_pair=self.config["defaults"].get("trading_pair")
+
+        leverage=self.config["defaults"].get("leverage", 1)
+
+        candles_interval = "1m"
+        candles_max_records = 300
+
+        # Orders configuration
+        leverage = 1
+        
+        profitability_min = 0.5
+        profitability_target = 0.6
+        
+
+        # Triple barrier configuration
+        #stop_loss = Decimal("0.2")
+        # Disabled
+        stop_loss = 0
+        # Without arbitrage
+        
+        # Test profit, don't left or minus all finanecs because of fees?
+        # take_profit = Decimal("0.003")
+        # Standart
+        take_profit = Decimal("0.06")
+        time_limit = 60 * 60 * 12
+        step_between_orders = 0.009
+        trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
+        trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
+
+        '''
+        #Original    
+        stop_loss = Decimal("0.2")
+        take_profit = Decimal("0.06")
+        time_limit = 60 * 60 * 12
+        trailing_stop_activation_price_delta = Decimal(str(step_between_orders / 2))
+        trailing_stop_trailing_delta = Decimal(str(step_between_orders / 3))
+        '''
+
+        # Advanced configurations
+        natr_length = 100
+    
+
+
         # For maker
         order_level_builder = OrderLevelBuilder(n_levels=n_levels)
         order_levels = order_level_builder.build_order_levels(
-            amounts=order_amount,
-            spreads=Distributions.arithmetic(n_levels=n_levels, start=start_spread, step=step_between_orders),
+            amounts=Distributions.geometric(n_levels=n_levels, start=float(order_amount), ratio=amount_ratio_increase),
+            spreads=[Decimal(top_order_start_spread)] + Distributions.geometric(n_levels=n_levels - 1, start=start_spread, ratio=spread_ratio_increase),
             triple_barrier_confs=TripleBarrierConf(
                 stop_loss=stop_loss, take_profit=take_profit, time_limit=time_limit,
                 trailing_stop_activation_price_delta=trailing_stop_activation_price_delta,
                 trailing_stop_trailing_delta=trailing_stop_trailing_delta),
-            order_refresh_time=order_refresh_time,
+            order_refresh_time=[top_order_refresh_time] + [order_refresh_time] * (n_levels - 1),
             cooldown_time=cooldown_time,
         )
-
-
-        #takersController=TakersController(config=taker_markets_config)
-        #markets = controller.update_strategy_markets_dict(markets)
-        #This is wrong, because no add:
-        #for conf in taker_markets_config:
-        #    markets[conf["exchange"]]={conf["trading_pair"]}
-        #controllers['TAKERS'] = TakersController(config=taker_markets_config)
 
 
         
         config = DManConfig(
             config=self.config,
-            trading_pair=conf["trading_pair"],
             order_levels=order_levels,
+            exchange=maker_exchange,
+            trading_pair=trading_pair,
             candles_config=[
-                CandlesConfig(connector=candles_exchange, trading_pair=candles_pair,
+                CandlesConfig(connector=taker_exchange, trading_pair=trading_pair,
                             interval=candles_interval, max_records=candles_max_records),
             ],
-            leverage=conf.get("leverage", 1),
+            leverage=leverage,
             natr_length=natr_length,
             # Advanced
             maker_perpetual_only_close = False,
-            taker_exchange = candles_exchange,
-            taker_pair = candles_pair,
+            taker_exchange = taker_exchange,
+            taker_pair = trading_pair,
             taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
         )
         controller = DManController(config=config)
 
         
-        markets = controller.update_strategy_markets_dict(markets)
-        controllers[conf["trading_pair"]] = controller
+        self.markets = controller.update_strategy_markets_dict(self.markets)
+        self.controllers[trading_pair] = controller
 
     
-        self.markets_controller = MarketController(strategy=self,connectors=connectors);
+        self.markets_monitor = MarketsMonitor(strategy=self,connectors=connectors);
 
         for trading_pair, controller in self.controllers.items():
             self.executor_handlers[trading_pair] = AdvancedExecutorHandler(strategy=self, controller=controller)

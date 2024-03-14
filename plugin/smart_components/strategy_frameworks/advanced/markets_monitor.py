@@ -22,7 +22,7 @@ from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 # 1. изменения книги
 # 2. изменения бюджетов и ассетов.
 
-class MarketController(OrderBookComponent):
+class MarketsMonitor(OrderBookComponent):
     _logger = None
 
     @classmethod
@@ -95,7 +95,10 @@ class MarketController(OrderBookComponent):
 
 
     def get_taker_price(self,trade_type,level) -> Decimal:
-            return self.taker_prices[trade_type][level]
+        return self.taker_prices[trade_type][level]
+
+    def get_taker_prices(self) -> Decimal:
+        return self.taker_prices
 
     '''        
     def execute_taker_trade(self, trade_type, amount):
