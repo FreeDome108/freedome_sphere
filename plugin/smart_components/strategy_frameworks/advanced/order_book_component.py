@@ -1,3 +1,4 @@
+import logging
 import asyncio
 from decimal import Decimal
 from enum import Enum
@@ -11,6 +12,7 @@ from hummingbot.core.event.events import OrderBookEvent, OrderBookTradeEvent
 from hummingbot.core.utils.async_utils import safe_ensure_future
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
+from hummingbot.logger import HummingbotLogger
 
 class SmartComponentStatus(Enum):
     NOT_STARTED = 1
@@ -67,6 +69,7 @@ class OrderBookComponent:
         return cls._logger
 
     def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 0.5):
+        self.logger().warning(f"OrderBookComponent initializing")
         self.order_book_changed=False
         
         self._strategy: ScriptStrategyBase = strategy
@@ -87,6 +90,7 @@ class OrderBookComponent:
         self.register_events()
         self.terminated = asyncio.Event()
         safe_ensure_future(self.control_loop())
+        self.logger().warning(f"OrderBookComponent initialized")
 
     @property
     def status(self):

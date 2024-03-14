@@ -1,4 +1,5 @@
 import os
+import logging
 from decimal import Decimal
 from typing import Dict
 
@@ -18,6 +19,7 @@ from hummingbot.smart_components.strategy_frameworks.advanced.advanced_executor_
 )
 from hummingbot.smart_components.strategy_frameworks.advanced.markets_monitor import MarketsMonitor
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
+from hummingbot.logger import HummingbotLogger
 
 #from scripts.markets_monitor_strategy_config import MarketsMonitorStrategyConfig
 
@@ -32,6 +34,15 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
     #    cls.markets = {config.exchange: set(config.trading_pairs.split(","))}
 
     # def __init__(self, connectors: Dict[str, ConnectorBase],config: MarketsMonitorStrategyConfig):
+
+    _logger = None
+
+    @classmethod
+    def logger(cls) -> HummingbotLogger:
+        if cls._logger is None:
+            cls._logger = logging.getLogger(__name__)
+        return cls._logger
+
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         super().__init__(connectors)        
 
