@@ -1,5 +1,6 @@
 import os
 import json
+import logging
 from decimal import Decimal
 from typing import Dict
 
@@ -21,31 +22,50 @@ from hummingbot.smart_components.strategy_frameworks.advanced.markets_monitor im
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
 from scripts.dman_strategy_config import DManStrategyConfig
-
+from hummingbot.logger import HummingbotLogger
 
 
 # Стратегия торгует над одним и тем же инструментом, названия торговых пар у разных exchanges нужны в случае отличий внутренних наименований
 class DManStrategy(ScriptStrategyBase):
-    # config_type="prod"
-    
-    # Dev config
-    #config_type="test_perp"
-
+    # Initialize deps
     controllers = {}
     markets = {}
-    maker_exchange="whitebit"
-    taker_exchange="binance_perpetual"
-    trading_pair="XRP-USDT"
+    executor_handlers = {}
+    ######################
+
+
+    NODE_ENV = os.getenv("NODE_ENV", "dev")
+    NODE_ENV = "prod"
+    conf=DManStrategyConfig();
+    
+    config_type=conf.config_types[NODE_ENV]
+    config=conf.markets_configs.get(config_type)
+
+    '''
+    maker_exchange=config["makers"][0].get("exchange")
+    taker_exchange=config["takers"][0].get("exchange")
+    exchange=taker_exchange
+    
+    trading_pair=config["defaults"].get("trading_pair")
     
     markets={maker_exchange:{trading_pair},taker_exchange:{trading_pair}}
+    '''
+    
+    _logger = None
 
-    executor_handlers = {}
+    @classmethod
+    def logger(cls) -> HummingbotLogger:
+        if cls._logger is None:
+            cls._logger = logging.getLogger(__name__)
+        return cls._logger
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
+        self.logger().info(f"NODE_ENV={self.NODE_ENV}")
+        self.logger().info(f"config_type={self.config_type}")
+        self.logger().info(f"config={json.dumps(self.config)}")
+
         super().__init__(connectors)        
         
-        conf=DManStrategyConfig();
-        self.config=conf.markets_config
 
         n_levels=self.config["defaults"]["n_levels"]
         order_amount=self.config["defaults"]["order_amount"]
@@ -59,16 +79,11 @@ class DManStrategy(ScriptStrategyBase):
         order_refresh_time=self.config["defaults"]["order_refresh_time"]
         cooldown_time=self.config["defaults"]["cooldown_time"]
 
-        maker_exchange=self.config["makers"][0].get("exchange")
-        taker_exchange=self.config["takers"][0].get("exchange")
-        trading_pair=self.config["defaults"].get("trading_pair")
 
         # Для market monitor пока так
         self.n_levels=n_levels
         self.order_amount=order_amount
-        self.exchange=taker_exchange
-        self.trading_pair=trading_pair
-        self.taker_exchange=taker_exchange
+
 
 
         leverage=self.config["defaults"].get("leverage", 1)
@@ -130,10 +145,10 @@ class DManStrategy(ScriptStrategyBase):
         config = DManConfig(
             config=self.config,
             order_levels=order_levels,
-            exchange=maker_exchange,
-            trading_pair=trading_pair,
+            exchange=self.maker_exchange,
+            trading_pair=self.trading_pair,
             candles_config=[
-                CandlesConfig(connector=taker_exchange, trading_pair=trading_pair,
+                CandlesConfig(connector=self.taker_exchange, trading_pair=self.trading_pair,
                             interval=candles_interval, max_records=candles_max_records),
             ],
             leverage=leverage,
@@ -141,18 +156,18 @@ class DManStrategy(ScriptStrategyBase):
 
             # Advanced
             maker_perpetual_only_close = False,
-            taker_exchange = taker_exchange,
-            taker_pair = trading_pair,
+            taker_exchange = self.taker_exchange,
+            taker_pair = self.trading_pair,
             taker_profitability = 0.6, #taker_profitability_targer = 0.6
             taker_profitability_min = 0.5
         )
         controller = DManController(config=config)
 
-        self.markets[taker_exchange]={trading_pair}
+        self.markets[self.taker_exchange]={self.trading_pair}
 
 
         self.markets = controller.update_strategy_markets_dict(self.markets)
-        self.controllers[trading_pair] = controller
+        self.controllers[self.trading_pair] = controller
 
         # self.logger().warning(f"self.markets: {json.dumps(self.markets)}")
 

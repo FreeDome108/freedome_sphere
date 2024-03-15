@@ -3,6 +3,11 @@ from hummingbot.client.config.config_data_types import BaseClientModel, ClientFi
 #from scripts.dman_strategy import DManStrategy
 
 class DManStrategyConfig(BaseClientModel):
+    config_types = {
+        "dev":"dev1",
+        "prod":"prod1"
+    }
+
     # параметры можно указать в maker_defaults и taker_defaults, и если нужно можно их прописать к конкретной бирже
     # perpetual_exclude_open  - только снимать позиции
     # weights рекурсивно умножаются, другие параметры берутся рекурсивно самый глубокий
@@ -11,12 +16,8 @@ class DManStrategyConfig(BaseClientModel):
 
     #На перпетуальном мейкере есть смысл если позиций открыто больше,чем order_amount - выставлять БОЛЬШЕ (по крайней мере, что сможем удовлетворить)
 
-    # config_type="prod"
     
-    # Dev config
-    config_type="test"
-    
-    defaults_test = {
+    defaults_dev = {
         "trading_pair": "XRP-USDT",
         
         "order_amount": Decimal("10"), # Позже можно массивом уровни и спреды
@@ -39,8 +40,8 @@ class DManStrategyConfig(BaseClientModel):
         "cooldown_time": 5,
     }
 
-    defaults = {
-        "trading_pair": "XRP-USDT",
+    defaults_prod = {
+        "trading_pair": "XMR-USDT",
         
         "order_amount": Decimal("10"), # Позже можно массивом уровни и спреды
         "amount_ratio_increase": 1.5,
@@ -55,13 +56,13 @@ class DManStrategyConfig(BaseClientModel):
         "start_spread": 0.02,
         "spread_ratio_increase": 2.0,
 
-        "top_order_refresh_time": 60, #!!!
-        "order_refresh_time": 60 * 60 * 2, #!!!
+        "top_order_refresh_time": 15, #!!!
+        "order_refresh_time": 30, #!!!
         "cooldown_time": 5,
     }
 
     markets_configs = {
-        "test":
+        "dev1":
         {
             "makers":
             [
@@ -83,9 +84,33 @@ class DManStrategyConfig(BaseClientModel):
             {
                 "trading_pair": "XRP-USDT",
             },
-            "defaults": defaults_test
+            "defaults": defaults_dev
         },
-        "prod":
+        "prod1":
+        {
+            "makers":
+            [
+                {
+                    "exchange": "whitebit",
+                },
+            ],
+            "takers":
+            [
+                {
+                    "exchange": "binance_perpetual",
+                },       
+            ],
+            "maker_defaults":
+            {
+                "order_amount": Decimal("10")
+            },
+            "taker_defaults":
+            {
+                "trading_pair": "XRP-USDT",
+            },
+            "defaults": defaults_prod
+        },        
+        "prodN":
         {
             "makers":
             [
@@ -168,8 +193,7 @@ class DManStrategyConfig(BaseClientModel):
             {
                 "trading_pair": "XRP-USDT",
             },
-            "defaults":defaults
+            "defaults":defaults_prod
         }
     }
 
-    markets_config=markets_configs[config_type]
