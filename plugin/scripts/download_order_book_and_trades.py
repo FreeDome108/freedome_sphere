@@ -18,8 +18,11 @@ class DownloadTradesAndOrderBookSnapshots(ScriptStrategyBase):
         
     #exchange = os.getenv("EXCHANGE", "binance_paper_trade")
     exchange = os.getenv("EXCHANGE", "whitebit")
-    trading_pairs = os.getenv("TRADING_PAIRS", "ETH-USDT,BTC-USDT")
-    trading_pairs = os.getenv("TRADING_PAIRS", "ETH-USDT,BTC-USDT")
+    #exchange = os.getenv("EXCHANGE", "dydx_perpetual")
+    #exchange = os.getenv("EXCHANGE", "binance_perpetual")
+    #trading_pairs = os.getenv("TRADING_PAIRS", "ETH-USD,BTC-USD")
+    #trading_pairs = os.getenv("TRADING_PAIRS", "ETH-USDT,BTC-USDT")
+    trading_pairs = os.getenv("TRADING_PAIRS", "BTC-USDT")
     depth = int(os.getenv("DEPTH", 50))
     trading_pairs = [pair for pair in trading_pairs.split(",")]
     last_dump_timestamp = 0
@@ -104,12 +107,14 @@ class DownloadTradesAndOrderBookSnapshots(ScriptStrategyBase):
     def _process_public_trade(self, event_tag: int, market: ConnectorBase, event: OrderBookTradeEvent):
         # self.logger().warning(f"_process_public_trade")
         current_datetime = datetime.now()
-        timestamp_str = str(current_datetime.timestamp())
-        diff=float(current_datetime.timestamp())-float(event.timestamp)
-        self.logger().warning(f"_process_public_trade {diff} {event.timestamp} {timestamp_str} ")
+        current_timestamp=current_datetime.timestamp()
+        timestamp_str = str(current_timestamp)
+        lag=float(float(current_timestamp)-float(event.timestamp))
+        self.logger().warning(f"_process_public_trade {lag} {event.timestamp} {timestamp_str} ")
         self.trades_temp_storage[event.trading_pair].append({
             "ts": event.timestamp,
-            "ts_now": timestamp_str,
+            "tslocal": timestamp_str,
+            "lag": lag,
             "price": event.price,
             "q_base": event.amount,
             "side": event.type.name.lower(),

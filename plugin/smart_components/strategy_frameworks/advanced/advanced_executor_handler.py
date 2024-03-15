@@ -71,7 +71,7 @@ class AdvancedExecutorHandler(MarketMakingExecutorHandler):
                         current_metrics[current_executor.side]["executors"].append(current_executor)
                 else:
                     # Вот именно здесь мы пытались слать цены taker рынков, но возможно нужно по другому.
-                    taker_prices=self.markets_monitor.get_taker_prices();
+                    taker_prices=self.markets_monitor.get_taker_prices(self.straregy.taker_exchange,self.straregy.trading_pair);
                     position_config = self.controller.get_position_config(taker_prices, order_level)
                     #position_config = self.controller.get_position_config(order_level)
                     if position_config:

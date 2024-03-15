@@ -56,6 +56,12 @@ class DManStrategy(ScriptStrategyBase):
         taker_exchange=self.config["takers"][0].get("exchange")
         trading_pair=self.config["defaults"].get("trading_pair")
 
+        # Для market monitor пока так
+        self.exchange=taker_exchange
+        self.trading_pair=trading_pair
+        self.taker_exchange=taker_exchange
+
+
         leverage=self.config["defaults"].get("leverage", 1)
 
         candles_interval = "1m"

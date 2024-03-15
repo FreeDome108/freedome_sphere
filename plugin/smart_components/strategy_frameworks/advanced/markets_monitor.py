@@ -1,3 +1,4 @@
+import json
 import logging
 from decimal import Decimal
 from typing import Dict, Optional, List, Tuple, Union
@@ -11,6 +12,12 @@ from hummingbot.smart_components.strategy_frameworks.advanced.order_book_compone
 
 from hummingbot.strategy.script_strategy_base import ScriptStrategyBase
 
+# Сюда вынесена логика по мониторингу цен на всех рынках при срабатывании событий получения новой книги ордеров или покупках.
+# TODO: 
+# 1. Обрабатывание события получения новой книги ордеров, перестройка taker_price и вызов событий.
+# 2. Работа с мультирынками, пока только один
+
+# Старая информация:
 # Сюда вынесена вся логика по работе с рынком taker_exchange.
 # Обращения идут из:
 # 1. dman.py, для него выдается информация по цене выставления позиций
@@ -34,6 +41,7 @@ class MarketsMonitor(OrderBookComponent):
     def __init__(self, strategy: ScriptStrategyBase, connectors: List[str], update_interval: float = 1.0):
         super().__init__(strategy=strategy, connectors=connectors, update_interval=update_interval)
         self.strategy=strategy
+        self.connectors=connectors
         self.taker_prices = {}
         # self.get_order_book(self.strategy.taker_exchange, self.strategy.taker_pair)
         #Поже изменить на механизм подписки
@@ -57,12 +65,19 @@ class MarketsMonitor(OrderBookComponent):
 
 
 
-    def on_order_book_change(self, order_book, connector_name: str, trading_pair: str):
+    def on_order_book_change(self, order_book_snapshot, connector_name: str, trading_pair: str):
         self.logger().warning(f"on_order_book_change connector_name={connector_name}")
-        self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.SELL);
-        self.calculate_taker_prices(order_book, connector_name, trading_pair, TradeType.BUY);
+        self.calculate_taker_prices(order_book_snapshot, connector_name, trading_pair, TradeType.SELL);
+        self.calculate_taker_prices(order_book_snapshot, connector_name, trading_pair, TradeType.BUY);
 
-    def calculate_taker_prices(self, order_book, connector_exchange: str, connector_pair: str, trade_type: TradeType):
+    def calculate_taker_prices(self, order_book_snapshot, connector_exchange: str, connector_pair: str, trade_type: TradeType):
+        depth=50
+        order_book={
+            "bids": order_book_snapshot[0].loc[:(depth - 1), ["price", "amount"]].values.tolist(),
+            "asks": order_book_snapshot[1].loc[:(depth - 1), ["price", "amount"]].values.tolist(),
+        }
+        #self.logger().warning(f"order_book: {json.dumps(order_book)}")
+        
         position_size = self.strategy.order_amount
         positions_count = self.strategy.n_levels
         volumes = [Decimal(position_size) for _ in range(positions_count)]
@@ -72,9 +87,12 @@ class MarketsMonitor(OrderBookComponent):
         for volume in volumes:
             total_volume = Decimal("0")
             weighted_price = Decimal("0")
+            #orders = order_book_snapshot[1] if trade_type == TradeType.BUY else order_book_snapshot[0]
             orders = order_book['asks'] if trade_type == TradeType.BUY else order_book['bids']
 
-            for order_price, order_volume in orders:
+            for order in orders:
+                order_price = order[0]
+                order_volume = order[1]
                 available_volume = Decimal(order_volume)
                 required_volume = volume - total_volume
 
@@ -98,7 +116,10 @@ class MarketsMonitor(OrderBookComponent):
     def get_taker_price(self,trade_type,level) -> Decimal:
         return self.taker_prices[trade_type][level]
 
-    def get_taker_prices(self) -> Decimal:
+    def get_taker_prices(self,exchange,trading_pair) -> Decimal:
+        order_book = self.connectors[exchange].get_order_book(trading_pair)
+        order_book_snapshot = order_book.snapshot
+        self.on_order_book_change(order_book_snapshot,exchange,trading_pair)
         return self.taker_prices
 
     '''        

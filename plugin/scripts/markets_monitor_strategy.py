@@ -28,6 +28,8 @@ from hummingbot.core.event.events import OrderBookEvent, OrderBookTradeEvent
 class MarketsMonitorStrategy(ScriptStrategyBase):
     exchange="binance_perpetual"
     trading_pair="XRP-USDT"
+    order_amount=Decimal(10)
+    n_levels=3
     
     markets={exchange:[trading_pair]}
 
@@ -55,14 +57,6 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
         
         self.executor_handlers = {"markets_monitor":self.markets_monitor}
 
-        for market in self.connectors.values():
-            for order_book in market.order_books.values():
-                order_book.add_listener(OrderBookEvent.TradeEvent, self.order_book_trade_event)
-
-
-    def order_book_trade_event(self):
-        self.logger().warning(f"order_book_trade_event")
-
     def on_stop(self):
         pass
 
@@ -76,7 +70,7 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
             if executor_handler.status == SmartComponentStatus.NOT_STARTED:
                 executor_handler.start()
             else:
-                takers_price=executor_handler.get_taker_prices();
+                takers_price=executor_handler.get_taker_prices(self.exchange,self.trading_pair);
                 self.logger().warning(f"takers_price={takers_price}")
 
     def format_status(self) -> str:
