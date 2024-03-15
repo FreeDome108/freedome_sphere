@@ -39,9 +39,9 @@ class DManStrategyConfig(BaseClientModel):
         "order_refresh_time": 60,
         "cooldown_time": 5,
     }
-
+    
     defaults_prod = {
-        "trading_pair": "XMR-USDT",
+        "trading_pair": "XRP-USDT",
         
         "order_amount": Decimal("10"), # Позже можно массивом уровни и спреды
         "amount_ratio_increase": 1.5,
@@ -82,10 +82,10 @@ class DManStrategyConfig(BaseClientModel):
             },
             "taker_defaults":
             {
-                "trading_pair": "XRP-USDT",
+                #"trading_pair": "XRP-USDT",
             },
             "defaults": defaults_dev
-        },
+        },      
         "prod1":
         {
             "makers":
@@ -106,10 +106,10 @@ class DManStrategyConfig(BaseClientModel):
             },
             "taker_defaults":
             {
-                "trading_pair": "XRP-USDT",
+                #"trading_pair": "XRP-USDT",
             },
             "defaults": defaults_prod
-        },        
+        },
         "prodN":
         {
             "makers":
@@ -152,11 +152,11 @@ class DManStrategyConfig(BaseClientModel):
                     "comment": "фьючерсная пружинка"
                     # сработает если рынок пришел в большое движение, остальным рынкам нужно перестраиваться под него
                 },
-                '''
-                {
-                    #еще один вариант возможен. 
-                }
-                '''
+                
+                #{
+                #    #еще один вариант возможен. 
+                #}
+                
             ],
             "takers":
             [
@@ -191,9 +191,10 @@ class DManStrategyConfig(BaseClientModel):
             },
             "taker_defaults":
             {
-                "trading_pair": "XRP-USDT",
+                #"trading_pair": "XRP-USDT",
             },
             "defaults":defaults_prod
         }
     }
+
 

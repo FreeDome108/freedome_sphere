@@ -367,3 +367,7 @@ class PositionExecutor(PositionExecutorBase):
         adjusted_order_candidate: OrderCandidate = self.connectors[self.taker_exchange].budget_checker.adjust_candidate(order_candidate)
         if adjusted_order_candidate.amount > Decimal("0"):
             return adjusted_order_candidate
+
+    def validate_sufficient_balance(self):
+        #Что-то переделали по закрытию, позже разобраться пока так:
+        self.check_taker_budget()

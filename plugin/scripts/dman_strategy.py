@@ -39,18 +39,19 @@ class DManStrategy(ScriptStrategyBase):
     conf=DManStrategyConfig();
     
     config_type=conf.config_types[NODE_ENV]
-    config=conf.markets_configs.get(config_type)
+    config=conf.markets_configs[config_type]
 
-    '''
     maker_exchange=config["makers"][0].get("exchange")
     taker_exchange=config["takers"][0].get("exchange")
     exchange=taker_exchange
     
+    defaults=config["defaults"]
+
+
     trading_pair=config["defaults"].get("trading_pair")
     
     markets={maker_exchange:{trading_pair},taker_exchange:{trading_pair}}
-    '''
-    
+
     _logger = None
 
     @classmethod
@@ -59,25 +60,34 @@ class DManStrategy(ScriptStrategyBase):
             cls._logger = logging.getLogger(__name__)
         return cls._logger
 
+    def decimal_default(self,obj):
+        if isinstance(obj, Decimal):
+            return str(obj)
+        raise TypeError
+
     def __init__(self, connectors: Dict[str, ConnectorBase]):
         self.logger().info(f"NODE_ENV={self.NODE_ENV}")
         self.logger().info(f"config_type={self.config_type}")
-        self.logger().info(f"config={json.dumps(self.config)}")
+        self.logger().info(f"config={json.dumps(self.config,default=self.decimal_default)}")
+        self.logger().info(f"defaults={json.dumps(self.defaults,default=self.decimal_default)}")
 
         super().__init__(connectors)        
         
 
-        n_levels=self.config["defaults"]["n_levels"]
-        order_amount=self.config["defaults"]["order_amount"]
-        amount_ratio_increase=self.config["defaults"]["amount_ratio_increase"]
-    
-        top_order_start_spread=self.config["defaults"]["top_order_start_spread"]
-        start_spread=self.config["defaults"]["start_spread"]
-        spread_ratio_increase=self.config["defaults"]["spread_ratio_increase"]
+        n_levels=self.defaults.get("n_levels")
+        order_amount=self.defaults.get("order_amount")
+        self.logger().info(f"n_levels={n_levels}")
 
-        top_order_refresh_time=self.config["defaults"]["top_order_start_spread"]
-        order_refresh_time=self.config["defaults"]["order_refresh_time"]
-        cooldown_time=self.config["defaults"]["cooldown_time"]
+        
+        amount_ratio_increase=self.defaults.get("amount_ratio_increase")
+    
+        top_order_start_spread=self.defaults.get("top_order_start_spread")
+        start_spread=self.defaults.get("start_spread")
+        spread_ratio_increase=self.defaults.get("spread_ratio_increase")
+
+        top_order_refresh_time=self.defaults.get("top_order_start_spread")
+        order_refresh_time=self.defaults.get("order_refresh_time")
+        cooldown_time=self.defaults.get("cooldown_time")
 
 
         # Для market monitor пока так
@@ -85,8 +95,7 @@ class DManStrategy(ScriptStrategyBase):
         self.order_amount=order_amount
 
 
-
-        leverage=self.config["defaults"].get("leverage", 1)
+        leverage=self.defaults.get("leverage", 1)
 
         candles_interval = "1m"
         candles_max_records = 300
