@@ -97,10 +97,10 @@ class DManController(AdvancedControllerBase):
         """
         
         if self.config.order_placement_strategy == OrderPlacementStrategy.TAKER_BASED:
-            close_price = taker_prices[order_level.side][order_level.spread_factor]
+            close_price = taker_prices[order_level.side][order_level.level]
             
-            price_multiplier = self.config.price_multiplier
-            spread_multiplier = self.config.spread_multiplier
+            price_multiplier = 1.01 #self.config.price_multiplier
+            spread_multiplier = 1.01 #self.config.spread_multiplier
 
         else:
             close_price = self.get_close_price(self.close_price_trading_pair)
@@ -108,9 +108,9 @@ class DManController(AdvancedControllerBase):
 
 
 
-        price_adjusted = close_price * (1 + price_multiplier)
+        price_adjusted = Decimal(float(close_price) * (1 + price_multiplier))
         side_multiplier = -1 if order_level.side == TradeType.BUY else 1
-        order_price = price_adjusted * (1 + order_level.spread_factor * spread_multiplier * side_multiplier)
+        order_price = Decimal(float(price_adjusted) * (1 + float(order_level.spread_factor) * float(spread_multiplier) * float(side_multiplier)))
         amount = order_level.order_amount_usd / order_price
 
         if order_level.triple_barrier_conf.trailing_stop_trailing_delta and order_level.triple_barrier_conf.trailing_stop_trailing_delta:

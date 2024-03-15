@@ -1,4 +1,5 @@
 import os
+import json
 from decimal import Decimal
 from typing import Dict
 
@@ -32,6 +33,12 @@ class DManStrategy(ScriptStrategyBase):
 
     controllers = {}
     markets = {}
+    maker_exchange="whitebit"
+    taker_exchange="binance_perpetual"
+    trading_pair="XRP-USDT"
+    
+    markets={maker_exchange:{trading_pair},taker_exchange:{trading_pair}}
+
     executor_handlers = {}
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
@@ -57,6 +64,8 @@ class DManStrategy(ScriptStrategyBase):
         trading_pair=self.config["defaults"].get("trading_pair")
 
         # Для market monitor пока так
+        self.n_levels=n_levels
+        self.order_amount=order_amount
         self.exchange=taker_exchange
         self.trading_pair=trading_pair
         self.taker_exchange=taker_exchange
@@ -129,6 +138,7 @@ class DManStrategy(ScriptStrategyBase):
             ],
             leverage=leverage,
             natr_length=natr_length,
+
             # Advanced
             maker_perpetual_only_close = False,
             taker_exchange = taker_exchange,
@@ -138,11 +148,14 @@ class DManStrategy(ScriptStrategyBase):
         )
         controller = DManController(config=config)
 
-        
+        self.markets[taker_exchange]={trading_pair}
+
+
         self.markets = controller.update_strategy_markets_dict(self.markets)
         self.controllers[trading_pair] = controller
 
-    
+        # self.logger().warning(f"self.markets: {json.dumps(self.markets)}")
+
         self.markets_monitor = MarketsMonitor(strategy=self,connectors=connectors);
 
         for trading_pair, controller in self.controllers.items():
