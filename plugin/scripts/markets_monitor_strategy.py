@@ -26,12 +26,15 @@ from hummingbot.core.event.events import OrderBookEvent, OrderBookTradeEvent
 #from scripts.markets_monitor_strategy_config import MarketsMonitorStrategyConfig
 
 class MarketsMonitorStrategy(ScriptStrategyBase):
-    exchange="binance_perpetual"
+    config={"tick_size":0.1}
+
+    maker_exchange="whitebit"
+    taker_exchange="binance_perpetual"
     trading_pair="XRP-USDT"
     order_amount=Decimal(10)
     n_levels=3
     
-    markets={exchange:[trading_pair]}
+    markets={maker_exchange:[trading_pair],taker_exchange:[trading_pair]}
 
     #@classmethod
     #def init_markets(cls, config: MarketsMonitorStrategyConfig):
@@ -48,7 +51,7 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
         return cls._logger
 
     def __init__(self, connectors: Dict[str, ConnectorBase]):
-        super().__init__(connectors)        
+        super().__init__(connectors=connectors,config=self.config)        
 
         self.controllers = {}
         #self.executor_handlers = {}
@@ -70,7 +73,9 @@ class MarketsMonitorStrategy(ScriptStrategyBase):
             if executor_handler.status == SmartComponentStatus.NOT_STARTED:
                 executor_handler.start()
             else:
-                takers_price=executor_handler.get_taker_prices(self.exchange,self.trading_pair);
+                executor_handler.control_task2()
+
+                takers_price=executor_handler.get_taker_prices(self.taker_exchange,self.trading_pair);
                 self.logger().warning(f"takers_price={takers_price}")
 
     def format_status(self) -> str:

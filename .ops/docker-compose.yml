@@ -24,6 +24,7 @@ services:
       - "../submodule/hummingbot.git/hummingbot/smart_components/executors/position_executor/data_types.py:/home/hummingbot/hummingbot/smart_components/executors/position_executor/data_types_base.py"
 # Bug bix:
       - "../plugin/core/web_assistant/rest_assistant.py:/home/hummingbot/hummingbot/core/web_assistant/rest_assistant.py"
+      - "../plugin/core/data_type/order_book.pyx:/home/hummingbot/hummingbot/core/data_type/order_book.pyx"
 # Bot instances
       - "../hummingbot-1_files/conf:/home/hummingbot/conf"
       - "../hummingbot-1_files/conf/connectors:/home/hummingbot/conf/connectors"
