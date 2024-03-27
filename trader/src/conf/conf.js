@@ -7,7 +7,7 @@ export const markets_configs = {
             trading_pair: 'BTC/USDT:USDT-240628',
             future:
             {
-                expire_date:new Date('2024-12-27')
+                expire_date:new Date('2024-06-28')
             }
         },
         {
@@ -15,7 +15,7 @@ export const markets_configs = {
             trading_pair: 'BTC/USDT:USDT-240329',
             future:
             {
-                expire_date:new Date('2024-12-27')
+                expire_date:new Date('2024-03-29')
             }
         },
         {
