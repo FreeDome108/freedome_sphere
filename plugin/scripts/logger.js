@@ -1,12 +1,12 @@
 // Require CCXT Pro for real-time data
-const ccxtpro = require('ccxt');
+const ccxt = require('ccxt');
 
 // Instantiate exchanges with CCXT Pro
-const maker_exchange = new ccxtpro["derebit"]({
+const maker_exchange = new ccxt["derebit"]({
     apiKey: 'KL4mbyYU',
     secret: 'L5Du7D5B2GO0PePrmTJsZ1aoNyqfvaAS2S1hHd8jin8',
 });
-const taker_exchange = new ccxtpro["binance"]({
+const taker_exchange = new ccxt["binance"]({
     apiKey: 'fFJjfZfoiRQNv5Kt4DAJ7waI7XAOT6pHg6NnQd4POdiOz2zrR8MhJa36RQhaiEqS',
     secret: 'KY0eIWVS5i0PLtmF5IJkLH6WwzBSuu7fxzVGvTQyhLYSUsVHaekjUaeHT5bR6F2l',
 });
