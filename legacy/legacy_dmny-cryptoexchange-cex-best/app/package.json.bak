@@ -1,0 +1,24 @@
+{
+  "name": "TranslationAgregator",
+  "version": "1.0.0",
+  "description": "TranslationAgregator microservice with HTTP REST API and swagger interface for translation from one language to another",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "swagger-ui-express": "^4.1.4",
+    "yandex-translate": "^1.1.0",
+    "google-translate-api": "^2.3.0",
+    "baidu-translate-api": "^0.2.0"
+  }
+}
+
+
+
+
