@@ -1,0 +1,107 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "API Documentation",
+        "description": "API documentation for the trading app"
+    },
+    "basePath": "/api/v1",
+    "schemes": [
+        "http"
+    ],
+    "paths": {
+        "/currency": {
+            "get": {
+                "summary": "Get available currencies",
+                "description": "Retrieves a list of available currencies",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Currencies"
+                        }
+                    }
+                }
+            }
+        },
+        "/symbol": {
+            "get": {
+                "summary": "Get available symbols",
+                "description": "Retrieves a list of available symbols",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/Symbols"
+                        }
+                    }
+                }
+            }
+        },
+        "/orderbook": {
+            "get": {
+                "summary": "Get order book",
+                "description": "Retrieves the order book",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/OrderBook"
+                        }
+                    }
+                }
+            }
+        },
+        "/orderbook/{symbol}": {
+            "get": {
+                "summary": "Get order book by symbol",
+                "description": "Retrieves the order book for a specific symbol",
+                "parameters": [
+                    {
+                        "name": "symbol",
+                        "in": "path",
+                        "description": "The symbol to retrieve the order book for",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "$ref": "#/definitions/OrderBook"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request - symbol not supported"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Currencies": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "Symbols": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "OrderBook": {
+            "type": "object",
+            "properties": {
+                "{symbol}": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    }
+}
