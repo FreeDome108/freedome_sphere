@@ -1,14 +1,52 @@
 const fs = require('fs');
 const path = require('path');
+const BorankoFormat = require('../core/borankoFormat');
 
 /**
  * Импортер комиксов Баранько для freedome_sphere
- * Поддерживает формат .comics и интеграцию с mbharata_client
+ * 
+ * ⚠️ ВАЖНОЕ ПРЕДУПРЕЖДЕНИЕ:
+ * Формат .comics поддерживается ТОЛЬКО в режиме ASIS для единственного 
+ * legacy приложения mbharata (с комиксами нарисованными Боранько).
+ * 
+ * 🚨 DEPRECATION NOTICE:
+ * Формат .comics будет скоро признан DEPRECATED и УДАЛЕН из системы.
+ * Используйте современный формат .zelim для всех новых проектов.
+ * 
+ * Импортирует из устаревших форматов (.comics, .cbr, .cbz)
+ * Конвертирует в современный формат .boranko для 2D
  */
 class BarankoComicsImporter {
     constructor() {
-        this.supportedFormats = ['.comics', '.cbr', '.cbz'];
+        this.supportedImportFormats = ['.comics', '.cbr', '.cbz']; // Только для импорта
+        this.exportFormat = '.boranko'; // Сохраняем только в .boranko для 2D
         this.importedComics = [];
+        this.borankoFormat = new BorankoFormat();
+        
+        // Предупреждение о deprecation
+        this.showDeprecationWarning();
+    }
+
+    /**
+     * Показать предупреждение о deprecation формата .comics
+     */
+    showDeprecationWarning() {
+        console.warn(`
+🚨 DEPRECATION WARNING 🚨
+═══════════════════════════════════════════════════════════════
+⚠️  Формат .comics поддерживается ТОЛЬКО в режиме ASIS
+   для единственного legacy приложения mbharata 
+   (с комиксами нарисованными Боранько).
+
+🚨 ВНИМАНИЕ: Формат .comics будет скоро признан DEPRECATED 
+   и УДАЛЕН из системы!
+
+✅ РЕКОМЕНДАЦИЯ: Используйте современный формат .boranko 
+   для всех новых 2D проектов.
+
+📅 Планируемое удаление: Следующая мажорная версия
+═══════════════════════════════════════════════════════════════
+        `);
     }
 
     /**
@@ -22,7 +60,7 @@ class BarankoComicsImporter {
             
             const files = fs.readdirSync(folderPath);
             const comicsFiles = files.filter(file => 
-                this.supportedFormats.some(format => file.toLowerCase().endsWith(format))
+                this.supportedImportFormats.some(format => file.toLowerCase().endsWith(format))
             );
 
             const importedComics = [];
@@ -70,6 +108,10 @@ class BarankoComicsImporter {
 
             switch (fileExt) {
                 case '.comics':
+                    // Предупреждение для .comics файлов
+                    console.warn(`⚠️ DEPRECATION WARNING: Импорт устаревшего формата .comics из ${fileName}`);
+                    console.warn(`   Этот формат поддерживается только в режиме ASIS для legacy mbharata`);
+                    console.warn(`   Рекомендуется использовать современный формат .boranko для 2D`);
                     comicData = await this.parseComicsFile(filePath);
                     break;
                 case '.cbr':
@@ -80,19 +122,17 @@ class BarankoComicsImporter {
                     throw new Error(`Неподдерживаемый формат: ${fileExt}`);
             }
 
-            // Добавление метаданных для freedome_sphere
-            const enhancedComic = {
+            // Конвертация в .boranko формат
+            const borankoComic = this.convertToBorankoFormat({
                 id: Date.now() + Math.random(),
                 name: fileName,
                 originalPath: filePath,
-                type: 'comic',
-                format: fileExt,
+                originalFormat: fileExt,
                 imported: new Date().toISOString(),
-                domeOptimized: false,
                 ...comicData
-            };
+            });
 
-            return enhancedComic;
+            return borankoComic;
 
         } catch (error) {
             console.error(`❌ Ошибка импорта комикса ${filePath}:`, error);
@@ -214,8 +254,156 @@ class BarankoComicsImporter {
     }
 
     /**
-     * Экспорт комикса в формат mbharata_client
+     * Конвертация комикса в .boranko формат
      * @param {Object} comic - Данные комикса
+     * @returns {Object} Конвертированный комикс в .boranko формате
+     */
+    convertToBorankoFormat(comic) {
+        return {
+            id: comic.id,
+            name: comic.name,
+            type: 'comic',
+            format: 'boranko',
+            domeOptimized: true,
+            
+            // Конвертированные страницы
+            pages: this.convertPagesToBoranko(comic.pages || []),
+            
+            // Метаданные
+            metadata: {
+                ...comic.metadata,
+                originalFormat: comic.originalFormat,
+                converted: new Date().toISOString(),
+                domeCompatible: true,
+                projectionType: 'spherical'
+            },
+            
+            // Настройки отображения
+            display: {
+                aspectRatio: '16:9',
+                resolution: {
+                    width: 4096,
+                    height: 2048
+                },
+                sphericalMapping: true,
+                fisheyeCorrection: true
+            },
+            
+            // Информация об оригинале
+            original: {
+                path: comic.originalPath,
+                format: comic.originalFormat,
+                imported: comic.imported
+            }
+        };
+    }
+
+    /**
+     * Конвертация страниц в .boranko формат
+     * @param {Array} pages - Страницы комикса
+     * @returns {Array} Конвертированные страницы
+     */
+    convertPagesToBoranko(pages) {
+        return pages.map((page, index) => ({
+            id: page.id || `page_${index}`,
+            index: index,
+            type: 'comic_page',
+            format: 'boranko',
+            
+            // Конвертированное изображение
+            image: {
+                data: page.imageData || null,
+                format: 'webp',
+                resolution: {
+                    width: 2048,
+                    height: 1024
+                },
+                domeOptimized: true
+            },
+            
+            // Метаданные страницы
+            metadata: {
+                ...page.metadata,
+                converted: new Date().toISOString(),
+                originalFormat: page.originalFormat || 'unknown'
+            }
+        }));
+    }
+
+    /**
+     * Сохранение комикса в .boranko формате
+     * @param {Object} comic - Данные комикса
+     * @param {string} outputPath - Путь для сохранения
+     * @returns {Promise<Object>} Результат сохранения
+     */
+    async saveAsBoranko(comic, outputPath) {
+        try {
+            const borankoComic = this.convertToBorankoFormat(comic);
+            const borankoData = this.borankoFormat.createBorankoStructure({
+                name: comic.name,
+                comics: [borankoComic]
+            });
+            
+            // Обновление статистики
+            const updatedData = this.borankoFormat.updateStatistics(borankoData);
+            
+            // Сохранение файла
+            fs.writeFileSync(outputPath, JSON.stringify(updatedData, null, 2));
+            
+            return {
+                success: true,
+                path: outputPath,
+                format: 'boranko',
+                message: 'Комикс сохранен в формате .boranko'
+            };
+            
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message,
+                message: 'Ошибка сохранения в формате .boranko'
+            };
+        }
+    }
+
+    /**
+     * Загрузка комикса из .boranko формата
+     * @param {string} filePath - Путь к .boranko файлу
+     * @returns {Promise<Object>} Загруженный комикс
+     */
+    async loadFromBoranko(filePath) {
+        try {
+            const fileContent = fs.readFileSync(filePath, 'utf8');
+            const borankoData = JSON.parse(fileContent);
+            
+            // Валидация файла
+            const validation = this.borankoFormat.validateBorankoFile(borankoData);
+            if (!validation.valid) {
+                throw new Error(`Неверный формат .boranko: ${validation.errors.join(', ')}`);
+            }
+            
+            // Извлечение комиксов
+            const comics = borankoData.content.comics || [];
+            
+            return {
+                success: true,
+                comics: comics,
+                metadata: borankoData.project,
+                message: `Загружено ${comics.length} комиксов из .boranko файла`
+            };
+            
+        } catch (error) {
+            return {
+                success: false,
+                error: error.message,
+                message: 'Ошибка загрузки .boranko файла'
+            };
+        }
+    }
+
+    /**
+     * Экспорт комикса в формат mbharata_client
+     * @param {Object} comic - Данные комикса в .boranko формате
      * @returns {Object} Формат для mbharata_client
      */
     exportForMbharataClient(comic) {
@@ -227,11 +415,12 @@ class BarankoComicsImporter {
             content: {
                 pages: comic.pages,
                 metadata: comic.metadata,
-                domeSettings: comic.domeOptimized
+                domeSettings: comic.display
             },
             compatibility: {
                 mbharata_client: '1.0.0',
-                dome_systems: ['spherical', 'fisheye']
+                dome_systems: ['spherical', 'fisheye'],
+                boranko_format: '1.0.0'
             }
         };
     }
