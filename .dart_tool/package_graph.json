@@ -14,6 +14,7 @@
         "flutter_3d_controller",
         "flutter_localizations",
         "flutter_svg",
+        "intl",
         "path_provider",
         "provider",
         "shared_preferences"
@@ -143,6 +144,15 @@
       "name": "cupertino_icons",
       "version": "1.0.8",
       "dependencies": []
+    },
+    {
+      "name": "intl",
+      "version": "0.20.2",
+      "dependencies": [
+        "clock",
+        "meta",
+        "path"
+      ]
     },
     {
       "name": "flutter_localizations",
@@ -543,15 +553,6 @@
         "flutter_inappwebview_platform_interface",
         "flutter_inappwebview_web",
         "flutter_inappwebview_windows"
-      ]
-    },
-    {
-      "name": "intl",
-      "version": "0.20.2",
-      "dependencies": [
-        "clock",
-        "meta",
-        "path"
       ]
     },
     {
