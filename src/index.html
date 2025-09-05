@@ -537,21 +537,33 @@
             saveProject();
         });
 
-        ipcRenderer.on('menu-import-comics', (event, folderPath) => {
+        ipcRenderer.on('menu-import-comics', async (event, folderPath) => {
             console.log('Importing comics from:', folderPath);
             setStatus('Importing comics...', 'working');
             
-            // Имитация импорта комиксов
-            setTimeout(() => {
-                const comicFiles = [
-                    { name: 'comic1.comics', type: 'comic' },
-                    { name: 'comic2.comics', type: 'comic' }
-                ];
+            try {
+                // Реальный импорт комиксов через IPC
+                const result = await ipcRenderer.invoke('import-comics', folderPath);
                 
-                importedFiles = [...importedFiles, ...comicFiles];
-                updateImportedFiles();
-                setStatus('Comics imported successfully', 'ready');
-            }, 2000);
+                if (result.success) {
+                    // Добавление импортированных комиксов
+                    const comicFiles = result.comics.map(comic => ({
+                        name: comic.name,
+                        type: 'comic',
+                        id: comic.id,
+                        originalPath: comic.originalPath
+                    }));
+                    
+                    importedFiles = [...importedFiles, ...comicFiles];
+                    updateImportedFiles();
+                    setStatus(`Comics imported successfully (${result.count} files)`, 'ready');
+                } else {
+                    setStatus(`Import failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error importing comics:', error);
+                setStatus('Import failed', 'error');
+            }
         });
 
         ipcRenderer.on('menu-import-unreal', (event, filePath) => {
@@ -578,13 +590,29 @@
             }, 2000);
         });
 
-        ipcRenderer.on('menu-export-mbharata', (event, outputPath) => {
+        ipcRenderer.on('menu-export-mbharata', async (event, outputPath) => {
             console.log('Exporting to mbharata_client:', outputPath);
             setStatus('Exporting to mbharata_client...', 'working');
             
-            setTimeout(() => {
-                setStatus('Export completed successfully', 'ready');
-            }, 3000);
+            try {
+                if (!currentProject) {
+                    setStatus('No project to export', 'error');
+                    return;
+                }
+                
+                // Реальный экспорт через IPC
+                const result = await ipcRenderer.invoke('export-mbharata', currentProject, outputPath);
+                
+                if (result.success) {
+                    setStatus(`Export completed successfully (${result.metadata.fileSizeFormatted})`, 'ready');
+                    console.log('Export metadata:', result.metadata);
+                } else {
+                    setStatus(`Export failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error exporting project:', error);
+                setStatus('Export failed', 'error');
+            }
         });
 
         ipcRenderer.on('menu-export-dome', (event, outputPath) => {
