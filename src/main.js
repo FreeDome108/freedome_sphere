@@ -6,6 +6,8 @@ const fs = require('fs');
 // Импорт модулей freedome_sphere
 const BarankoComicsImporter = require('./importers/barankoComicsImporter');
 const MbharataClientExporter = require('./exporters/mbharataClientExporter');
+const AnAntaSoundManager = require('./core/anAntaSoundManager');
+const Zelim3DImporter = require('./importers/zelim3DImporter');
 
 // Инициализация хранилища настроек
 const store = new Store();
@@ -13,6 +15,8 @@ const store = new Store();
 // Инициализация модулей
 const comicsImporter = new BarankoComicsImporter();
 const mbharataExporter = new MbharataClientExporter();
+const anAntaSoundManager = new AnAntaSoundManager();
+const zelim3DImporter = new Zelim3DImporter();
 
 let mainWindow;
 
@@ -137,6 +141,38 @@ function createMenu() {
                   mainWindow.webContents.send('menu-import-blender', result.filePaths[0]);
                 }
               }
+            },
+            { type: 'separator' },
+            {
+              label: 'Load .zelim File',
+              click: async () => {
+                const result = await dialog.showOpenDialog(mainWindow, {
+                  properties: ['openFile'],
+                  filters: [
+                    { name: 'Zelim 3D Files', extensions: ['zelim'] },
+                    { name: 'All Files', extensions: ['*'] }
+                  ]
+                });
+                
+                if (!result.canceled) {
+                  mainWindow.webContents.send('menu-load-zelim', result.filePaths[0]);
+                }
+              }
+            },
+            {
+              label: 'Save as .zelim',
+              click: async () => {
+                const result = await dialog.showSaveDialog(mainWindow, {
+                  filters: [
+                    { name: 'Zelim 3D Files', extensions: ['zelim'] },
+                    { name: 'All Files', extensions: ['*'] }
+                  ]
+                });
+                
+                if (!result.canceled) {
+                  mainWindow.webContents.send('menu-save-zelim', result.filePath);
+                }
+              }
             }
           ]
         },
@@ -219,6 +255,38 @@ function createMenu() {
           label: '3D Audio Positioning',
           click: () => {
             mainWindow.webContents.send('menu-3d-audio');
+          }
+        },
+        { type: 'separator' },
+        {
+          label: 'Load .daga File',
+          click: async () => {
+            const result = await dialog.showOpenDialog(mainWindow, {
+              properties: ['openFile'],
+              filters: [
+                { name: 'Daga Audio Files', extensions: ['daga'] },
+                { name: 'All Files', extensions: ['*'] }
+              ]
+            });
+            
+            if (!result.canceled) {
+              mainWindow.webContents.send('menu-load-daga', result.filePaths[0]);
+            }
+          }
+        },
+        {
+          label: 'Save as .daga',
+          click: async () => {
+            const result = await dialog.showSaveDialog(mainWindow, {
+              filters: [
+                { name: 'Daga Audio Files', extensions: ['daga'] },
+                { name: 'All Files', extensions: ['*'] }
+              ]
+            });
+            
+            if (!result.canceled) {
+              mainWindow.webContents.send('menu-save-daga', result.filePath);
+            }
           }
         }
       ]
@@ -328,6 +396,82 @@ app.whenReady().then(() => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+// Обработчик загрузки .daga файла
+ipcMain.handle('load-daga-file', async (event, filePath) => {
+  try {
+    console.log(`🎵 Загрузка .daga файла: ${filePath}`);
+    const result = await anAntaSoundManager.loadDagaFile(filePath);
+    
+    return {
+      success: true,
+      data: result,
+      message: 'Daga файл загружен успешно'
+    };
+  } catch (error) {
+    console.error('❌ Ошибка загрузки .daga файла:', error);
+    return {
+      success: false,
+      error: error.message,
+      message: 'Ошибка загрузки .daga файла'
+    };
+  }
+});
+
+// Обработчик сохранения .daga файла
+ipcMain.handle('save-daga-file', async (event, audioData, outputPath) => {
+  try {
+    console.log(`💾 Сохранение .daga файла: ${outputPath}`);
+    const result = await anAntaSoundManager.saveAsDaga(audioData, outputPath);
+    
+    return result;
+  } catch (error) {
+    console.error('❌ Ошибка сохранения .daga файла:', error);
+    return {
+      success: false,
+      error: error.message,
+      message: 'Ошибка сохранения .daga файла'
+    };
+  }
+});
+
+// Обработчик загрузки .zelim файла
+ipcMain.handle('load-zelim-file', async (event, filePath) => {
+  try {
+    console.log(`🎮 Загрузка .zelim файла: ${filePath}`);
+    const result = await zelim3DImporter.loadFromZelim(filePath);
+    
+    return {
+      success: true,
+      data: result,
+      message: 'Zelim файл загружен успешно'
+    };
+  } catch (error) {
+    console.error('❌ Ошибка загрузки .zelim файла:', error);
+    return {
+      success: false,
+      error: error.message,
+      message: 'Ошибка загрузки .zelim файла'
+    };
+  }
+});
+
+// Обработчик сохранения .zelim файла
+ipcMain.handle('save-zelim-file', async (event, content3D, outputPath) => {
+  try {
+    console.log(`💾 Сохранение .zelim файла: ${outputPath}`);
+    const result = await zelim3DImporter.saveAsZelim(content3D, outputPath);
+    
+    return result;
+  } catch (error) {
+    console.error('❌ Ошибка сохранения .zelim файла:', error);
+    return {
+      success: false,
+      error: error.message,
+      message: 'Ошибка сохранения .zelim файла'
+    };
   }
 });
 

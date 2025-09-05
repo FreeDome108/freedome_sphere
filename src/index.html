@@ -276,6 +276,12 @@
                 <h3>Audio</h3>
                 <button class="button" onclick="setupAnantaSound()">🔊 anAntaSound Setup</button>
                 <button class="button secondary" onclick="audio3D()">🎵 3D Positioning</button>
+                <button class="button" onclick="loadDagaFile()">📁 Load .daga File</button>
+                <button class="button secondary" onclick="saveDagaFile()">💾 Save as .daga</button>
+                
+                <h3>3D Content</h3>
+                <button class="button" onclick="loadZelimFile()">📁 Load .zelim File</button>
+                <button class="button secondary" onclick="saveZelimFile()">💾 Save as .zelim</button>
                 
                 <div class="audio-controls" id="audioControls" style="display: none;">
                     <h4>Audio Sources</h4>
@@ -411,6 +417,30 @@
             console.log('3D Audio positioning...');
             setStatus('Opening 3D Audio editor...', 'working');
             // Логика 3D позиционирования аудио
+        }
+
+        function loadDagaFile() {
+            console.log('Loading .daga file...');
+            setStatus('Selecting .daga file...', 'working');
+            // Логика загрузки .daga файла будет обработана через IPC
+        }
+
+        function saveDagaFile() {
+            console.log('Saving as .daga file...');
+            setStatus('Saving as .daga file...', 'working');
+            // Логика сохранения .daga файла будет обработана через IPC
+        }
+
+        function loadZelimFile() {
+            console.log('Loading .zelim file...');
+            setStatus('Selecting .zelim file...', 'working');
+            // Логика загрузки .zelim файла будет обработана через IPC
+        }
+
+        function saveZelimFile() {
+            console.log('Saving as .zelim file...');
+            setStatus('Saving as .zelim file...', 'working');
+            // Логика сохранения .zelim файла будет обработана через IPC
         }
 
         function exportMbharata() {
@@ -622,6 +652,138 @@
             setTimeout(() => {
                 setStatus('Dome projection exported', 'ready');
             }, 2000);
+        });
+
+        ipcRenderer.on('menu-load-daga', async (event, filePath) => {
+            console.log('Loading .daga file from:', filePath);
+            setStatus('Loading .daga file...', 'working');
+            
+            try {
+                // Реальная загрузка .daga файла через IPC
+                const result = await ipcRenderer.invoke('load-daga-file', filePath);
+                
+                if (result.success) {
+                    // Добавление загруженного аудио
+                    const dagaAudio = {
+                        name: result.data.audio.name,
+                        type: 'daga_audio',
+                        id: result.data.audio.id,
+                        format: 'daga',
+                        spatial: result.data.spatial,
+                        anantasound: result.data.anantasound
+                    };
+                    
+                    audioSources.push(dagaAudio);
+                    updateAudioControls();
+                    setStatus(`Daga file loaded: ${result.data.audio.name}`, 'ready');
+                } else {
+                    setStatus(`Load failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading .daga file:', error);
+                setStatus('Load failed', 'error');
+            }
+        });
+
+        ipcRenderer.on('menu-save-daga', async (event, outputPath) => {
+            console.log('Saving .daga file to:', outputPath);
+            setStatus('Saving .daga file...', 'working');
+            
+            try {
+                if (audioSources.length === 0) {
+                    setStatus('No audio sources to save', 'error');
+                    return;
+                }
+                
+                // Сохранение первого аудио источника как .daga
+                const audioData = audioSources[0];
+                const result = await ipcRenderer.invoke('save-daga-file', audioData, outputPath);
+                
+                if (result.success) {
+                    setStatus(`Daga file saved: ${result.path}`, 'ready');
+                } else {
+                    setStatus(`Save failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving .daga file:', error);
+                setStatus('Save failed', 'error');
+            }
+        });
+
+        ipcRenderer.on('menu-load-zelim', async (event, filePath) => {
+            console.log('Loading .zelim file from:', filePath);
+            setStatus('Loading .zelim file...', 'working');
+            
+            try {
+                // Реальная загрузка .zelim файла через IPC
+                const result = await ipcRenderer.invoke('load-zelim-file', filePath);
+                
+                if (result.success) {
+                    // Добавление загруженного 3D контента
+                    const zelimContent = {
+                        name: result.data.project.name,
+                        type: 'zelim_3d',
+                        id: result.data.project.id,
+                        format: 'zelim',
+                        scene: result.data.scene,
+                        dome: result.data.dome
+                    };
+                    
+                    // Добавление в список контента (можно расширить)
+                    setStatus(`Zelim file loaded: ${result.data.project.name}`, 'ready');
+                } else {
+                    setStatus(`Load failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error loading .zelim file:', error);
+                setStatus('Load failed', 'error');
+            }
+        });
+
+        ipcRenderer.on('menu-save-zelim', async (event, outputPath) => {
+            console.log('Saving .zelim file to:', outputPath);
+            setStatus('Saving .zelim file...', 'working');
+            
+            try {
+                // Создание тестового 3D контента для сохранения
+                const content3D = {
+                    name: 'Test 3D Content',
+                    author: 'Freedome Sphere',
+                    description: 'Test 3D content for .zelim format',
+                    domeRadius: 10,
+                    projectionType: 'spherical',
+                    models: [
+                        {
+                            name: 'Test Model',
+                            geometryType: 'mesh',
+                            triangles: 1000,
+                            vertices: 500
+                        }
+                    ],
+                    materials: [
+                        {
+                            name: 'Test Material',
+                            type: 'standard',
+                            color: '#ffffff',
+                            metalness: 0.0,
+                            roughness: 0.5
+                        }
+                    ],
+                    animations: [],
+                    textures: []
+                };
+                
+                const result = await ipcRenderer.invoke('save-zelim-file', content3D, outputPath);
+                
+                if (result.success) {
+                    setStatus(`Zelim file saved: ${result.path}`, 'ready');
+                } else {
+                    setStatus(`Save failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('Error saving .zelim file:', error);
+                setStatus('Save failed', 'error');
+            }
         });
 
         function updateImportedFiles() {

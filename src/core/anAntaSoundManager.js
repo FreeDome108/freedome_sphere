@@ -1,11 +1,15 @@
+const DagaAudioFormat = require('./dagaAudioFormat');
+
 /**
  * Менеджер системы anAntaSound для freedome_sphere
  * Обеспечивает 3D пространственное аудио для купольного отображения
+ * Работает с форматом .daga для продвинутого аудио
  */
 class AnAntaSoundManager {
     constructor() {
         this.audioContext = null;
         this.audioSources = [];
+        this.dagaFormat = new DagaAudioFormat();
         this.spatialSettings = {
             domeRadius: 10,
             listenerPosition: { x: 0, y: 0, z: 0 },
@@ -176,6 +180,72 @@ class AnAntaSoundManager {
         } catch (error) {
             console.error('❌ Ошибка загрузки аудио файла:', error);
             throw error;
+        }
+    }
+
+    /**
+     * Загрузка .daga файла
+     * @param {string} filePath - Путь к .daga файлу
+     * @returns {Promise<Object>} Данные .daga файла
+     */
+    async loadDagaFile(filePath) {
+        try {
+            console.log(`🎵 Загрузка .daga файла: ${filePath}`);
+            
+            const response = await fetch(filePath);
+            const dagaData = await response.json();
+            
+            // Валидация .daga файла
+            const validation = this.dagaFormat.validateDagaFile(dagaData);
+            if (!validation.valid) {
+                throw new Error(`Неверный формат .daga: ${validation.errors.join(', ')}`);
+            }
+            
+            console.log(`✅ .daga файл загружен: ${dagaData.audio.name}`);
+            return dagaData;
+            
+        } catch (error) {
+            console.error('❌ Ошибка загрузки .daga файла:', error);
+            throw error;
+        }
+    }
+
+    /**
+     * Сохранение аудио в .daga формате
+     * @param {Object} audioSource - Аудио источник
+     * @param {string} outputPath - Путь для сохранения
+     * @returns {Promise<Object>} Результат сохранения
+     */
+    async saveAsDaga(audioSource, outputPath) {
+        try {
+            console.log(`💾 Сохранение аудио в .daga формате: ${outputPath}`);
+            
+            // Конвертация в .daga формат
+            const dagaData = this.dagaFormat.createDagaStructure(audioSource);
+            
+            // Обработка для купольного отображения
+            const domeProcessed = this.dagaFormat.processForDome(dagaData, this.spatialSettings);
+            
+            // Сохранение файла
+            const fs = require('fs');
+            fs.writeFileSync(outputPath, JSON.stringify(domeProcessed, null, 2));
+            
+            console.log(`✅ Аудио сохранено в .daga формате: ${outputPath}`);
+            
+            return {
+                success: true,
+                path: outputPath,
+                format: 'daga',
+                message: 'Аудио сохранено в формате .daga'
+            };
+            
+        } catch (error) {
+            console.error('❌ Ошибка сохранения .daga файла:', error);
+            return {
+                success: false,
+                error: error.message,
+                message: 'Ошибка сохранения в формате .daga'
+            };
         }
     }
 
