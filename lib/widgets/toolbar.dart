@@ -37,129 +37,132 @@ class Toolbar extends StatelessWidget {
           bottom: BorderSide(color: Color(0xFF3A3A3A), width: 1),
         ),
       ),
-      child: Row(
-        children: [
-          // Project controls
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: onNewProject,
-                  icon: const Icon(Icons.add, size: 18),
-                  label: Text(l10n.newButton),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF4A9EFF),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            // Project controls
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: onNewProject,
+                    icon: const Icon(Icons.add, size: 18),
+                    label: Text(l10n.newButton),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF4A9EFF),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                OutlinedButton.icon(
-                  onPressed: onOpenProject,
-                  icon: const Icon(Icons.folder_open, size: 18),
-                  label: Text(l10n.open),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Color(0xFF555555)),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: onOpenProject,
+                    icon: const Icon(Icons.folder_open, size: 18),
+                    label: Text(l10n.open),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF555555)),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                OutlinedButton.icon(
-                  onPressed: onSaveProject,
-                  icon: const Icon(Icons.save, size: 18),
-                  label: Text(l10n.save),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Color(0xFF555555)),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: onSaveProject,
+                    icon: const Icon(Icons.save, size: 18),
+                    label: Text(l10n.save),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF555555)),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          
-          const VerticalDivider(color: Color(0xFF3A3A3A)),
-          
-          // Viewport controls
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                ElevatedButton.icon(
-                  onPressed: onPlayPreview,
-                  icon: const Icon(Icons.play_arrow, size: 18),
-                  label: Text(l10n.play),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF28A745),
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            
+            const VerticalDivider(color: Color(0xFF3A3A3A)),
+            
+            // Viewport controls
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: onPlayPreview,
+                    icon: const Icon(Icons.play_arrow, size: 18),
+                    label: Text(l10n.play),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF28A745),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                OutlinedButton.icon(
-                  onPressed: onStopPreview,
-                  icon: const Icon(Icons.stop, size: 18),
-                  label: Text(l10n.stop),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Color(0xFF555555)),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: onStopPreview,
+                    icon: const Icon(Icons.stop, size: 18),
+                    label: Text(l10n.stop),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF555555)),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                OutlinedButton.icon(
-                  onPressed: onResetView,
-                  icon: const Icon(Icons.refresh, size: 18),
-                  label: Text(l10n.reset),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Color(0xFF555555)),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  const SizedBox(width: 8),
+                  OutlinedButton.icon(
+                    onPressed: onResetView,
+                    icon: const Icon(Icons.refresh, size: 18),
+                    label: Text(l10n.reset),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      side: const BorderSide(color: Color(0xFF555555)),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          
-          const Spacer(),
-          
-          // Edition selector
-          const EditionSelector(),
-          
-          const SizedBox(width: 8),
-          
-          // Language selector
-          const LanguageSelector(),
-          
-          const SizedBox(width: 16),
-          
-          // Status indicator
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Container(
-                  width: 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    color: _getStatusColor(),
-                    shape: BoxShape.circle,
+            
+            const VerticalDivider(color: Color(0xFF3A3A3A)),
+            
+            // Edition selector
+            const EditionSelector(),
+            
+            const SizedBox(width: 8),
+            
+            // Language selector
+            const LanguageSelector(),
+            
+            const SizedBox(width: 16),
+            
+            // Status indicator
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      color: _getStatusColor(),
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  statusMessage,
-                  style: const TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
+                  const SizedBox(width: 8),
+                  Text(
+                    statusMessage,
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

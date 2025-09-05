@@ -103,11 +103,49 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _openProject() async {
     final l10n = AppLocalizations.of(context)!;
-    // TODO: Implement file picker for opening projects
+    
     setState(() {
       _statusMessage = l10n.openingProject;
       _statusType = 'working';
     });
+
+    try {
+      final projectService = Provider.of<ProjectService>(context, listen: false);
+      final projects = await projectService.getAllProjects();
+      
+      if (projects.isEmpty) {
+        setState(() {
+          _statusMessage = l10n.noProject;
+          _statusType = 'ready';
+        });
+        return;
+      }
+
+      // Показать диалог выбора проекта
+      final selectedProject = await showDialog<FreedomeProject>(
+        context: context,
+        builder: (context) => ProjectSelectionDialog(projects: projects),
+      );
+
+      if (selectedProject != null) {
+        await projectService.setCurrentProject(selectedProject.id);
+        setState(() {
+          _currentProject = selectedProject;
+          _statusMessage = l10n.projectLoaded;
+          _statusType = 'ready';
+        });
+      } else {
+        setState(() {
+          _statusMessage = l10n.ready;
+          _statusType = 'ready';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _statusMessage = l10n.errorLoadingProject(e.toString());
+        _statusType = 'error';
+      });
+    }
   }
 
   Future<void> _saveProject() async {
