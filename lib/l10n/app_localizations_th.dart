@@ -12,7 +12,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get appTitle => 'Freedome Sphere';
 
   @override
-  String get new => 'ใหม่';
+  String get newButton => 'ใหม่';
 
   @override
   String get open => 'เปิด';

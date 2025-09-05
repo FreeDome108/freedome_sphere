@@ -12,7 +12,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appTitle => 'Freedome Sphere';
 
   @override
-  String get new => 'New';
+  String get newButton => 'New';
 
   @override
   String get open => 'Open';
@@ -192,7 +192,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get domeProjection => 'Dome Projection';
 
   @override
-  String get pleaseCreateOrOpenProject => 'Please create or open a project first';
+  String get pleaseCreateOrOpenProject =>
+      'Please create or open a project first';
 
   @override
   String get importingBarankoComics => 'Importing Baranko comics...';

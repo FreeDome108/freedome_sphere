@@ -1,7 +1,7 @@
 {
   "@@locale": "th",
   "appTitle": "Freedome Sphere",
-  "new": "ใหม่",
+  "newButton": "ใหม่",
   "open": "เปิด",
   "save": "บันทึก",
   "play": "เล่น",

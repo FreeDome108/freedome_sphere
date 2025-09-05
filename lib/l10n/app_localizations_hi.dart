@@ -12,7 +12,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get appTitle => 'Freedome Sphere';
 
   @override
-  String get new => 'नया';
+  String get newButton => 'नया';
 
   @override
   String get open => 'खोलें';
@@ -105,7 +105,8 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tagsOptional => 'टैग (वैकल्पिक)';
 
   @override
-  String get enterTagsSeparatedByCommas => 'टैग को अल्पविराम से अलग करके दर्ज करें';
+  String get enterTagsSeparatedByCommas =>
+      'टैग को अल्पविराम से अलग करके दर्ज करें';
 
   @override
   String get cancel => 'रद्द करें';
@@ -192,13 +193,15 @@ class AppLocalizationsHi extends AppLocalizations {
   String get domeProjection => 'डोम प्रोजेक्शन';
 
   @override
-  String get pleaseCreateOrOpenProject => 'कृपया पहले एक प्रोजेक्ट बनाएं या खोलें';
+  String get pleaseCreateOrOpenProject =>
+      'कृपया पहले एक प्रोजेक्ट बनाएं या खोलें';
 
   @override
   String get importingBarankoComics => 'Baranko कॉमिक्स आयात हो रहे हैं...';
 
   @override
-  String get importingUnrealEngineScene => 'Unreal Engine सीन आयात हो रहा है...';
+  String get importingUnrealEngineScene =>
+      'Unreal Engine सीन आयात हो रहा है...';
 
   @override
   String get importingBlenderModel => 'Blender मॉडल आयात हो रहा है...';
