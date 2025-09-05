@@ -14,9 +14,14 @@ void main() {
     test('should change edition', () async {
       final themeService = ThemeService();
       
+      // Проверяем начальное состояние
+      expect(themeService.currentEdition, equals(AppEdition.vaishnava));
+      
+      // Меняем на Enterprise
       await themeService.setEdition(AppEdition.enterprise);
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
       
+      // Меняем на Education
       await themeService.setEdition(AppEdition.education);
       expect(themeService.currentEdition, equals(AppEdition.education));
     });
