@@ -1,4 +1,0 @@
-[submodule "submodule/hummingbot.git"]
-	path = submodule/hummingbot.git
-	url = git@github.com:hummingbot/hummingbot.git
-	branch = v1.25.0
