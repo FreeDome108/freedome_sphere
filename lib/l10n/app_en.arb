@@ -4,8 +4,8 @@
   "@appTitle": {
     "description": "The title of the application"
   },
-  "new": "New",
-  "@new": {
+  "newButton": "New",
+  "@newButton": {
     "description": "New button text"
   },
   "open": "Open",

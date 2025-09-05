@@ -139,11 +139,11 @@ void main() {
     });
 
     test('should create material color correctly', () {
-      final color = Color(0xFF87CEEB);
-      final materialColor = themeService._createMaterialColor(color);
+      final themeData = themeService.getThemeData();
+      final materialColor = themeData.primarySwatch;
       
       expect(materialColor, isA<MaterialColor>());
-      expect(materialColor.value, equals(color.value));
+      expect(materialColor.value, equals(Color(0xFF87CEEB).value));
     });
 
     test('should notify listeners when edition changes', () async {
