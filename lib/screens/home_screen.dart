@@ -327,3 +327,59 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
     );
   }
 }
+
+class ProjectSelectionDialog extends StatelessWidget {
+  final List<FreedomeProject> projects;
+
+  const ProjectSelectionDialog({
+    super.key,
+    required this.projects,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
+    return AlertDialog(
+      title: Text(l10n.open),
+      content: SizedBox(
+        width: 400,
+        height: 300,
+        child: ListView.builder(
+          itemCount: projects.length,
+          itemBuilder: (context, index) {
+            final project = projects[index];
+            return ListTile(
+              title: Text(project.name),
+              subtitle: Text(
+                '${l10n.modified(_formatDate(project.modified))}\n${project.description}',
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              trailing: project.tags.isNotEmpty
+                  ? Wrap(
+                      spacing: 4,
+                      children: project.tags.take(2).map((tag) => Chip(
+                        label: Text(tag, style: const TextStyle(fontSize: 10)),
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      )).toList(),
+                    )
+                  : null,
+              onTap: () => Navigator.of(context).pop(project),
+            );
+          },
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(l10n.cancel),
+        ),
+      ],
+    );
+  }
+
+  String _formatDate(DateTime date) {
+    return '${date.day}/${date.month}/${date.year}';
+  }
+}
