@@ -64,34 +64,25 @@ void main() {
 
     test('should detect light/dark theme efficiently', () {
       final themeService = ThemeService();
-      final lightColors = [
-        Color(0xFFF0F8FF), // Alice Blue
-        Color(0xFFFFFFFF), // White
-        Color(0xFFFEF3C7), // Light Yellow
-      ];
-      final darkColors = [
-        Color(0xFF0F172A), // Very Dark Blue
-        Color(0xFF1E293B), // Dark Gray
-        Color(0xFF000000), // Black
-      ];
       
       final stopwatch = Stopwatch()..start();
       
-      // Проверяем определение темы 1000 раз
+      // Проверяем определение темы через создание тем
       for (int i = 0; i < 1000; i++) {
-        for (final color in lightColors) {
-          final isLight = themeService._isLightTheme(color);
-          expect(isLight, isTrue);
-        }
-        for (final color in darkColors) {
-          final isLight = themeService._isLightTheme(color);
-          expect(isLight, isFalse);
-        }
+        // Vaishnava - светлая тема
+        themeService.setEdition(AppEdition.vaishnava);
+        final lightTheme = themeService.getThemeData();
+        expect(lightTheme.brightness, equals(Brightness.light));
+        
+        // Enterprise - темная тема
+        themeService.setEdition(AppEdition.enterprise);
+        final darkTheme = themeService.getThemeData();
+        expect(darkTheme.brightness, equals(Brightness.dark));
       }
       
       stopwatch.stop();
       
-      // Проверяем что 6000 проверок занимают менее 100ms
+      // Проверяем что 2000 проверок занимают менее 100ms
       expect(stopwatch.elapsedMilliseconds, lessThan(100));
     });
 

@@ -1,7 +1,7 @@
 {
   "@@locale": "hi",
   "appTitle": "Freedome Sphere",
-  "new": "नया",
+  "newButton": "नया",
   "open": "खोलें",
   "save": "सहेजें",
   "play": "चलाएं",
