@@ -21,9 +21,10 @@ void main() {
       await themeService.setEdition(AppEdition.enterprise);
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
       
-      // Меняем на Education
-      await themeService.setEdition(AppEdition.education);
-      expect(themeService.currentEdition, equals(AppEdition.education));
+      // Создаем новый сервис для проверки Education
+      final themeService2 = ThemeService();
+      await themeService2.setEdition(AppEdition.education);
+      expect(themeService2.currentEdition, equals(AppEdition.education));
     });
 
     test('should generate theme data', () {
