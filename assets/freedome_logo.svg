@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Основной круг (купол) -->
+  <circle cx="32" cy="32" r="28" fill="#1E3A8A" stroke="#3B82F6" stroke-width="3"/>
+  
+  <!-- Внутренний купол -->
+  <path d="M 12 32 Q 32 8 52 32" fill="none" stroke="#60A5FA" stroke-width="2"/>
+  
+  <!-- Свобода - символ птицы/крыльев -->
+  <path d="M 20 24 Q 32 16 44 24" fill="none" stroke="#FBBF24" stroke-width="2"/>
+  <path d="M 20 40 Q 32 48 44 40" fill="none" stroke="#FBBF24" stroke-width="2"/>
+  
+  <!-- Центральная точка -->
+  <circle cx="32" cy="32" r="4" fill="#F59E0B"/>
+  
+  <!-- Текст FreeDome -->
+  <text x="32" y="58" text-anchor="middle" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="#1E3A8A">FreeDome</text>
+</svg>
