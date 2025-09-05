@@ -47,7 +47,7 @@ class Toolbar extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: onNewProject,
                   icon: const Icon(Icons.add, size: 18),
-                  label: Text(l10n.new),
+                  label: Text(l10n.newButton),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4A9EFF),
                     foregroundColor: Colors.white,
