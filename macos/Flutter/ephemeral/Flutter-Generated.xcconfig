@@ -1,12 +1,14 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=/Users/anton/development/flutter
-FLUTTER_APPLICATION_PATH=/Users/anton/proj/FreeDome/HKAPPLICATIONS/mbharata/freedome_sphere
+FLUTTER_APPLICATION_PATH=/Users/anton/proj/FreeDome/freedome_sphere
 COCOAPODS_PARALLEL_CODE_SIGN=true
+FLUTTER_TARGET=/Users/anton/proj/FreeDome/freedome_sphere/lib/main.dart
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
 FLUTTER_BUILD_NUMBER=1
 FLUTTER_CLI_BUILD_MODE=debug
+DART_DEFINES=RkxVVFRFUl9WRVJTSU9OPTMuMzUuMg==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWdpdEBnaXRodWIuY29tOmZsdXR0ZXIvZmx1dHRlci5naXQ=,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049MDVkYjk2ODkwOA==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049YThiZmRmYzM5NA==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My45LjA=
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=.dart_tool/package_config.json
+PACKAGE_CONFIG=/Users/anton/proj/FreeDome/freedome_sphere/.dart_tool/package_config.json
