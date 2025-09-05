@@ -474,4 +474,4 @@ class ZelimFormat {
     }
 }
 
-module.exports = BorankoFormat;
+module.exports = ZelimFormat;
