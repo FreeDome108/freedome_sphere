@@ -148,13 +148,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get anantaSoundSetup => 'anAntaSound सेटअप';
 
   @override
-  String get threeDPositioning => '3D Positioning';
+  String get threeDPositioning => '3D पोजिशनिंग';
 
   @override
   String get loadDagaFile => '.daga फाइल लोड करें';
 
   @override
-  String get threeDContent => '3D Content';
+  String get threeDContent => '3D सामग्री';
 
   @override
   String get loadZelimFile => '.zelim फाइल लोड करें';

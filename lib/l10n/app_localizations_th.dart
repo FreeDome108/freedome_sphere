@@ -148,13 +148,13 @@ class AppLocalizationsTh extends AppLocalizations {
   String get anantaSoundSetup => 'การตั้งค่า anAntaSound';
 
   @override
-  String get threeDPositioning => '3D Positioning';
+  String get threeDPositioning => 'การจัดตำแหน่ง 3D';
 
   @override
   String get loadDagaFile => 'โหลดไฟล์ .daga';
 
   @override
-  String get threeDContent => '3D Content';
+  String get threeDContent => 'เนื้อหา 3D';
 
   @override
   String get loadZelimFile => 'โหลดไฟล์ .zelim';
