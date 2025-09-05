@@ -34,7 +34,7 @@ class EditionInfo {
       edition: AppEdition.vaishnava,
       name: 'Vaishnava Edition',
       description: 'Светлая тема для глубоких вопросов и духовного развития',
-      logoPath: 'assets/logos/vaishnava_logo.png',
+      logoPath: 'assets/logos/vaishnava_logo.svg',
       primaryColor: '0xFF87CEEB', // Светло-голубой (Sky Blue)
       secondaryColor: '0xFFB0E0E6', // Порошковый голубой (Powder Blue)
       backgroundColor: '0xFFF0F8FF', // Алиса Блю (Alice Blue)
@@ -46,7 +46,7 @@ class EditionInfo {
       edition: AppEdition.enterprise,
       name: 'Enterprise Edition',
       description: 'Профессиональная тема для корпоративного использования',
-      logoPath: 'assets/logos/enterprise_logo.png',
+      logoPath: 'assets/logos/enterprise_logo.svg',
       primaryColor: '0xFF1E3A8A', // Темно-синий
       secondaryColor: '0xFF3B82F6', // Синий
       backgroundColor: '0xFF0F172A', // Очень темный синий
@@ -58,7 +58,7 @@ class EditionInfo {
       edition: AppEdition.education,
       name: 'Education Edition',
       description: 'Образовательная тема для обучения и исследований',
-      logoPath: 'assets/logos/education_logo.png',
+      logoPath: 'assets/logos/education_logo.svg',
       primaryColor: '0xFF7C3AED', // Фиолетовый
       secondaryColor: '0xFFA855F7', // Светло-фиолетовый
       backgroundColor: '0xFFFEF3C7', // Светло-желтый
