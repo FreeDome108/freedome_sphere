@@ -3,8 +3,16 @@ const path = require('path');
 const Store = require('electron-store');
 const fs = require('fs');
 
+// Импорт модулей freedome_sphere
+const BarankoComicsImporter = require('./importers/barankoComicsImporter');
+const MbharataClientExporter = require('./exporters/mbharataClientExporter');
+
 // Инициализация хранилища настроек
 const store = new Store();
+
+// Инициализация модулей
+const comicsImporter = new BarankoComicsImporter();
+const mbharataExporter = new MbharataClientExporter();
 
 let mainWindow;
 
@@ -254,18 +262,22 @@ ipcMain.handle('set-store-value', (event, key, value) => {
 // Обработчик импорта комиксов
 ipcMain.handle('import-comics', async (event, folderPath) => {
   try {
-    const files = fs.readdirSync(folderPath);
-    const comicsFiles = files.filter(file => file.endsWith('.comics'));
+    console.log(`📚 Импорт комиксов из: ${folderPath}`);
+    const result = await comicsImporter.importFromFolder(folderPath);
     
-    return {
-      success: true,
-      files: comicsFiles,
-      path: folderPath
-    };
+    if (result.success) {
+      console.log(`✅ Импортировано ${result.count} комиксов`);
+    } else {
+      console.error(`❌ Ошибка импорта: ${result.error}`);
+    }
+    
+    return result;
   } catch (error) {
+    console.error('❌ Критическая ошибка импорта комиксов:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
+      message: 'Критическая ошибка при импорте комиксов'
     };
   }
 });
@@ -273,34 +285,30 @@ ipcMain.handle('import-comics', async (event, folderPath) => {
 // Обработчик экспорта для mbharata_client
 ipcMain.handle('export-mbharata', async (event, projectData, outputPath) => {
   try {
-    // Создание структуры для mbharata_client
-    const mbharataPackage = {
-      version: "1.0.0",
-      type: "dome_content",
-      metadata: {
-        title: projectData.title,
-        author: projectData.author,
-        created: new Date().toISOString(),
-        dome_radius: projectData.domeRadius || 10
-      },
-      content: {
-        scenes: projectData.scenes || [],
-        audio: projectData.audio || [],
-        comics: projectData.comics || []
-      }
-    };
+    console.log(`📱 Экспорт проекта в mbharata_client: ${outputPath}`);
     
-    // Сохранение пакета
-    fs.writeFileSync(outputPath, JSON.stringify(mbharataPackage, null, 2));
+    // Валидация данных проекта
+    if (!projectData || !outputPath) {
+      throw new Error('Отсутствуют данные проекта или путь для экспорта');
+    }
     
-    return {
-      success: true,
-      path: outputPath
-    };
+    // Экспорт через MbharataClientExporter
+    const result = await mbharataExporter.exportProject(projectData, outputPath);
+    
+    if (result.success) {
+      console.log(`✅ Проект экспортирован: ${result.path}`);
+      console.log(`📊 Размер файла: ${result.metadata.fileSizeFormatted}`);
+    } else {
+      console.error(`❌ Ошибка экспорта: ${result.error}`);
+    }
+    
+    return result;
   } catch (error) {
+    console.error('❌ Критическая ошибка экспорта:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
+      message: 'Критическая ошибка при экспорте проекта'
     };
   }
 });
