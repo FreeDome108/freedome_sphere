@@ -1,0 +1,321 @@
+{
+  "@@locale": "en",
+  "appTitle": "Freedome Sphere",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "new": "New",
+  "@new": {
+    "description": "New button text"
+  },
+  "open": "Open",
+  "@open": {
+    "description": "Open button text"
+  },
+  "save": "Save",
+  "@save": {
+    "description": "Save button text"
+  },
+  "play": "Play",
+  "@play": {
+    "description": "Play button text"
+  },
+  "stop": "Stop",
+  "@stop": {
+    "description": "Stop button text"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset button text"
+  },
+  "ready": "Ready",
+  "@ready": {
+    "description": "Ready status message"
+  },
+  "loadingProject": "Loading project...",
+  "@loadingProject": {
+    "description": "Loading project status message"
+  },
+  "projectLoaded": "Project loaded",
+  "@projectLoaded": {
+    "description": "Project loaded status message"
+  },
+  "noProject": "No project",
+  "@noProject": {
+    "description": "No project status message"
+  },
+  "errorLoadingProject": "Error loading project: {error}",
+  "@errorLoadingProject": {
+    "description": "Error loading project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "creatingNewProject": "Creating new project...",
+  "@creatingNewProject": {
+    "description": "Creating new project status message"
+  },
+  "newProjectCreated": "New project created",
+  "@newProjectCreated": {
+    "description": "New project created status message"
+  },
+  "errorCreatingProject": "Error creating project: {error}",
+  "@errorCreatingProject": {
+    "description": "Error creating project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "openingProject": "Opening project...",
+  "@openingProject": {
+    "description": "Opening project status message"
+  },
+  "savingProject": "Saving project...",
+  "@savingProject": {
+    "description": "Saving project status message"
+  },
+  "projectSaved": "Project saved",
+  "@projectSaved": {
+    "description": "Project saved status message"
+  },
+  "saveFailed": "Save failed",
+  "@saveFailed": {
+    "description": "Save failed status message"
+  },
+  "errorSavingProject": "Error saving project: {error}",
+  "@errorSavingProject": {
+    "description": "Error saving project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "playingPreview": "Playing preview...",
+  "@playingPreview": {
+    "description": "Playing preview status message"
+  },
+  "previewStopped": "Preview stopped",
+  "@previewStopped": {
+    "description": "Preview stopped status message"
+  },
+  "viewReset": "View reset",
+  "@viewReset": {
+    "description": "View reset status message"
+  },
+  "newProject": "New Project",
+  "@newProject": {
+    "description": "New project dialog title"
+  },
+  "projectName": "Project Name",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+  "enterProjectName": "Enter project name",
+  "@enterProjectName": {
+    "description": "Project name field hint"
+  },
+  "pleaseEnterProjectName": "Please enter a project name",
+  "@pleaseEnterProjectName": {
+    "description": "Project name validation message"
+  },
+  "descriptionOptional": "Description (Optional)",
+  "@descriptionOptional": {
+    "description": "Description field label"
+  },
+  "enterProjectDescription": "Enter project description",
+  "@enterProjectDescription": {
+    "description": "Description field hint"
+  },
+  "tagsOptional": "Tags (Optional)",
+  "@tagsOptional": {
+    "description": "Tags field label"
+  },
+  "enterTagsSeparatedByCommas": "Enter tags separated by commas",
+  "@enterTagsSeparatedByCommas": {
+    "description": "Tags field hint"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "create": "Create",
+  "@create": {
+    "description": "Create button text"
+  },
+  "project": "Project",
+  "@project": {
+    "description": "Project section title"
+  },
+  "currentProject": "Current Project",
+  "@currentProject": {
+    "description": "Current project label"
+  },
+  "created": "Created: {date}",
+  "@created": {
+    "description": "Created date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "modified": "Modified: {date}",
+  "@modified": {
+    "description": "Modified date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "import": "Import",
+  "@import": {
+    "description": "Import section title"
+  },
+  "barankoComics": "Baranko Comics",
+  "@barankoComics": {
+    "description": "Baranko Comics import button"
+  },
+  "unrealEngine": "Unreal Engine",
+  "@unrealEngine": {
+    "description": "Unreal Engine import button"
+  },
+  "blenderModel": "Blender Model",
+  "@blenderModel": {
+    "description": "Blender Model import button"
+  },
+  "audio": "Audio",
+  "@audio": {
+    "description": "Audio section title"
+  },
+  "anantaSoundSetup": "anAntaSound Setup",
+  "@anantaSoundSetup": {
+    "description": "anAntaSound Setup button"
+  },
+  "threeDPositioning": "3D Positioning",
+  "@threeDPositioning": {
+    "description": "3D Positioning button"
+  },
+  "loadDagaFile": "Load .daga File",
+  "@loadDagaFile": {
+    "description": "Load .daga File button"
+  },
+  "threeDContent": "3D Content",
+  "@threeDContent": {
+    "description": "3D Content section title"
+  },
+  "loadZelimFile": "Load .zelim File",
+  "@loadZelimFile": {
+    "description": "Load .zelim File button"
+  },
+  "domeSettings": "Dome Settings",
+  "@domeSettings": {
+    "description": "Dome Settings section title"
+  },
+  "domeConfiguration": "Dome Configuration",
+  "@domeConfiguration": {
+    "description": "Dome Configuration label"
+  },
+  "radius": "Radius: {radius}m",
+  "@radius": {
+    "description": "Dome radius label",
+    "placeholders": {
+      "radius": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionType": "Projection Type:",
+  "@projectionType": {
+    "description": "Projection type label"
+  },
+  "spherical": "Spherical",
+  "@spherical": {
+    "description": "Spherical projection type"
+  },
+  "fisheye": "Fisheye",
+  "@fisheye": {
+    "description": "Fisheye projection type"
+  },
+  "equirectangular": "Equirectangular",
+  "@equirectangular": {
+    "description": "Equirectangular projection type"
+  },
+  "export": "Export",
+  "@export": {
+    "description": "Export section title"
+  },
+  "mbharataClient": "mbharata_client",
+  "@mbharataClient": {
+    "description": "mbharata_client export button"
+  },
+  "domeProjection": "Dome Projection",
+  "@domeProjection": {
+    "description": "Dome Projection export button"
+  },
+  "pleaseCreateOrOpenProject": "Please create or open a project first",
+  "@pleaseCreateOrOpenProject": {
+    "description": "Error message when no project is selected"
+  },
+  "importingBarankoComics": "Importing Baranko comics...",
+  "@importingBarankoComics": {
+    "description": "Importing Baranko comics status"
+  },
+  "importingUnrealEngineScene": "Importing Unreal Engine scene...",
+  "@importingUnrealEngineScene": {
+    "description": "Importing Unreal Engine scene status"
+  },
+  "importingBlenderModel": "Importing Blender model...",
+  "@importingBlenderModel": {
+    "description": "Importing Blender model status"
+  },
+  "settingUpAnantaSound": "Setting up anAntaSound...",
+  "@settingUpAnantaSound": {
+    "description": "Setting up anAntaSound status"
+  },
+  "opening3dAudioEditor": "Opening 3D Audio editor...",
+  "@opening3dAudioEditor": {
+    "description": "Opening 3D Audio editor status"
+  },
+  "loadingDagaFile": "Loading .daga file...",
+  "@loadingDagaFile": {
+    "description": "Loading .daga file status"
+  },
+  "loadingZelimFile": "Loading .zelim file...",
+  "@loadingZelimFile": {
+    "description": "Loading .zelim file status"
+  },
+  "exportingToMbharata": "Exporting to mbharata_client...",
+  "@exportingToMbharata": {
+    "description": "Exporting to mbharata_client status"
+  },
+  "exportingDomeProjection": "Exporting dome projection...",
+  "@exportingDomeProjection": {
+    "description": "Exporting dome projection status"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language selection label"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "russian": "Русский",
+  "@russian": {
+    "description": "Russian language option"
+  },
+  "thai": "ไทย",
+  "@thai": {
+    "description": "Thai language option"
+  },
+  "hindi": "हिन्दी",
+  "@hindi": {
+    "description": "Hindi language option"
+  }
+}

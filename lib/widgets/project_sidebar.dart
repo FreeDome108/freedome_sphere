@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../models/project.dart';
 
 class ProjectSidebar extends StatelessWidget {
@@ -15,6 +16,7 @@ class ProjectSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: 300,
       decoration: const BoxDecoration(
@@ -62,10 +64,10 @@ class ProjectSidebar extends StatelessWidget {
                 children: [
                   // Project Info
                   _buildSection(
-                    title: 'Project',
+                    title: l10n.project,
                     children: [
                       if (project != null) ...[
-                        _buildProjectInfo(),
+                        _buildProjectInfo(l10n),
                         const SizedBox(height: 16),
                       ],
                     ],
@@ -73,22 +75,22 @@ class ProjectSidebar extends StatelessWidget {
                   
                   // Import
                   _buildSection(
-                    title: 'Import',
+                    title: l10n.import,
                     children: [
                       _buildImportButton(
                         icon: Icons.book,
-                        label: 'Baranko Comics',
-                        onTap: () => _importComics(context),
+                        label: l10n.barankoComics,
+                        onTap: () => _importComics(context, l10n),
                       ),
                       _buildImportButton(
                         icon: Icons.videogame_asset,
-                        label: 'Unreal Engine',
-                        onTap: () => _importUnreal(context),
+                        label: l10n.unrealEngine,
+                        onTap: () => _importUnreal(context, l10n),
                       ),
                       _buildImportButton(
                         icon: Icons.architecture,
-                        label: 'Blender Model',
-                        onTap: () => _importBlender(context),
+                        label: l10n.blenderModel,
+                        onTap: () => _importBlender(context, l10n),
                       ),
                     ],
                   ),
@@ -183,7 +185,7 @@ class ProjectSidebar extends StatelessWidget {
     );
   }
 
-  Widget _buildProjectInfo() {
+  Widget _buildProjectInfo(AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -193,9 +195,9 @@ class ProjectSidebar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Current Project',
-            style: TextStyle(
+          Text(
+            l10n.currentProject,
+            style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Color(0xFF4A9EFF),
@@ -211,7 +213,7 @@ class ProjectSidebar extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Created: ${_formatDate(project!.created)}',
+            l10n.created(_formatDate(project!.created)),
             style: const TextStyle(
               fontSize: 12,
               color: Colors.white70,
@@ -219,7 +221,7 @@ class ProjectSidebar extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'Modified: ${_formatDate(project!.modified)}',
+            l10n.modified(_formatDate(project!.modified)),
             style: const TextStyle(
               fontSize: 12,
               color: Colors.white70,
@@ -353,18 +355,18 @@ class ProjectSidebar extends StatelessWidget {
     return '${date.day}/${date.month}/${date.year}';
   }
 
-  void _importComics(BuildContext context) {
-    onStatusUpdate('Importing Baranko comics...', 'working');
+  void _importComics(BuildContext context, AppLocalizations l10n) {
+    onStatusUpdate(l10n.importingBarankoComics, 'working');
     // TODO: Implement comics import
   }
 
-  void _importUnreal(BuildContext context) {
-    onStatusUpdate('Importing Unreal Engine scene...', 'working');
+  void _importUnreal(BuildContext context, AppLocalizations l10n) {
+    onStatusUpdate(l10n.importingUnrealEngineScene, 'working');
     // TODO: Implement Unreal import
   }
 
-  void _importBlender(BuildContext context) {
-    onStatusUpdate('Importing Blender model...', 'working');
+  void _importBlender(BuildContext context, AppLocalizations l10n) {
+    onStatusUpdate(l10n.importingBlenderModel, 'working');
     // TODO: Implement Blender import
   }
 

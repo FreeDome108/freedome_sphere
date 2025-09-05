@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../services/project_service.dart';
 import '../models/project.dart';
 import '../widgets/project_sidebar.dart';
@@ -17,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FreedomeProject? _currentProject;
   bool _isLoading = false;
-  String _statusMessage = 'Ready';
+  String _statusMessage = '';
   String _statusType = 'ready';
 
   @override
@@ -27,9 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadCurrentProject() async {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _isLoading = true;
-      _statusMessage = 'Loading project...';
+      _statusMessage = l10n.loadingProject;
       _statusType = 'working';
     });
 
@@ -39,13 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
       
       setState(() {
         _currentProject = project;
-        _statusMessage = project != null ? 'Project loaded' : 'No project';
+        _statusMessage = project != null ? l10n.projectLoaded : l10n.noProject;
         _statusType = 'ready';
         _isLoading = false;
       });
     } catch (e) {
       setState(() {
-        _statusMessage = 'Error loading project: $e';
+        _statusMessage = l10n.errorLoadingProject(e.toString());
         _statusType = 'error';
         _isLoading = false;
       });
@@ -53,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _createNewProject() async {
+    final l10n = AppLocalizations.of(context)!;
     final result = await showDialog<Map<String, dynamic>>(
       context: context,
       builder: (context) => const NewProjectDialog(),
@@ -61,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (result != null) {
       setState(() {
         _isLoading = true;
-        _statusMessage = 'Creating new project...';
+        _statusMessage = l10n.creatingNewProject;
         _statusType = 'working';
       });
 
@@ -77,13 +80,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
         setState(() {
           _currentProject = project;
-          _statusMessage = 'New project created';
+          _statusMessage = l10n.newProjectCreated;
           _statusType = 'ready';
           _isLoading = false;
         });
       } catch (e) {
         setState(() {
-          _statusMessage = 'Error creating project: $e';
+          _statusMessage = l10n.errorCreatingProject(e.toString());
           _statusType = 'error';
           _isLoading = false;
         });
@@ -92,18 +95,20 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _openProject() async {
+    final l10n = AppLocalizations.of(context)!;
     // TODO: Implement file picker for opening projects
     setState(() {
-      _statusMessage = 'Opening project...';
+      _statusMessage = l10n.openingProject;
       _statusType = 'working';
     });
   }
 
   Future<void> _saveProject() async {
     if (_currentProject == null) return;
+    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
-      _statusMessage = 'Saving project...';
+      _statusMessage = l10n.savingProject;
       _statusType = 'working';
     });
 
@@ -112,12 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
       final success = await projectService.saveProject(_currentProject!);
 
       setState(() {
-        _statusMessage = success ? 'Project saved' : 'Save failed';
+        _statusMessage = success ? l10n.projectSaved : l10n.saveFailed;
         _statusType = success ? 'ready' : 'error';
       });
     } catch (e) {
       setState(() {
-        _statusMessage = 'Error saving project: $e';
+        _statusMessage = l10n.errorSavingProject(e.toString());
         _statusType = 'error';
       });
     }
@@ -146,9 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onNewProject: _createNewProject,
             onOpenProject: _openProject,
             onSaveProject: _saveProject,
-            onPlayPreview: () => _setStatus('Playing preview...', 'working'),
-            onStopPreview: () => _setStatus('Preview stopped', 'ready'),
-            onResetView: () => _setStatus('View reset', 'ready'),
+            onPlayPreview: () => _setStatus(AppLocalizations.of(context)!.playingPreview, 'working'),
+            onStopPreview: () => _setStatus(AppLocalizations.of(context)!.previewStopped, 'ready'),
+            onResetView: () => _setStatus(AppLocalizations.of(context)!.viewReset, 'ready'),
             statusMessage: _statusMessage,
             statusType: _statusType,
           ),
@@ -209,8 +214,9 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('New Project'),
+      title: Text(l10n.newProject),
       content: Form(
         key: _formKey,
         child: Column(
@@ -218,13 +224,13 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Project Name',
-                hintText: 'Enter project name',
+              decoration: InputDecoration(
+                labelText: l10n.projectName,
+                hintText: l10n.enterProjectName,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Please enter a project name';
+                  return l10n.pleaseEnterProjectName;
                 }
                 return null;
               },
@@ -232,18 +238,18 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
             const SizedBox(height: 16),
             TextFormField(
               controller: _descriptionController,
-              decoration: const InputDecoration(
-                labelText: 'Description (Optional)',
-                hintText: 'Enter project description',
+              decoration: InputDecoration(
+                labelText: l10n.descriptionOptional,
+                hintText: l10n.enterProjectDescription,
               ),
               maxLines: 3,
             ),
             const SizedBox(height: 16),
             TextFormField(
               controller: _tagsController,
-              decoration: const InputDecoration(
-                labelText: 'Tags (Optional)',
-                hintText: 'Enter tags separated by commas',
+              decoration: InputDecoration(
+                labelText: l10n.tagsOptional,
+                hintText: l10n.enterTagsSeparatedByCommas,
               ),
             ),
           ],
@@ -252,7 +258,7 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Cancel'),
+          child: Text(l10n.cancel),
         ),
         ElevatedButton(
           onPressed: () {
@@ -270,7 +276,7 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
               });
             }
           },
-          child: const Text('Create'),
+          child: Text(l10n.create),
         ),
       ],
     );
