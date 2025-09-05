@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'language_selector.dart';
+import 'edition_selector.dart';
 
 class Toolbar extends StatelessWidget {
   final VoidCallback onNewProject;
@@ -24,6 +27,8 @@ class Toolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -42,7 +47,7 @@ class Toolbar extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: onNewProject,
                   icon: const Icon(Icons.add, size: 18),
-                  label: const Text('New'),
+                  label: Text(l10n.new),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF4A9EFF),
                     foregroundColor: Colors.white,
@@ -53,7 +58,7 @@ class Toolbar extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: onOpenProject,
                   icon: const Icon(Icons.folder_open, size: 18),
-                  label: const Text('Open'),
+                  label: Text(l10n.open),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Color(0xFF555555)),
@@ -64,7 +69,7 @@ class Toolbar extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: onSaveProject,
                   icon: const Icon(Icons.save, size: 18),
-                  label: const Text('Save'),
+                  label: Text(l10n.save),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Color(0xFF555555)),
@@ -85,7 +90,7 @@ class Toolbar extends StatelessWidget {
                 ElevatedButton.icon(
                   onPressed: onPlayPreview,
                   icon: const Icon(Icons.play_arrow, size: 18),
-                  label: const Text('Play'),
+                  label: Text(l10n.play),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF28A745),
                     foregroundColor: Colors.white,
@@ -96,7 +101,7 @@ class Toolbar extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: onStopPreview,
                   icon: const Icon(Icons.stop, size: 18),
-                  label: const Text('Stop'),
+                  label: Text(l10n.stop),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Color(0xFF555555)),
@@ -107,7 +112,7 @@ class Toolbar extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: onResetView,
                   icon: const Icon(Icons.refresh, size: 18),
-                  label: const Text('Reset'),
+                  label: Text(l10n.reset),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: Colors.white,
                     side: const BorderSide(color: Color(0xFF555555)),
@@ -119,6 +124,16 @@ class Toolbar extends StatelessWidget {
           ),
           
           const Spacer(),
+          
+          // Edition selector
+          const EditionSelector(),
+          
+          const SizedBox(width: 8),
+          
+          // Language selector
+          const LanguageSelector(),
+          
+          const SizedBox(width: 16),
           
           // Status indicator
           Padding(
