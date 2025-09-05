@@ -52,7 +52,7 @@ void main() {
         for (final edition in AppEdition.values) {
           themeService.setEdition(edition);
           final themeData = themeService.getThemeData();
-          expect(themeData.primarySwatch, isA<MaterialColor>());
+          expect(themeData.primaryColor, isA<Color>());
         }
       }
       

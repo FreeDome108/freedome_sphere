@@ -24,7 +24,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _loadCurrentProject();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_statusMessage.isEmpty) {
+      _loadCurrentProject();
+    }
   }
 
   Future<void> _loadCurrentProject() async {
