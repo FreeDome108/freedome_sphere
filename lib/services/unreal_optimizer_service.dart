@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import '../models/unreal_analysis.dart';
 
 class UnrealOptimizerService {
-  static const MethodChannel _channel = MethodChannel('unreal_optimizer');
+  // static const MethodChannel _channel = MethodChannel('unreal_optimizer');
   static const String _pluginPath = 'unreal_blocks_to_code_plugin';
   
   static final UnrealOptimizerService _instance = UnrealOptimizerService._internal();
@@ -30,7 +30,7 @@ class UnrealOptimizerService {
       _isInitialized = true;
       return true;
     } catch (e) {
-      print('Ошибка инициализации UnrealOptimizerService: $e');
+      // print('Ошибка инициализации UnrealOptimizerService: $e');
       return false;
     }
   }
@@ -318,10 +318,10 @@ module.exports = { UnrealProjectAnalyzer, CodeOptimizer };
       );
 
       if (result.exitCode != 0) {
-        print('Предупреждение: Не удалось установить зависимости npm: ${result.stderr}');
+        // print('Предупреждение: Не удалось установить зависимости npm: ${result.stderr}');
       }
     } catch (e) {
-      print('Предупреждение: Ошибка установки зависимостей: $e');
+      // print('Предупреждение: Ошибка установки зависимостей: $e');
     }
   }
 
