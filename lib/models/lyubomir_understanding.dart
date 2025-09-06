@@ -90,7 +90,10 @@ enum UnderstandingType {
   spatial,     // Пространственное понимание (3D, купольное)
   semantic,    // Семантическое понимание (смысл, контекст)
   interactive, // Интерактивное понимание (взаимодействие)
+}
 
+/// Расширение для UnderstandingType
+extension UnderstandingTypeExtension on UnderstandingType {
   static UnderstandingType fromString(String value) {
     switch (value.toLowerCase()) {
       case 'visual':
@@ -119,7 +122,10 @@ enum UnderstandingStatus {
   completed,   // Завершено
   error,       // Ошибка
   paused,      // Приостановлено
+}
 
+/// Расширение для UnderstandingStatus
+extension UnderstandingStatusExtension on UnderstandingStatus {
   static UnderstandingStatus fromString(String value) {
     switch (value.toLowerCase()) {
       case 'idle':
