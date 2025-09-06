@@ -450,8 +450,8 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     final random = Random();
     final position = SphericalCoord(
       r: random.nextDouble() * 5.0,
-          theta: random.nextDouble() * math.pi,
-          phi: random.nextDouble() * 2 * math.pi,
+          theta: random.nextDouble() * pi,
+          phi: random.nextDouble() * 2 * pi,
       height: random.nextDouble() * 3.0,
     );
     final weight = random.nextDouble();
@@ -517,8 +517,8 @@ class QuantumVisualizationPainter extends CustomPainter {
       final weight = consciousnessField.participantWeights[i];
       
       // Преобразование сферических координат в экранные
-          final x = center.dx + position.r * math.cos(position.phi) * math.sin(position.theta) * radius / 5.0;
-          final y = center.dy + position.r * math.sin(position.phi) * math.sin(position.theta) * radius / 5.0;
+          final x = center.dx + position.r * cos(position.phi) * sin(position.theta) * radius / 5.0;
+          final y = center.dy + position.r * sin(position.phi) * sin(position.theta) * radius / 5.0;
       
       final participantPaint = Paint()
         ..color = Colors.indigo.withOpacity(0.7)
@@ -530,8 +530,8 @@ class QuantumVisualizationPainter extends CustomPainter {
       // Связи между участниками
       if (i > 0) {
         final prevPosition = consciousnessField.participantPositions[i - 1];
-            final prevX = center.dx + prevPosition.r * math.cos(prevPosition.phi) * math.sin(prevPosition.theta) * radius / 5.0;
-            final prevY = center.dy + prevPosition.r * math.sin(prevPosition.phi) * math.sin(prevPosition.theta) * radius / 5.0;
+            final prevX = center.dx + prevPosition.r * cos(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
+            final prevY = center.dy + prevPosition.r * sin(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
         
         final connectionPaint = Paint()
           ..color = Colors.indigo.withOpacity(0.3)
@@ -553,3 +553,4 @@ class QuantumVisualizationPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
+

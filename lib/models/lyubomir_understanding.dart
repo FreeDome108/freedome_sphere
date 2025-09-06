@@ -30,8 +30,8 @@ class LyubomirUnderstanding {
       id: json['id'] as String,
       name: json['name'] as String,
       description: json['description'] as String,
-      type: UnderstandingType.fromString(json['type'] as String),
-      status: UnderstandingStatus.fromString(json['status'] as String),
+      type: UnderstandingTypeExtension.fromString(json['type'] as String),
+      status: UnderstandingStatusExtension.fromString(json['status'] as String),
       createdAt: DateTime.parse(json['createdAt'] as String),
       lastAnalyzed: json['lastAnalyzed'] != null 
           ? DateTime.parse(json['lastAnalyzed'] as String) 
@@ -223,7 +223,7 @@ class LyubomirSettings {
       autoAnalyze: json['autoAnalyze'] as bool? ?? true,
       sensitivity: (json['sensitivity'] as num?)?.toDouble() ?? 0.7,
       enabledTypes: (json['enabledTypes'] as List?)
-          ?.map((type) => UnderstandingType.fromString(type as String))
+          ?.map((type) => UnderstandingTypeExtension.fromString(type as String))
           .toList() ?? [
         UnderstandingType.visual,
         UnderstandingType.audio,
