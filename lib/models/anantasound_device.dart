@@ -123,7 +123,7 @@ class SphericalCoord {
   final double phi;     // азимутальный угол (0-2π)
   final double height;  // высота в куполе
 
-  SphericalCoord({
+  const SphericalCoord({
     required this.r,
     required this.theta,
     required this.phi,
@@ -277,7 +277,7 @@ class MIDIConfig {
   final bool sysexEnabled;         // Поддержка SysEx
   final int clockRate;             // Скорость MIDI
 
-  MIDIConfig({
+  const MIDIConfig({
     this.channel = 1,
     this.deviceId = 0x7F,
     this.sysexEnabled = true,
@@ -311,7 +311,7 @@ class OSCConfig {
   final bool udpDisabled;          // Отключение UDP
   final int bufferSize;            // Размер буфера
 
-  OSCConfig({
+  const OSCConfig({
     this.host = "127.0.0.1",
     this.port = 8000,
     this.tcpEnabled = true,
