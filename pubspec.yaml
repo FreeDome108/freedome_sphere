@@ -1,5 +1,8 @@
 name: freedome_sphere_flutter
-description: "FreeDome Sphere"
+description: "FreeDome Sphere - Редактор сферического 3D и 2D контента"
+license: NativeMindNONC
+# Developed by NativeMind Development Team
+# FreeDome Ecosystem Support - Full API Integration
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
