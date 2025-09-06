@@ -7,6 +7,7 @@ import 'services/project_service.dart';
 import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/anantasound_service.dart';
+import 'services/lyubomir_understanding_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,9 @@ class FreedomeSphereApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<AnantaSoundService>(
           create: (_) => AnantaSoundService(),
+        ),
+        ChangeNotifierProvider<LyubomirUnderstandingService>(
+          create: (_) => LyubomirUnderstandingService(),
         ),
       ],
       child: Consumer2<ThemeService, LocaleService>(
