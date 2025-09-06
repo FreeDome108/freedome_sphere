@@ -567,3 +567,4 @@ class _AnantaSoundSettingsDialogState extends State<AnantaSoundSettingsDialog> {
     Navigator.of(context).pop();
   }
 }
+

@@ -483,3 +483,4 @@ extension DeviceStatusExtension on DeviceStatus {
     );
   }
 }
+

@@ -428,3 +428,4 @@ enum MIDIMessageType {
   programChange,
   systemExclusive,
 }
+
