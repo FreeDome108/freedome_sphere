@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/project_service.dart';
+import '../services/anantasound_service.dart';
 import '../models/project.dart';
 import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
 import '../widgets/toolbar.dart';
 import '../widgets/status_bar.dart';
+import 'anantasound_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,6 +191,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('FreeDome Sphere'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.radio_button_checked),
+            tooltip: 'anAntaSound Quantum Resonance Device',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AnantaSoundScreen(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Column(
         children: [
           // Toolbar
