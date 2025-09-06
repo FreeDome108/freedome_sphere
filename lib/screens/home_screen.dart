@@ -8,7 +8,9 @@ import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
 import '../widgets/toolbar.dart';
 import '../widgets/status_bar.dart';
+import '../widgets/lyubomir_understanding_panel.dart';
 import 'anantasound_screen.dart';
+import 'lyubomir_understanding_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -197,6 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
         foregroundColor: Colors.white,
         actions: [
           IconButton(
+            icon: const Icon(Icons.psychology),
+            tooltip: 'Понимание Любомира',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const LyubomirUnderstandingScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.radio_button_checked),
             tooltip: 'anAntaSound Quantum Resonance Device',
             onPressed: () {
@@ -236,9 +249,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 
                 // Main viewport
                 Expanded(
-                  child: Viewport3D(
-                    project: _currentProject,
-                    isLoading: _isLoading,
+                  child: Column(
+                    children: [
+                      // Lyubomir Understanding Panel
+                      const LyubomirUnderstandingPanel(),
+                      
+                      // 3D Viewport
+                      Expanded(
+                        child: Viewport3D(
+                          project: _currentProject,
+                          isLoading: _isLoading,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

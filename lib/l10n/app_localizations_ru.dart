@@ -121,7 +121,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String created(String date) {
-    return 'Создан: $date';
+    return 'Создано';
   }
 
   @override
