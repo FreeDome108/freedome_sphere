@@ -8,7 +8,6 @@ import '../models/anantasound_device.dart';
 /// Сервис для управления anAntaSound Quantum Resonance Device
 class AnantaSoundService extends ChangeNotifier {
   static const String _deviceKey = 'anantasound_device';
-  static const String _statusKey = 'anantasound_status';
   
   AnantaSoundDevice? _device;
   DeviceStatus? _status;

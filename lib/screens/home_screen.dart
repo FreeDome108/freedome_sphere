@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/project_service.dart';
-import '../services/anantasound_service.dart';
 import '../models/project.dart';
 import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
@@ -11,6 +10,7 @@ import '../widgets/status_bar.dart';
 import '../widgets/lyubomir_understanding_panel.dart';
 import 'anantasound_screen.dart';
 import 'lyubomir_understanding_screen.dart';
+import 'unreal_optimizer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -216,6 +216,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const AnantaSoundScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.auto_fix_high),
+            tooltip: 'Unreal Engine Optimizer',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const UnrealOptimizerScreen(),
                 ),
               );
             },
