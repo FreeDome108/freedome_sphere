@@ -76,7 +76,7 @@ jobs:
       uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
-        packageName: com.example.freedome_sphere_flutter
+        packageName: com.freedome.sphere
         releaseFiles: build/app/outputs/bundle/release/app-release.aab
         track: production
         status: completed
