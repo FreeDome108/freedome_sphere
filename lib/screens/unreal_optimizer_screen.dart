@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:provider/provider.dart';
 import '../services/unreal_optimizer_service.dart';
 import '../models/unreal_analysis.dart';
 import '../widgets/unreal_analysis_panel.dart';
-import '../widgets/unreal_optimization_panel.dart';
 import '../widgets/unreal_report_panel.dart';
 
 class UnrealOptimizerScreen extends StatefulWidget {
