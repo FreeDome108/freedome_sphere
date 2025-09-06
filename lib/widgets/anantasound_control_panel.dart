@@ -17,7 +17,6 @@ class _AnantaSoundControlPanelState extends State<AnantaSoundControlPanel>
   late AnimationController _pulseController;
   late AnimationController _rotationController;
   late Animation<double> _pulseAnimation;
-  late Animation<double> _rotationAnimation;
 
   @override
   void initState() {
@@ -41,10 +40,6 @@ class _AnantaSoundControlPanelState extends State<AnantaSoundControlPanel>
       curve: Curves.easeInOut,
     ));
     
-    _rotationAnimation = Tween<double>(
-      begin: 0.0,
-      end: 2 * pi,
-    ).animate(_rotationController);
   }
 
   @override

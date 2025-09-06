@@ -1,4 +1,3 @@
-import 'dart:math';
 
 /// Модель для anAntaSound Quantum Resonance Device
 class AnantaSoundDevice {
