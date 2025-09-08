@@ -80,6 +80,11 @@ class ProjectSidebar extends StatelessWidget {
                     children: [
                       _buildImportButton(
                         icon: Icons.book,
+                        label: "Import File",
+                        onTap: () => _importFile(context, l10n),
+                      ),
+                      _buildImportButton(
+                        icon: Icons.book,
                         label: l10n.barankoComics,
                         onTap: () => _importComics(context, l10n),
                       ),
@@ -354,6 +359,22 @@ class ProjectSidebar extends StatelessWidget {
 
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year}';
+  }
+
+  void _importFile(BuildContext context, AppLocalizations l10n) async {
+    onStatusUpdate("Importing files...", 'working');
+
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions:['zip', 'rar', '7z', 'cbz', 'cbr',   'uasset', 'umap', 'fbx', 'obj',  'blend', 'fbx', 'obj', 'dae', '3ds',    ],
+        allowMultiple:true
+      ); 
+
+      //TODO
+    } catch (e) {
+      onStatusUpdate('Import failed: $e', 'error');
+    }
   }
 
   void _importComics(BuildContext context, AppLocalizations l10n) async {
