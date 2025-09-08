@@ -18,6 +18,12 @@
 @import file_picker;
 #endif
 
+#if __has_include(<firebase_core/FLTFirebaseCorePlugin.h>)
+#import <firebase_core/FLTFirebaseCorePlugin.h>
+#else
+@import firebase_core;
+#endif
+
 #if __has_include(<flutter_inappwebview_ios/InAppWebViewFlutterPlugin.h>)
 #import <flutter_inappwebview_ios/InAppWebViewFlutterPlugin.h>
 #else
@@ -41,6 +47,7 @@
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [AudioplayersDarwinPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersDarwinPlugin"]];
   [FilePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FilePickerPlugin"]];
+  [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];

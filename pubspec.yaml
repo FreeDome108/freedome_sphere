@@ -48,6 +48,7 @@ dependencies:
   provider: ^6.1.5+1
   flutter_svg: ^2.0.10+1
   flutter_inappwebview: ^6.0.0
+  firebase_core: ^4.1.0
 
 dev_dependencies:
   flutter_test:
