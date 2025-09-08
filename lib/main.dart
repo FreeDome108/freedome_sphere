@@ -8,6 +8,7 @@ import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/anantasound_service.dart';
 import 'services/lyubomir_understanding_service.dart';
+import 'services/boranko_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,9 @@ class FreedomeSphereApp extends StatelessWidget {
         ),
         Provider<ProjectService>(
           create: (_) => ProjectService(),
+        ),
+        Provider<BorankoService>(
+          create: (_) => BorankoService(),
         ),
         ChangeNotifierProvider<AnantaSoundService>(
           create: (_) => AnantaSoundService(),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../services/project_service.dart';
+import '../services/boranko_service.dart';
 import '../models/project.dart';
 import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
@@ -177,6 +178,52 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _importBorankoProject() async {
+    final l10n = AppLocalizations.of(context)!;
+    setState(() {
+      _isLoading = true;
+      _statusMessage = l10n.importingBorankoProject;
+      _statusType = 'working';
+    });
+
+    try {
+      final borankoService = Provider.of<BorankoService>(context, listen: false);
+      // TODO: Replace with actual file path
+      final borankoProject = await borankoService.importBorankoProject('dummy/path/project.boranko');
+      
+      // TODO: Integrate the imported Boranko project into the current project
+
+      setState(() {
+        _statusMessage = 'Boranko project imported successfully'; // Replace with localization
+        _statusType = 'ready';
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _statusMessage = l10n.errorImportingBorankoProject(e.toString());
+        _statusType = 'error';
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _importComicsProject() async {
+    final l10n = AppLocalizations.of(context)!;
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.comicsDeprecatedTitle),
+        content: Text(l10n.comicsDeprecatedContent),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(l10n.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _updateProject(FreedomeProject project) {
     setState(() {
       _currentProject = project;
@@ -243,6 +290,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPlayPreview: () => _setStatus(AppLocalizations.of(context)!.playingPreview, 'working'),
             onStopPreview: () => _setStatus(AppLocalizations.of(context)!.previewStopped, 'ready'),
             onResetView: () => _setStatus(AppLocalizations.of(context)!.viewReset, 'ready'),
+            onImportBoranko: _importBorankoProject,
+            onImportComics: _importComicsProject,
             statusMessage: _statusMessage,
             statusType: _statusType,
           ),

@@ -10,6 +10,8 @@ class Toolbar extends StatelessWidget {
   final VoidCallback onPlayPreview;
   final VoidCallback onStopPreview;
   final VoidCallback onResetView;
+  final VoidCallback onImportBoranko;
+  final VoidCallback onImportComics;
   final String statusMessage;
   final String statusType;
 
@@ -21,6 +23,8 @@ class Toolbar extends StatelessWidget {
     required this.onPlayPreview,
     required this.onStopPreview,
     required this.onResetView,
+    required this.onImportBoranko,
+    required this.onImportComics,
     required this.statusMessage,
     required this.statusType,
   });
@@ -82,6 +86,39 @@ class Toolbar extends StatelessWidget {
               ),
             ),
             
+            const VerticalDivider(color: Color(0xFF3A3A3A)),
+
+            // Import menu
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'boranko') {
+                    onImportBoranko();
+                  } else if (value == 'comics') {
+                    onImportComics();
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                    value: 'boranko',
+                    child: Text('Import .boranko'),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'comics',
+                    child: Text('Import .comics (deprecated)'),
+                  ),
+                ],
+                child: Row(
+                  children: [
+                    const Icon(Icons.import_export, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(l10n.import, style: const TextStyle(color: Colors.white)),
+                  ],
+                ),
+              ),
+            ),
+
             const VerticalDivider(color: Color(0xFF3A3A3A)),
             
             // Viewport controls
