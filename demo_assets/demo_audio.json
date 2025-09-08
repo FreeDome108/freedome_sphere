@@ -1,0 +1,13 @@
+{
+  "name": "Демо Аудио",
+  "type": "background_music",
+  "anAntaSound": {
+    "enabled": true,
+    "spatialFactor": 1.0,
+    "quantumResonance": {
+      "frequency": 432.0,
+      "intensity": 0.7,
+      "coherenceTime": 2000.0
+    }
+  }
+}
