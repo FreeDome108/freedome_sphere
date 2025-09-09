@@ -75,7 +75,7 @@ class _LyubomirUnderstandingScreenState extends State<LyubomirUnderstandingScree
           Consumer<LyubomirUnderstandingService>(
             builder: (context, service, child) {
               return Switch(
-                value: service.isEnabled,
+                value: service.settings.enabled,
                 onChanged: (value) async {
                   final newSettings = service.settings.copyWith(enabled: value);
                   service.updateSettings(newSettings);
@@ -422,7 +422,7 @@ class _AnalysisTab extends StatelessWidget {
                 subtitle: Text('${understanding.results.length} результатов'),
                 children: understanding.results.map((result) {
                   return ListTile(
-                    title: Text(result.type),
+                    title: Text(result.type.toString()),
                     subtitle: Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
                     trailing: Text(
                       '${result.tags.length} тегов',
@@ -443,7 +443,7 @@ class _AnalysisTab extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(result.type),
+        title: Text(result.type.toString()),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -547,7 +547,7 @@ class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> 
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<UnderstandingType>(
-              initialValue: _selectedType,
+              value: _selectedType,
               decoration: const InputDecoration(
                 labelText: 'Тип понимания',
                 border: OutlineInputBorder(),
@@ -703,7 +703,7 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
                 return Card(
                   margin: const EdgeInsets.only(bottom: 8),
                   child: ListTile(
-                    title: Text(result.type),
+                    title: Text(result.type.toString()),
                     subtitle: Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
                     trailing: Text(
                       '${result.tags.length} тегов',
@@ -744,7 +744,7 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(result.type),
+        title: Text(result.type.toString()),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

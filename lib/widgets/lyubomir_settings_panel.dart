@@ -37,7 +37,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
               const SizedBox(height: 24),
               _buildTypeSettings(),
               const SizedBox(height: 24),
-              _buildAdvancedSettings(),
+              _buildAdvancedSettings(service),
               const SizedBox(height: 32),
               _buildActionButtons(service),
             ],
@@ -174,7 +174,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     );
   }
 
-  Widget _buildAdvancedSettings() {
+  Widget _buildAdvancedSettings(LyubomirUnderstandingService service) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -190,14 +190,14 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
               title: const Text('Сбросить к настройкам по умолчанию'),
               subtitle: const Text('Восстановить все настройки'),
               trailing: const Icon(Icons.restore),
-              onTap: _showResetConfirmation,
+              onTap: () => _showResetConfirmation(service),
             ),
             const Divider(),
             ListTile(
               title: const Text('Очистить все данные'),
               subtitle: const Text('Удалить все понимания и результаты'),
               trailing: const Icon(Icons.delete_forever, color: Colors.red),
-              onTap: _showClearDataConfirmation,
+              onTap: () => _showClearDataConfirmation(service),
             ),
           ],
         ),
@@ -260,7 +260,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
   }
 
   void _saveSettings(LyubomirUnderstandingService service) async {
-    service.updateSettings(_currentSettings);
+    await service.updateSettings(_currentSettings);
     setState(() {
       _hasChanges = false;
     });
@@ -283,7 +283,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     });
   }
 
-  void _showResetConfirmation() {
+  void _showResetConfirmation(LyubomirUnderstandingService service) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -297,7 +297,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              _resetToDefaults();
+              _resetToDefaults(service);
             },
             child: const Text('Сбросить'),
           ),
@@ -306,7 +306,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     );
   }
 
-  void _showClearDataConfirmation() {
+  void _showClearDataConfirmation(LyubomirUnderstandingService service) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -320,7 +320,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              _clearAllData();
+              _clearAllData(service);
             },
             child: const Text('Очистить', style: TextStyle(color: Colors.red)),
           ),
@@ -329,8 +329,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     );
   }
 
-  void _resetToDefaults() async {
-    final service = context.read<LyubomirUnderstandingService>();
+  void _resetToDefaults(LyubomirUnderstandingService service) async {
     await service.resetToDefaults();
     setState(() {
       _currentSettings = service.settings;
@@ -347,8 +346,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     }
   }
 
-  void _clearAllData() async {
-    final service = context.read<LyubomirUnderstandingService>();
+  void _clearAllData(LyubomirUnderstandingService service) async {
     await service.clearAllData();
     
     if (mounted) {

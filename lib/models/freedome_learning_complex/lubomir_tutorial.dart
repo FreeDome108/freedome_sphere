@@ -207,8 +207,8 @@ class LubomirLearningSettings {
     return LubomirLearningSettings(
       enabled: json['enabled'] as bool? ?? true,
       autoStart: json['autoStart'] as bool? ?? true,
-      enabledTypes: (json['enabledTypes'] as List?)\
-          ?.map((type) => LubomirTutorialTypeExtension.fromString(type as String))\
+      enabledTypes: (json['enabledTypes'] as List?)
+          ?.map((type) => LubomirTutorialTypeExtension.fromString(type as String))
           .toList() ?? [
         LubomirTutorialType.visual,
         LubomirTutorialType.audio,
