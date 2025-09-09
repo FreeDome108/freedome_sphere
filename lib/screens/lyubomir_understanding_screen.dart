@@ -548,7 +548,7 @@ class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> 
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<UnderstandingType>(
-              value: _selectedType,
+              initialValue: _selectedType,
               decoration: const InputDecoration(
                 labelText: 'Тип понимания',
                 border: OutlineInputBorder(),
