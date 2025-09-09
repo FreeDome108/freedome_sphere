@@ -1,0 +1,1 @@
+const logTradingFilePath = path.join(__dirname,"/logs/",trading_pair+"_"+exchange+'_trading_log.txt');
