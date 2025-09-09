@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -113,15 +114,24 @@ void main() {
         ),
       );
 
-      var appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, themeService.getThemeData().appBarTheme.backgroundColor);
+      await tester.pumpAndSettle();
+
+      Material appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ));
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
       
       await themeService.setEdition(AppEdition.enterprise);
       await tester.pumpAndSettle();
       
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
-      appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, themeService.getThemeData().appBarTheme.backgroundColor);
+
+      appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ));
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
     testWidgets('should persist theme selection', (WidgetTester tester) async {
@@ -255,8 +265,11 @@ void main() {
       await tester.pumpAndSettle();
       
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
-      final appBar = tester.widget<AppBar>(find.byType(AppBar));
-      expect(appBar.backgroundColor, themeService.getThemeData().appBarTheme.backgroundColor);
+      final appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ));
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
     testWidgets('should handle rapid theme changes', (WidgetTester tester) async {
