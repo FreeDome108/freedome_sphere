@@ -1,6 +1,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freedome_sphere_flutter/services/jpg_service.dart';
+import 'package:freedome_sphere_flutter/services/video_service.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 // Mock class for FilePicker
@@ -20,26 +20,26 @@ class MockFilePicker extends Fake with MockPlatformInterfaceMixin implements Fil
     bool? readSequential,
     int? compressionQuality,
   }) async {
-    return FilePickerResult([PlatformFile(path: 'dummy/path/to/jpg.jpg', name: 'jpg.jpg', size: 100)]);
+    return FilePickerResult([PlatformFile(path: 'dummy/path/to/video.mp4', name: 'video.mp4', size: 100)]);
   }
 }
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  group('JpgService', () {
-    late JpgService jpgService;
+  group('VideoService', () {
+    late VideoService videoService;
 
     setUp(() {
-      jpgService = JpgService();
+      videoService = VideoService();
       FilePicker.platform = MockFilePicker();
     });
 
-    test('pickJpg sets jpg when a file is picked', () async {
-      await jpgService.pickJpg();
+    test('pickVideo sets video when a file is picked', () async {
+      await videoService.pickVideo();
 
-      expect(jpgService.jpg, isNotNull);
-      expect(jpgService.jpg!.path, 'dummy/path/to/jpg.jpg');
+      expect(videoService.video, isNotNull);
+      expect(videoService.video!.path, 'dummy/path/to/video.mp4');
     });
   });
 }

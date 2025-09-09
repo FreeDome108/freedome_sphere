@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:freedome_sphere_flutter/screens/gif_screen.dart';
 import 'package:freedome_sphere_flutter/screens/jpg_screen.dart';
+import 'package:freedome_sphere_flutter/screens/video_screen.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../models/freedome_learning_complex/tutorials.dart';
@@ -267,6 +268,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const JpgScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.video_library),
+            tooltip: 'Video Importer',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const VideoScreen(),
                 ),
               );
             },

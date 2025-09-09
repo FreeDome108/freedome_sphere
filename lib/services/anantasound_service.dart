@@ -14,7 +14,7 @@ class AnantaSoundService extends ChangeNotifier {
   DeviceStatus? _status;
   Timer? _statusTimer;
   bool _isInitialized = false;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final AudioPlayer _audioPlayer;
   
   // Потоки для реального времени
   final StreamController<DeviceStatus> _statusController = 
@@ -32,6 +32,8 @@ class AnantaSoundService extends ChangeNotifier {
   Stream<DeviceStatus> get statusStream => _statusController.stream;
   Stream<QuantumResonanceField> get resonanceStream => _resonanceController.stream;
   Stream<ConsciousnessField> get consciousnessStream => _consciousnessController.stream;
+
+  AnantaSoundService({AudioPlayer? audioPlayer}) : _audioPlayer = audioPlayer ?? AudioPlayer();
 
   /// Инициализация сервиса
   Future<bool> initialize() async {
