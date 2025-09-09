@@ -1,0 +1,117 @@
+# .github/workflows/ci.yml
+name: Flutter CI/CD for GitHub Actions
+
+# Контролирует, когда будет запускаться воркфлоу
+on:
+  push:
+    branches:
+      - main  # или ваша основная ветка
+    tags:
+      - 'v*.*.*'  # Запуск для тегов, например v1.2.3
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Задача для тестирования кода
+  test:
+    name: "🧪 Тестирование"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "🛎️ Клонирование репозитория"
+        uses: actions/checkout@v3
+
+      - name: "🐦 Настройка Flutter"
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: "📦 Установка зависимостей"
+        run: flutter pub get
+
+      - name: "🔬 Запуск тестов"
+        run: flutter test
+
+  # Задача для сборки Android-приложения
+  build_android:
+    name: "🔨 Сборка Android"
+    needs: test # Запускается после успешного завершения 'test'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "🛎️ Клонирование репозитория"
+        uses: actions/checkout@v3
+
+      - name: "🐦 Настройка Flutter"
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: "📦 Установка зависимостей"
+        run: flutter pub get
+
+      # Для релизной сборки (при пуше тега) необходимо настроить подпись.
+      # Создайте секреты в настройках репозитория: Settings -> Secrets and variables -> Actions
+      # 1. KEYSTORE_BASE64: ваш .jks файл, закодированный в base64
+      # 2. KEY_ALIAS: алиас вашего ключа
+      # 3. STORE_PASSWORD: пароль от хранилища ключей
+      # 4. KEY_PASSWORD: пароль от самого ключа
+      - name: "🔑 Настройка Keystore для релиза"
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/app/upload-keystore.jks
+          echo "storeFile=upload-keystore.jks" >> android/key.properties
+          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
+          echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
+        
+      - name: "📱 Сборка APK (Release)"
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: flutter build apk --release
+
+      - name: "📦 Сборка App Bundle (Release)"
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: flutter build appbundle --release
+
+      # Загрузка артефактов сборки
+      - name: "⬆️ Загрузка APK"
+        uses: actions/upload-artifact@v3
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: "⬆️ Загрузка App Bundle"
+        uses: actions/upload-artifact@v3
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: app-release.aab
+          path: build/app/outputs/bundle/release/app-release.aab
+
+  # Задача для создания релиза на GitHub
+  release:
+    name: "🎉 Создание релиза"
+    needs: build_android
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v') # Запускать только для тегов
+
+    steps:
+      # Загружаем артефакты из предыдущей задачи
+      - name: "⬇️ Скачивание APK"
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.apk
+      - name: "⬇️ Скачивание App Bundle"
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.aab
+
+      # Создаем релиз и прикрепляем к нему файлы
+      - name: "📝 Создание GitHub Release"
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "app-release.apk,app-release.aab"
+          token: ${{ secrets.GITHUB_TOKEN }} # Стандартный токен, предоставляемый GitHub
+          body: "Автоматически сгенерированный релиз для тега ${{ github.ref_name }}"
+          name: "Релиз ${{ github.ref_name }}"
