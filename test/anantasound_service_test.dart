@@ -13,7 +13,6 @@ class FakeSource extends Fake implements Source {}
 @GenerateMocks([AudioPlayer])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  registerFallbackValue(FakeSource());
 
   group('AnantaSoundService', () {
     late AnantaSoundService anantaSoundService;
