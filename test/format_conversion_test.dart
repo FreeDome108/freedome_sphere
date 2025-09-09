@@ -1,6 +1,5 @@
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:freedome_sphere_flutter/models/zelim_format.dart';
 import 'package:freedome_sphere_flutter/services/collada_service.dart';
 import 'package:freedome_sphere_flutter/services/zelim_service.dart';
 import 'dart:io';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/lyubomir_understanding_service.dart';
 import '../models/lyubomir_understanding.dart';
-import '../widgets/lyubomir_understanding_panel.dart';
 import '../widgets/lyubomir_settings_panel.dart';
 
 /// Экран управления пониманием Любомира
