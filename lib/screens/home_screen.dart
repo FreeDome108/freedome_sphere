@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
+import '../models/freedome_learning_complex/tutorials.dart';
+import '../screens/tutorials_screen.dart';
 import '../services/project_service.dart';
 import '../services/boranko_service.dart';
 import '../models/project.dart';
@@ -245,6 +247,17 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.school),
+            tooltip: 'Туториалы',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => TutorialsScreen(tutorials: tutorials),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.psychology),
             tooltip: 'Понимание Любомира',
