@@ -54,8 +54,6 @@ dependencies:
   xml: ^6.5.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   mockito: ^5.4.4
   build_runner: any
 
