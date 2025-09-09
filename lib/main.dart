@@ -12,18 +12,24 @@ import 'services/boranko_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const FreedomeSphereApp());
+
+  final themeService = ThemeService();
+  await themeService.init();
+
+  runApp(FreedomeSphereApp(themeService: themeService));
 }
 
 class FreedomeSphereApp extends StatelessWidget {
-  const FreedomeSphereApp({super.key});
+  final ThemeService themeService;
+
+  const FreedomeSphereApp({super.key, required this.themeService});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ThemeService>(
-          create: (_) => ThemeService(),
+        ChangeNotifierProvider<ThemeService>.value(
+          value: themeService,
         ),
         ChangeNotifierProvider<LocaleService>(
           create: (_) => LocaleService()..loadLocale(),

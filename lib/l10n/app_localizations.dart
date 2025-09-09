@@ -330,6 +330,48 @@ abstract class AppLocalizations {
   /// **'Import'**
   String get import;
 
+  /// Import .boranko menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Import .boranko'**
+  String get importBoranko;
+
+  /// Import .comics (deprecated) menu item
+  ///
+  /// In en, this message translates to:
+  /// **'Import .comics (deprecated)'**
+  String get importComics;
+
+  /// Title for the comics deprecated dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Legacy Format'**
+  String get comicsDeprecatedTitle;
+
+  /// Content for the comics deprecated dialog
+  ///
+  /// In en, this message translates to:
+  /// **'The .comics format is deprecated and will be removed in a future version. Please use the modern .boranko format for all new 2D projects.'**
+  String get comicsDeprecatedContent;
+
+  /// OK button text
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// Status message for importing a Boranko project
+  ///
+  /// In en, this message translates to:
+  /// **'Importing Boranko project...'**
+  String get importingBorankoProject;
+
+  /// Error message for importing a Boranko project
+  ///
+  /// In en, this message translates to:
+  /// **'Error importing Boranko project: {error}'**
+  String errorImportingBorankoProject(String error);
+
   /// Baranko Comics import button
   ///
   /// In en, this message translates to:
