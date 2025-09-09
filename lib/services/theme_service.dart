@@ -137,8 +137,6 @@ class ThemeService extends ChangeNotifier {
         onSecondary: isLightTheme ? Colors.white : textColor,
         onSurface: textColor,
         onError: Colors.white,
-        background: backgroundColor,
-        onBackground: textColor,
       ),
     );
   }

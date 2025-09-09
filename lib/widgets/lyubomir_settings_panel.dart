@@ -260,7 +260,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
   }
 
   void _saveSettings(LyubomirUnderstandingService service) async {
-    await service.updateSettings(_currentSettings);
+    service.updateSettings(_currentSettings);
     setState(() {
       _hasChanges = false;
     });
