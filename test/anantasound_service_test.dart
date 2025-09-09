@@ -1,15 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:freedome_sphere_flutter/services/anantasound_service.dart';
 import 'package:freedome_sphere_flutter/models/anantasound_device.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class MockAudioPlayer extends Mock implements AudioPlayer {}
+import 'anantasound_service_test.mocks.dart';
 
+class FakeSource extends Fake implements Source {}
+
+@GenerateMocks([AudioPlayer])
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  
+  registerFallbackValue(FakeSource());
+
   group('AnantaSoundService', () {
     late AnantaSoundService anantaSoundService;
     late MockAudioPlayer mockAudioPlayer;
@@ -19,10 +24,10 @@ void main() {
       mockAudioPlayer = MockAudioPlayer();
       anantaSoundService = AnantaSoundService(audioPlayer: mockAudioPlayer);
 
-      when(mockAudioPlayer.setSourceDeviceFile(any)).thenAnswer((_) async => ());
-      when(mockAudioPlayer.resume()).thenAnswer((_) async => ());
-      when(mockAudioPlayer.pause()).thenAnswer((_) async => ());
-      when(mockAudioPlayer.dispose()).thenAnswer((_) async => ());
+      when(mockAudioPlayer.setSource(any)).thenAnswer((_) async => Future.value());
+      when(mockAudioPlayer.resume()).thenAnswer((_) async => Future.value());
+      when(mockAudioPlayer.pause()).thenAnswer((_) async => Future.value());
+      when(mockAudioPlayer.dispose()).thenAnswer((_) async => Future.value());
     });
 
     test('initialize initializes the service', () async {

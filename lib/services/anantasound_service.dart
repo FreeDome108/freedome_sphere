@@ -43,7 +43,7 @@ class AnantaSoundService extends ChangeNotifier {
         await _createDefaultDevice();
       }
       if (_device?.mp3FilePath != null) {
-        await _audioPlayer.setSourceDeviceFile(_device!.mp3FilePath!);
+        await _audioPlayer.setSource(DeviceFileSource(_device!.mp3FilePath!));
       }
       _isInitialized = true;
       _startStatusMonitoring();
@@ -144,7 +144,7 @@ class AnantaSoundService extends ChangeNotifier {
     if (_device == null) return;
 
     try {
-      await _audioPlayer.setSourceDeviceFile(filePath);
+      await _audioPlayer.setSource(DeviceFileSource(filePath));
       _device = _device!.copyWith(mp3FilePath: filePath);
       await _saveDeviceToStorage();
       notifyListeners();
