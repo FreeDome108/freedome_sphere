@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freedome_sphere_flutter/screens/gif_screen.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../models/freedome_learning_complex/tutorials.dart';
@@ -247,6 +248,17 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.gif),
+            tooltip: 'GIF Importer',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const GifScreen(),
+                ),
+              );
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.school),
             tooltip: 'Туториалы',
