@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset><contributor><author></author><authoring_tool>FBX COLLADA exporter</authoring_tool><comments></comments></contributor><created>2020-02-05T12:07:23Z</created><keywords></keywords><modified>2020-02-05T12:07:23Z</modified><revision></revision><subject></subject><title></title><unit meter="0.010000" name="centimeter"></unit><up_axis>Y_UP</up_axis></asset>
+  <library_images>
+    <image id="BG-image" name="BG"><init_from>BG.jpg</init_from></image>
+  </library_images>
+  <library_materials>
+    <material id="BG" name="BG">
+      <instance_effect url="#BG-fx"/>
+    </material>
+  </library_materials>
+  <library_effects>
+    <effect id="BG-fx" name="BG">
+      <profile_COMMON>
+        <technique sid="standard">
+          <phong>
+            <emission>
+              <color sid="emission">0.000000  0.000000 0.000000 1.000000</color>
+            </emission>
+            <ambient>
+              <color sid="ambient">0.588000  0.588000 0.588000 1.000000</color>
+            </ambient>
+            <diffuse>
+              <texture texture="BG-image" texcoord="CHANNEL0">
+                <extra>
+                  <technique profile="MAYA">
+                    <wrapU sid="wrapU0">TRUE</wrapU>
+                    <wrapV sid="wrapV0">TRUE</wrapV>
+                    <blend_mode>ADD</blend_mode>
+                  </technique>
+                </extra>
+              </texture>
+            </diffuse>
+            <specular>
+              <color sid="specular">0.000000  0.000000 0.000000 1.000000</color>
+            </specular>
+            <shininess>
+              <float sid="shininess">2.000000</float>
+            </shininess>
+            <reflective>
+              <color sid="reflective">0.000000  0.000000 0.000000 1.000000</color>
+            </reflective>
+            <reflectivity>
+              <float sid="reflectivity">1.000000</float>
+            </reflectivity>
+            <transparent opaque="RGB_ZERO">
+              <color sid="transparent">1.000000  1.000000 1.000000 1.000000</color>
+            </transparent>
+            <transparency>
+              <float sid="transparency">0.000000</float>
+            </transparency>
+          </phong>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_geometries>
+    <geometry id="buddah_BG-lib" name="buddah_BGMesh">
+      <mesh>
+        <source id="buddah_BG-POSITION">
+          <float_array id="buddah_BG-POSITION-array" count="54">
+-38.407482 -35.237144 -24.176214
+38.800156 -35.237144 -24.176216
+-38.407490 -27.365505 24.176214
+-15.802513 4.725929 24.176214
+11.544256 4.725929 24.176214
+38.800148 -27.365505 24.176212
+-16.494087 4.725931 14.022207
+12.220316 4.725931 14.022207
+38.800148 -27.365503 14.022203
+-38.407490 -27.365503 14.022203
+-38.407490 -27.365499 -12.526752
+-18.177416 4.725935 -10.693142
+13.859671 4.725935 -10.599840
+38.800148 -27.365499 -13.364439
+10.486036 0.068428 -15.435493
+-12.716995 -0.002255 -15.555526
+-31.977678 -27.365498 -24.176214
+28.067934 -27.365498 -24.176216
+</float_array>
+          <technique_common>
+            <accessor source="#buddah_BG-POSITION-array" count="18" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="buddah_BG-Normal0">
+          <float_array id="buddah_BG-Normal0-array" count="198">
+0.828730 -0.558962 -0.027713
+0.491800 -0.818397 0.297253
+0.469172 -0.882968 -0.015696
+0.491800 -0.818397 0.297253
+0.828730 -0.558962 -0.027713
+0.755988 -0.563292 0.333444
+0.469172 -0.882968 -0.015696
+-0.421876 -0.847376 0.322451
+-0.427508 -0.903905 -0.013861
+-0.421876 -0.847376 0.322451
+0.469172 -0.882968 -0.015696
+0.491800 -0.818397 0.297253
+-0.427508 -0.903905 -0.013861
+-0.421876 -0.847376 0.322451
+-0.773064 -0.633834 -0.025045
+-0.773064 -0.633834 -0.025045
+-0.421876 -0.847376 0.322451
+-0.685359 -0.620611 0.380952
+0.447830 -0.893989 -0.015251
+0.828730 -0.558962 -0.027713
+0.469172 -0.882968 -0.015696
+0.828730 -0.558962 -0.027713
+0.447830 -0.893989 -0.015251
+0.821367 -0.569714 -0.027971
+0.447830 -0.893989 -0.015251
+-0.427508 -0.903905 -0.013861
+-0.407917 -0.912918 -0.013580
+-0.427508 -0.903905 -0.013861
+0.447830 -0.893989 -0.015251
+0.469172 -0.882968 -0.015696
+-0.407917 -0.912918 -0.013580
+-0.773064 -0.633834 -0.025045
+-0.765913 -0.642438 -0.025498
+-0.773064 -0.633834 -0.025045
+-0.407917 -0.912918 -0.013580
+-0.427508 -0.903905 -0.013861
+0.755988 -0.563292 0.333444
+0.196540 -0.557989 0.806238
+0.491800 -0.818397 0.297253
+0.196540 -0.557989 0.806238
+0.755988 -0.563292 0.333444
+0.502793 -0.499102 0.705759
+0.502793 -0.499102 0.705759
+0.755988 -0.563292 0.333444
+0.634449 -0.526686 0.565753
+-0.685359 -0.620611 0.380952
+-0.416212 -0.507782 0.754271
+-0.546520 -0.552612 0.629234
+-0.685359 -0.620611 0.380952
+-0.421876 -0.847376 0.322451
+-0.416212 -0.507782 0.754271
+-0.416212 -0.507782 0.754271
+-0.421876 -0.847376 0.322451
+-0.191177 -0.554591 0.809864
+-0.416212 -0.507782 0.754271
+0.196540 -0.557989 0.806238
+0.502793 -0.499102 0.705759
+0.196540 -0.557989 0.806238
+-0.416212 -0.507782 0.754271
+-0.191177 -0.554591 0.809864
+-0.421876 -0.847376 0.322451
+0.196540 -0.557989 0.806238
+-0.191177 -0.554591 0.809864
+0.196540 -0.557989 0.806238
+-0.421876 -0.847376 0.322451
+0.491800 -0.818397 0.297253
+</float_array>
+          <technique_common>
+            <accessor source="#buddah_BG-Normal0-array" count="66" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="buddah_BG-UV0">
+          <float_array id="buddah_BG-UV0-array" count="36">
+0.000676 -0.001359
+0.998657 -0.001359
+0.000676 0.998641
+0.292867 0.998641
+0.646349 0.998641
+0.998657 0.998641
+0.283928 0.788641
+0.655088 0.788641
+0.998657 0.788641
+0.000676 0.788641
+0.000676 0.239569
+0.262169 0.277491
+0.676278 0.279421
+0.998657 0.222245
+0.632671 0.179412
+0.332750 0.176930
+0.083788 -0.001359
+0.859933 -0.001359
+</float_array>
+          <technique_common>
+            <accessor source="#buddah_BG-UV0-array" count="18" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="buddah_BG-VERTEX">
+          <input semantic="POSITION" source="#buddah_BG-POSITION"/>
+        </vertices>
+        <triangles count="22" material="BG"><input semantic="VERTEX" offset="0" source="#buddah_BG-VERTEX"/><input semantic="NORMAL" offset="1" source="#buddah_BG-Normal0"/><input semantic="TEXCOORD" offset="2" set="0" source="#buddah_BG-UV0"/><p> 9 0 9 11 1 11 6 2 6 11 3 11 9 4 9 10 5 10 6 6 6 12 7 12 7 8 7 12 9 12 6 10 6 11 11 11 7 12 7 12 13 12 8 14 8 8 15 8 12 16 12 13 17 13 3 18 3 9 19 9 6 20 6 9 21 9 3 22 3 2 23 2 3 24 3 7 25 7 4 26 4 7 27 7 3 28 3 6 29 6 4 30 4 8 31 8 5 32 5 8 33 8 4 34 4 7 35 7 10 36 10 15 37 15 11 38 11 15 39 15 10 40 10 16 41 16 16 42 16 10 43 10 0 44 0 13 45 13 17 46 17 1 47 1 13 48 13 12 49 12 17 50 17 17 51 17 12 52 12 14 53 14 17 54 17 15 55 15 16 56 16 15 57 15 17 58 17 14 59 14 12 60 12 15 61 15 14 62 14 15 63 15 12 64 12 11 65 11</p></triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="buddah_BG_v3" name="buddah_BG_v3">
+      <node name="buddah_BG" id="buddah_BG" sid="buddah_BG"><matrix sid="matrix">1.000000 0.000000 0.000000 0.890737 -0.000000 0.000000 1.000000 3.680346 0.000000 -1.000000 0.000000 -11.912622 0.000000 0.000000 0.000000 1.000000</matrix><instance_geometry url="#buddah_BG-lib"><bind_material><technique_common><instance_material symbol="BG" target="#BG"/></technique_common></bind_material></instance_geometry><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node>
+      <extra><technique profile="MAX3D"><frame_rate>30.000000</frame_rate></technique><technique profile="FCOLLADA"><start_time>0.000000</start_time><end_time>13.333333</end_time></technique></extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#buddah_BG_v3"></instance_visual_scene>
+  </scene>
+</COLLADA>

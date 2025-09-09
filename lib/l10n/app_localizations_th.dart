@@ -133,6 +133,30 @@ class AppLocalizationsTh extends AppLocalizations {
   String get import => 'นำเข้า';
 
   @override
+  String get importBoranko => 'Import .boranko';
+
+  @override
+  String get importComics => 'Import .comics (deprecated)';
+
+  @override
+  String get comicsDeprecatedTitle => 'Legacy Format';
+
+  @override
+  String get comicsDeprecatedContent =>
+      'The .comics format is deprecated and will be removed in a future version. Please use the modern .boranko format for all new 2D projects.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get importingBorankoProject => 'Importing Boranko project...';
+
+  @override
+  String errorImportingBorankoProject(String error) {
+    return 'Error importing Boranko project: $error';
+  }
+
+  @override
   String get barankoComics => 'การ์ตูน Baranko';
 
   @override

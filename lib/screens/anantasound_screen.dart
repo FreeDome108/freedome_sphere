@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/anantasound_service.dart';
@@ -147,6 +149,8 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                     children: [
                       _buildQuantumVisualization(service),
                       const SizedBox(height: 24),
+                      _buildMp3Loader(service),
+                      const SizedBox(height: 24),
                       const AnantaSoundControlPanel(),
                       const SizedBox(height: 24),
                       _buildParticipantManagement(service),
@@ -159,6 +163,61 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+  Widget _buildMp3Loader(AnantaSoundService service) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.indigo.withOpacity(0.3)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Управление MP3',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    FilePickerResult? result = await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['mp3'],
+                    );
+
+                    if (result != null) {
+                      service.loadMp3(result.files.single.path!);
+                    }
+                  },
+                  icon: const Icon(Icons.music_note),
+                  label: const Text('Загрузить MP3'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.indigo,
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          if (service.device?.mp3FilePath != null)
+            Text(
+              'Загруженный файл: ${service.device!.mp3FilePath!.split('/').last}',
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
+        ],
       ),
     );
   }
@@ -553,4 +612,3 @@ class QuantumVisualizationPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
-

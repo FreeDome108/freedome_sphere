@@ -622,6 +622,8 @@ class ProjectSidebar extends StatelessWidget {
 }
 
 class AnantaSoundSetupDialog extends StatefulWidget {
+  const AnantaSoundSetupDialog({super.key});
+
   @override
   _AnantaSoundSetupDialogState createState() => _AnantaSoundSetupDialogState();
 }
@@ -654,7 +656,7 @@ class _AnantaSoundSetupDialogState extends State<AnantaSoundSetupDialog> {
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
-            value: _format,
+            initialValue: _format,
             decoration: const InputDecoration(labelText: 'Audio Format'),
             items: const [
               DropdownMenuItem(value: 'daga', child: Text('.daga')),
@@ -739,7 +741,7 @@ class _ExportDialogState extends State<ExportDialog> {
           ),
           const SizedBox(height: 16),
           DropdownButtonFormField<String>(
-            value: _quality,
+            initialValue: _quality,
             decoration: const InputDecoration(labelText: 'Quality'),
             items: const [
               DropdownMenuItem(value: 'low', child: Text('Low')),

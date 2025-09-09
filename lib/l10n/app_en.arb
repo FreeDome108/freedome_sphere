@@ -177,6 +177,39 @@
   "@import": {
     "description": "Import section title"
   },
+   "importBoranko": "Import .boranko",
+  "@importBoranko": {
+    "description": "Import .boranko menu item"
+  },
+  "importComics": "Import .comics (deprecated)",
+  "@importComics": {
+    "description": "Import .comics (deprecated) menu item"
+  },
+  "comicsDeprecatedTitle": "Legacy Format",
+  "@comicsDeprecatedTitle": {
+    "description": "Title for the comics deprecated dialog"
+  },
+  "comicsDeprecatedContent": "The .comics format is deprecated and will be removed in a future version. Please use the modern .boranko format for all new 2D projects.",
+  "@comicsDeprecatedContent": {
+    "description": "Content for the comics deprecated dialog"
+  },
+  "ok": "OK",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "importingBorankoProject": "Importing Boranko project...",
+  "@importingBorankoProject": {
+    "description": "Status message for importing a Boranko project"
+  },
+  "errorImportingBorankoProject": "Error importing Boranko project: {error}",
+  "@errorImportingBorankoProject": {
+    "description": "Error message for importing a Boranko project",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "barankoComics": "Baranko Comics",
   "@barankoComics": {
     "description": "Baranko Comics import button"

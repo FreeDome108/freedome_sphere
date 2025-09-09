@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>app-store</string>
+    <string>app-store-connect</string>
     <key>teamID</key>
-    <string>YOUR_TEAM_ID</string>
+    <string>6XT4R7V83F</string>
     <key>uploadBitcode</key>
     <false/>
     <key>uploadSymbols</key>
@@ -16,10 +16,5 @@
     <string>automatic</string>
     <key>signingCertificate</key>
     <string>iPhone Distribution</string>
-    <key>provisioningProfiles</key>
-    <dict>
-        <key>com.freedome.sphere</key>
-        <string>YOUR_PROVISIONING_PROFILE</string>
-    </dict>
 </dict>
 </plist>

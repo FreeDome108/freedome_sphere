@@ -79,7 +79,7 @@ class _LyubomirUnderstandingScreenState extends State<LyubomirUnderstandingScree
                 value: service.isEnabled,
                 onChanged: (value) async {
                   final newSettings = service.settings.copyWith(enabled: value);
-                  await service.updateSettings(newSettings);
+                  service.updateSettings(newSettings);
                 },
               );
             },
@@ -548,7 +548,7 @@ class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> 
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<UnderstandingType>(
-              value: _selectedType,
+              initialValue: _selectedType,
               decoration: const InputDecoration(
                 labelText: 'Тип понимания',
                 border: OutlineInputBorder(),

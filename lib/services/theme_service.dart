@@ -11,8 +11,10 @@ class ThemeService extends ChangeNotifier {
   AppEdition get currentEdition => _currentEdition;
   EditionInfo get currentEditionInfo => _currentEditionInfo;
 
-  ThemeService() {
-    _loadSavedEdition();
+  ThemeService();
+
+  Future<void> init() async {
+    await _loadSavedEdition();
   }
 
   Future<void> _loadSavedEdition() async {
@@ -21,12 +23,12 @@ class ThemeService extends ChangeNotifier {
       final editionIndex = prefs.getInt(_editionKey) ?? AppEdition.vaishnava.index;
       _currentEdition = AppEdition.values[editionIndex];
       _currentEditionInfo = EditionInfo.getEditionInfo(_currentEdition);
-      notifyListeners();
     } catch (e) {
       // Если ошибка, используем дефолтное издание
       _currentEdition = AppEdition.vaishnava;
       _currentEditionInfo = EditionInfo.editions[AppEdition.vaishnava]!;
     }
+    notifyListeners();
   }
 
   Future<void> setEdition(AppEdition edition) async {
@@ -135,8 +137,6 @@ class ThemeService extends ChangeNotifier {
         onSecondary: isLightTheme ? Colors.white : textColor,
         onSurface: textColor,
         onError: Colors.white,
-        background: backgroundColor,
-        onBackground: textColor,
       ),
     );
   }

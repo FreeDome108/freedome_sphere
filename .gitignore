@@ -63,6 +63,14 @@ app.*.map.json
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
+# iOS build artifacts and debug symbols
+**/ios/Runner.xcarchive/
+**/ios/*.xcarchive/
+**/*.dSYM/
+**/*.dSYM
+**/build/ios/
+**/ios/build/
+
 # macOS related
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral/

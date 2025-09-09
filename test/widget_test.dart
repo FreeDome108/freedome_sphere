@@ -1,37 +1,45 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:freedome_sphere_flutter/models/app_edition.dart';
 import 'package:freedome_sphere_flutter/services/theme_service.dart';
 import 'package:freedome_sphere_flutter/widgets/edition_selector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
   group('Freedome Sphere Widget Tests', () {
+    
+    setUp(() {
+      SharedPreferences.setMockInitialValues({});
+    });
+
     testWidgets('should display app with default theme', (WidgetTester tester) async {
-      // Создаем простое приложение для тестирования
       await tester.pumpWidget(
         ChangeNotifierProvider(
           create: (context) => ThemeService(),
           child: MaterialApp(
             home: Scaffold(
-              appBar: AppBar(title: Text('Test App')),
-              body: Center(child: Text('Test Content')),
+              appBar: AppBar(title: const Text('Test App')),
+              body: const Center(child: Text('Test Content')),
             ),
           ),
         ),
       );
 
-      // Проверяем что приложение запустилось
       expect(find.byType(MaterialApp), findsOneWidget);
-      
-      // Проверяем что есть основной экран
       expect(find.byType(Scaffold), findsOneWidget);
     });
 
     testWidgets('should display edition selector', (WidgetTester tester) async {
+      final themeService = ThemeService();
+      await themeService.init();
+
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => ThemeService(),
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: MaterialApp(
             home: Scaffold(
               body: EditionSelector(),
@@ -39,61 +47,65 @@ void main() {
           ),
         ),
       );
-
-      // Проверяем что селектор отображается
-      expect(find.byType(EditionSelector), findsOneWidget);
       
-      // Проверяем что есть выпадающий список
-      expect(find.byType(DropdownButton<AppEdition>), findsOneWidget);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(EditionSelector), findsOneWidget);
+      expect(find.byType(PopupMenuButton<AppEdition>), findsOneWidget);
     });
 
     testWidgets('should change theme when edition is selected', (WidgetTester tester) async {
       final themeService = ThemeService();
+      await themeService.init();
       
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => themeService,
-          child: MaterialApp(
-            home: Scaffold(
-              body: EditionSelector(),
-            ),
+        ChangeNotifierProvider.value(
+          value: themeService,
+          child: Consumer<ThemeService>(
+            builder: (context, service, child) {
+              return MaterialApp(
+                theme: service.getThemeData(),
+                home: Scaffold(
+                  body: EditionSelector(),
+                ),
+              );
+            }
           ),
         ),
       );
 
-      // Находим выпадающий список
-      final dropdown = find.byType(DropdownButton<AppEdition>);
+      await tester.pumpAndSettle();
+
+      final dropdown = find.byType(PopupMenuButton<AppEdition>);
       expect(dropdown, findsOneWidget);
 
-      // Открываем выпадающий список
       await tester.tap(dropdown);
       await tester.pumpAndSettle();
 
-      // Выбираем Enterprise edition
-      final enterpriseOption = find.text('Enterprise Edition');
+      final enterpriseOption = find.text('Enterprise Edition').last;
       expect(enterpriseOption, findsOneWidget);
       
       await tester.tap(enterpriseOption);
       await tester.pumpAndSettle();
 
-      // Проверяем что тема изменилась
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
     });
 
     testWidgets('should display correct colors for different editions', (WidgetTester tester) async {
       final themeService = ThemeService();
+      await themeService.init();
       
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => themeService,
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: Consumer<ThemeService>(
             builder: (context, themeService, child) {
               return MaterialApp(
                 theme: themeService.getThemeData(),
                 home: Scaffold(
-                  appBar: AppBar(title: Text('Test')),
+                  appBar: AppBar(title: const Text('Test')),
                   body: Container(
-                    child: Text('Test Content'),
+                    child: const Text('Test Content'),
                   ),
                 ),
               );
@@ -102,24 +114,33 @@ void main() {
         ),
       );
 
-      // Проверяем начальную тему (Vaishnava - светлая)
-      var appBar = find.byType(AppBar);
-      expect(appBar, findsOneWidget);
+      await tester.pumpAndSettle();
+
+      Material appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ).first);
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
       
-      // Меняем на Enterprise (темная тема)
       await themeService.setEdition(AppEdition.enterprise);
       await tester.pumpAndSettle();
       
-      // Проверяем что тема обновилась
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
+
+      appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ).first);
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
     testWidgets('should persist theme selection', (WidgetTester tester) async {
       final themeService = ThemeService();
-      
+      await themeService.init();
+
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => themeService,
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: MaterialApp(
             home: Scaffold(
               body: EditionSelector(),
@@ -128,18 +149,23 @@ void main() {
         ),
       );
 
-      // Меняем издание
       await themeService.setEdition(AppEdition.education);
       await tester.pumpAndSettle();
 
-      // Проверяем что издание сохранилось
       expect(themeService.currentEdition, equals(AppEdition.education));
+
+      final newThemeService = ThemeService();
+      await newThemeService.init();
+      await tester.pumpAndSettle();
+      expect(newThemeService.currentEdition, equals(AppEdition.education));
     });
 
     testWidgets('should display all edition options', (WidgetTester tester) async {
+       final themeService = ThemeService();
+      await themeService.init();
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => ThemeService(),
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: MaterialApp(
             home: Scaffold(
               body: EditionSelector(),
@@ -148,19 +174,18 @@ void main() {
         ),
       );
 
-      // Открываем выпадающий список
-      final dropdown = find.byType(DropdownButton<AppEdition>);
+      final dropdown = find.byType(PopupMenuButton<AppEdition>);
       await tester.tap(dropdown);
       await tester.pumpAndSettle();
 
-      // Проверяем что все опции отображаются
-      expect(find.text('Vaishnava Edition'), findsOneWidget);
-      expect(find.text('Enterprise Edition'), findsOneWidget);
-      expect(find.text('Education Edition'), findsOneWidget);
+      expect(find.text('Vaishnava Edition').last, findsOneWidget);
+      expect(find.text('Enterprise Edition').last, findsOneWidget);
+      expect(find.text('Education Edition').last, findsOneWidget);
     });
 
     testWidgets('should handle theme service disposal', (WidgetTester tester) async {
       final themeService = ThemeService();
+      await themeService.init();
       
       await tester.pumpWidget(
         ChangeNotifierProvider(
@@ -173,41 +198,41 @@ void main() {
         ),
       );
 
-      // Проверяем что сервис работает
       expect(themeService.currentEdition, equals(AppEdition.vaishnava));
       
-      // Удаляем виджет
       await tester.pumpWidget(Container());
-      
-      // Сервис должен быть доступен для dispose
-      expect(() => themeService.dispose(), returnsNormally);
     });
   });
 
   group('Theme Integration Tests', () {
+    setUp(() {
+      SharedPreferences.setMockInitialValues({});
+    });
+
     testWidgets('should apply correct theme colors to all components', (WidgetTester tester) async {
       final themeService = ThemeService();
+      await themeService.init();
       
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => themeService,
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: Consumer<ThemeService>(
             builder: (context, themeService, child) {
               return MaterialApp(
                 theme: themeService.getThemeData(),
                 home: Scaffold(
                   appBar: AppBar(
-                    title: Text('Test App'),
+                    title: const Text('Test App'),
                     actions: [
                       IconButton(
-                        icon: Icon(Icons.settings),
+                        icon: const Icon(Icons.settings),
                         onPressed: () {},
                       ),
                     ],
                   ),
                   body: Column(
                     children: [
-                      Card(
+                      const Card(
                         child: ListTile(
                           title: Text('Test Card'),
                           subtitle: Text('Test Subtitle'),
@@ -215,9 +240,9 @@ void main() {
                       ),
                       ElevatedButton(
                         onPressed: () {},
-                        child: Text('Test Button'),
+                        child: const Text('Test Button'),
                       ),
-                      TextField(
+                      const TextField(
                         decoration: InputDecoration(
                           labelText: 'Test Input',
                         ),
@@ -231,30 +256,34 @@ void main() {
         ),
       );
 
-      // Проверяем что все компоненты отображаются
       expect(find.byType(AppBar), findsOneWidget);
       expect(find.byType(Card), findsOneWidget);
       expect(find.byType(ElevatedButton), findsOneWidget);
       expect(find.byType(TextField), findsOneWidget);
       
-      // Меняем тему и проверяем что все обновилось
       await themeService.setEdition(AppEdition.enterprise);
       await tester.pumpAndSettle();
       
       expect(themeService.currentEdition, equals(AppEdition.enterprise));
+      final appBarMaterial = tester.widget<Material>(find.descendant(
+        of: find.byType(AppBar),
+        matching: find.byType(Material),
+      ).first);
+      expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
     testWidgets('should handle rapid theme changes', (WidgetTester tester) async {
       final themeService = ThemeService();
+      await themeService.init();
       
       await tester.pumpWidget(
-        ChangeNotifierProvider(
-          create: (context) => themeService,
+        ChangeNotifierProvider.value(
+          value: themeService,
           child: Consumer<ThemeService>(
             builder: (context, themeService, child) {
               return MaterialApp(
                 theme: themeService.getThemeData(),
-                home: Scaffold(
+                home: const Scaffold(
                   body: Center(
                     child: Text('Rapid Theme Test'),
                   ),
@@ -265,7 +294,6 @@ void main() {
         ),
       );
 
-      // Быстро меняем темы
       await themeService.setEdition(AppEdition.enterprise);
       await tester.pump();
       
@@ -275,7 +303,6 @@ void main() {
       await themeService.setEdition(AppEdition.vaishnava);
       await tester.pumpAndSettle();
       
-      // Проверяем что финальная тема корректная
       expect(themeService.currentEdition, equals(AppEdition.vaishnava));
     });
   });

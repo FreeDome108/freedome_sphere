@@ -183,7 +183,7 @@ class UnrealProjectAnalyzer {
         severity: 'error',
         file: filePath,
         line: 0,
-        message: \`Ошибка чтения файла: \${error}\`,
+        message: `Ошибка чтения файла: \${error}`,
         suggestion: 'Проверьте права доступа к файлу'
       });
     }

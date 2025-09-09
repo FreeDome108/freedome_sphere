@@ -9,6 +9,7 @@ class AnantaSoundDevice {
   final MechanicalResonatorSettings resonatorSettings;
   final MIDIConfig midiConfig;
   final OSCConfig oscConfig;
+  final String? mp3FilePath;
 
   AnantaSoundDevice({
     required this.id,
@@ -19,6 +20,7 @@ class AnantaSoundDevice {
     required this.resonatorSettings,
     required this.midiConfig,
     required this.oscConfig,
+    this.mp3FilePath,
   });
 
   AnantaSoundDevice copyWith({
@@ -30,6 +32,7 @@ class AnantaSoundDevice {
     MechanicalResonatorSettings? resonatorSettings,
     MIDIConfig? midiConfig,
     OSCConfig? oscConfig,
+    String? mp3FilePath,
   }) {
     return AnantaSoundDevice(
       id: id ?? this.id,
@@ -40,6 +43,7 @@ class AnantaSoundDevice {
       resonatorSettings: resonatorSettings ?? this.resonatorSettings,
       midiConfig: midiConfig ?? this.midiConfig,
       oscConfig: oscConfig ?? this.oscConfig,
+      mp3FilePath: mp3FilePath ?? this.mp3FilePath,
     );
   }
 
@@ -53,6 +57,7 @@ class AnantaSoundDevice {
       'resonatorSettings': resonatorSettings.toJson(),
       'midiConfig': midiConfig.toJson(),
       'oscConfig': oscConfig.toJson(),
+      'mp3FilePath': mp3FilePath,
     };
   }
 
@@ -66,6 +71,7 @@ class AnantaSoundDevice {
       resonatorSettings: MechanicalResonatorSettings.fromJson(json['resonatorSettings']),
       midiConfig: MIDIConfig.fromJson(json['midiConfig']),
       oscConfig: OSCConfig.fromJson(json['oscConfig']),
+      mp3FilePath: json['mp3FilePath'],
     );
   }
 }
@@ -427,4 +433,3 @@ enum MIDIMessageType {
   programChange,
   systemExclusive,
 }
-
