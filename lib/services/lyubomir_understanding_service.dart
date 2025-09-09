@@ -5,7 +5,7 @@ import '../models/lyubomir_understanding.dart';
 class LyubomirUnderstandingService with ChangeNotifier {
   bool _isEnabled = false;
   LyubomirSettings _settings = LyubomirSettings(enabled: false, enabledTypes: []);
-  List<LyubomirUnderstanding> _understandings = [];
+  final List<LyubomirUnderstanding> _understandings = [];
 
   bool get isEnabled => _isEnabled;
   LyubomirSettings get settings => _settings;

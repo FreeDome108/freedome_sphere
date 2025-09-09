@@ -79,7 +79,7 @@ class _LyubomirUnderstandingScreenState extends State<LyubomirUnderstandingScree
                 value: service.isEnabled,
                 onChanged: (value) async {
                   final newSettings = service.settings.copyWith(enabled: value);
-                  await service.updateSettings(newSettings);
+                  service.updateSettings(newSettings);
                 },
               );
             },

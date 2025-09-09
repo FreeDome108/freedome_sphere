@@ -119,7 +119,7 @@ void main() {
       Material appBarMaterial = tester.widget<Material>(find.descendant(
         of: find.byType(AppBar),
         matching: find.byType(Material),
-      ));
+      ).first);
       expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
       
       await themeService.setEdition(AppEdition.enterprise);
@@ -130,7 +130,7 @@ void main() {
       appBarMaterial = tester.widget<Material>(find.descendant(
         of: find.byType(AppBar),
         matching: find.byType(Material),
-      ));
+      ).first);
       expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
@@ -268,7 +268,7 @@ void main() {
       final appBarMaterial = tester.widget<Material>(find.descendant(
         of: find.byType(AppBar),
         matching: find.byType(Material),
-      ));
+      ).first);
       expect(appBarMaterial.color, themeService.getThemeData().appBarTheme.backgroundColor);
     });
 
