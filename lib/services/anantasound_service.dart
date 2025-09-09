@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/anantasound_device.dart';
@@ -13,6 +14,7 @@ class AnantaSoundService extends ChangeNotifier {
   DeviceStatus? _status;
   Timer? _statusTimer;
   bool _isInitialized = false;
+  final AudioPlayer _audioPlayer = AudioPlayer();
   
   // Потоки для реального времени
   final StreamController<DeviceStatus> _statusController = 
@@ -25,6 +27,7 @@ class AnantaSoundService extends ChangeNotifier {
   AnantaSoundDevice? get device => _device;
   DeviceStatus? get status => _status;
   bool get isInitialized => _isInitialized;
+  AudioPlayer get audioPlayer => _audioPlayer;
   
   Stream<DeviceStatus> get statusStream => _statusController.stream;
   Stream<QuantumResonanceField> get resonanceStream => _resonanceController.stream;
@@ -36,6 +39,9 @@ class AnantaSoundService extends ChangeNotifier {
       await _loadDeviceFromStorage();
       if (_device == null) {
         await _createDefaultDevice();
+      }
+      if (_device?.mp3FilePath != null) {
+        await _audioPlayer.setSourceDeviceFile(_device!.mp3FilePath!);
       }
       _isInitialized = true;
       _startStatusMonitoring();
@@ -131,6 +137,20 @@ class AnantaSoundService extends ChangeNotifier {
     }
   }
 
+  /// Загрузка MP3 файла
+  Future<void> loadMp3(String filePath) async {
+    if (_device == null) return;
+
+    try {
+      await _audioPlayer.setSourceDeviceFile(filePath);
+      _device = _device!.copyWith(mp3FilePath: filePath);
+      await _saveDeviceToStorage();
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Ошибка загрузки MP3: $e');
+    }
+  }
+
   /// Активация квантового резонанса
   Future<bool> activateQuantumResonance() async {
     if (_device == null) return false;
@@ -145,6 +165,9 @@ class AnantaSoundService extends ChangeNotifier {
       _status = _device!.status;
       await _saveDeviceToStorage();
       _statusController.add(_status!);
+      if (_device!.mp3FilePath != null) {
+        await _audioPlayer.resume();
+      }
       notifyListeners();
       return true;
     } catch (e) {
@@ -167,6 +190,9 @@ class AnantaSoundService extends ChangeNotifier {
       _status = _device!.status;
       await _saveDeviceToStorage();
       _statusController.add(_status!);
+      if (_device!.mp3FilePath != null) {
+        await _audioPlayer.pause();
+      }
       notifyListeners();
     } catch (e) {
       debugPrint('Ошибка деактивации резонанса: $e');
@@ -453,6 +479,7 @@ class AnantaSoundService extends ChangeNotifier {
   @override
   void dispose() {
     _statusTimer?.cancel();
+    _audioPlayer.dispose();
     _statusController.close();
     _resonanceController.close();
     _consciousnessController.close();
@@ -482,4 +509,3 @@ extension DeviceStatusExtension on DeviceStatus {
     );
   }
 }
-
