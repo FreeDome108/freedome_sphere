@@ -1,13 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 import 'screens/home_screen.dart';
+import 'screens/onboarding_screen.dart';
 import 'services/project_service.dart';
 import 'services/theme_service.dart';
 import 'services/locale_service.dart';
 import 'services/anantasound_service.dart';
-import 'services/lyubomir_understanding_service.dart';
+import 'services/unreal_optimizer_service.dart';
 import 'services/boranko_service.dart';
 
 void main() async {
@@ -16,13 +19,17 @@ void main() async {
   final themeService = ThemeService();
   await themeService.init();
 
-  runApp(FreedomeSphereApp(themeService: themeService));
+  final prefs = await SharedPreferences.getInstance();
+  final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
+
+  runApp(FreedomeSphereApp(themeService: themeService, seenOnboarding: seenOnboarding));
 }
 
 class FreedomeSphereApp extends StatelessWidget {
   final ThemeService themeService;
+  final bool seenOnboarding;
 
-  const FreedomeSphereApp({super.key, required this.themeService});
+  const FreedomeSphereApp({super.key, required this.themeService, required this.seenOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +50,8 @@ class FreedomeSphereApp extends StatelessWidget {
         ChangeNotifierProvider<AnantaSoundService>(
           create: (_) => AnantaSoundService(),
         ),
-        ChangeNotifierProvider<LyubomirUnderstandingService>(
-          create: (_) => LyubomirUnderstandingService(),
+        ChangeNotifierProvider<UnrealOptimizerService>(
+          create: (_) => UnrealOptimizerService(),
         ),
       ],
       child: Consumer2<ThemeService, LocaleService>(
@@ -60,7 +67,7 @@ class FreedomeSphereApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: LocaleService.supportedLocales,
-            home: const HomeScreen(),
+            home: seenOnboarding ? const HomeScreen() : const OnboardingScreen(),
             debugShowCheckedModeBanner: false,
           );
         },
