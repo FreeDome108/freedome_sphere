@@ -575,6 +575,216 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'हिन्दी'**
   String get hindi;
+
+  /// The title of the Home Screen
+  ///
+  /// In en, this message translates to:
+  /// **'FreeDome Sphere'**
+  String get homeScreenTitle;
+
+  /// Tooltip for the GIF importer icon button
+  ///
+  /// In en, this message translates to:
+  /// **'GIF Importer'**
+  String get gifImporterTooltip;
+
+  /// Tooltip for the JPG importer icon button
+  ///
+  /// In en, this message translates to:
+  /// **'JPG Importer'**
+  String get jpgImporterTooltip;
+
+  /// Tooltip for the video importer icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Video Importer'**
+  String get videoImporterTooltip;
+
+  /// Tooltip for the tutorials icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Tutorials'**
+  String get tutorialsTooltip;
+
+  /// Tooltip for the Lyubomir's Understanding icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Lyubomir\'s Understanding'**
+  String get lyubomirUnderstandingTooltip;
+
+  /// Tooltip for the anAntaSound icon button
+  ///
+  /// In en, this message translates to:
+  /// **'anAntaSound Quantum Resonance Device'**
+  String get anantaSoundTooltip;
+
+  /// Tooltip for the Unreal Engine Optimizer icon button
+  ///
+  /// In en, this message translates to:
+  /// **'Unreal Engine Optimizer'**
+  String get unrealOptimizerTooltip;
+
+  /// Success message when a Boranko project is imported
+  ///
+  /// In en, this message translates to:
+  /// **'Boranko project imported successfully'**
+  String get borankoImportSuccess;
+
+  /// The title of the anAntaSound screen
+  ///
+  /// In en, this message translates to:
+  /// **'anAntaSound Quantum Resonance Device'**
+  String get anantaSoundScreenTitle;
+
+  /// Status for when the device is active
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get active;
+
+  /// Status for when the device is inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Inactive'**
+  String get inactive;
+
+  /// Message shown while the device is initializing
+  ///
+  /// In en, this message translates to:
+  /// **'Initializing Quantum Resonance Device...'**
+  String get initializingQuantumResonanceDevice;
+
+  /// Title for the MP3 management section
+  ///
+  /// In en, this message translates to:
+  /// **'MP3 Management'**
+  String get mp3Management;
+
+  /// Button text to load an MP3 file
+  ///
+  /// In en, this message translates to:
+  /// **'Load MP3'**
+  String get loadMp3;
+
+  /// Label to show the name of the loaded file
+  ///
+  /// In en, this message translates to:
+  /// **'Loaded file: {fileName}'**
+  String loadedFile(String fileName);
+
+  /// Title for the participant management section
+  ///
+  /// In en, this message translates to:
+  /// **'Participant Management'**
+  String get participantManagement;
+
+  /// Button text to add a participant
+  ///
+  /// In en, this message translates to:
+  /// **'Add Participant'**
+  String get addParticipant;
+
+  /// Button text to remove a participant
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Participant'**
+  String get removeParticipant;
+
+  /// Label for the list of active participants
+  ///
+  /// In en, this message translates to:
+  /// **'Active Participants:'**
+  String get activeParticipants;
+
+  /// Label for a single participant in a list
+  ///
+  /// In en, this message translates to:
+  /// **'Participant {index}'**
+  String participant(int index);
+
+  /// Details of a participant, including weight and position
+  ///
+  /// In en, this message translates to:
+  /// **'Weight: {weight} | Position: ({r}, {theta}, {phi})'**
+  String participantDetails(String weight, String r, String theta, String phi);
+
+  /// Title for the real-time data section
+  ///
+  /// In en, this message translates to:
+  /// **'Real-time Data'**
+  String get realTimeData;
+
+  /// Label for the frequency data point
+  ///
+  /// In en, this message translates to:
+  /// **'Frequency'**
+  String get frequency;
+
+  /// Label for the intensity data point
+  ///
+  /// In en, this message translates to:
+  /// **'Intensity'**
+  String get intensity;
+
+  /// Label for the participants data point
+  ///
+  /// In en, this message translates to:
+  /// **'Participants'**
+  String get participants;
+
+  /// Label for the MIDI data point
+  ///
+  /// In en, this message translates to:
+  /// **'MIDI'**
+  String get midi;
+
+  /// Status for when a connection is active
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// Status for when a connection is inactive
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get disconnected;
+
+  /// Label for the OSC data point
+  ///
+  /// In en, this message translates to:
+  /// **'OSC'**
+  String get osc;
+
+  /// Label for the consciousness data point
+  ///
+  /// In en, this message translates to:
+  /// **'Consciousness'**
+  String get consciousness;
+
+  /// Status for when consciousness is linked
+  ///
+  /// In en, this message translates to:
+  /// **'Linked'**
+  String get linked;
+
+  /// Status for when consciousness is not linked
+  ///
+  /// In en, this message translates to:
+  /// **'Not Linked'**
+  String get notLinked;
+
+  /// Unit for frequency in Hertz
+  ///
+  /// In en, this message translates to:
+  /// **'{value} Hz'**
+  String hzUnit(String value);
+
+  /// Unit for percentage
+  ///
+  /// In en, this message translates to:
+  /// **'{value}%'**
+  String percentageUnit(String value);
 }
 
 class _AppLocalizationsDelegate

@@ -350,5 +350,179 @@
   "hindi": "हिन्दी",
   "@hindi": {
     "description": "Hindi language option"
+  },
+  "homeScreenTitle": "FreeDome Sphere",
+  "@homeScreenTitle": {
+    "description": "The title of the Home Screen"
+  },
+  "gifImporterTooltip": "GIF Importer",
+  "@gifImporterTooltip": {
+    "description": "Tooltip for the GIF importer icon button"
+  },
+  "jpgImporterTooltip": "JPG Importer",
+  "@jpgImporterTooltip": {
+    "description": "Tooltip for the JPG importer icon button"
+  },
+  "videoImporterTooltip": "Video Importer",
+  "@videoImporterTooltip": {
+    "description": "Tooltip for the video importer icon button"
+  },
+  "tutorialsTooltip": "Tutorials",
+  "@tutorialsTooltip": {
+    "description": "Tooltip for the tutorials icon button"
+  },
+  "lyubomirUnderstandingTooltip": "Lyubomir's Understanding",
+  "@lyubomirUnderstandingTooltip": {
+    "description": "Tooltip for the Lyubomir's Understanding icon button"
+  },
+  "anantaSoundTooltip": "anAntaSound Quantum Resonance Device",
+  "@anantaSoundTooltip": {
+    "description": "Tooltip for the anAntaSound icon button"
+  },
+  "unrealOptimizerTooltip": "Unreal Engine Optimizer",
+  "@unrealOptimizerTooltip": {
+    "description": "Tooltip for the Unreal Engine Optimizer icon button"
+  },
+  "borankoImportSuccess": "Boranko project imported successfully",
+  "@borankoImportSuccess": {
+    "description": "Success message when a Boranko project is imported"
+  },
+  "anantaSoundScreenTitle": "anAntaSound Quantum Resonance Device",
+  "@anantaSoundScreenTitle": {
+    "description": "The title of the anAntaSound screen"
+  },
+  "active": "Active",
+  "@active": {
+    "description": "Status for when the device is active"
+  },
+  "inactive": "Inactive",
+  "@inactive": {
+    "description": "Status for when the device is inactive"
+  },
+  "initializingQuantumResonanceDevice": "Initializing Quantum Resonance Device...",
+  "@initializingQuantumResonanceDevice": {
+    "description": "Message shown while the device is initializing"
+  },
+  "mp3Management": "MP3 Management",
+  "@mp3Management": {
+    "description": "Title for the MP3 management section"
+  },
+  "loadMp3": "Load MP3",
+  "@loadMp3": {
+    "description": "Button text to load an MP3 file"
+  },
+  "loadedFile": "Loaded file: {fileName}",
+  "@loadedFile": {
+    "description": "Label to show the name of the loaded file",
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "participantManagement": "Participant Management",
+  "@participantManagement": {
+    "description": "Title for the participant management section"
+  },
+  "addParticipant": "Add Participant",
+  "@addParticipant": {
+    "description": "Button text to add a participant"
+  },
+  "removeParticipant": "Remove Participant",
+  "@removeParticipant": {
+    "description": "Button text to remove a participant"
+  },
+  "activeParticipants": "Active Participants:",
+  "@activeParticipants": {
+    "description": "Label for the list of active participants"
+  },
+  "participant": "Participant {index}",
+  "@participant": {
+    "description": "Label for a single participant in a list",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "participantDetails": "Weight: {weight} | Position: ({r}, {theta}, {phi})",
+  "@participantDetails": {
+    "description": "Details of a participant, including weight and position",
+    "placeholders": {
+      "weight": {
+        "type": "String"
+      },
+      "r": {
+        "type": "String"
+      },
+      "theta": {
+        "type": "String"
+      },
+      "phi": {
+        "type": "String"
+      }
+    }
+  },
+  "realTimeData": "Real-time Data",
+  "@realTimeData": {
+    "description": "Title for the real-time data section"
+  },
+  "frequency": "Frequency",
+  "@frequency": {
+    "description": "Label for the frequency data point"
+  },
+  "intensity": "Intensity",
+  "@intensity": {
+    "description": "Label for the intensity data point"
+  },
+  "participants": "Participants",
+  "@participants": {
+    "description": "Label for the participants data point"
+  },
+  "midi": "MIDI",
+  "@midi": {
+    "description": "Label for the MIDI data point"
+  },
+  "connected": "Connected",
+  "@connected": {
+    "description": "Status for when a connection is active"
+  },
+  "disconnected": "Disconnected",
+  "@disconnected": {
+    "description": "Status for when a connection is inactive"
+  },
+  "osc": "OSC",
+  "@osc": {
+    "description": "Label for the OSC data point"
+  },
+  "consciousness": "Consciousness",
+  "@consciousness": {
+    "description": "Label for the consciousness data point"
+  },
+  "linked": "Linked",
+  "@linked": {
+    "description": "Status for when consciousness is linked"
+  },
+  "notLinked": "Not Linked",
+  "@notLinked": {
+    "description": "Status for when consciousness is not linked"
+  },
+  "hzUnit": "{value} Hz",
+  "@hzUnit": {
+    "description": "Unit for frequency in Hertz",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "percentageUnit": "{value}%",
+  "@percentageUnit": {
+    "description": "Unit for percentage",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   }
 }

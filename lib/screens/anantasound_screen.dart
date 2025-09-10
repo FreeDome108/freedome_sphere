@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../l10n/app_localizations.dart';
 import '../services/anantasound_service.dart';
 import '../widgets/anantasound_control_panel.dart';
 import '../models/anantasound_device.dart';
 
-/// Экран управления anAntaSound Quantum Resonance Device
 class AnantaSoundScreen extends StatefulWidget {
   const AnantaSoundScreen({super.key});
 
@@ -79,9 +79,10 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('anAntaSound Quantum Resonance Device'),
+        title: Text(l10n.anantaSoundScreenTitle),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         elevation: 0,
@@ -100,7 +101,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      status?.isActive == true ? 'Активно' : 'Неактивно',
+                      status?.isActive == true ? l10n.active : l10n.inactive,
                       style: TextStyle(
                         color: status?.isActive == true ? Colors.green : Colors.grey,
                         fontWeight: FontWeight.w500,
@@ -130,13 +131,13 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
             child: Consumer<AnantaSoundService>(
               builder: (context, service, child) {
                 if (!service.isInitialized) {
-                  return const Center(
+                  return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 16),
-                        Text('Инициализация Quantum Resonance Device...'),
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 16),
+                        Text(l10n.initializingQuantumResonanceDevice),
                       ],
                     ),
                   );
@@ -148,13 +149,13 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                     children: [
                       _buildQuantumVisualization(service),
                       const SizedBox(height: 24),
-                      _buildMp3Loader(service),
+                      _buildMp3Loader(service, l10n),
                       const SizedBox(height: 24),
                       const AnantaSoundControlPanel(),
                       const SizedBox(height: 24),
-                      _buildParticipantManagement(service),
+                      _buildParticipantManagement(service, l10n),
                       const SizedBox(height: 24),
-                      _buildRealTimeData(service),
+                      _buildRealTimeData(service, l10n),
                     ],
                   ),
                 );
@@ -167,7 +168,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
   }
 }
 
-  Widget _buildMp3Loader(AnantaSoundService service) {
+  Widget _buildMp3Loader(AnantaSoundService service, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -178,9 +179,9 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Управление MP3',
-            style: TextStyle(
+          Text(
+            l10n.mp3Management,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -201,7 +202,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                     }
                   },
                   icon: const Icon(Icons.music_note),
-                  label: const Text('Загрузить MP3'),
+                  label: Text(l10n.loadMp3),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo,
                     foregroundColor: Colors.white,
@@ -213,7 +214,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
           const SizedBox(height: 16),
           if (service.device?.mp3FilePath != null)
             Text(
-              'Загруженный файл: ${service.device!.mp3FilePath!.split('/').last}',
+              l10n.loadedFile(service.device!.mp3FilePath!.split('/').last),
               style: const TextStyle(fontStyle: FontStyle.italic),
             ),
         ],
@@ -252,7 +253,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     );
   }
 
-  Widget _buildParticipantManagement(AnantaSoundService service) {
+  Widget _buildParticipantManagement(AnantaSoundService service, AppLocalizations l10n) {
     final consciousnessField = service.device?.consciousnessField;
     if (consciousnessField == null) return const SizedBox.shrink();
 
@@ -266,9 +267,9 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Управление участниками',
-            style: TextStyle(
+          Text(
+            l10n.participantManagement,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -280,7 +281,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                 child: ElevatedButton.icon(
                   onPressed: () => _addRandomParticipant(service),
                   icon: const Icon(Icons.person_add),
-                  label: const Text('Добавить участника'),
+                  label: Text(l10n.addParticipant),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white,
@@ -294,7 +295,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                       ? () => _removeLastParticipant(service)
                       : null,
                   icon: const Icon(Icons.person_remove),
-                  label: const Text('Удалить участника'),
+                  label: Text(l10n.removeParticipant),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,
@@ -305,19 +306,19 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
           ),
           const SizedBox(height: 16),
           if (consciousnessField.participantWeights.isNotEmpty)
-            _buildParticipantsList(consciousnessField),
+            _buildParticipantsList(consciousnessField, l10n),
         ],
       ),
     );
   }
 
-  Widget _buildParticipantsList(ConsciousnessField field) {
+  Widget _buildParticipantsList(ConsciousnessField field, AppLocalizations l10n) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Активные участники:',
-          style: TextStyle(
+        Text(
+          l10n.activeParticipants,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
@@ -354,16 +355,18 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Участник ${index + 1}',
+                        l10n.participant(index + 1),
                         style: const TextStyle(
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
-                        'Вес: ${weight.toStringAsFixed(2)} | '
-                        'Позиция: (${position.r.toStringAsFixed(1)}, '
-                        '${position.theta.toStringAsFixed(1)}, '
-                        '${position.phi.toStringAsFixed(1)})',
+                        l10n.participantDetails(
+                          weight.toStringAsFixed(2),
+                          position.r.toStringAsFixed(1),
+                          position.theta.toStringAsFixed(1),
+                          position.phi.toStringAsFixed(1),
+                        ),
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey[600],
@@ -380,7 +383,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     );
   }
 
-  Widget _buildRealTimeData(AnantaSoundService service) {
+  Widget _buildRealTimeData(AnantaSoundService service, AppLocalizations l10n) {
     final status = service.status;
     if (status == null) return const SizedBox.shrink();
 
@@ -394,9 +397,9 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Данные в реальном времени',
-            style: TextStyle(
+          Text(
+            l10n.realTimeData,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
@@ -406,19 +409,21 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
             children: [
               Expanded(
                 child: _buildDataCard(
-                  'Частота',
-                  '${status.currentFrequency.toStringAsFixed(1)} Гц',
+                  l10n.frequency,
+                  l10n.hzUnit(status.currentFrequency.toStringAsFixed(1)),
                   Icons.graphic_eq,
                   Colors.blue,
+                  l10n
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: _buildDataCard(
-                  'Интенсивность',
-                  '${(status.currentIntensity * 100).toStringAsFixed(0)}%',
+                  l10n.intensity,
+                  l10n.percentageUnit((status.currentIntensity * 100).toStringAsFixed(0)),
                   Icons.signal_cellular_alt,
                   Colors.orange,
+                  l10n
                 ),
               ),
             ],
@@ -428,19 +433,21 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
             children: [
               Expanded(
                 child: _buildDataCard(
-                  'Участники',
+                  l10n.participants,
                   '${status.connectedParticipants}',
                   Icons.people,
                   Colors.green,
+                  l10n
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: _buildDataCard(
-                  'MIDI',
-                  status.midiConnected ? 'Подключен' : 'Отключен',
+                  l10n.midi,
+                  status.midiConnected ? l10n.connected : l10n.disconnected,
                   Icons.music_note,
                   status.midiConnected ? Colors.green : Colors.red,
+                  l10n
                 ),
               ),
             ],
@@ -450,19 +457,21 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
             children: [
               Expanded(
                 child: _buildDataCard(
-                  'OSC',
-                  status.oscConnected ? 'Подключен' : 'Отключен',
+                  l10n.osc,
+                  status.oscConnected ? l10n.connected : l10n.disconnected,
                   Icons.network_check,
                   status.oscConnected ? Colors.green : Colors.red,
+                  l10n
                 ),
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: _buildDataCard(
-                  'Сознание',
-                  status.consciousnessConnected ? 'Связано' : 'Не связано',
+                  l10n.consciousness,
+                  status.consciousnessConnected ? l10n.linked : l10n.notLinked,
                   Icons.psychology,
                   status.consciousnessConnected ? Colors.purple : Colors.grey,
+                  l10n
                 ),
               ),
             ],
@@ -472,7 +481,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     );
   }
 
-  Widget _buildDataCard(String title, String value, IconData icon, Color color) {
+  Widget _buildDataCard(String title, String value, IconData icon, Color color, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
@@ -525,7 +534,6 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
   }
 }
 
-/// Кастомный painter для визуализации квантового поля
 class QuantumVisualizationPainter extends CustomPainter {
   final DeviceStatus? status;
   final QuantumResonanceField resonanceField;
@@ -542,14 +550,12 @@ class QuantumVisualizationPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width * 0.3;
 
-    // Фон
     final backgroundPaint = Paint()
       ..color = Colors.black.withOpacity(0.1)
       ..style = PaintingStyle.fill;
     
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), backgroundPaint);
 
-    // Квантовое резонансное поле
     if (status?.isActive == true) {
       final resonancePaint = Paint()
         ..color = Colors.deepPurple.withOpacity(0.3)
@@ -558,7 +564,6 @@ class QuantumVisualizationPainter extends CustomPainter {
       
       canvas.drawCircle(center, radius, resonancePaint);
       
-      // Волны резонанса
       for (int i = 1; i <= 3; i++) {
         final wavePaint = Paint()
           ..color = Colors.deepPurple.withOpacity(0.1 / i)
@@ -569,14 +574,12 @@ class QuantumVisualizationPainter extends CustomPainter {
       }
     }
 
-    // Участники в поле сознания
     for (int i = 0; i < consciousnessField.participantPositions.length; i++) {
       final position = consciousnessField.participantPositions[i];
       final weight = consciousnessField.participantWeights[i];
       
-      // Преобразование сферических координат в экранные
-          final x = center.dx + position.r * cos(position.phi) * sin(position.theta) * radius / 5.0;
-          final y = center.dy + position.r * sin(position.phi) * sin(position.theta) * radius / 5.0;
+      final x = center.dx + position.r * cos(position.phi) * sin(position.theta) * radius / 5.0;
+      final y = center.dy + position.r * sin(position.phi) * sin(position.theta) * radius / 5.0;
       
       final participantPaint = Paint()
         ..color = Colors.indigo.withOpacity(0.7)
@@ -585,11 +588,10 @@ class QuantumVisualizationPainter extends CustomPainter {
       final participantRadius = 8.0 + weight * 8.0;
       canvas.drawCircle(Offset(x, y), participantRadius, participantPaint);
       
-      // Связи между участниками
       if (i > 0) {
         final prevPosition = consciousnessField.participantPositions[i - 1];
-            final prevX = center.dx + prevPosition.r * cos(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
-            final prevY = center.dy + prevPosition.r * sin(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
+        final prevX = center.dx + prevPosition.r * cos(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
+        final prevY = center.dy + prevPosition.r * sin(prevPosition.phi) * sin(prevPosition.theta) * radius / 5.0;
         
         final connectionPaint = Paint()
           ..color = Colors.indigo.withOpacity(0.3)
@@ -600,7 +602,6 @@ class QuantumVisualizationPainter extends CustomPainter {
       }
     }
 
-    // Центральная точка
     final centerPaint = Paint()
       ..color = status?.isActive == true ? Colors.deepPurple : Colors.grey
       ..style = PaintingStyle.fill;

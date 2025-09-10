@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
         return;
       }
 
-      // Показать диалог выбора проекта
+      // Show project selection dialog
       final selectedProject = await showDialog<FreedomeProject>(
         context: context,
         builder: (context) => ProjectSelectionDialog(projects: projects),
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
       // TODO: Integrate the imported Boranko project into the current project
 
       setState(() {
-        _statusMessage = 'Boranko project imported successfully'; // Replace with localization
+        _statusMessage = l10n.borankoImportSuccess;
         _statusType = 'ready';
         _isLoading = false;
       });
@@ -244,15 +244,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('FreeDome Sphere'),
+        title: Text(l10n.homeScreenTitle),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
           IconButton(
             icon: const Icon(Icons.gif),
-            tooltip: 'GIF Importer',
+            tooltip: l10n.gifImporterTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -263,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.image),
-            tooltip: 'JPG Importer',
+            tooltip: l10n.jpgImporterTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -274,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.video_library),
-            tooltip: 'Video Importer',
+            tooltip: l10n.videoImporterTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -285,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.school),
-            tooltip: 'Туториалы',
+            tooltip: l10n.tutorialsTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -296,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.psychology),
-            tooltip: 'Понимание Любомира',
+            tooltip: l10n.lyubomirUnderstandingTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -307,7 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.radio_button_checked),
-            tooltip: 'anAntaSound Quantum Resonance Device',
+            tooltip: l10n.anantaSoundTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -318,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.auto_fix_high),
-            tooltip: 'Unreal Engine Optimizer',
+            tooltip: l10n.unrealOptimizerTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -336,9 +337,9 @@ class _HomeScreenState extends State<HomeScreen> {
             onNewProject: _createNewProject,
             onOpenProject: _openProject,
             onSaveProject: _saveProject,
-            onPlayPreview: () => _setStatus(AppLocalizations.of(context)!.playingPreview, 'working'),
-            onStopPreview: () => _setStatus(AppLocalizations.of(context)!.previewStopped, 'ready'),
-            onResetView: () => _setStatus(AppLocalizations.of(context)!.viewReset, 'ready'),
+            onPlayPreview: () => _setStatus(l10n.playingPreview, 'working'),
+            onStopPreview: () => _setStatus(l10n.previewStopped, 'ready'),
+            onResetView: () => _setStatus(l10n.viewReset, 'ready'),
             onImportBoranko: _importBorankoProject,
             onImportComics: _importComicsProject,
             statusMessage: _statusMessage,

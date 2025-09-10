@@ -8,7 +8,7 @@ class LyubomirUnderstandingService with ChangeNotifier {
   bool _isEnabled = false;
   LyubomirSettings _settings = LyubomirSettings(
     enabled: false,
-    enabledTypes: UnderstandingType.values,
+    enabledTypes: [],
     autoAnalyze: false,
     sensitivity: 0.5,
   );

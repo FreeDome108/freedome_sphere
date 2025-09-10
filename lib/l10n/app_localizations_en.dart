@@ -260,4 +260,120 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hindi => 'हिन्दी';
+
+  @override
+  String get homeScreenTitle => 'FreeDome Sphere';
+
+  @override
+  String get gifImporterTooltip => 'GIF Importer';
+
+  @override
+  String get jpgImporterTooltip => 'JPG Importer';
+
+  @override
+  String get videoImporterTooltip => 'Video Importer';
+
+  @override
+  String get tutorialsTooltip => 'Tutorials';
+
+  @override
+  String get lyubomirUnderstandingTooltip => 'Lyubomir\'s Understanding';
+
+  @override
+  String get anantaSoundTooltip => 'anAntaSound Quantum Resonance Device';
+
+  @override
+  String get unrealOptimizerTooltip => 'Unreal Engine Optimizer';
+
+  @override
+  String get borankoImportSuccess => 'Boranko project imported successfully';
+
+  @override
+  String get anantaSoundScreenTitle => 'anAntaSound Quantum Resonance Device';
+
+  @override
+  String get active => 'Active';
+
+  @override
+  String get inactive => 'Inactive';
+
+  @override
+  String get initializingQuantumResonanceDevice =>
+      'Initializing Quantum Resonance Device...';
+
+  @override
+  String get mp3Management => 'MP3 Management';
+
+  @override
+  String get loadMp3 => 'Load MP3';
+
+  @override
+  String loadedFile(String fileName) {
+    return 'Loaded file: $fileName';
+  }
+
+  @override
+  String get participantManagement => 'Participant Management';
+
+  @override
+  String get addParticipant => 'Add Participant';
+
+  @override
+  String get removeParticipant => 'Remove Participant';
+
+  @override
+  String get activeParticipants => 'Active Participants:';
+
+  @override
+  String participant(int index) {
+    return 'Participant $index';
+  }
+
+  @override
+  String participantDetails(String weight, String r, String theta, String phi) {
+    return 'Weight: $weight | Position: ($r, $theta, $phi)';
+  }
+
+  @override
+  String get realTimeData => 'Real-time Data';
+
+  @override
+  String get frequency => 'Frequency';
+
+  @override
+  String get intensity => 'Intensity';
+
+  @override
+  String get participants => 'Participants';
+
+  @override
+  String get midi => 'MIDI';
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get disconnected => 'Disconnected';
+
+  @override
+  String get osc => 'OSC';
+
+  @override
+  String get consciousness => 'Consciousness';
+
+  @override
+  String get linked => 'Linked';
+
+  @override
+  String get notLinked => 'Not Linked';
+
+  @override
+  String hzUnit(String value) {
+    return '$value Hz';
+  }
+
+  @override
+  String percentageUnit(String value) {
+    return '$value%';
+  }
 }

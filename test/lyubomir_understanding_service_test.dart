@@ -22,6 +22,8 @@ void main() {
       final newSettings = LyubomirSettings(
         enabled: true,
         enabledTypes: [UnderstandingType.visual, UnderstandingType.audio],
+        autoAnalyze: false,
+        sensitivity: 0.5,
       );
 
       service.updateSettings(newSettings);
@@ -39,6 +41,8 @@ void main() {
       final newSettings = LyubomirSettings(
         enabled: true,
         enabledTypes: [UnderstandingType.visual],
+        autoAnalyze: false,
+        sensitivity: 0.5,
       );
 
       service.updateSettings(newSettings);
