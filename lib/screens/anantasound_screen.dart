@@ -228,7 +228,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     if (device == null) return const SizedBox.shrink();
 
     return Container(
-      height: 300,
+      height: 200,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
@@ -323,61 +323,68 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
           ),
         ),
         const SizedBox(height: 8),
-        ...List.generate(field.participantWeights.length, (index) {
-          final weight = field.participantWeights[index];
-          final position = field.participantPositions[index];
-          
-          return Container(
-            margin: const EdgeInsets.only(bottom: 8),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.indigo.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.indigo.withOpacity(0.3)),
-            ),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 16,
-                  backgroundColor: Colors.indigo,
-                  child: Text(
-                    '${index + 1}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 200),
+          child: SingleChildScrollView(
+            child: Column(
+              children: List.generate(field.participantWeights.length, (index) {
+                final weight = field.participantWeights[index];
+                final position = field.participantPositions[index];
+                
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.indigo.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.indigo.withOpacity(0.3)),
                   ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      Text(
-                        l10n.participant(index + 1),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w500,
+                      CircleAvatar(
+                        radius: 16,
+                        backgroundColor: Colors.indigo,
+                        child: Text(
+                          '${index + 1}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Text(
-                        l10n.participantDetails(
-                          weight.toStringAsFixed(2),
-                          position.r.toStringAsFixed(1),
-                          position.theta.toStringAsFixed(1),
-                          position.phi.toStringAsFixed(1),
-                        ),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              l10n.participant(index + 1),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Text(
+                              l10n.participantDetails(
+                                weight.toStringAsFixed(2),
+                                position.r.toStringAsFixed(1),
+                                position.theta.toStringAsFixed(1),
+                                position.phi.toStringAsFixed(1),
+                              ),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                );
+              }),
             ),
-          );
-        }),
+          ),
+        ),
       ],
     );
   }

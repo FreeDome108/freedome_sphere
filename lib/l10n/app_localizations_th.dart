@@ -261,6 +261,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get hindi => 'हिन्दी';
 
   @override
+  String get german => 'Deutsch';
+
+  @override
   String get homeScreenTitle => 'FreeDome Sphere';
 
   @override

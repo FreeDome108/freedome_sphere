@@ -1,50 +1,50 @@
 {
-  "@@locale": "en",
+  "@@locale": "de",
   "appTitle": "Freedome Sphere",
   "@appTitle": {
     "description": "The title of the application"
   },
-  "newButton": "New",
+  "newButton": "Neu",
   "@newButton": {
     "description": "New button text"
   },
-  "open": "Open",
+  "open": "Öffnen",
   "@open": {
     "description": "Open button text"
   },
-  "save": "Save",
+  "save": "Speichern",
   "@save": {
     "description": "Save button text"
   },
-  "play": "Play",
+  "play": "Abspielen",
   "@play": {
     "description": "Play button text"
   },
-  "stop": "Stop",
+  "stop": "Stoppen",
   "@stop": {
     "description": "Stop button text"
   },
-  "reset": "Reset",
+  "reset": "Zurücksetzen",
   "@reset": {
     "description": "Reset button text"
   },
-  "ready": "Ready",
+  "ready": "Bereit",
   "@ready": {
     "description": "Ready status message"
   },
-  "loadingProject": "Loading project...",
+  "loadingProject": "Projekt wird geladen...",
   "@loadingProject": {
     "description": "Loading project status message"
   },
-  "projectLoaded": "Project loaded",
+  "projectLoaded": "Projekt geladen",
   "@projectLoaded": {
     "description": "Project loaded status message"
   },
-  "noProject": "No project",
+  "noProject": "Kein Projekt",
   "@noProject": {
     "description": "No project status message"
   },
-  "errorLoadingProject": "Error loading project: {error}",
+  "errorLoadingProject": "Fehler beim Laden des Projekts: {error}",
   "@errorLoadingProject": {
     "description": "Error loading project message",
     "placeholders": {
@@ -53,15 +53,15 @@
       }
     }
   },
-  "creatingNewProject": "Creating new project...",
+  "creatingNewProject": "Neues Projekt wird erstellt...",
   "@creatingNewProject": {
     "description": "Creating new project status message"
   },
-  "newProjectCreated": "New project created",
+  "newProjectCreated": "Neues Projekt erstellt",
   "@newProjectCreated": {
     "description": "New project created status message"
   },
-  "errorCreatingProject": "Error creating project: {error}",
+  "errorCreatingProject": "Fehler beim Erstellen des Projekts: {error}",
   "@errorCreatingProject": {
     "description": "Error creating project message",
     "placeholders": {
@@ -70,23 +70,23 @@
       }
     }
   },
-  "openingProject": "Opening project...",
+  "openingProject": "Projekt wird geöffnet...",
   "@openingProject": {
     "description": "Opening project status message"
   },
-  "savingProject": "Saving project...",
+  "savingProject": "Projekt wird gespeichert...",
   "@savingProject": {
     "description": "Saving project status message"
   },
-  "projectSaved": "Project saved",
+  "projectSaved": "Projekt gespeichert",
   "@projectSaved": {
     "description": "Project saved status message"
   },
-  "saveFailed": "Save failed",
+  "saveFailed": "Speichern fehlgeschlagen",
   "@saveFailed": {
     "description": "Save failed status message"
   },
-  "errorSavingProject": "Error saving project: {error}",
+  "errorSavingProject": "Fehler beim Speichern des Projekts: {error}",
   "@errorSavingProject": {
     "description": "Error saving project message",
     "placeholders": {
@@ -95,39 +95,39 @@
       }
     }
   },
-  "playingPreview": "Playing preview...",
+  "playingPreview": "Vorschau wird abgespielt...",
   "@playingPreview": {
     "description": "Playing preview status message"
   },
-  "previewStopped": "Preview stopped",
+  "previewStopped": "Vorschau gestoppt",
   "@previewStopped": {
     "description": "Preview stopped status message"
   },
-  "viewReset": "View reset",
+  "viewReset": "Ansicht zurückgesetzt",
   "@viewReset": {
     "description": "View reset status message"
   },
-  "newProject": "New Project",
+  "newProject": "Neues Projekt",
   "@newProject": {
     "description": "New project dialog title"
   },
-  "projectName": "Project Name",
+  "projectName": "Projektname",
   "@projectName": {
     "description": "Project name field label"
   },
-  "enterProjectName": "Enter project name",
+  "enterProjectName": "Projektname eingeben",
   "@enterProjectName": {
     "description": "Project name field hint"
   },
-  "pleaseEnterProjectName": "Please enter a project name",
+  "pleaseEnterProjectName": "Bitte geben Sie einen Projektnamen ein",
   "@pleaseEnterProjectName": {
     "description": "Project name validation message"
   },
-  "descriptionOptional": "Description (Optional)",
+  "descriptionOptional": "Beschreibung (Optional)",
   "@descriptionOptional": {
     "description": "Description field label"
   },
-  "enterProjectDescription": "Enter project description",
+  "enterProjectDescription": "Projektbeschreibung eingeben",
   "@enterProjectDescription": {
     "description": "Description field hint"
   },
@@ -135,27 +135,27 @@
   "@tagsOptional": {
     "description": "Tags field label"
   },
-  "enterTagsSeparatedByCommas": "Enter tags separated by commas",
+  "enterTagsSeparatedByCommas": "Tags durch Kommas getrennt eingeben",
   "@enterTagsSeparatedByCommas": {
     "description": "Tags field hint"
   },
-  "cancel": "Cancel",
+  "cancel": "Abbrechen",
   "@cancel": {
     "description": "Cancel button text"
   },
-  "create": "Create",
+  "create": "Erstellen",
   "@create": {
     "description": "Create button text"
   },
-  "project": "Project",
+  "project": "Projekt",
   "@project": {
     "description": "Project section title"
   },
-  "currentProject": "Current Project",
+  "currentProject": "Aktuelles Projekt",
   "@currentProject": {
     "description": "Current project label"
   },
-  "created": "Created: {date}",
+  "created": "Erstellt: {date}",
   "@created": {
     "description": "Created date label",
     "placeholders": {
@@ -164,7 +164,7 @@
       }
     }
   },
-  "modified": "Modified: {date}",
+  "modified": "Geändert: {date}",
   "@modified": {
     "description": "Modified date label",
     "placeholders": {
@@ -173,23 +173,23 @@
       }
     }
   },
-  "import": "Import",
+  "import": "Importieren",
   "@import": {
     "description": "Import section title"
   },
-   "importBoranko": "Import .boranko",
+   "importBoranko": ".boranko importieren",
   "@importBoranko": {
     "description": "Import .boranko menu item"
   },
-  "importComics": "Import .comics (deprecated)",
+  "importComics": ".comics importieren (veraltet)",
   "@importComics": {
     "description": "Import .comics (deprecated) menu item"
   },
-  "comicsDeprecatedTitle": "Legacy Format",
+  "comicsDeprecatedTitle": "Veraltetes Format",
   "@comicsDeprecatedTitle": {
     "description": "Title for the comics deprecated dialog"
   },
-  "comicsDeprecatedContent": "The .comics format is deprecated and will be removed in a future version. Please use the modern .boranko format for all new 2D projects.",
+  "comicsDeprecatedContent": "Das .comics-Format ist veraltet und wird in einer zukünftigen Version entfernt. Bitte verwenden Sie das moderne .boranko-Format für alle neuen 2D-Projekte.",
   "@comicsDeprecatedContent": {
     "description": "Content for the comics deprecated dialog"
   },
@@ -197,11 +197,11 @@
   "@ok": {
     "description": "OK button text"
   },
-  "importingBorankoProject": "Importing Boranko project...",
+  "importingBorankoProject": "Boranko-Projekt wird importiert...",
   "@importingBorankoProject": {
     "description": "Status message for importing a Boranko project"
   },
-  "errorImportingBorankoProject": "Error importing Boranko project: {error}",
+  "errorImportingBorankoProject": "Fehler beim Importieren des Boranko-Projekts: {error}",
   "@errorImportingBorankoProject": {
     "description": "Error message for importing a Boranko project",
     "placeholders": {
@@ -218,7 +218,7 @@
   "@unrealEngine": {
     "description": "Unreal Engine import button"
   },
-  "blenderModel": "Blender Model",
+  "blenderModel": "Blender-Modell",
   "@blenderModel": {
     "description": "Blender Model import button"
   },
@@ -226,31 +226,31 @@
   "@audio": {
     "description": "Audio section title"
   },
-  "anantaSoundSetup": "anAntaSound Setup",
+  "anantaSoundSetup": "anAntaSound-Setup",
   "@anantaSoundSetup": {
     "description": "anAntaSound Setup button"
   },
-  "threeDPositioning": "3D Positioning",
+  "threeDPositioning": "3D-Positionierung",
   "@threeDPositioning": {
     "description": "3D Positioning button"
   },
-  "loadDagaFile": "Load .daga File",
+  "loadDagaFile": ".daga-Datei laden",
   "@loadDagaFile": {
     "description": "Load .daga File button"
   },
-  "threeDContent": "3D Content",
+  "threeDContent": "3D-Inhalt",
   "@threeDContent": {
     "description": "3D Content section title"
   },
-  "loadZelimFile": "Load .zelim File",
+  "loadZelimFile": ".zelim-Datei laden",
   "@loadZelimFile": {
     "description": "Load .zelim File button"
   },
-  "domeSettings": "Dome Settings",
+  "domeSettings": "Kuppel-Einstellungen",
   "@domeSettings": {
     "description": "Dome Settings section title"
   },
-  "domeConfiguration": "Dome Configuration",
+  "domeConfiguration": "Kuppel-Konfiguration",
   "@domeConfiguration": {
     "description": "Dome Configuration label"
   },
@@ -263,11 +263,11 @@
       }
     }
   },
-  "projectionType": "Projection Type:",
+  "projectionType": "Projektionstyp:",
   "@projectionType": {
     "description": "Projection type label"
   },
-  "spherical": "Spherical",
+  "spherical": "Sphärisch",
   "@spherical": {
     "description": "Spherical projection type"
   },
@@ -279,7 +279,7 @@
   "@equirectangular": {
     "description": "Equirectangular projection type"
   },
-  "export": "Export",
+  "export": "Exportieren",
   "@export": {
     "description": "Export section title"
   },
@@ -287,51 +287,51 @@
   "@mbharataClient": {
     "description": "mbharata_client export button"
   },
-  "domeProjection": "Dome Projection",
+  "domeProjection": "Kuppel-Projektion",
   "@domeProjection": {
     "description": "Dome Projection export button"
   },
-  "pleaseCreateOrOpenProject": "Please create or open a project first",
+  "pleaseCreateOrOpenProject": "Bitte erstellen oder öffnen Sie zuerst ein Projekt",
   "@pleaseCreateOrOpenProject": {
     "description": "Error message when no project is selected"
   },
-  "importingBarankoComics": "Importing Baranko comics...",
+  "importingBarankoComics": "Baranko-Comics werden importiert...",
   "@importingBarankoComics": {
     "description": "Importing Baranko comics status"
   },
-  "importingUnrealEngineScene": "Importing Unreal Engine scene...",
+  "importingUnrealEngineScene": "Unreal Engine-Szene wird importiert...",
   "@importingUnrealEngineScene": {
     "description": "Importing Unreal Engine scene status"
   },
-  "importingBlenderModel": "Importing Blender model...",
+  "importingBlenderModel": "Blender-Modell wird importiert...",
   "@importingBlenderModel": {
     "description": "Importing Blender model status"
   },
-  "settingUpAnantaSound": "Setting up anAntaSound...",
+  "settingUpAnantaSound": "anAntaSound wird eingerichtet...",
   "@settingUpAnantaSound": {
     "description": "Setting up anAntaSound status"
   },
-  "opening3dAudioEditor": "Opening 3D Audio editor...",
+  "opening3dAudioEditor": "3D-Audio-Editor wird geöffnet...",
   "@opening3dAudioEditor": {
     "description": "Opening 3D Audio editor status"
   },
-  "loadingDagaFile": "Loading .daga file...",
+  "loadingDagaFile": ".daga-Datei wird geladen...",
   "@loadingDagaFile": {
     "description": "Loading .daga file status"
   },
-  "loadingZelimFile": "Loading .zelim file...",
+  "loadingZelimFile": ".zelim-Datei wird geladen...",
   "@loadingZelimFile": {
     "description": "Loading .zelim file status"
   },
-  "exportingToMbharata": "Exporting to mbharata_client...",
+  "exportingToMbharata": "Export zu mbharata_client...",
   "@exportingToMbharata": {
     "description": "Exporting to mbharata_client status"
   },
-  "exportingDomeProjection": "Exporting dome projection...",
+  "exportingDomeProjection": "Kuppel-Projektion wird exportiert...",
   "@exportingDomeProjection": {
     "description": "Exporting dome projection status"
   },
-  "language": "Language",
+  "language": "Sprache",
   "@language": {
     "description": "Language selection label"
   },
@@ -359,15 +359,15 @@
   "@homeScreenTitle": {
     "description": "The title of the Home Screen"
   },
-  "gifImporterTooltip": "GIF Importer",
+  "gifImporterTooltip": "GIF-Importer",
   "@gifImporterTooltip": {
     "description": "Tooltip for the GIF importer icon button"
   },
-  "jpgImporterTooltip": "JPG Importer",
+  "jpgImporterTooltip": "JPG-Importer",
   "@jpgImporterTooltip": {
     "description": "Tooltip for the JPG importer icon button"
   },
-  "videoImporterTooltip": "Video Importer",
+  "videoImporterTooltip": "Video-Importer",
   "@videoImporterTooltip": {
     "description": "Tooltip for the video importer icon button"
   },
@@ -375,47 +375,47 @@
   "@tutorialsTooltip": {
     "description": "Tooltip for the tutorials icon button"
   },
-  "lyubomirUnderstandingTooltip": "Lyubomir's Understanding",
+  "lyubomirUnderstandingTooltip": "Lyubomirs Verständnis",
   "@lyubomirUnderstandingTooltip": {
     "description": "Tooltip for the Lyubomir's Understanding icon button"
   },
-  "anantaSoundTooltip": "anAntaSound Quantum Resonance Device",
+  "anantaSoundTooltip": "anAntaSound Quantenresonanzgerät",
   "@anantaSoundTooltip": {
     "description": "Tooltip for the anAntaSound icon button"
   },
-  "unrealOptimizerTooltip": "Unreal Engine Optimizer",
+  "unrealOptimizerTooltip": "Unreal Engine-Optimierer",
   "@unrealOptimizerTooltip": {
     "description": "Tooltip for the Unreal Engine Optimizer icon button"
   },
-  "borankoImportSuccess": "Boranko project imported successfully",
+  "borankoImportSuccess": "Boranko-Projekt erfolgreich importiert",
   "@borankoImportSuccess": {
     "description": "Success message when a Boranko project is imported"
   },
-  "anantaSoundScreenTitle": "anAntaSound Quantum Resonance Device",
+  "anantaSoundScreenTitle": "anAntaSound Quantenresonanzgerät",
   "@anantaSoundScreenTitle": {
     "description": "The title of the anAntaSound screen"
   },
-  "active": "Active",
+  "active": "Aktiv",
   "@active": {
     "description": "Status for when the device is active"
   },
-  "inactive": "Inactive",
+  "inactive": "Inaktiv",
   "@inactive": {
     "description": "Status for when the device is inactive"
   },
-  "initializingQuantumResonanceDevice": "Initializing Quantum Resonance Device...",
+  "initializingQuantumResonanceDevice": "Quantenresonanzgerät wird initialisiert...",
   "@initializingQuantumResonanceDevice": {
     "description": "Message shown while the device is initializing"
   },
-  "mp3Management": "MP3 Management",
+  "mp3Management": "MP3-Verwaltung",
   "@mp3Management": {
     "description": "Title for the MP3 management section"
   },
-  "loadMp3": "Load MP3",
+  "loadMp3": "MP3 laden",
   "@loadMp3": {
     "description": "Button text to load an MP3 file"
   },
-  "loadedFile": "Loaded file: {fileName}",
+  "loadedFile": "Geladene Datei: {fileName}",
   "@loadedFile": {
     "description": "Label to show the name of the loaded file",
     "placeholders": {
@@ -424,23 +424,23 @@
       }
     }
   },
-  "participantManagement": "Participant Management",
+  "participantManagement": "Teilnehmerverwaltung",
   "@participantManagement": {
     "description": "Title for the participant management section"
   },
-  "addParticipant": "Add Participant",
+  "addParticipant": "Teilnehmer hinzufügen",
   "@addParticipant": {
     "description": "Button text to add a participant"
   },
-  "removeParticipant": "Remove Participant",
+  "removeParticipant": "Teilnehmer entfernen",
   "@removeParticipant": {
     "description": "Button text to remove a participant"
   },
-  "activeParticipants": "Active Participants:",
+  "activeParticipants": "Aktive Teilnehmer:",
   "@activeParticipants": {
     "description": "Label for the list of active participants"
   },
-  "participant": "Participant {index}",
+  "participant": "Teilnehmer {index}",
   "@participant": {
     "description": "Label for a single participant in a list",
     "placeholders": {
@@ -449,7 +449,7 @@
       }
     }
   },
-  "participantDetails": "Weight: {weight} | Position: ({r}, {theta}, {phi})",
+  "participantDetails": "Gewicht: {weight} | Position: ({r}, {theta}, {phi})",
   "@participantDetails": {
     "description": "Details of a participant, including weight and position",
     "placeholders": {
@@ -467,19 +467,19 @@
       }
     }
   },
-  "realTimeData": "Real-time Data",
+  "realTimeData": "Echtzeitdaten",
   "@realTimeData": {
     "description": "Title for the real-time data section"
   },
-  "frequency": "Frequency",
+  "frequency": "Frequenz",
   "@frequency": {
     "description": "Label for the frequency data point"
   },
-  "intensity": "Intensity",
+  "intensity": "Intensität",
   "@intensity": {
     "description": "Label for the intensity data point"
   },
-  "participants": "Participants",
+  "participants": "Teilnehmer",
   "@participants": {
     "description": "Label for the participants data point"
   },
@@ -487,11 +487,11 @@
   "@midi": {
     "description": "Label for the MIDI data point"
   },
-  "connected": "Connected",
+  "connected": "Verbunden",
   "@connected": {
     "description": "Status for when a connection is active"
   },
-  "disconnected": "Disconnected",
+  "disconnected": "Getrennt",
   "@disconnected": {
     "description": "Status for when a connection is inactive"
   },
@@ -499,15 +499,15 @@
   "@osc": {
     "description": "Label for the OSC data point"
   },
-  "consciousness": "Consciousness",
+  "consciousness": "Bewusstsein",
   "@consciousness": {
     "description": "Label for the consciousness data point"
   },
-  "linked": "Linked",
+  "linked": "Verknüpft",
   "@linked": {
     "description": "Status for when consciousness is linked"
   },
-  "notLinked": "Not Linked",
+  "notLinked": "Nicht verknüpft",
   "@notLinked": {
     "description": "Status for when consciousness is not linked"
   },
