@@ -299,7 +299,7 @@ class LyubomirRecentResults extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            result.type,
+                            result.type.name,
                             style: Theme.of(context).textTheme.bodySmall,
                             overflow: TextOverflow.ellipsis,
                           ),
