@@ -73,6 +73,12 @@ app.*.map.json
 **/build/ios/
 **/ios/build/
 
+# CocoaPods
+**/ios/Pods/
+**/ios/Podfile.lock
+**/macos/Pods/
+**/macos/Podfile.lock
+
 # macOS related
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral/

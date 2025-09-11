@@ -166,7 +166,6 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
       ),
     );
   }
-}
 
   Widget _buildMp3Loader(AnantaSoundService service, AppLocalizations l10n) {
     return Container(
@@ -517,8 +516,8 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     final random = Random();
     final position = SphericalCoord(
       r: random.nextDouble() * 5.0,
-          theta: random.nextDouble() * pi,
-          phi: random.nextDouble() * 2 * pi,
+      theta: random.nextDouble() * pi,
+      phi: random.nextDouble() * 2 * pi,
       height: random.nextDouble() * 3.0,
     );
     final weight = random.nextDouble();
@@ -532,6 +531,7 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
       service.removeParticipant(field.participantWeights.length - 1);
     }
   }
+
 }
 
 class QuantumVisualizationPainter extends CustomPainter {
