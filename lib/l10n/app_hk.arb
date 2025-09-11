@@ -1,0 +1,382 @@
+{
+  "@@locale": "hk",
+  "appTitle": "Сфера Харконненов",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "newButton": "Захватить",
+  "@newButton": {
+    "description": "New button text"
+  },
+  "open": "Вскрыть",
+  "@open": {
+    "description": "Open button text"
+  },
+  "save": "Сохранить в хранилище",
+  "@save": {
+    "description": "Save button text"
+  },
+  "play": "Активировать",
+  "@play": {
+    "description": "Play button text"
+  },
+  "stop": "Прекратить",
+  "@stop": {
+    "description": "Stop button text"
+  },
+  "reset": "Уничтожить",
+  "@reset": {
+    "description": "Reset button text"
+  },
+  "ready": "К бою готов",
+  "@ready": {
+    "description": "Ready status message"
+  },
+  "loadingProject": "Загружаю проект в бункер...",
+  "@loadingProject": {
+    "description": "Loading project status message"
+  },
+  "projectLoaded": "Проект захвачен",
+  "@projectLoaded": {
+    "description": "Project loaded status message"
+  },
+  "noProject": "Нет добычи",
+  "@noProject": {
+    "description": "No project status message"
+  },
+  "errorLoadingProject": "Ошибка захвата проекта: {error}",
+  "@errorLoadingProject": {
+    "description": "Error loading project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "creatingNewProject": "Создаю новую крепость...",
+  "@creatingNewProject": {
+    "description": "Creating new project status message"
+  },
+  "newProjectCreated": "Крепость построена",
+  "@newProjectCreated": {
+    "description": "New project created status message"
+  },
+  "errorCreatingProject": "Ошибка строительства крепости: {error}",
+  "@errorCreatingProject": {
+    "description": "Error creating project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "openingProject": "Вскрываю проект...",
+  "@openingProject": {
+    "description": "Opening project status message"
+  },
+  "savingProject": "Сохраняю в тайники...",
+  "@savingProject": {
+    "description": "Saving project status message"
+  },
+  "projectSaved": "Спрятано в тайнике",
+  "@projectSaved": {
+    "description": "Project saved status message"
+  },
+  "saveFailed": "Тайник взломан",
+  "@saveFailed": {
+    "description": "Save failed status message"
+  },
+  "errorSavingProject": "Ошибка сокрытия: {error}",
+  "@errorSavingProject": {
+    "description": "Error saving project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "playingPreview": "Демонстрирую мощь...",
+  "@playingPreview": {
+    "description": "Playing preview status message"
+  },
+  "previewStopped": "Демонстрация завершена",
+  "@previewStopped": {
+    "description": "Preview stopped status message"
+  },
+  "viewReset": "Обзор обнулен",
+  "@viewReset": {
+    "description": "View reset status message"
+  },
+  "newProject": "Новая Крепость",
+  "@newProject": {
+    "description": "New project dialog title"
+  },
+  "projectName": "Название крепости",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+  "enterProjectName": "Введите название крепости",
+  "@enterProjectName": {
+    "description": "Project name field hint"
+  },
+  "pleaseEnterProjectName": "Укажите название крепости",
+  "@pleaseEnterProjectName": {
+    "description": "Project name validation message"
+  },
+  "descriptionOptional": "Описание (по желанию)",
+  "@descriptionOptional": {
+    "description": "Description field label"
+  },
+  "enterProjectDescription": "Опишите крепость",
+  "@enterProjectDescription": {
+    "description": "Description field hint"
+  },
+  "tagsOptional": "Метки (по желанию)",
+  "@tagsOptional": {
+    "description": "Tags field label"
+  },
+  "enterTagsSeparatedByCommas": "Метки через запятую",
+  "@enterTagsSeparatedByCommas": {
+    "description": "Tags field hint"
+  },
+  "cancel": "Отступить",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "create": "Построить",
+  "@create": {
+    "description": "Create button text"
+  },
+  "project": "Крепость",
+  "@project": {
+    "description": "Project section title"
+  },
+  "currentProject": "Текущая крепость",
+  "@currentProject": {
+    "description": "Current project label"
+  },
+  "created": "Построена: {date}",
+  "@created": {
+    "description": "Created date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "modified": "Укреплена: {date}",
+  "@modified": {
+    "description": "Modified date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "import": "Захватить",
+  "@import": {
+    "description": "Import section title"
+  },
+  "importBoranko": "Захватить .boranko",
+  "@importBoranko": {
+    "description": "Import .boranko menu item"
+  },
+  "importComics": "Захватить .comics (устарело)",
+  "@importComics": {
+    "description": "Import .comics (deprecated) menu item"
+  },
+  "comicsDeprecatedTitle": "Древний формат",
+  "@comicsDeprecatedTitle": {
+    "description": "Title for the comics deprecated dialog"
+  },
+  "comicsDeprecatedContent": "Формат .comics устарел как технологии Атрейдесов. Используйте современный .boranko для новых завоеваний.",
+  "@comicsDeprecatedContent": {
+    "description": "Content for the comics deprecated dialog"
+  },
+  "ok": "Понял",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "importingBorankoProject": "Захватываю Boranko-проект...",
+  "@importingBorankoProject": {
+    "description": "Status message for importing a Boranko project"
+  },
+  "errorImportingBorankoProject": "Ошибка захвата Boranko: {error}",
+  "@errorImportingBorankoProject": {
+    "description": "Error message for importing a Boranko project",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "barankoComics": "Комиксы Баранко",
+  "@barankoComics": {
+    "description": "Baranko Comics import button"
+  },
+  "unrealEngine": "Двигатель Разрушения",
+  "@unrealEngine": {
+    "description": "Unreal Engine import button"
+  },
+  "blenderModel": "Модель Блендера",
+  "@blenderModel": {
+    "description": "Blender Model import button"
+  },
+  "audio": "Звуковое оружие",
+  "@audio": {
+    "description": "Audio section title"
+  },
+  "anantaSoundSetup": "Настройка anAntaSound",
+  "@anantaSoundSetup": {
+    "description": "anAntaSound Setup button"
+  },
+  "threeDPositioning": "3D-позиционирование",
+  "@threeDPositioning": {
+    "description": "3D Positioning button"
+  },
+  "loadDagaFile": "Загрузить .daga файл",
+  "@loadDagaFile": {
+    "description": "Load .daga File button"
+  },
+  "threeDContent": "3D-контент",
+  "@threeDContent": {
+    "description": "3D Content section title"
+  },
+  "loadZelimFile": "Загрузить .zelim файл",
+  "@loadZelimFile": {
+    "description": "Load .zelim File button"
+  },
+  "domeSettings": "Настройки купола",
+  "@domeSettings": {
+    "description": "Dome Settings section title"
+  },
+  "domeConfiguration": "Конфигурация купола",
+  "@domeConfiguration": {
+    "description": "Dome Configuration label"
+  },
+  "radius": "Радиус: {radius}м",
+  "@radius": {
+    "description": "Dome radius label",
+    "placeholders": {
+      "radius": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionType": "Тип проекции:",
+  "@projectionType": {
+    "description": "Projection type label"
+  },
+  "spherical": "Сферическая",
+  "@spherical": {
+    "description": "Spherical projection type"
+  },
+  "fisheye": "Рыбий глаз",
+  "@fisheye": {
+    "description": "Fisheye projection type"
+  },
+  "equirectangular": "Равнопрямоугольная",
+  "@equirectangular": {
+    "description": "Equirectangular projection type"
+  },
+  "export": "Экспортировать",
+  "@export": {
+    "description": "Export section title"
+  },
+  "mbharataClient": "mbharata_client",
+  "@mbharataClient": {
+    "description": "mbharata_client export button"
+  },
+  "domeProjection": "Проекция купола",
+  "@domeProjection": {
+    "description": "Dome Projection export button"
+  },
+  "pleaseCreateOrOpenProject": "Сначала постройте или захватите крепость",
+  "@pleaseCreateOrOpenProject": {
+    "description": "Error message when no project is selected"
+  },
+  "language": "Язык империи",
+  "@language": {
+    "description": "Language selection label"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "russian": "Русский",
+  "@russian": {
+    "description": "Russian language option"
+  },
+  "thai": "ไทย",
+  "@thai": {
+    "description": "Thai language option"
+  },
+  "hindi": "हिन्दी",
+  "@hindi": {
+    "description": "Hindi language option"
+  },
+  "german": "Deutsch",
+  "@german": {
+    "description": "German language option"
+  },
+  "harkonnen": "Харконнены",
+  "@harkonnen": {
+    "description": "Harkonnen language option"
+  },
+  "atreides": "Атрейдесы",
+  "@atreides": {
+    "description": "Atreides language option"
+  },
+  "petrosyan": "Петросян",
+  "@petrosyan": {
+    "description": "Petrosyan language option"
+  },
+  "homeScreenTitle": "Сфера Харконненов",
+  "@homeScreenTitle": {
+    "description": "The title of the Home Screen"
+  },
+  "anantaSoundScreenTitle": "Звуковое оружие anAntaSound",
+  "@anantaSoundScreenTitle": {
+    "description": "The title of the anAntaSound screen"
+  },
+  "active": "Активно",
+  "@active": {
+    "description": "Status for when the device is active"
+  },
+  "inactive": "Неактивно",
+  "@inactive": {
+    "description": "Status for when the device is inactive"
+  },
+  "frequency": "Частота",
+  "@frequency": {
+    "description": "Label for the frequency data point"
+  },
+  "intensity": "Интенсивность",
+  "@intensity": {
+    "description": "Label for the intensity data point"
+  },
+  "participants": "Участники",
+  "@participants": {
+    "description": "Label for the participants data point"
+  },
+  "connected": "Подключено",
+  "@connected": {
+    "description": "Status for when a connection is active"
+  },
+  "disconnected": "Отключено",
+  "@disconnected": {
+    "description": "Status for when a connection is inactive"
+  },
+  "consciousness": "Сознание",
+  "@consciousness": {
+    "description": "Label for the consciousness data point"
+  },
+  "linked": "Связано",
+  "@linked": {
+    "description": "Status for when consciousness is linked"
+  },
+  "notLinked": "Не связано",
+  "@notLinked": {
+    "description": "Status for when consciousness is not linked"
+  }
+}

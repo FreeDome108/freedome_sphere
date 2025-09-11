@@ -14,6 +14,9 @@ class LocaleService extends ChangeNotifier {
     Locale('th', ''), // Thai
     Locale('hi', ''), // Hindi
     Locale('de', ''), // German
+    Locale('hk', ''), // Harkonnen (Easter egg)
+    Locale('at', ''), // Atreides (Easter egg)
+    Locale('pt', ''), // Petrosyan (Humor)
   ];
   
   static const Map<String, String> localeNames = {
@@ -22,6 +25,9 @@ class LocaleService extends ChangeNotifier {
     'th': 'ไทย',
     'hi': 'हिन्दी',
     'de': 'Deutsch',
+    'hk': 'Харконнены',
+    'at': 'Атрейдесы',
+    'pt': 'Петросян',
   };
   
   Future<void> loadLocale() async {

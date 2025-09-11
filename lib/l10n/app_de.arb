@@ -355,6 +355,18 @@
   "@german": {
     "description": "German language option"
   },
+  "harkonnen": "Харконнены",
+  "@harkonnen": {
+    "description": "Harkonnen language option"
+  },
+  "atreides": "Атрейдесы",
+  "@atreides": {
+    "description": "Atreides language option"
+  },
+  "petrosyan": "Петросян",
+  "@petrosyan": {
+    "description": "Petrosyan language option"
+  },
   "homeScreenTitle": "FreeDome Sphere",
   "@homeScreenTitle": {
     "description": "The title of the Home Screen"

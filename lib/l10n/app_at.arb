@@ -1,0 +1,382 @@
+{
+  "@@locale": "at",
+  "appTitle": "Сфера Атрейдесов",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "newButton": "Создать",
+  "@newButton": {
+    "description": "New button text"
+  },
+  "open": "Открыть с честью",
+  "@open": {
+    "description": "Open button text"
+  },
+  "save": "Сохранить благородно",
+  "@save": {
+    "description": "Save button text"
+  },
+  "play": "Воспроизвести",
+  "@play": {
+    "description": "Play button text"
+  },
+  "stop": "Остановить",
+  "@stop": {
+    "description": "Stop button text"
+  },
+  "reset": "Обновить",
+  "@reset": {
+    "description": "Reset button text"
+  },
+  "ready": "Готов служить",
+  "@ready": {
+    "description": "Ready status message"
+  },
+  "loadingProject": "Загружаю проект с достоинством...",
+  "@loadingProject": {
+    "description": "Loading project status message"
+  },
+  "projectLoaded": "Проект загружен честно",
+  "@projectLoaded": {
+    "description": "Project loaded status message"
+  },
+  "noProject": "Нет проекта",
+  "@noProject": {
+    "description": "No project status message"
+  },
+  "errorLoadingProject": "Благородная ошибка загрузки: {error}",
+  "@errorLoadingProject": {
+    "description": "Error loading project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "creatingNewProject": "Создаю новый благородный проект...",
+  "@creatingNewProject": {
+    "description": "Creating new project status message"
+  },
+  "newProjectCreated": "Благородный проект создан",
+  "@newProjectCreated": {
+    "description": "New project created status message"
+  },
+  "errorCreatingProject": "Ошибка создания проекта: {error}",
+  "@errorCreatingProject": {
+    "description": "Error creating project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "openingProject": "Открываю проект с честью...",
+  "@openingProject": {
+    "description": "Opening project status message"
+  },
+  "savingProject": "Сохраняю проект благородно...",
+  "@savingProject": {
+    "description": "Saving project status message"
+  },
+  "projectSaved": "Проект сохранен с честью",
+  "@projectSaved": {
+    "description": "Project saved status message"
+  },
+  "saveFailed": "Сохранение не удалось",
+  "@saveFailed": {
+    "description": "Save failed status message"
+  },
+  "errorSavingProject": "Ошибка сохранения: {error}",
+  "@errorSavingProject": {
+    "description": "Error saving project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "playingPreview": "Воспроизвожу предварительный просмотр...",
+  "@playingPreview": {
+    "description": "Playing preview status message"
+  },
+  "previewStopped": "Просмотр остановлен",
+  "@previewStopped": {
+    "description": "Preview stopped status message"
+  },
+  "viewReset": "Вид обновлен",
+  "@viewReset": {
+    "description": "View reset status message"
+  },
+  "newProject": "Новый Благородный Проект",
+  "@newProject": {
+    "description": "New project dialog title"
+  },
+  "projectName": "Имя проекта",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+  "enterProjectName": "Введите благородное имя проекта",
+  "@enterProjectName": {
+    "description": "Project name field hint"
+  },
+  "pleaseEnterProjectName": "Пожалуйста, укажите имя проекта",
+  "@pleaseEnterProjectName": {
+    "description": "Project name validation message"
+  },
+  "descriptionOptional": "Описание (по желанию)",
+  "@descriptionOptional": {
+    "description": "Description field label"
+  },
+  "enterProjectDescription": "Опишите благородный проект",
+  "@enterProjectDescription": {
+    "description": "Description field hint"
+  },
+  "tagsOptional": "Метки (по желанию)",
+  "@tagsOptional": {
+    "description": "Tags field label"
+  },
+  "enterTagsSeparatedByCommas": "Метки через запятую",
+  "@enterTagsSeparatedByCommas": {
+    "description": "Tags field hint"
+  },
+  "cancel": "Отменить",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "create": "Создать благородно",
+  "@create": {
+    "description": "Create button text"
+  },
+  "project": "Проект",
+  "@project": {
+    "description": "Project section title"
+  },
+  "currentProject": "Текущий проект",
+  "@currentProject": {
+    "description": "Current project label"
+  },
+  "created": "Создан: {date}",
+  "@created": {
+    "description": "Created date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "modified": "Изменен: {date}",
+  "@modified": {
+    "description": "Modified date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "import": "Импортировать",
+  "@import": {
+    "description": "Import section title"
+  },
+  "importBoranko": "Импортировать .boranko",
+  "@importBoranko": {
+    "description": "Import .boranko menu item"
+  },
+  "importComics": "Импортировать .comics (устарело)",
+  "@importComics": {
+    "description": "Import .comics (deprecated) menu item"
+  },
+  "comicsDeprecatedTitle": "Устаревший формат",
+  "@comicsDeprecatedTitle": {
+    "description": "Title for the comics deprecated dialog"
+  },
+  "comicsDeprecatedContent": "Формат .comics устарел как старые традиции. Используйте современный .boranko для новых благородных проектов.",
+  "@comicsDeprecatedContent": {
+    "description": "Content for the comics deprecated dialog"
+  },
+  "ok": "Понятно",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "importingBorankoProject": "Импортирую Boranko-проект...",
+  "@importingBorankoProject": {
+    "description": "Status message for importing a Boranko project"
+  },
+  "errorImportingBorankoProject": "Ошибка импорта Boranko: {error}",
+  "@errorImportingBorankoProject": {
+    "description": "Error message for importing a Boranko project",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "barankoComics": "Комиксы Баранко",
+  "@barankoComics": {
+    "description": "Baranko Comics import button"
+  },
+  "unrealEngine": "Двигатель Реальности",
+  "@unrealEngine": {
+    "description": "Unreal Engine import button"
+  },
+  "blenderModel": "Модель Блендера",
+  "@blenderModel": {
+    "description": "Blender Model import button"
+  },
+  "audio": "Благородный звук",
+  "@audio": {
+    "description": "Audio section title"
+  },
+  "anantaSoundSetup": "Настройка anAntaSound",
+  "@anantaSoundSetup": {
+    "description": "anAntaSound Setup button"
+  },
+  "threeDPositioning": "3D-позиционирование",
+  "@threeDPositioning": {
+    "description": "3D Positioning button"
+  },
+  "loadDagaFile": "Загрузить .daga файл",
+  "@loadDagaFile": {
+    "description": "Load .daga File button"
+  },
+  "threeDContent": "3D-контент",
+  "@threeDContent": {
+    "description": "3D Content section title"
+  },
+  "loadZelimFile": "Загрузить .zelim файл",
+  "@loadZelimFile": {
+    "description": "Load .zelim File button"
+  },
+  "domeSettings": "Настройки купола",
+  "@domeSettings": {
+    "description": "Dome Settings section title"
+  },
+  "domeConfiguration": "Конфигурация купола",
+  "@domeConfiguration": {
+    "description": "Dome Configuration label"
+  },
+  "radius": "Радиус: {radius}м",
+  "@radius": {
+    "description": "Dome radius label",
+    "placeholders": {
+      "radius": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionType": "Тип проекции:",
+  "@projectionType": {
+    "description": "Projection type label"
+  },
+  "spherical": "Сферическая",
+  "@spherical": {
+    "description": "Spherical projection type"
+  },
+  "fisheye": "Рыбий глаз",
+  "@fisheye": {
+    "description": "Fisheye projection type"
+  },
+  "equirectangular": "Равнопрямоугольная",
+  "@equirectangular": {
+    "description": "Equirectangular projection type"
+  },
+  "export": "Экспортировать",
+  "@export": {
+    "description": "Export section title"
+  },
+  "mbharataClient": "mbharata_client",
+  "@mbharataClient": {
+    "description": "mbharata_client export button"
+  },
+  "domeProjection": "Проекция купола",
+  "@domeProjection": {
+    "description": "Dome Projection export button"
+  },
+  "pleaseCreateOrOpenProject": "Пожалуйста, создайте или откройте проект сначала",
+  "@pleaseCreateOrOpenProject": {
+    "description": "Error message when no project is selected"
+  },
+  "language": "Язык дома",
+  "@language": {
+    "description": "Language selection label"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "russian": "Русский",
+  "@russian": {
+    "description": "Russian language option"
+  },
+  "thai": "ไทย",
+  "@thai": {
+    "description": "Thai language option"
+  },
+  "hindi": "हिन्दी",
+  "@hindi": {
+    "description": "Hindi language option"
+  },
+  "german": "Deutsch",
+  "@german": {
+    "description": "German language option"
+  },
+  "harkonnen": "Харконнены",
+  "@harkonnen": {
+    "description": "Harkonnen language option"
+  },
+  "atreides": "Атрейдесы",
+  "@atreides": {
+    "description": "Atreides language option"
+  },
+  "petrosyan": "Петросян",
+  "@petrosyan": {
+    "description": "Petrosyan language option"
+  },
+  "homeScreenTitle": "Сфера Атрейдесов",
+  "@homeScreenTitle": {
+    "description": "The title of the Home Screen"
+  },
+  "anantaSoundScreenTitle": "Благородное устройство anAntaSound",
+  "@anantaSoundScreenTitle": {
+    "description": "The title of the anAntaSound screen"
+  },
+  "active": "Активен",
+  "@active": {
+    "description": "Status for when the device is active"
+  },
+  "inactive": "Неактивен",
+  "@inactive": {
+    "description": "Status for when the device is inactive"
+  },
+  "frequency": "Частота",
+  "@frequency": {
+    "description": "Label for the frequency data point"
+  },
+  "intensity": "Интенсивность",
+  "@intensity": {
+    "description": "Label for the intensity data point"
+  },
+  "participants": "Участники",
+  "@participants": {
+    "description": "Label for the participants data point"
+  },
+  "connected": "Подключен",
+  "@connected": {
+    "description": "Status for when a connection is active"
+  },
+  "disconnected": "Отключен",
+  "@disconnected": {
+    "description": "Status for when a connection is inactive"
+  },
+  "consciousness": "Сознание",
+  "@consciousness": {
+    "description": "Label for the consciousness data point"
+  },
+  "linked": "Связан",
+  "@linked": {
+    "description": "Status for when consciousness is linked"
+  },
+  "notLinked": "Не связан",
+  "@notLinked": {
+    "description": "Status for when consciousness is not linked"
+  }
+}

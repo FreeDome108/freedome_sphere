@@ -1,0 +1,382 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Петросян Сфера",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "newButton": "Новый анекдот",
+  "@newButton": {
+    "description": "New button text"
+  },
+  "open": "Открыть с юмором",
+  "@open": {
+    "description": "Open button text"
+  },
+  "save": "Сохранить шутку",
+  "@save": {
+    "description": "Save button text"
+  },
+  "play": "Рассказать",
+  "@play": {
+    "description": "Play button text"
+  },
+  "stop": "Хватит шутить",
+  "@stop": {
+    "description": "Stop button text"
+  },
+  "reset": "Забыть анекдот",
+  "@reset": {
+    "description": "Reset button text"
+  },
+  "ready": "Готов шутить",
+  "@ready": {
+    "description": "Ready status message"
+  },
+  "loadingProject": "Загружаю проект... Как долго! Это не анекдот!",
+  "@loadingProject": {
+    "description": "Loading project status message"
+  },
+  "projectLoaded": "Проект загружен! А вы думали это шутка?",
+  "@projectLoaded": {
+    "description": "Project loaded status message"
+  },
+  "noProject": "Нет проекта - вот это анекдот!",
+  "@noProject": {
+    "description": "No project status message"
+  },
+  "errorLoadingProject": "Ошибка загрузки: {error}. Это не смешно!",
+  "@errorLoadingProject": {
+    "description": "Error loading project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "creatingNewProject": "Создаю новый проект... Надеюсь, он будет смешнее предыдущего!",
+  "@creatingNewProject": {
+    "description": "Creating new project status message"
+  },
+  "newProjectCreated": "Новый проект создан! Ха-ха-ха!",
+  "@newProjectCreated": {
+    "description": "New project created status message"
+  },
+  "errorCreatingProject": "Ошибка создания проекта: {error}. Вот это поворот!",
+  "@errorCreatingProject": {
+    "description": "Error creating project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "openingProject": "Открываю проект... Как коробку с сюрпризом!",
+  "@openingProject": {
+    "description": "Opening project status message"
+  },
+  "savingProject": "Сохраняю проект... Как хорошую шутку в памяти!",
+  "@savingProject": {
+    "description": "Saving project status message"
+  },
+  "projectSaved": "Проект сохранен! Теперь он бессмертен как мои анекдоты!",
+  "@projectSaved": {
+    "description": "Project saved status message"
+  },
+  "saveFailed": "Сохранение не удалось! Как неудачная шутка...",
+  "@saveFailed": {
+    "description": "Save failed status message"
+  },
+  "errorSavingProject": "Ошибка сохранения: {error}. Это не смешно!",
+  "@errorSavingProject": {
+    "description": "Error saving project message",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "playingPreview": "Показываю превью... Как фокус!",
+  "@playingPreview": {
+    "description": "Playing preview status message"
+  },
+  "previewStopped": "Превью остановлено! Занавес!",
+  "@previewStopped": {
+    "description": "Preview stopped status message"
+  },
+  "viewReset": "Вид сброшен! Как память после хорошей шутки!",
+  "@viewReset": {
+    "description": "View reset status message"
+  },
+  "newProject": "Новый Смешной Проект",
+  "@newProject": {
+    "description": "New project dialog title"
+  },
+  "projectName": "Название проекта (желательно смешное)",
+  "@projectName": {
+    "description": "Project name field label"
+  },
+  "enterProjectName": "Введите название проекта (с юмором!)",
+  "@enterProjectName": {
+    "description": "Project name field hint"
+  },
+  "pleaseEnterProjectName": "Пожалуйста, введите название! Без названия - не анекдот!",
+  "@pleaseEnterProjectName": {
+    "description": "Project name validation message"
+  },
+  "descriptionOptional": "Описание (с шутками)",
+  "@descriptionOptional": {
+    "description": "Description field label"
+  },
+  "enterProjectDescription": "Опишите проект с юмором",
+  "@enterProjectDescription": {
+    "description": "Description field hint"
+  },
+  "tagsOptional": "Теги (смешные)",
+  "@tagsOptional": {
+    "description": "Tags field label"
+  },
+  "enterTagsSeparatedByCommas": "Теги через запятую (как паузы в анекдоте)",
+  "@enterTagsSeparatedByCommas": {
+    "description": "Tags field hint"
+  },
+  "cancel": "Отменить (как плохую шутку)",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "create": "Создать с юмором",
+  "@create": {
+    "description": "Create button text"
+  },
+  "project": "Проект-анекдот",
+  "@project": {
+    "description": "Project section title"
+  },
+  "currentProject": "Текущий проект (надеюсь, смешной)",
+  "@currentProject": {
+    "description": "Current project label"
+  },
+  "created": "Создан: {date} (хорошая дата для шутки)",
+  "@created": {
+    "description": "Created date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "modified": "Изменен: {date} (стал еще смешнее)",
+  "@modified": {
+    "description": "Modified date label",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "import": "Импорт (как хорошую шутку)",
+  "@import": {
+    "description": "Import section title"
+  },
+  "importBoranko": "Импортировать .boranko (с юмором)",
+  "@importBoranko": {
+    "description": "Import .boranko menu item"
+  },
+  "importComics": "Импортировать .comics (старые как мои анекдоты)",
+  "@importComics": {
+    "description": "Import .comics (deprecated) menu item"
+  },
+  "comicsDeprecatedTitle": "Устаревший формат (как мои шутки)",
+  "@comicsDeprecatedTitle": {
+    "description": "Title for the comics deprecated dialog"
+  },
+  "comicsDeprecatedContent": "Формат .comics устарел как анекдоты про компьютеры. Используйте .boranko - он свежее!",
+  "@comicsDeprecatedContent": {
+    "description": "Content for the comics deprecated dialog"
+  },
+  "ok": "Понял шутку",
+  "@ok": {
+    "description": "OK button text"
+  },
+  "importingBorankoProject": "Импортирую Boranko... Как хорошую шутку!",
+  "@importingBorankoProject": {
+    "description": "Status message for importing a Boranko project"
+  },
+  "errorImportingBorankoProject": "Ошибка импорта Boranko: {error}. Это не смешно!",
+  "@errorImportingBorankoProject": {
+    "description": "Error message for importing a Boranko project",
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "barankoComics": "Комиксы Баранко (смешные)",
+  "@barankoComics": {
+    "description": "Baranko Comics import button"
+  },
+  "unrealEngine": "Нереальный Двигатель (как мои гонорары)",
+  "@unrealEngine": {
+    "description": "Unreal Engine import button"
+  },
+  "blenderModel": "Модель Блендера (перемешаю с юмором)",
+  "@blenderModel": {
+    "description": "Blender Model import button"
+  },
+  "audio": "Звук (смеха)",
+  "@audio": {
+    "description": "Audio section title"
+  },
+  "anantaSoundSetup": "Настройка anAntaSound (для смеха)",
+  "@anantaSoundSetup": {
+    "description": "anAntaSound Setup button"
+  },
+  "threeDPositioning": "3D-позиционирование (как в анекдоте)",
+  "@threeDPositioning": {
+    "description": "3D Positioning button"
+  },
+  "loadDagaFile": "Загрузить .daga файл (с юмором)",
+  "@loadDagaFile": {
+    "description": "Load .daga File button"
+  },
+  "threeDContent": "3D-контент (объемные шутки)",
+  "@threeDContent": {
+    "description": "3D Content section title"
+  },
+  "loadZelimFile": "Загрузить .zelim файл (зеленый юмор)",
+  "@loadZelimFile": {
+    "description": "Load .zelim File button"
+  },
+  "domeSettings": "Настройки купола (цирка)",
+  "@domeSettings": {
+    "description": "Dome Settings section title"
+  },
+  "domeConfiguration": "Конфигурация купола (для выступлений)",
+  "@domeConfiguration": {
+    "description": "Dome Configuration label"
+  },
+  "radius": "Радиус: {radius}м (размер зала для шуток)",
+  "@radius": {
+    "description": "Dome radius label",
+    "placeholders": {
+      "radius": {
+        "type": "String"
+      }
+    }
+  },
+  "projectionType": "Тип проекции (как подача шутки):",
+  "@projectionType": {
+    "description": "Projection type label"
+  },
+  "spherical": "Сферическая (объемная шутка)",
+  "@spherical": {
+    "description": "Spherical projection type"
+  },
+  "fisheye": "Рыбий глаз (как у зрителей)",
+  "@fisheye": {
+    "description": "Fisheye projection type"
+  },
+  "equirectangular": "Равнопрямоугольная (как хорошая шутка)",
+  "@equirectangular": {
+    "description": "Equirectangular projection type"
+  },
+  "export": "Экспорт (шуток)",
+  "@export": {
+    "description": "Export section title"
+  },
+  "mbharataClient": "mbharata_client (клиент для смеха)",
+  "@mbharataClient": {
+    "description": "mbharata_client export button"
+  },
+  "domeProjection": "Проекция купола (цирка)",
+  "@domeProjection": {
+    "description": "Dome Projection export button"
+  },
+  "pleaseCreateOrOpenProject": "Сначала создайте проект! Без проекта - не анекдот!",
+  "@pleaseCreateOrOpenProject": {
+    "description": "Error message when no project is selected"
+  },
+  "language": "Язык юмора",
+  "@language": {
+    "description": "Language selection label"
+  },
+  "english": "English (серьезный)",
+  "@english": {
+    "description": "English language option"
+  },
+  "russian": "Русский (классический)",
+  "@russian": {
+    "description": "Russian language option"
+  },
+  "thai": "ไทย (экзотический)",
+  "@thai": {
+    "description": "Thai language option"
+  },
+  "hindi": "हिन्दी (болливудский)",
+  "@hindi": {
+    "description": "Hindi language option"
+  },
+  "german": "Deutsch (без юмора)",
+  "@german": {
+    "description": "German language option"
+  },
+  "harkonnen": "Харконнены (злые шутки)",
+  "@harkonnen": {
+    "description": "Harkonnen language option"
+  },
+  "atreides": "Атрейдесы (благородные шутки)",
+  "@atreides": {
+    "description": "Atreides language option"
+  },
+  "petrosyan": "Петросян (самые смешные)",
+  "@petrosyan": {
+    "description": "Petrosyan language option"
+  },
+  "homeScreenTitle": "Петросян Сфера (Центр Юмора)",
+  "@homeScreenTitle": {
+    "description": "The title of the Home Screen"
+  },
+  "anantaSoundScreenTitle": "anAntaSound Устройство Смеха",
+  "@anantaSoundScreenTitle": {
+    "description": "The title of the anAntaSound screen"
+  },
+  "active": "Активно (как мой юмор)",
+  "@active": {
+    "description": "Status for when the device is active"
+  },
+  "inactive": "Неактивно (как зрители без чувства юмора)",
+  "@inactive": {
+    "description": "Status for when the device is inactive"
+  },
+  "frequency": "Частота (шуток в минуту)",
+  "@frequency": {
+    "description": "Label for the frequency data point"
+  },
+  "intensity": "Интенсивность (смеха)",
+  "@intensity": {
+    "description": "Label for the intensity data point"
+  },
+  "participants": "Участники (зрители)",
+  "@participants": {
+    "description": "Label for the participants data point"
+  },
+  "connected": "Подключен (к юмору)",
+  "@connected": {
+    "description": "Status for when a connection is active"
+  },
+  "disconnected": "Отключен (от юмора)",
+  "@disconnected": {
+    "description": "Status for when a connection is inactive"
+  },
+  "consciousness": "Сознание (чувство юмора)",
+  "@consciousness": {
+    "description": "Label for the consciousness data point"
+  },
+  "linked": "Связан (с юмором)",
+  "@linked": {
+    "description": "Status for when consciousness is linked"
+  },
+  "notLinked": "Не связан (без чувства юмора)",
+  "@notLinked": {
+    "description": "Status for when consciousness is not linked"
+  }
+}

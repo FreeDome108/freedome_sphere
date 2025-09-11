@@ -144,18 +144,19 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
                 }
 
                 return SingleChildScrollView(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(8),
                   child: Column(
                     children: [
                       _buildQuantumVisualization(service),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
                       _buildMp3Loader(service, l10n),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
                       const AnantaSoundControlPanel(),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
                       _buildParticipantManagement(service, l10n),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 12),
                       _buildRealTimeData(service, l10n),
+                      const SizedBox(height: 20), // Bottom padding
                     ],
                   ),
                 );
@@ -394,10 +395,10 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
     if (status == null) return const SizedBox.shrink();
 
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.blue.withOpacity(0.3)),
       ),
       child: Column(
@@ -406,11 +407,11 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
           Text(
             l10n.realTimeData,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Row(
             children: [
               Expanded(
@@ -489,27 +490,27 @@ class _AnantaSoundScreenState extends State<AnantaSoundScreen>
 
   Widget _buildDataCard(String title, String value, IconData icon, Color color, AppLocalizations l10n) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
         children: [
-          Icon(icon, color: color, size: 20),
-          const SizedBox(height: 4),
+          Icon(icon, color: color, size: 16),
+          const SizedBox(height: 2),
           Text(
             title,
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 10,
               color: Colors.grey[600],
             ),
           ),
           Text(
             value,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: color,
             ),
