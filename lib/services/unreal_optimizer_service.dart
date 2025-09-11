@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/unreal_analysis.dart';
 
-class UnrealOptimizerService {
+class UnrealOptimizerService extends ChangeNotifier {
   // static const MethodChannel _channel = MethodChannel('unreal_optimizer');
   static const String _pluginPath = 'unreal_blocks_to_code_plugin';
   
@@ -469,8 +470,10 @@ module.exports = { UnrealProjectAnalyzer, CodeOptimizer };
   bool get isInitialized => _isInitialized;
   
   /// Очистка ресурсов
-  Future<void> dispose() async {
+  @override
+  void dispose() {
     _isInitialized = false;
     _nodeProcessPath = null;
+    super.dispose();
   }
 }
