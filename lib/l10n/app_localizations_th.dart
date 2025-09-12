@@ -133,6 +133,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get import => 'นำเข้า';
 
   @override
+  String get importGeneral => 'ไฟล์ทั่วไป';
+
+  @override
   String get importBoranko => 'Import .boranko';
 
   @override

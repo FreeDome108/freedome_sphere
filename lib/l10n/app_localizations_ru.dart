@@ -133,6 +133,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get import => 'Импорт';
 
   @override
+  String get importGeneral => 'Общие файлы';
+
+  @override
   String get importBoranko => 'Импорт .boranko';
 
   @override

@@ -133,6 +133,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get import => 'Импортировать';
 
   @override
+  String get importGeneral => 'Общие файлы';
+
+  @override
   String get importBoranko => 'Импортировать .boranko';
 
   @override

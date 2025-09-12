@@ -134,6 +134,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get import => 'Importieren';
 
   @override
+  String get importGeneral => 'Allgemeine Dateien';
+
+  @override
   String get importBoranko => '.boranko importieren';
 
   @override

@@ -177,6 +177,10 @@
   "@import": {
     "description": "Import section title"
   },
+  "importGeneral": "General Files",
+  "@importGeneral": {
+    "description": "General file import option"
+  },
    "importBoranko": "Import .boranko",
   "@importBoranko": {
     "description": "Import .boranko menu item"

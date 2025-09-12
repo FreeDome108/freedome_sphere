@@ -134,7 +134,10 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get import => 'Импорт (как хорошую шутку)';
+  String get import => 'Импорт';
+
+  @override
+  String get importGeneral => 'Общие файлы (как хорошую шутку)';
 
   @override
   String get importBoranko => 'Импортировать .boranko (с юмором)';

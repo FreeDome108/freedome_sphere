@@ -338,6 +338,12 @@ abstract class AppLocalizations {
   /// **'Import'**
   String get import;
 
+  /// General file import option
+  ///
+  /// In en, this message translates to:
+  /// **'General Files'**
+  String get importGeneral;
+
   /// Import .boranko menu item
   ///
   /// In en, this message translates to:
