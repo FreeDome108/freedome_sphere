@@ -380,7 +380,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Text('Dome Resolution'),
+            'Dome Resolution',
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,

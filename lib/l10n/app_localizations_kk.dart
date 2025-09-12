@@ -133,7 +133,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get import => 'Захватить';
 
   @override
-  String get importGeneral => 'Общие файлы';
+  String get importGeneral => 'General Files';
 
   @override
   String get importBoranko => 'Захватить .boranko';

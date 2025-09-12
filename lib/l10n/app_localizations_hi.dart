@@ -134,7 +134,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get import => 'आयात';
 
   @override
-  String get importGeneral => 'सामान्य फाइलें';
+  String get importGeneral => 'General Files';
 
   @override
   String get importBoranko => 'Import .boranko';
