@@ -4,21 +4,21 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Russian (`ru`).
-class AppLocalizationsRu extends AppLocalizations {
-  AppLocalizationsRu([String locale = 'ru']) : super(locale);
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get appTitle => 'Freedome Sphere';
+  String get appTitle => 'Сфера Атрейдесов';
 
   @override
-  String get newButton => 'Новый';
+  String get newButton => 'Создать';
 
   @override
-  String get open => 'Открыть';
+  String get open => 'Открыть с честью';
 
   @override
-  String get save => 'Сохранить';
+  String get save => 'Сохранить благородно';
 
   @override
   String get play => 'Воспроизвести';
@@ -27,30 +27,30 @@ class AppLocalizationsRu extends AppLocalizations {
   String get stop => 'Остановить';
 
   @override
-  String get reset => 'Сбросить';
+  String get reset => 'Обновить';
 
   @override
-  String get ready => 'Готов';
+  String get ready => 'Готов служить';
 
   @override
-  String get loadingProject => 'Загрузка проекта...';
+  String get loadingProject => 'Загружаю проект с достоинством...';
 
   @override
-  String get projectLoaded => 'Проект загружен';
+  String get projectLoaded => 'Проект загружен честно';
 
   @override
   String get noProject => 'Нет проекта';
 
   @override
   String errorLoadingProject(String error) {
-    return 'Ошибка загрузки проекта: $error';
+    return 'Благородная ошибка загрузки: $error';
   }
 
   @override
-  String get creatingNewProject => 'Создание нового проекта...';
+  String get creatingNewProject => 'Создаю новый благородный проект...';
 
   @override
-  String get newProjectCreated => 'Новый проект создан';
+  String get newProjectCreated => 'Благородный проект создан';
 
   @override
   String errorCreatingProject(String error) {
@@ -58,60 +58,60 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get openingProject => 'Открытие проекта...';
+  String get openingProject => 'Открываю проект с честью...';
 
   @override
-  String get savingProject => 'Сохранение проекта...';
+  String get savingProject => 'Сохраняю проект благородно...';
 
   @override
-  String get projectSaved => 'Проект сохранен';
+  String get projectSaved => 'Проект сохранен с честью';
 
   @override
-  String get saveFailed => 'Ошибка сохранения';
+  String get saveFailed => 'Сохранение не удалось';
 
   @override
   String errorSavingProject(String error) {
-    return 'Ошибка сохранения проекта: $error';
+    return 'Ошибка сохранения: $error';
   }
 
   @override
-  String get playingPreview => 'Воспроизведение превью...';
+  String get playingPreview => 'Воспроизвожу предварительный просмотр...';
 
   @override
-  String get previewStopped => 'Превью остановлено';
+  String get previewStopped => 'Просмотр остановлен';
 
   @override
-  String get viewReset => 'Вид сброшен';
+  String get viewReset => 'Вид обновлен';
 
   @override
-  String get newProject => 'Новый проект';
+  String get newProject => 'Новый Благородный Проект';
 
   @override
-  String get projectName => 'Название проекта';
+  String get projectName => 'Имя проекта';
 
   @override
-  String get enterProjectName => 'Введите название проекта';
+  String get enterProjectName => 'Введите благородное имя проекта';
 
   @override
-  String get pleaseEnterProjectName => 'Пожалуйста, введите название проекта';
+  String get pleaseEnterProjectName => 'Пожалуйста, укажите имя проекта';
 
   @override
-  String get descriptionOptional => 'Описание (необязательно)';
+  String get descriptionOptional => 'Описание (по желанию)';
 
   @override
-  String get enterProjectDescription => 'Введите описание проекта';
+  String get enterProjectDescription => 'Опишите благородный проект';
 
   @override
-  String get tagsOptional => 'Теги (необязательно)';
+  String get tagsOptional => 'Метки (по желанию)';
 
   @override
-  String get enterTagsSeparatedByCommas => 'Введите теги через запятую';
+  String get enterTagsSeparatedByCommas => 'Метки через запятую';
 
   @override
-  String get cancel => 'Отмена';
+  String get cancel => 'Отменить';
 
   @override
-  String get create => 'Создать';
+  String get create => 'Создать благородно';
 
   @override
   String get project => 'Проект';
@@ -121,7 +121,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String created(String date) {
-    return 'Создано';
+    return 'Создан: $date';
   }
 
   @override
@@ -130,55 +130,55 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get import => 'Импорт';
+  String get import => 'Импортировать';
 
   @override
-  String get importBoranko => 'Импорт .boranko';
+  String get importBoranko => 'Импортировать .boranko';
 
   @override
-  String get importComics => 'Импорт .comics (устарело)';
+  String get importComics => 'Импортировать .comics (устарело)';
 
   @override
   String get comicsDeprecatedTitle => 'Устаревший формат';
 
   @override
   String get comicsDeprecatedContent =>
-      'Формат .comics является устаревшим и будет удален в будущей версии. Пожалуйста, используйте современный формат .boranko для всех новых 2D-проектов.';
+      'Формат .comics устарел как старые традиции. Используйте современный .boranko для новых благородных проектов.';
 
   @override
-  String get ok => 'ОК';
+  String get ok => 'Понятно';
 
   @override
-  String get importingBorankoProject => 'Импорт проекта Boranko...';
+  String get importingBorankoProject => 'Импортирую Boranko-проект...';
 
   @override
   String errorImportingBorankoProject(String error) {
-    return 'Ошибка импорта проекта Boranko: $error';
+    return 'Ошибка импорта Boranko: $error';
   }
 
   @override
-  String get barankoComics => 'Комиксы Baranko';
+  String get barankoComics => 'Комиксы Баранко';
 
   @override
-  String get unrealEngine => 'Unreal Engine';
+  String get unrealEngine => 'Двигатель Реальности';
 
   @override
-  String get blenderModel => 'Модель Blender';
+  String get blenderModel => 'Модель Блендера';
 
   @override
-  String get audio => 'Аудио';
+  String get audio => 'Благородный звук';
 
   @override
   String get anantaSoundSetup => 'Настройка anAntaSound';
 
   @override
-  String get threeDPositioning => '3D позиционирование';
+  String get threeDPositioning => '3D-позиционирование';
 
   @override
   String get loadDagaFile => 'Загрузить .daga файл';
 
   @override
-  String get threeDContent => '3D контент';
+  String get threeDContent => '3D-контент';
 
   @override
   String get loadZelimFile => 'Загрузить .zelim файл';
@@ -204,10 +204,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get fisheye => 'Рыбий глаз';
 
   @override
-  String get equirectangular => 'Равнопромежуточная';
+  String get equirectangular => 'Равнопрямоугольная';
 
   @override
-  String get export => 'Экспорт';
+  String get export => 'Экспортировать';
 
   @override
   String get mbharataClient => 'mbharata_client';
@@ -217,37 +217,37 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pleaseCreateOrOpenProject =>
-      'Пожалуйста, создайте или откройте проект';
+      'Пожалуйста, создайте или откройте проект сначала';
 
   @override
-  String get importingBarankoComics => 'Импорт комиксов Baranko...';
+  String get importingBarankoComics => 'Importing Baranko comics...';
 
   @override
-  String get importingUnrealEngineScene => 'Импорт сцены Unreal Engine...';
+  String get importingUnrealEngineScene => 'Importing Unreal Engine scene...';
 
   @override
-  String get importingBlenderModel => 'Импорт модели Blender...';
+  String get importingBlenderModel => 'Importing Blender model...';
 
   @override
-  String get settingUpAnantaSound => 'Настройка anAntaSound...';
+  String get settingUpAnantaSound => 'Setting up anAntaSound...';
 
   @override
-  String get opening3dAudioEditor => 'Открытие 3D аудио редактора...';
+  String get opening3dAudioEditor => 'Opening 3D Audio editor...';
 
   @override
-  String get loadingDagaFile => 'Загрузка .daga файла...';
+  String get loadingDagaFile => 'Loading .daga file...';
 
   @override
-  String get loadingZelimFile => 'Загрузка .zelim файла...';
+  String get loadingZelimFile => 'Loading .zelim file...';
 
   @override
-  String get exportingToMbharata => 'Экспорт в mbharata_client...';
+  String get exportingToMbharata => 'Exporting to mbharata_client...';
 
   @override
-  String get exportingDomeProjection => 'Экспорт проекции купола...';
+  String get exportingDomeProjection => 'Exporting dome projection...';
 
   @override
-  String get language => 'Язык';
+  String get language => 'Язык дома';
 
   @override
   String get english => 'English';
@@ -274,7 +274,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get petrosyan => 'Петросян';
 
   @override
-  String get homeScreenTitle => 'FreeDome Sphere';
+  String get homeScreenTitle => 'Сфера Атрейдесов';
 
   @override
   String get gifImporterTooltip => 'GIF Importer';
@@ -301,13 +301,13 @@ class AppLocalizationsRu extends AppLocalizations {
   String get borankoImportSuccess => 'Boranko project imported successfully';
 
   @override
-  String get anantaSoundScreenTitle => 'anAntaSound Quantum Resonance Device';
+  String get anantaSoundScreenTitle => 'Благородное устройство anAntaSound';
 
   @override
-  String get active => 'Активно';
+  String get active => 'Активен';
 
   @override
-  String get inactive => 'Inactive';
+  String get inactive => 'Неактивен';
 
   @override
   String get initializingQuantumResonanceDevice =>
@@ -350,34 +350,34 @@ class AppLocalizationsRu extends AppLocalizations {
   String get realTimeData => 'Real-time Data';
 
   @override
-  String get frequency => 'Frequency';
+  String get frequency => 'Частота';
 
   @override
-  String get intensity => 'Intensity';
+  String get intensity => 'Интенсивность';
 
   @override
-  String get participants => 'Participants';
+  String get participants => 'Участники';
 
   @override
   String get midi => 'MIDI';
 
   @override
-  String get connected => 'Connected';
+  String get connected => 'Подключен';
 
   @override
-  String get disconnected => 'Disconnected';
+  String get disconnected => 'Отключен';
 
   @override
   String get osc => 'OSC';
 
   @override
-  String get consciousness => 'Consciousness';
+  String get consciousness => 'Сознание';
 
   @override
-  String get linked => 'Linked';
+  String get linked => 'Связан';
 
   @override
-  String get notLinked => 'Not Linked';
+  String get notLinked => 'Не связан';
 
   @override
   String hzUnit(String value) {

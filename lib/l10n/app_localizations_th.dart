@@ -264,6 +264,15 @@ class AppLocalizationsTh extends AppLocalizations {
   String get german => 'Deutsch';
 
   @override
+  String get harkonnen => 'Харконнены';
+
+  @override
+  String get atreides => 'Атрейдесы';
+
+  @override
+  String get petrosyan => 'Петросян';
+
+  @override
   String get homeScreenTitle => 'FreeDome Sphere';
 
   @override

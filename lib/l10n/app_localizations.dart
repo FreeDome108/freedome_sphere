@@ -5,9 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_ar.dart';
 import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_hi.dart';
+import 'app_localizations_kk.dart';
+import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
 import 'app_localizations_th.dart';
 
@@ -97,9 +100,12 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('ar'),
     Locale('de'),
     Locale('en'),
     Locale('hi'),
+    Locale('kk'),
+    Locale('pt'),
     Locale('ru'),
     Locale('th'),
   ];
@@ -584,6 +590,24 @@ abstract class AppLocalizations {
   /// **'Deutsch'**
   String get german;
 
+  /// Harkonnen language option
+  ///
+  /// In en, this message translates to:
+  /// **'Харконнены'**
+  String get harkonnen;
+
+  /// Atreides language option
+  ///
+  /// In en, this message translates to:
+  /// **'Атрейдесы'**
+  String get atreides;
+
+  /// Petrosyan language option
+  ///
+  /// In en, this message translates to:
+  /// **'Петросян'**
+  String get petrosyan;
+
   /// The title of the Home Screen
   ///
   /// In en, this message translates to:
@@ -805,8 +829,16 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['de', 'en', 'hi', 'ru', 'th'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'de',
+    'en',
+    'hi',
+    'kk',
+    'pt',
+    'ru',
+    'th',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -815,12 +847,18 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'ar':
+      return AppLocalizationsAr();
     case 'de':
       return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
     case 'hi':
       return AppLocalizationsHi();
+    case 'kk':
+      return AppLocalizationsKk();
+    case 'pt':
+      return AppLocalizationsPt();
     case 'ru':
       return AppLocalizationsRu();
     case 'th':

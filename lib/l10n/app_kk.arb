@@ -1,50 +1,50 @@
 {
-  "@@locale": "at",
-  "appTitle": "Сфера Атрейдесов",
+  "@@locale": "kk",
+  "appTitle": "Сфера Харконненов",
   "@appTitle": {
     "description": "The title of the application"
   },
-  "newButton": "Создать",
+  "newButton": "Захватить",
   "@newButton": {
     "description": "New button text"
   },
-  "open": "Открыть с честью",
+  "open": "Вскрыть",
   "@open": {
     "description": "Open button text"
   },
-  "save": "Сохранить благородно",
+  "save": "Сохранить в хранилище",
   "@save": {
     "description": "Save button text"
   },
-  "play": "Воспроизвести",
+  "play": "Активировать",
   "@play": {
     "description": "Play button text"
   },
-  "stop": "Остановить",
+  "stop": "Прекратить",
   "@stop": {
     "description": "Stop button text"
   },
-  "reset": "Обновить",
+  "reset": "Уничтожить",
   "@reset": {
     "description": "Reset button text"
   },
-  "ready": "Готов служить",
+  "ready": "К бою готов",
   "@ready": {
     "description": "Ready status message"
   },
-  "loadingProject": "Загружаю проект с достоинством...",
+  "loadingProject": "Загружаю проект в бункер...",
   "@loadingProject": {
     "description": "Loading project status message"
   },
-  "projectLoaded": "Проект загружен честно",
+  "projectLoaded": "Проект захвачен",
   "@projectLoaded": {
     "description": "Project loaded status message"
   },
-  "noProject": "Нет проекта",
+  "noProject": "Нет добычи",
   "@noProject": {
     "description": "No project status message"
   },
-  "errorLoadingProject": "Благородная ошибка загрузки: {error}",
+  "errorLoadingProject": "Ошибка захвата проекта: {error}",
   "@errorLoadingProject": {
     "description": "Error loading project message",
     "placeholders": {
@@ -53,15 +53,15 @@
       }
     }
   },
-  "creatingNewProject": "Создаю новый благородный проект...",
+  "creatingNewProject": "Создаю новую крепость...",
   "@creatingNewProject": {
     "description": "Creating new project status message"
   },
-  "newProjectCreated": "Благородный проект создан",
+  "newProjectCreated": "Крепость построена",
   "@newProjectCreated": {
     "description": "New project created status message"
   },
-  "errorCreatingProject": "Ошибка создания проекта: {error}",
+  "errorCreatingProject": "Ошибка строительства крепости: {error}",
   "@errorCreatingProject": {
     "description": "Error creating project message",
     "placeholders": {
@@ -70,23 +70,23 @@
       }
     }
   },
-  "openingProject": "Открываю проект с честью...",
+  "openingProject": "Вскрываю проект...",
   "@openingProject": {
     "description": "Opening project status message"
   },
-  "savingProject": "Сохраняю проект благородно...",
+  "savingProject": "Сохраняю в тайники...",
   "@savingProject": {
     "description": "Saving project status message"
   },
-  "projectSaved": "Проект сохранен с честью",
+  "projectSaved": "Спрятано в тайнике",
   "@projectSaved": {
     "description": "Project saved status message"
   },
-  "saveFailed": "Сохранение не удалось",
+  "saveFailed": "Тайник взломан",
   "@saveFailed": {
     "description": "Save failed status message"
   },
-  "errorSavingProject": "Ошибка сохранения: {error}",
+  "errorSavingProject": "Ошибка сокрытия: {error}",
   "@errorSavingProject": {
     "description": "Error saving project message",
     "placeholders": {
@@ -95,31 +95,31 @@
       }
     }
   },
-  "playingPreview": "Воспроизвожу предварительный просмотр...",
+  "playingPreview": "Демонстрирую мощь...",
   "@playingPreview": {
     "description": "Playing preview status message"
   },
-  "previewStopped": "Просмотр остановлен",
+  "previewStopped": "Демонстрация завершена",
   "@previewStopped": {
     "description": "Preview stopped status message"
   },
-  "viewReset": "Вид обновлен",
+  "viewReset": "Обзор обнулен",
   "@viewReset": {
     "description": "View reset status message"
   },
-  "newProject": "Новый Благородный Проект",
+  "newProject": "Новая Крепость",
   "@newProject": {
     "description": "New project dialog title"
   },
-  "projectName": "Имя проекта",
+  "projectName": "Название крепости",
   "@projectName": {
     "description": "Project name field label"
   },
-  "enterProjectName": "Введите благородное имя проекта",
+  "enterProjectName": "Введите название крепости",
   "@enterProjectName": {
     "description": "Project name field hint"
   },
-  "pleaseEnterProjectName": "Пожалуйста, укажите имя проекта",
+  "pleaseEnterProjectName": "Укажите название крепости",
   "@pleaseEnterProjectName": {
     "description": "Project name validation message"
   },
@@ -127,7 +127,7 @@
   "@descriptionOptional": {
     "description": "Description field label"
   },
-  "enterProjectDescription": "Опишите благородный проект",
+  "enterProjectDescription": "Опишите крепость",
   "@enterProjectDescription": {
     "description": "Description field hint"
   },
@@ -139,23 +139,23 @@
   "@enterTagsSeparatedByCommas": {
     "description": "Tags field hint"
   },
-  "cancel": "Отменить",
+  "cancel": "Отступить",
   "@cancel": {
     "description": "Cancel button text"
   },
-  "create": "Создать благородно",
+  "create": "Построить",
   "@create": {
     "description": "Create button text"
   },
-  "project": "Проект",
+  "project": "Крепость",
   "@project": {
     "description": "Project section title"
   },
-  "currentProject": "Текущий проект",
+  "currentProject": "Текущая крепость",
   "@currentProject": {
     "description": "Current project label"
   },
-  "created": "Создан: {date}",
+  "created": "Построена: {date}",
   "@created": {
     "description": "Created date label",
     "placeholders": {
@@ -164,7 +164,7 @@
       }
     }
   },
-  "modified": "Изменен: {date}",
+  "modified": "Укреплена: {date}",
   "@modified": {
     "description": "Modified date label",
     "placeholders": {
@@ -173,35 +173,35 @@
       }
     }
   },
-  "import": "Импортировать",
+  "import": "Захватить",
   "@import": {
     "description": "Import section title"
   },
-  "importBoranko": "Импортировать .boranko",
+  "importBoranko": "Захватить .boranko",
   "@importBoranko": {
     "description": "Import .boranko menu item"
   },
-  "importComics": "Импортировать .comics (устарело)",
+  "importComics": "Захватить .comics (устарело)",
   "@importComics": {
     "description": "Import .comics (deprecated) menu item"
   },
-  "comicsDeprecatedTitle": "Устаревший формат",
+  "comicsDeprecatedTitle": "Древний формат",
   "@comicsDeprecatedTitle": {
     "description": "Title for the comics deprecated dialog"
   },
-  "comicsDeprecatedContent": "Формат .comics устарел как старые традиции. Используйте современный .boranko для новых благородных проектов.",
+  "comicsDeprecatedContent": "Формат .comics устарел как технологии Атрейдесов. Используйте современный .boranko для новых завоеваний.",
   "@comicsDeprecatedContent": {
     "description": "Content for the comics deprecated dialog"
   },
-  "ok": "Понятно",
+  "ok": "Понял",
   "@ok": {
     "description": "OK button text"
   },
-  "importingBorankoProject": "Импортирую Boranko-проект...",
+  "importingBorankoProject": "Захватываю Boranko-проект...",
   "@importingBorankoProject": {
     "description": "Status message for importing a Boranko project"
   },
-  "errorImportingBorankoProject": "Ошибка импорта Boranko: {error}",
+  "errorImportingBorankoProject": "Ошибка захвата Boranko: {error}",
   "@errorImportingBorankoProject": {
     "description": "Error message for importing a Boranko project",
     "placeholders": {
@@ -214,7 +214,7 @@
   "@barankoComics": {
     "description": "Baranko Comics import button"
   },
-  "unrealEngine": "Двигатель Реальности",
+  "unrealEngine": "Двигатель Разрушения",
   "@unrealEngine": {
     "description": "Unreal Engine import button"
   },
@@ -222,7 +222,7 @@
   "@blenderModel": {
     "description": "Blender Model import button"
   },
-  "audio": "Благородный звук",
+  "audio": "Звуковое оружие",
   "@audio": {
     "description": "Audio section title"
   },
@@ -291,11 +291,11 @@
   "@domeProjection": {
     "description": "Dome Projection export button"
   },
-  "pleaseCreateOrOpenProject": "Пожалуйста, создайте или откройте проект сначала",
+  "pleaseCreateOrOpenProject": "Сначала постройте или захватите крепость",
   "@pleaseCreateOrOpenProject": {
     "description": "Error message when no project is selected"
   },
-  "language": "Язык дома",
+  "language": "Язык империи",
   "@language": {
     "description": "Language selection label"
   },
@@ -331,19 +331,19 @@
   "@petrosyan": {
     "description": "Petrosyan language option"
   },
-  "homeScreenTitle": "Сфера Атрейдесов",
+  "homeScreenTitle": "Сфера Харконненов",
   "@homeScreenTitle": {
     "description": "The title of the Home Screen"
   },
-  "anantaSoundScreenTitle": "Благородное устройство anAntaSound",
+  "anantaSoundScreenTitle": "Звуковое оружие anAntaSound",
   "@anantaSoundScreenTitle": {
     "description": "The title of the anAntaSound screen"
   },
-  "active": "Активен",
+  "active": "Активно",
   "@active": {
     "description": "Status for when the device is active"
   },
-  "inactive": "Неактивен",
+  "inactive": "Неактивно",
   "@inactive": {
     "description": "Status for when the device is inactive"
   },
@@ -359,11 +359,11 @@
   "@participants": {
     "description": "Label for the participants data point"
   },
-  "connected": "Подключен",
+  "connected": "Подключено",
   "@connected": {
     "description": "Status for when a connection is active"
   },
-  "disconnected": "Отключен",
+  "disconnected": "Отключено",
   "@disconnected": {
     "description": "Status for when a connection is inactive"
   },
@@ -371,11 +371,11 @@
   "@consciousness": {
     "description": "Label for the consciousness data point"
   },
-  "linked": "Связан",
+  "linked": "Связано",
   "@linked": {
     "description": "Status for when consciousness is linked"
   },
-  "notLinked": "Не связан",
+  "notLinked": "Не связано",
   "@notLinked": {
     "description": "Status for when consciousness is not linked"
   }

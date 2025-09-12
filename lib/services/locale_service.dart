@@ -14,8 +14,8 @@ class LocaleService extends ChangeNotifier {
     Locale('th', ''), // Thai
     Locale('hi', ''), // Hindi
     Locale('de', ''), // German
-    Locale('hk', ''), // Harkonnen (Easter egg)
-    Locale('at', ''), // Atreides (Easter egg)
+    Locale('kk', ''), // Harkonnen (Easter egg - using Kazakh code)
+    Locale('ar', ''), // Atreides (Easter egg - using Arabic code)
     Locale('pt', ''), // Petrosyan (Humor)
   ];
   
@@ -25,8 +25,8 @@ class LocaleService extends ChangeNotifier {
     'th': 'ไทย',
     'hi': 'हिन्दी',
     'de': 'Deutsch',
-    'hk': 'Харконнены',
-    'at': 'Атрейдесы',
+    'kk': 'Харконнены',
+    'ar': 'Атрейдесы',
     'pt': 'Петросян',
   };
   
