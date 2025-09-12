@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../l10n/app_localizations.dart';
 
 class ProjectSidebar extends StatefulWidget {
   final Map<String, dynamic> project;
@@ -34,7 +34,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
           children: [
             // Project Info
             _buildSection(
-              title: l10n.projectInfo,
+              title: l10n.project,
               children: [
                 _buildProjectInfo(l10n),
               ],
@@ -42,11 +42,11 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
             // Import File (consolidated)
             _buildSection(
-              title: l10n.importFile,
+              title: l10n.import,
               children: [
                 _buildImportMenuButton(
                   icon: Icons.file_upload,
-                  label: l10n.importFile,
+                  label: l10n.import,
                   context: context,
                   l10n: l10n,
                 ),
@@ -55,26 +55,26 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
             // Quick Actions
             _buildSection(
-              title: l10n.quickActions,
+              title: 'Quick Actions',
               children: [
                 _buildImportButton(
                   icon: Icons.auto_fix_high,
-                  label: l10n.aiSceneOptimizer,
+                  label: 'AI Scene Optimizer',
                   onTap: () => _optimizeScene(context),
                 ),
                 _buildImportButton(
                   icon: Icons.preview,
-                  label: l10n.quickPreview,
+                  label: 'Quick Preview',
                   onTap: () => _quickPreview(context),
                 ),
                 _buildImportButton(
                   icon: Icons.backup,
-                  label: l10n.autoBackup,
+                  label: 'Auto Backup',
                   onTap: () => _autoBackup(context),
                 ),
                 _buildImportButton(
                   icon: Icons.share,
-                  label: l10n.shareProject,
+                  label: 'Share Project',
                   onTap: () => _shareProject(context),
                 ),
               ],
@@ -91,7 +91,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
                 ),
                 _buildImportButton(
                   icon: Icons.surround_sound,
-                  label: l10n.audio3D,
+                  label: l10n.threeDPositioning,
                   onTap: () => _audio3D(context),
                 ),
                 _buildImportButton(
@@ -109,26 +109,26 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
             // 3D Content
             _buildSection(
-              title: l10n.content3D,
+              title: l10n.threeDContent,
               children: [
                 _buildImportButton(
                   icon: Icons.view_in_ar,
-                  label: l10n.loadModel,
+                  label: 'Load Model',
                   onTap: () => _loadModel(context),
                 ),
                 _buildImportButton(
                   icon: Icons.terrain,
-                  label: l10n.loadTerrain,
+                  label: 'Load Terrain',
                   onTap: () => _loadTerrain(context),
                 ),
                 _buildImportButton(
                   icon: Icons.lightbulb,
-                  label: l10n.setupLighting,
+                  label: 'Setup Lighting',
                   onTap: () => _setupLighting(context),
                 ),
                 _buildImportButton(
                   icon: Icons.camera_alt,
-                  label: l10n.setupCamera,
+                  label: 'Setup Camera',
                   onTap: () => _setupCamera(context),
                 ),
               ],
@@ -148,17 +148,17 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
               children: [
                 _buildImportButton(
                   icon: Icons.phone_android,
-                  label: l10n.exportMbharata,
+                  label: l10n.mbharataClient,
                   onTap: () => _exportMbharata(context),
                 ),
                 _buildImportButton(
                   icon: Icons.public,
-                  label: l10n.exportDome,
+                  label: l10n.domeProjection,
                   onTap: () => _exportDome(context),
                 ),
                 _buildImportButton(
                   icon: Icons.download,
-                  label: l10n.exportProject,
+                  label: 'Export Project',
                   onTap: () => _exportProject(context),
                 ),
               ],
@@ -380,7 +380,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            l10n.domeResolution,
+            Text('Dome Resolution'),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
