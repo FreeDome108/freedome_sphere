@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/lyubomir_understanding_service.dart';
 import '../models/lyubomir_understanding.dart';
-import '../screens/lyubomir_understanding_screen.dart';
+import '../screens/lyubomir_learning_system_screen.dart';
 
-/// Панель понимания Любомира для главного экрана
-class LyubomirUnderstandingPanel extends StatelessWidget {
-  const LyubomirUnderstandingPanel({super.key});
+/// Панель системы обучения Любомира для главного экрана
+class LyubomirLearningSystemPanel extends StatelessWidget {
+  const LyubomirLearningSystemPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class LyubomirUnderstandingPanel extends StatelessWidget {
                     const Icon(Icons.psychology, color: Colors.blue),
                     const SizedBox(width: 8),
                     Text(
-                      'Понимание Любомира',
+                      'Система обучения "Любомир"',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const Spacer(),
@@ -121,7 +121,7 @@ class LyubomirUnderstandingPanel extends StatelessWidget {
   void _navigateToUnderstandingScreen(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const LyubomirUnderstandingScreen(),
+        builder: (context) => const LyubomirLearningSystemScreen(),
       ),
     );
   }
@@ -343,7 +343,7 @@ class LyubomirRecentResults extends StatelessWidget {
   void _navigateToUnderstandingScreen(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const LyubomirUnderstandingScreen(),
+        builder: (context) => const LyubomirLearningSystemScreen(),
       ),
     );
   }

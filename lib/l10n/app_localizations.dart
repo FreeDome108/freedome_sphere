@@ -638,11 +638,11 @@ abstract class AppLocalizations {
   /// **'Tutorials'**
   String get tutorialsTooltip;
 
-  /// Tooltip for the Lyubomir's Understanding icon button
+  /// Tooltip for the Lyubomir Learning System icon button
   ///
   /// In en, this message translates to:
-  /// **'Lyubomir\'s Understanding'**
-  String get lyubomirUnderstandingTooltip;
+  /// **'Lyubomir Learning System'**
+  String get lyubomirLearningSystemTooltip;
 
   /// Tooltip for the anAntaSound icon button
   ///

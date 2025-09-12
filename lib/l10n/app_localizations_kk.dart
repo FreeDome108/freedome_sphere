@@ -289,7 +289,7 @@ class AppLocalizationsKk extends AppLocalizations {
   String get tutorialsTooltip => 'Tutorials';
 
   @override
-  String get lyubomirUnderstandingTooltip => 'Lyubomir\'s Understanding';
+  String get lyubomirLearningSystemTooltip => 'Система обучения Любомира';
 
   @override
   String get anantaSoundTooltip => 'anAntaSound Quantum Resonance Device';

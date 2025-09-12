@@ -291,7 +291,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get tutorialsTooltip => 'Tutorials';
 
   @override
-  String get lyubomirUnderstandingTooltip => 'Lyubomir\'s Understanding';
+  String get lyubomirLearningSystemTooltip => 'ल्यूबोमिर शिक्षा प्रणाली';
 
   @override
   String get anantaSoundTooltip => 'anAntaSound Quantum Resonance Device';

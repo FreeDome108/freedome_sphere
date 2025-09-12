@@ -275,6 +275,10 @@
   "@fisheye": {
     "description": "Fisheye projection type"
   },
+  "lyubomirLearningSystemTooltip": "نظام التعلم النبيل ليوبومير",
+  "@lyubomirLearningSystemTooltip": {
+    "description": "Lyubomir Learning System tooltip"
+  },
   "equirectangular": "Равнопрямоугольная",
   "@equirectangular": {
     "description": "Equirectangular projection type"

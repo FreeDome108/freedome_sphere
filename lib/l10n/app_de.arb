@@ -387,9 +387,9 @@
   "@tutorialsTooltip": {
     "description": "Tooltip for the tutorials icon button"
   },
-  "lyubomirUnderstandingTooltip": "Lyubomirs Verständnis",
-  "@lyubomirUnderstandingTooltip": {
-    "description": "Tooltip for the Lyubomir's Understanding icon button"
+  "lyubomirLearningSystemTooltip": "Lyubomir Lernsystem",
+  "@lyubomirLearningSystemTooltip": {
+    "description": "Tooltip for the Lyubomir Learning System icon button"
   },
   "anantaSoundTooltip": "anAntaSound Quantenresonanzgerät",
   "@anantaSoundTooltip": {

@@ -13,9 +13,9 @@ import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
 import '../widgets/toolbar.dart';
 import '../widgets/status_bar.dart';
-import '../widgets/lyubomir_understanding_panel.dart';
+import '../widgets/lyubomir_learning_system_panel.dart';
 import 'anantasound_screen.dart';
-import 'lyubomir_understanding_screen.dart';
+import 'lyubomir_learning_system_screen.dart';
 import 'unreal_optimizer_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -251,38 +251,81 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.gif),
-            tooltip: l10n.gifImporterTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const GifScreen(),
-                ),
-              );
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.import_export),
+            tooltip: l10n.import,
+            onSelected: (value) {
+              switch (value) {
+                case 'gif':
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const GifScreen(),
+                    ),
+                  );
+                  break;
+                case 'jpg':
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const JpgScreen(),
+                    ),
+                  );
+                  break;
+                case 'video':
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const VideoScreen(),
+                    ),
+                  );
+                  break;
+                case 'boranko':
+                  _importBorankoProject();
+                  break;
+                case 'comics':
+                  _importComicsProject();
+                  break;
+              }
             },
-          ),
-          IconButton(
-            icon: const Icon(Icons.image),
-            tooltip: l10n.jpgImporterTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const JpgScreen(),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: 'gif',
+                child: Row(
+                  children: [
+                    const Icon(Icons.gif),
+                    const SizedBox(width: 8),
+                    Text(l10n.gifImporterTooltip),
+                  ],
                 ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.video_library),
-            tooltip: l10n.videoImporterTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const VideoScreen(),
+              ),
+              PopupMenuItem<String>(
+                value: 'jpg',
+                child: Row(
+                  children: [
+                    const Icon(Icons.image),
+                    const SizedBox(width: 8),
+                    Text(l10n.jpgImporterTooltip),
+                  ],
                 ),
-              );
-            },
+              ),
+              PopupMenuItem<String>(
+                value: 'video',
+                child: Row(
+                  children: [
+                    const Icon(Icons.video_library),
+                    const SizedBox(width: 8),
+                    Text(l10n.videoImporterTooltip),
+                  ],
+                ),
+              ),
+              const PopupMenuDivider(),
+              PopupMenuItem<String>(
+                value: 'boranko',
+                child: Text(l10n.importBoranko),
+              ),
+              PopupMenuItem<String>(
+                value: 'comics',
+                child: Text(l10n.importComics),
+              ),
+            ],
           ),
           IconButton(
             icon: const Icon(Icons.school),
@@ -297,11 +340,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: const Icon(Icons.psychology),
-            tooltip: l10n.lyubomirUnderstandingTooltip,
+            tooltip: l10n.lyubomirLearningSystemTooltip,
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const LyubomirUnderstandingScreen(),
+                  builder: (context) => const LyubomirLearningSystemScreen(),
                 ),
               );
             },
@@ -361,8 +404,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: Column(
                     children: [
-                      // Lyubomir Understanding Panel
-                      const LyubomirUnderstandingPanel(),
+                      // Lyubomir Learning System Panel
+                      const LyubomirLearningSystemPanel(),
                       
                       // 3D Viewport
                       Expanded(

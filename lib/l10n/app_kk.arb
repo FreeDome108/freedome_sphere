@@ -211,6 +211,7 @@
     }
   },
   "barankoComics": "Комиксы Баранко",
+  "lyubomirLearningSystemTooltip": "Система обучения Любомира",
   "@barankoComics": {
     "description": "Baranko Comics import button"
   },

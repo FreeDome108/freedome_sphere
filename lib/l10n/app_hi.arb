@@ -47,6 +47,10 @@
   "loadDagaFile": ".daga फाइल लोड करें",
   "threeDContent": "3D सामग्री",
   "loadZelimFile": ".zelim फाइल लोड करें",
+  "lyubomirLearningSystemTooltip": "ल्यूबोमिर शिक्षा प्रणाली",
+  "@lyubomirLearningSystemTooltip": {
+    "description": "Tooltip for the Lyubomir Learning System icon button"
+  },
   "domeSettings": "डोम सेटिंग्स",
   "domeConfiguration": "डोम कॉन्फ़िगरेशन",
   "radius": "त्रिज्या: {radius}मी",

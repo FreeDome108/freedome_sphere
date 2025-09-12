@@ -4,15 +4,15 @@ import '../services/lyubomir_understanding_service.dart';
 import '../models/lyubomir_understanding.dart';
 import '../widgets/lyubomir_settings_panel.dart';
 
-/// Экран управления пониманием Любомира
-class LyubomirUnderstandingScreen extends StatefulWidget {
-  const LyubomirUnderstandingScreen({super.key});
+/// Экран управления системой обучения Любомира
+class LyubomirLearningSystemScreen extends StatefulWidget {
+  const LyubomirLearningSystemScreen({super.key});
 
   @override
-  State<LyubomirUnderstandingScreen> createState() => _LyubomirUnderstandingScreenState();
+  State<LyubomirLearningSystemScreen> createState() => _LyubomirLearningSystemScreenState();
 }
 
-class _LyubomirUnderstandingScreenState extends State<LyubomirUnderstandingScreen>
+class _LyubomirLearningSystemScreenState extends State<LyubomirLearningSystemScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   bool _isInitialized = false;

@@ -327,6 +327,10 @@
   "@atreides": {
     "description": "Atreides language option"
   },
+  "lyubomirLearningSystemTooltip": "Система обучения Петросяна (учимся смеяться!)",
+  "@lyubomirLearningSystemTooltip": {
+    "description": "Lyubomir Learning System tooltip"
+  },
   "petrosyan": "Петросян (самые смешные)",
   "@petrosyan": {
     "description": "Petrosyan language option"
