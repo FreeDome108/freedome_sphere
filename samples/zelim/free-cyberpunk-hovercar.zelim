@@ -1,0 +1,194 @@
+{
+  "header": {
+    "format": "zelim",
+    "version": "1.0.0",
+    "created": "2024-12-19T10:00:00.000Z",
+    "author": "FreeDome Sphere",
+    "compatibility": {
+      "freedome_sphere": ">=1.0.0",
+      "mbharata_client": ">=1.0.0"
+    }
+  },
+  "project": {
+    "id": "free-cyberpunk-hovercar-001",
+    "name": "Free Cyberpunk Hovercar",
+    "description": "A futuristic cyberpunk hovercar model with detailed textures and materials, optimized for dome projection",
+    "tags": ["cyberpunk", "futuristic", "vehicle", "hovercar", "3d-model", "free"],
+    "created": "2024-12-19T10:00:00.000Z",
+    "modified": "2024-12-19T10:00:00.000Z",
+    "version": "1.0.0"
+  },
+  "dome": {
+    "radius": 10.0,
+    "projectionType": "spherical",
+    "resolution": {
+      "width": 4096,
+      "height": 2048
+    },
+    "supportedFormats": ["zelim", "dome", "mbp"]
+  },
+  "scenes": [
+    {
+      "id": "hovercar_scene_001",
+      "name": "Cyberpunk Hovercar Scene",
+      "description": "Main scene featuring the cyberpunk hovercar",
+      "models": [
+        {
+          "id": "hovercar_model_001",
+          "name": "Free Cyberpunk Hovercar",
+          "geometryType": "mesh",
+          "triangles": 15000,
+          "vertices": 8000,
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/source/cdp-test-7.blend",
+          "transform": {
+            "position": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "rotation": {"x": 0.0, "y": 0.0, "z": 0.0},
+            "scale": {"x": 1.0, "y": 1.0, "z": 1.0}
+          }
+        }
+      ],
+      "materials": [
+        {
+          "id": "cdp_body_material",
+          "name": "CDP Body Material",
+          "type": "pbr",
+          "color": "#2a2a2a",
+          "metalness": 0.8,
+          "roughness": 0.2
+        },
+        {
+          "id": "cdp_metal_material",
+          "name": "CDP Metal Material",
+          "type": "pbr",
+          "color": "#4a4a4a",
+          "metalness": 0.9,
+          "roughness": 0.1
+        },
+        {
+          "id": "cdp_plastic_material",
+          "name": "CDP Plastic Material",
+          "type": "pbr",
+          "color": "#1a1a1a",
+          "metalness": 0.0,
+          "roughness": 0.3
+        },
+        {
+          "id": "white_light_material",
+          "name": "White Light Material",
+          "type": "emissive",
+          "color": "#ffffff",
+          "metalness": 0.0,
+          "roughness": 0.0
+        }
+      ],
+      "animations": [],
+      "textures": [
+        {
+          "id": "cdp_body_glossiness",
+          "name": "CDP Body Glossiness",
+          "type": "roughness",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_body_Glossiness.png"
+        },
+        {
+          "id": "cdp_body_ao",
+          "name": "CDP Body Ambient Occlusion",
+          "type": "ao",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_body_Mixed_AO.png"
+        },
+        {
+          "id": "cdp_body_normal",
+          "name": "CDP Body Normal Map",
+          "type": "normal",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_body_normal.png"
+        },
+        {
+          "id": "cdp_body_specular",
+          "name": "CDP Body Specular",
+          "type": "specular",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_body_Specular.png"
+        },
+        {
+          "id": "cdp_metal_diffuse",
+          "name": "CDP Metal Diffuse",
+          "type": "diffuse",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_metal_Diffuse.png"
+        },
+        {
+          "id": "cdp_metal_glossiness",
+          "name": "CDP Metal Glossiness",
+          "type": "roughness",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_metal_Glossiness.png"
+        },
+        {
+          "id": "cdp_metal_specular",
+          "name": "CDP Metal Specular",
+          "type": "specular",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_metal_Specular.png"
+        },
+        {
+          "id": "cdp_plastic_diffuse",
+          "name": "CDP Plastic Diffuse",
+          "type": "diffuse",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_plastic_Diffuse.png"
+        },
+        {
+          "id": "cdp_plastic_specular",
+          "name": "CDP Plastic Specular",
+          "type": "specular",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/cdp_plastic_Specular.png"
+        },
+        {
+          "id": "shadow_texture",
+          "name": "Shadow Texture",
+          "type": "shadow",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/shadow.png"
+        },
+        {
+          "id": "white_light_emissive",
+          "name": "White Light Emissive",
+          "type": "emissive",
+          "filePath": "samples/import/blend/free-cyberpunk-hovercar/textures/white_light_Emissive.png"
+        }
+      ]
+    }
+  ],
+  "quantum": {
+    "enabled": true,
+    "elements": 108,
+    "resonance": {
+      "frequency": 432.0,
+      "harmonics": [216.0, 648.0, 864.0]
+    },
+    "calibration": {
+      "type": "quantum",
+      "precision": 0.001
+    }
+  },
+  "anantasound": {
+    "enabled": true,
+    "sources": [
+      {
+        "id": "hovercar_engine",
+        "name": "Hovercar Engine Sound",
+        "type": "ambient",
+        "position": {"x": 0.0, "y": 0.0, "z": 0.0},
+        "volume": 0.7,
+        "loop": true
+      }
+    ],
+    "quantumResonance": true
+  },
+  "metadata": {
+    "sourceFormat": "blend",
+    "originalFile": "cdp-test-7.blend",
+    "optimizedForDome": true,
+    "quantumCompatible": true,
+    "polygonCount": 15000,
+    "textureCount": 11,
+    "materialCount": 4,
+    "animationCount": 0,
+    "physicsEnabled": false,
+    "lightingType": "pbr",
+    "renderingEngine": "quantum"
+  }
+}

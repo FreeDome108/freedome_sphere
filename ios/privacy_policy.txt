@@ -1,0 +1,78 @@
+# Privacy Policy for FreeDome Sphere
+Last Updated: September 14, 2025
+
+## 1. Introduction
+Welcome to FreeDome Sphere ("we," "our," or "us"). We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our FreeDome Sphere application ("App") on iOS and Apple TV devices.
+
+## 2. Information We Collect
+
+### 2.1 Personal Information
+- Account Information: When you create an account, we collect your name, email address, and password.
+- Contact Information: If you contact us, we may collect your name, email address, and any other information you provide.
+- Payment Information: For in-app purchases and subscriptions, we use Apple's secure payment processing. We do not store your payment card details.
+
+### 2.2 Usage Data
+- App Activity: We collect information about how you interact with our App, including features used and content accessed.
+- Device Information: We collect device type, operating system, unique device identifiers, and mobile network information.
+- Log Data: We automatically collect log information when you use our App, including your IP address, browser type, and access times.
+
+### 2.3 Content You Create
+- Projects and Models: We store the 3D models, projects, and other content you create using the App.
+- User Preferences: Your app settings and preferences are stored to enhance your experience.
+
+## 3. How We Use Your Information
+We use the information we collect to:
+- Provide, maintain, and improve our App
+- Process transactions and send related information
+- Respond to your comments, questions, and requests
+- Send you technical notices, updates, and support messages
+- Monitor and analyze trends, usage, and activities in connection with our App
+- Detect, investigate, and prevent fraudulent transactions and other illegal activities
+- Personalize your experience with the App
+
+## 4. Data Sharing and Disclosure
+
+### 4.1 Service Providers
+We may employ third-party companies and individuals to facilitate our App ("Service Providers"), to provide the App on our behalf, to perform service-related services, or to assist us in analyzing how our App is used.
+
+### 4.2 Legal Requirements
+We may disclose your information if required to do so by law or in response to valid requests by public authorities.
+
+### 4.3 Business Transfers
+If we are involved in a merger, acquisition, or asset sale, your information may be transferred.
+
+## 5. Data Security
+We implement appropriate technical and organizational measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure.
+
+## 6. Your Data Protection Rights
+Depending on your location, you may have the following rights regarding your personal information:
+- Access, update, or delete your information
+- Object to our processing of your personal data
+- Request restriction of processing your personal information
+- Data portability
+- Withdraw consent
+
+## 7. Apple TV Specific Information
+When using FreeDome Sphere on Apple TV:
+- We collect the same types of information as on iOS devices
+- Your data is synchronized across devices when you sign in with the same Apple ID
+- Some features may be limited compared to the iOS version
+
+## 8. Children's Privacy
+Our App is not intended for children under 13. We do not knowingly collect personal information from children under 13.
+
+## 9. Changes to This Privacy Policy
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Last Updated" date.
+
+## 10. Contact Us
+If you have any questions about this Privacy Policy, please contact us at:
+Email: privacy@freedome-sphere.com
+
+## 11. Apple-Specific Requirements
+- We comply with the Apple Developer Program License Agreement
+- We do not track users across third-party apps or websites
+- We only request access to device features necessary for app functionality
+- All data is processed in accordance with Apple's App Store Review Guidelines
+
+## 12. Data Retention
+We retain your personal information only for as long as necessary to provide you with our services and as described in this Privacy Policy. We will also retain and use your information to the extent necessary to comply with our legal obligations, resolve disputes, and enforce our policies.

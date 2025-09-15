@@ -9426,6 +9426,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -9477,7 +9478,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9515,7 +9516,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = DKPhotoGallery;
 				SDKROOT = iphoneos;
@@ -9544,7 +9545,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuthInterop/FirebaseAuthInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9594,6 +9595,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_keyboard_visibility/flutter_keyboard_visibility-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9631,7 +9633,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = DKImagePickerController;
 				SDKROOT = iphoneos;
@@ -9652,7 +9654,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DKImagePickerController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -9699,7 +9701,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9773,6 +9775,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -9834,7 +9837,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9885,7 +9888,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9931,7 +9934,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/RecaptchaInterop/RecaptchaInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -9971,7 +9974,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/RecaptchaInterop/RecaptchaInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10003,7 +10006,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCoreInternal_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -10062,6 +10065,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10107,7 +10111,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAppCheckInterop/FirebaseAppCheckInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10146,7 +10150,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10197,6 +10201,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10292,6 +10297,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation.modulemap";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -10331,7 +10337,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10370,7 +10376,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10402,7 +10408,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCore_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -10441,6 +10447,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_inappwebview_ios/flutter_inappwebview_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10479,7 +10486,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = GTMSessionFetcher;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/ResourceBundle-GTMSessionFetcher_Core_Privacy-GTMSessionFetcher-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = GTMSessionFetcher_Core_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -10519,7 +10526,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10565,7 +10572,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuthInterop/FirebaseAuthInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10597,7 +10604,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SDWebImage;
 				SDKROOT = iphoneos;
@@ -10637,7 +10644,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_auth/firebase_auth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10683,7 +10690,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10778,6 +10785,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -10856,7 +10864,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -10937,7 +10945,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11012,7 +11020,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCore_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11030,7 +11038,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11093,6 +11101,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11131,7 +11140,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DKPhotoGallery;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11170,7 +11179,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11199,7 +11208,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11231,7 +11240,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = SwiftyGif;
 				SDKROOT = iphoneos;
@@ -11253,7 +11262,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = SDWebImage;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11275,7 +11284,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DKImagePickerController;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11304,7 +11313,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11333,7 +11342,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11374,7 +11383,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_auth/firebase_auth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11432,6 +11441,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation.modulemap";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -11472,7 +11482,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11523,6 +11533,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11579,7 +11590,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_auth/firebase_auth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11678,6 +11689,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11716,7 +11728,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreExtension;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/ResourceBundle-FirebaseCoreExtension_Privacy-FirebaseCoreExtension-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCoreExtension_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11745,7 +11757,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/RecaptchaInterop/RecaptchaInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -11778,7 +11790,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseAuth;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/ResourceBundle-FirebaseAuth_Privacy-FirebaseAuth-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseAuth_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -11915,7 +11927,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12017,7 +12029,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/FirebaseCoreExtension-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12068,7 +12080,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12113,7 +12125,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12164,6 +12176,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_inappwebview_ios/flutter_inappwebview_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12201,7 +12214,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = GTMSessionFetcher;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/ResourceBundle-GTMSessionFetcher_Core_Privacy-GTMSessionFetcher-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = GTMSessionFetcher_Core_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12221,7 +12234,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseAuth;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/ResourceBundle-FirebaseAuth_Privacy-FirebaseAuth-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = FirebaseAuth_Privacy;
 				SDKROOT = iphoneos;
@@ -12250,7 +12263,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/FirebaseCoreExtension-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12343,6 +12356,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MODULEMAP_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -12383,7 +12397,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12415,7 +12429,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreExtension;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/ResourceBundle-FirebaseCoreExtension_Privacy-FirebaseCoreExtension-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCoreExtension_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12453,6 +12467,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_keyboard_visibility/flutter_keyboard_visibility-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12491,7 +12506,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = SwiftyGif;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -12519,7 +12534,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12570,6 +12585,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12634,7 +12650,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12666,7 +12682,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = FirebaseCore_Privacy;
 				SDKROOT = iphoneos;
@@ -12706,7 +12722,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12751,7 +12767,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12780,7 +12796,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12821,7 +12837,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12878,7 +12894,7 @@
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12923,7 +12939,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/FirebaseAuth-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12974,7 +12990,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13060,7 +13076,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13112,6 +13128,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13156,7 +13173,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13206,6 +13223,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_keyboard_visibility/flutter_keyboard_visibility-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13251,7 +13269,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAppCheckInterop/FirebaseAppCheckInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13289,7 +13307,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13321,7 +13339,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = FirebaseCoreInternal_Privacy;
 				SDKROOT = iphoneos;
@@ -13361,6 +13379,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13406,7 +13425,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuthInterop/FirebaseAuthInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13478,7 +13497,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseCoreInternal_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13518,6 +13537,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13634,7 +13654,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13656,7 +13676,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = SwiftyGif;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13683,7 +13703,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13774,7 +13794,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13796,7 +13816,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseAuth;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAuth/ResourceBundle-FirebaseAuth_Privacy-FirebaseAuth-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = FirebaseAuth_Privacy;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -13823,7 +13843,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13875,7 +13895,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = FirebaseCoreExtension;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/ResourceBundle-FirebaseCoreExtension_Privacy-FirebaseCoreExtension-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = FirebaseCoreExtension_Privacy;
 				SDKROOT = iphoneos;
@@ -13915,6 +13935,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/flutter_inappwebview_ios/flutter_inappwebview_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13960,7 +13981,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreExtension/FirebaseCoreExtension-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14012,7 +14033,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = DKPhotoGallery;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -14051,7 +14072,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14090,7 +14111,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				PRODUCT_NAME = SDWebImage;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -14117,7 +14138,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -14149,7 +14170,7 @@
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
 				IBSC_MODULE = GTMSessionFetcher;
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/ResourceBundle-GTMSessionFetcher_Core_Privacy-GTMSessionFetcher-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = GTMSessionFetcher_Core_Privacy;
 				SDKROOT = iphoneos;
@@ -14178,7 +14199,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/FirebaseAppCheckInterop/FirebaseAppCheckInterop-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
