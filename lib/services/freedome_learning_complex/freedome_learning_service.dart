@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/lyubomir_understanding.dart';
+import '../../models/lyubomir_understanding.dart';
 
 /// Сервис понимания Любомира
 /// 
@@ -127,9 +127,11 @@ class LyubomirUnderstandingService extends ChangeNotifier {
       name: name,
       description: description,
       type: type,
-      status: UnderstandingStatus.idle,
-      createdAt: DateTime.now(),
+      status: UnderstandingStatus.pending,
+      confidence: 0.0,
       metadata: metadata ?? {},
+      created: DateTime.now(),
+      updated: DateTime.now(),
       results: [],
     );
 
@@ -199,6 +201,8 @@ class LyubomirUnderstandingService extends ChangeNotifier {
         return 1000; // 1 секунда
       case UnderstandingType.spatial:
         return 4000; // 4 секунды
+      case UnderstandingType.temporal:
+        return 3500; // 3.5 секунды
       case UnderstandingType.semantic:
         return 2500; // 2.5 секунды
       case UnderstandingType.interactive:
@@ -224,6 +228,9 @@ class LyubomirUnderstandingService extends ChangeNotifier {
       case UnderstandingType.text:
         results.addAll(_generateTextResults(random));
         break;
+      case UnderstandingType.temporal:
+        results.addAll(_generateTemporalResults(random));
+        break;
       case UnderstandingType.spatial:
         results.addAll(_generateSpatialResults(random));
         break;
@@ -243,7 +250,7 @@ class LyubomirUnderstandingService extends ChangeNotifier {
     return [
       UnderstandingResult(
         id: _generateId(),
-        type: 'color_analysis',
+        type: UnderstandingType.visual,
         confidence: 0.8 + random.nextDouble() * 0.2,
         data: {
           'dominantColors': ['#FF6B6B', '#4ECDC4', '#45B7D1'],
@@ -251,12 +258,14 @@ class LyubomirUnderstandingService extends ChangeNotifier {
           'brightness': 0.7,
           'contrast': 0.8,
         },
+        status: UnderstandingStatus.completed,
         timestamp: DateTime.now(),
         tags: ['colors', 'visual', 'analysis'],
       ),
       UnderstandingResult(
         id: _generateId(),
-        type: 'object_detection',
+        type: UnderstandingType.visual,
+        status: UnderstandingStatus.completed,
         confidence: 0.75 + random.nextDouble() * 0.25,
         data: {
           'objects': ['person', 'building', 'tree'],
@@ -273,12 +282,33 @@ class LyubomirUnderstandingService extends ChangeNotifier {
     ];
   }
 
+  /// Генерация временных результатов
+  List<UnderstandingResult> _generateTemporalResults(Random random) {
+    return [
+      UnderstandingResult(
+        id: _generateId(),
+        type: UnderstandingType.temporal,
+        confidence: 0.75 + random.nextDouble() * 0.25,
+        data: {
+          'timeFlow': 'forward',
+          'duration': 120.0,
+          'keyframes': [0, 30, 60, 90, 120],
+          'transitions': ['fade', 'slide', 'zoom'],
+        },
+        status: UnderstandingStatus.completed,
+        timestamp: DateTime.now(),
+        tags: ['temporal', 'time', 'flow'],
+      ),
+    ];
+  }
+
   /// Генерация аудиальных результатов
   List<UnderstandingResult> _generateAudioResults(Random random) {
     return [
       UnderstandingResult(
         id: _generateId(),
-        type: 'audio_analysis',
+        type: UnderstandingType.audio,
+        status: UnderstandingStatus.completed,
         confidence: 0.85 + random.nextDouble() * 0.15,
         data: {
           'frequency': 440.0,
@@ -311,7 +341,8 @@ class LyubomirUnderstandingService extends ChangeNotifier {
     return [
       UnderstandingResult(
         id: _generateId(),
-        type: 'text_analysis',
+        type: UnderstandingType.text,
+        status: UnderstandingStatus.completed,
         confidence: 0.9 + random.nextDouble() * 0.1,
         data: {
           'sentiment': 'positive',
@@ -331,7 +362,8 @@ class LyubomirUnderstandingService extends ChangeNotifier {
     return [
       UnderstandingResult(
         id: _generateId(),
-        type: 'spatial_analysis',
+        type: UnderstandingType.spatial,
+        status: UnderstandingStatus.completed,
         confidence: 0.8 + random.nextDouble() * 0.2,
         data: {
           'dimensions': {'width': 10, 'height': 10, 'depth': 10},
@@ -353,7 +385,8 @@ class LyubomirUnderstandingService extends ChangeNotifier {
     return [
       UnderstandingResult(
         id: _generateId(),
-        type: 'semantic_analysis',
+        type: UnderstandingType.semantic,
+        status: UnderstandingStatus.completed,
         confidence: 0.75 + random.nextDouble() * 0.25,
         data: {
           'meaning': 'Система понимания контента для купольного отображения',

@@ -72,6 +72,24 @@ class LyubomirSettings {
       enabledTypes: enabledTypes ?? this.enabledTypes,
     );
   }
+
+  static LyubomirSettings defaultSettings() {
+    return LyubomirSettings(
+      enabled: true,
+      learningRate: 0.01,
+      maxIterations: 1000,
+      algorithm: 'quantum_neural',
+      parameters: const {},
+      autoAnalyze: true,
+      sensitivity: 0.7,
+      enabledTypes: [
+        UnderstandingType.visual,
+        UnderstandingType.audio,
+        UnderstandingType.spatial,
+        UnderstandingType.semantic,
+      ],
+    );
+  }
 }
 
 /// Тип понимания

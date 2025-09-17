@@ -186,9 +186,9 @@ class ComicsListWidget extends StatelessWidget {
               // Метаданные
               Row(
                 children: [
-                  if (project.metadata.domeOptimized)
+                  if (project.metadata.metadata.domeOptimized)
                     _buildMetadataChip('Купол', Colors.purple),
-                  if (project.metadata.quantumCompatible)
+                  if (project.metadata.metadata.quantumCompatible)
                     _buildMetadataChip('Квант', Colors.indigo),
                   const Spacer(),
                   Text(

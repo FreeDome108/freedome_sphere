@@ -1,4 +1,6 @@
 
+import 'dart:io';
+import 'dart:convert';
 import '../models/boranko_project.dart';
 import '../models/comics_project.dart';
 import 'comics_service.dart';
@@ -8,15 +10,19 @@ class BorankoService {
 
   /// Импорт .boranko проекта
   Future<BorankoProject> importBorankoProject(String path) async {
-    // TODO: Implement actual file reading and parsing logic
-    print('Importing Boranko project from: $path');
+    try {
+      final file = File(path);
+      if (!await file.exists()) {
+        throw Exception('Файл не найден: $path');
+      }
 
-    // For now, return a dummy project
-    return BorankoProject(
-      id: 'dummy-id',
-      name: 'Dummy Boranko Project',
-      pages: [],
-    );
+      final jsonString = await file.readAsString();
+      final jsonData = jsonDecode(jsonString) as Map<String, dynamic>;
+      
+      return BorankoProject.fromJson(jsonData);
+    } catch (e) {
+      throw Exception('Ошибка импорта .boranko проекта: $e');
+    }
   }
 
   /// Импорт .comics файла с конвертацией в .boranko
@@ -37,9 +43,10 @@ class BorankoService {
         name: comicsProject.name,
         pages: comicsProject.pages.map((page) => BorankoPage(
           id: '${comicsProject.id}_page_${page.pageNumber}',
+          pageNumber: page.pageNumber,
+          imagePath: page.fileName,
           fileName: page.fileName,
           originalPath: page.originalPath,
-          pageNumber: page.pageNumber,
           zDepth: 0.0, // По умолчанию без глубины
           domeOptimized: false,
           quantumCompatible: false,
@@ -79,6 +86,26 @@ class BorankoService {
       return results;
     } catch (e) {
       throw Exception('Ошибка массового импорта: $e');
+    }
+  }
+
+  /// Сохранение .boranko проекта в файл
+  Future<void> saveBorankoProject(BorankoProject project, String filePath) async {
+    try {
+      // Создаем директорию если не существует
+      final file = File(filePath);
+      final directory = file.parent;
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      // Конвертируем проект в JSON и сохраняем
+      final jsonString = jsonEncode(project.toJson());
+      await file.writeAsString(jsonString);
+      
+      print('Boranko project saved to: $filePath');
+    } catch (e) {
+      throw Exception('Ошибка сохранения .boranko проекта: $e');
     }
   }
 }

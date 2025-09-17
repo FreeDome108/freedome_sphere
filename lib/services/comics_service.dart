@@ -101,7 +101,7 @@ class ComicsService {
         pageNumber: pageNumber++,
         properties: {
           'fileSize': file.size,
-          'compressedSize': file.compressedSize,
+          'compressedSize': file.size, // compressedSize не доступен в новой версии archive
         },
       );
       pages.add(page);
