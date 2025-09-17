@@ -468,19 +468,57 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['zip', 'rar', '7z', 'cbz', 'cbr'],
-        allowMultiple: false,
+        allowedExtensions: ['comics', 'zip', 'rar', '7z', 'cbz', 'cbr'],
+        allowMultiple: true,
       );
       
       if (result != null && result.files.isNotEmpty) {
-        final file = result.files.first;
-        widget.onStatusUpdate('Imported: ${file.name}', 'ready');
+        int successCount = 0;
+        int errorCount = 0;
+        
+        for (final file in result.files) {
+          try {
+            if (file.extension == 'comics') {
+              // Импорт .comics файла
+              await _importComicsFile(file.path!);
+              successCount++;
+            } else {
+              // Импорт других форматов (конвертация в .boranko)
+              await _importOtherComicsFormat(file.path!);
+              successCount++;
+            }
+          } catch (e) {
+            print('Ошибка импорта ${file.name}: $e');
+            errorCount++;
+          }
+        }
+        
+        if (errorCount == 0) {
+          widget.onStatusUpdate('Imported $successCount comics successfully', 'ready');
+        } else {
+          widget.onStatusUpdate('Imported $successCount comics, $errorCount errors', 'warning');
+        }
       } else {
         widget.onStatusUpdate(l10n.ready, 'ready');
       }
     } catch (e) {
       widget.onStatusUpdate('Import failed: $e', 'error');
     }
+  }
+
+  Future<void> _importComicsFile(String filePath) async {
+    // TODO: Интеграция с ComicsService
+    // final comicsService = ComicsService();
+    // final result = await comicsService.importComicsFile(filePath);
+    // if (result.success) {
+    //   // Добавить в проект
+    // }
+    print('Importing .comics file: $filePath');
+  }
+
+  Future<void> _importOtherComicsFormat(String filePath) async {
+    // TODO: Конвертация других форматов в .boranko
+    print('Converting other format to .boranko: $filePath');
   }
 
   void _importUnreal(BuildContext context, AppLocalizations l10n) async {

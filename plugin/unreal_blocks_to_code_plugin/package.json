@@ -1,0 +1,123 @@
+{
+  "name": "unreal-blocks-to-code-optimizer",
+  "displayName": "Unreal Blocks to Code Optimizer",
+  "description": "Плагин для оптимизации кода Unreal Engine проектов",
+  "version": "1.0.0",
+  "publisher": "mозгач108",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Linters",
+    "Formatters"
+  ],
+  "keywords": [
+    "unreal",
+    "engine",
+    "optimization",
+    "blueprint",
+    "c++",
+    "game-development"
+  ],
+  "activationEvents": [
+    "onLanguage:cpp",
+    "onLanguage:cpppp",
+    "workspaceContains:**/*.uproject",
+    "workspaceContains:**/*.uplugin"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "unreal-optimizer.analyzeProject",
+        "title": "Анализировать проект Unreal Engine",
+        "category": "Unreal Optimizer"
+      },
+      {
+        "command": "unreal-optimizer.optimizeCode",
+        "title": "Оптимизировать код",
+        "category": "Unreal Optimizer"
+      },
+      {
+        "command": "unreal-optimizer.optimizeBlueprints",
+        "title": "Оптимизировать Blueprints",
+        "category": "Unreal Optimizer"
+      },
+      {
+        "command": "unreal-optimizer.generateReport",
+        "title": "Сгенерировать отчет об оптимизации",
+        "category": "Unreal Optimizer"
+      },
+      {
+        "command": "unreal-optimizer.viewErrorLog",
+        "title": "Просмотреть лог ошибок",
+        "category": "Unreal Optimizer"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "unreal-optimizer.analyzeProject",
+          "when": "resourceFilename =~ /\\.uproject$/",
+          "group": "unreal-optimizer"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "unreal-optimizer.optimizeCode",
+          "when": "resourceExtname =~ /\\.(cpp|h|cpppp)$/",
+          "group": "unreal-optimizer"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Unreal Optimizer",
+      "properties": {
+        "unrealOptimizer.enableAutoOptimization": {
+          "type": "boolean",
+          "default": false,
+          "description": "Автоматически оптимизировать код при сохранении"
+        },
+        "unrealOptimizer.optimizationLevel": {
+          "type": "string",
+          "enum": [
+            "basic",
+            "advanced",
+            "aggressive"
+          ],
+          "default": "basic",
+          "description": "Уровень оптимизации"
+        },
+        "unrealOptimizer.includeBlueprints": {
+          "type": "boolean",
+          "default": true,
+          "description": "Включать оптимизацию Blueprint файлов"
+        },
+        "unrealOptimizer.backupBeforeOptimization": {
+          "type": "boolean",
+          "default": true,
+          "description": "Создавать резервные копии перед оптимизацией"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^8.1.0",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.74.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "fs-extra": "^11.1.1",
+    "glob": "^7.2.3",
+    "xml2js": "^0.6.2"
+  },
+  "license": "NativeMindNONC"
+}

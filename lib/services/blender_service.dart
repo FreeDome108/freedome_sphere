@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:convert';
 import 'package:freedome_sphere_flutter/models/project.dart';
 import 'package:freedome_sphere_flutter/models/zelim_format.dart';
 
@@ -20,7 +19,7 @@ class BlenderService {
     // Пока создаем заглушку с базовой структурой
 
     final elements = <ZelimElement>[
-      _createHovercarElement(filePath),
+      _createHovercarQuantumElement(filePath),
     ];
 
     final scene = ZelimScene(
@@ -35,41 +34,19 @@ class BlenderService {
     return scene;
   }
 
-  /// Создание элемента hovercar из Blender файла
-  ZelimElement _createHovercarElement(String filePath) {
+  /// Создание квантового элемента hovercar из Blender файла
+  ZelimElement _createHovercarQuantumElement(String filePath) {
     return ZelimElement(
-      id: 'hovercar_${DateTime.now().millisecondsSinceEpoch}',
-      type: 'model',
-      name: 'Free Cyberpunk Hovercar',
-      position: Vector3(0.0, 0.0, 0.0),
-      rotation: Vector3(0.0, 0.0, 0.0),
-      scale: Vector3(1.0, 1.0, 1.0),
-      properties: {
-        'sourceFile': filePath,
-        'format': 'blend',
-        'modelType': 'vehicle',
-        'category': 'cyberpunk',
-        'description': 'Free cyberpunk hovercar model with textures',
-        'materials': [
-          'cdp_body',
-          'cdp_metal', 
-          'cdp_plastic',
-          'white_light'
-        ],
-        'textures': [
-          'cdp_body_Glossiness.png',
-          'cdp_body_Mixed_AO.png',
-          'cdp_body_normal.png',
-          'cdp_body_Specular.png',
-          'cdp_metal_Diffuse.png',
-          'cdp_metal_Glossiness.png',
-          'cdp_metal_Specular.png',
-          'cdp_plastic_Diffuse.png',
-          'cdp_plastic_Specular.png',
-          'shadow.png',
-          'white_light_Emissive.png'
-        ]
-      },
+      id: DateTime.now().millisecondsSinceEpoch,
+      orbitAngle: 0.0,
+      radius: 5.0,
+      phase: 0.0,
+      energyLevel: 1.0,
+      quantumState: 1,
+      subElements: [],
+      interactionMatrix: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0],
+      attractionCoefficient: 0.5,
+      conservationFactor: 0.8,
     );
   }
 

@@ -237,3 +237,4 @@ echo "📋 Отчет: $REPORT_FILE"
 echo ""
 echo "🚀 Следующий шаг: Проверьте App Store Connect"
 echo "🔗 https://appstoreconnect.apple.com"
+

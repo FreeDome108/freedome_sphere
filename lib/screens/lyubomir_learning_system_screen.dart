@@ -235,6 +235,14 @@ class _UnderstandingsTab extends StatelessWidget {
         return Colors.red;
       case UnderstandingType.interactive:
         return Colors.teal;
+      case UnderstandingType.temporal:
+        return Colors.indigo;
+      case UnderstandingType.emotional:
+        return Colors.pink;
+      case UnderstandingType.quantum:
+        return Colors.cyan;
+      case UnderstandingType.holistic:
+        return Colors.amber;
     }
   }
 
@@ -252,6 +260,14 @@ class _UnderstandingsTab extends StatelessWidget {
         return Icons.psychology;
       case UnderstandingType.interactive:
         return Icons.touch_app;
+      case UnderstandingType.temporal:
+        return Icons.schedule;
+      case UnderstandingType.emotional:
+        return Icons.favorite;
+      case UnderstandingType.quantum:
+        return Icons.auto_awesome;
+      case UnderstandingType.holistic:
+        return Icons.all_inclusive;
     }
   }
 
@@ -346,6 +362,12 @@ class _StatusChip extends StatelessWidget {
         return 'Ошибка';
       case UnderstandingStatus.paused:
         return 'Приостановлено';
+      case UnderstandingStatus.pending:
+        return 'В очереди';
+      case UnderstandingStatus.failed:
+        return 'Неудача';
+      case UnderstandingStatus.optimized:
+        return 'Оптимизировано';
     }
   }
 
@@ -363,6 +385,12 @@ class _StatusChip extends StatelessWidget {
         return Colors.red;
       case UnderstandingStatus.paused:
         return Colors.amber;
+      case UnderstandingStatus.pending:
+        return Colors.blueGrey;
+      case UnderstandingStatus.failed:
+        return Colors.redAccent;
+      case UnderstandingStatus.optimized:
+        return Colors.lightGreen;
     }
   }
 }
@@ -596,6 +624,14 @@ class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> 
         return 'Семантическое';
       case UnderstandingType.interactive:
         return 'Интерактивное';
+      case UnderstandingType.temporal:
+        return 'Временное';
+      case UnderstandingType.emotional:
+        return 'Эмоциональное';
+      case UnderstandingType.quantum:
+        return 'Квантовое';
+      case UnderstandingType.holistic:
+        return 'Холистическое';
     }
   }
 
@@ -666,7 +702,7 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Создано: ${_formatDateTime(understanding.createdAt)}',
+                      'Создано: ${_formatDateTime(understanding.createdAt ?? understanding.created)}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     if (understanding.lastAnalyzed != null) ...[
@@ -733,6 +769,14 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
         return 'Семантическое';
       case UnderstandingType.interactive:
         return 'Интерактивное';
+      case UnderstandingType.temporal:
+        return 'Временное';
+      case UnderstandingType.emotional:
+        return 'Эмоциональное';
+      case UnderstandingType.quantum:
+        return 'Квантовое';
+      case UnderstandingType.holistic:
+        return 'Холистическое';
     }
   }
 

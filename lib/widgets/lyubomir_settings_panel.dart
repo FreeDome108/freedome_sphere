@@ -239,6 +239,14 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
         return 'Семантическое понимание';
       case UnderstandingType.interactive:
         return 'Интерактивное понимание';
+      case UnderstandingType.temporal:
+        return 'Временное понимание';
+      case UnderstandingType.emotional:
+        return 'Эмоциональное понимание';
+      case UnderstandingType.quantum:
+        return 'Квантовое понимание';
+      case UnderstandingType.holistic:
+        return 'Холистическое понимание';
     }
   }
 
@@ -254,6 +262,14 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
         return 'Анализ 3D пространства, геометрии';
       case UnderstandingType.semantic:
         return 'Понимание смысла и контекста';
+      case UnderstandingType.temporal:
+        return 'Анализ временных последовательностей';
+      case UnderstandingType.emotional:
+        return 'Анализ эмоционального состояния';
+      case UnderstandingType.quantum:
+        return 'Квантовый анализ и обработка';
+      case UnderstandingType.holistic:
+        return 'Целостный анализ всех аспектов';
       case UnderstandingType.interactive:
         return 'Анализ взаимодействий и UX';
     }

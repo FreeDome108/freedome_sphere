@@ -12,6 +12,8 @@ import 'services/locale_service.dart';
 import 'services/anantasound_service.dart';
 import 'services/unreal_optimizer_service.dart';
 import 'services/boranko_service.dart';
+import 'services/aibasic_ide_service.dart';
+import 'services/unreal_plugin_integration_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +54,12 @@ class FreedomeSphereApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UnrealOptimizerService>(
           create: (_) => UnrealOptimizerService(),
+        ),
+        ChangeNotifierProvider<AIBasicIDEService>(
+          create: (_) => AIBasicIDEService(),
+        ),
+        ChangeNotifierProvider<UnrealPluginIntegrationService>(
+          create: (_) => UnrealPluginIntegrationService(),
         ),
       ],
       child: Consumer2<ThemeService, LocaleService>(

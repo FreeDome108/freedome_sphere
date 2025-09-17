@@ -1,0 +1,161 @@
+{
+  "name": "Free Cyberpunk Hovercar",
+  "description": "A futuristic cyberpunk hovercar model with detailed textures and materials, optimized for dome projection and quantum rendering",
+  "category": "vehicles",
+  "subcategory": "futuristic",
+  "tags": ["cyberpunk", "futuristic", "vehicle", "hovercar", "3d-model", "free", "dome-optimized"],
+  "author": "FreeDome Sphere",
+  "version": "1.0.0",
+  "created": "2024-12-19T10:00:00.000Z",
+  "modified": "2024-12-19T10:00:00.000Z",
+  "license": "Free for use in FreeDome Sphere projects",
+  "source": {
+    "format": "blend",
+    "file": "source/cdp-test-7.blend",
+    "blenderVersion": "3.0+",
+    "polygons": "estimated_high",
+    "vertices": "estimated_8000",
+    "triangles": "estimated_15000"
+  },
+  "textures": {
+    "count": 11,
+    "formats": ["png"],
+    "resolution": "various",
+    "list": [
+      {
+        "name": "cdp_body_Glossiness.png",
+        "type": "roughness",
+        "material": "cdp_body"
+      },
+      {
+        "name": "cdp_body_Mixed_AO.png",
+        "type": "ambient_occlusion",
+        "material": "cdp_body"
+      },
+      {
+        "name": "cdp_body_normal.png",
+        "type": "normal_map",
+        "material": "cdp_body"
+      },
+      {
+        "name": "cdp_body_Specular.png",
+        "type": "specular",
+        "material": "cdp_body"
+      },
+      {
+        "name": "cdp_metal_Diffuse.png",
+        "type": "diffuse",
+        "material": "cdp_metal"
+      },
+      {
+        "name": "cdp_metal_Glossiness.png",
+        "type": "roughness",
+        "material": "cdp_metal"
+      },
+      {
+        "name": "cdp_metal_Specular.png",
+        "type": "specular",
+        "material": "cdp_metal"
+      },
+      {
+        "name": "cdp_plastic_Diffuse.png",
+        "type": "diffuse",
+        "material": "cdp_plastic"
+      },
+      {
+        "name": "cdp_plastic_Specular.png",
+        "type": "specular",
+        "material": "cdp_plastic"
+      },
+      {
+        "name": "shadow.png",
+        "type": "shadow",
+        "material": "global"
+      },
+      {
+        "name": "white_light_Emissive.png",
+        "type": "emissive",
+        "material": "white_light"
+      }
+    ]
+  },
+  "materials": {
+    "count": 4,
+    "types": ["pbr", "emissive"],
+    "list": [
+      {
+        "name": "cdp_body",
+        "type": "pbr",
+        "properties": {
+          "metalness": 0.8,
+          "roughness": 0.2,
+          "baseColor": "#2a2a2a"
+        }
+      },
+      {
+        "name": "cdp_metal",
+        "type": "pbr",
+        "properties": {
+          "metalness": 0.9,
+          "roughness": 0.1,
+          "baseColor": "#4a4a4a"
+        }
+      },
+      {
+        "name": "cdp_plastic",
+        "type": "pbr",
+        "properties": {
+          "metalness": 0.0,
+          "roughness": 0.3,
+          "baseColor": "#1a1a1a"
+        }
+      },
+      {
+        "name": "white_light",
+        "type": "emissive",
+        "properties": {
+          "emission": "#ffffff",
+          "intensity": 1.0
+        }
+      }
+    ]
+  },
+  "optimization": {
+    "domeOptimized": true,
+    "quantumCompatible": true,
+    "mobileFriendly": false,
+    "lodLevels": 0,
+    "compression": "none"
+  },
+  "features": {
+    "animations": false,
+    "physics": false,
+    "interactive": false,
+    "lighting": "pbr",
+    "shadows": true,
+    "reflections": true,
+    "emission": true
+  },
+  "usage": {
+    "recommendedFor": ["dome_projection", "cyberpunk_scenes", "futuristic_environments"],
+    "notRecommendedFor": ["mobile_devices", "low_poly_scenes"],
+    "performance": "high_quality",
+    "renderingTime": "medium"
+  },
+  "integration": {
+    "freedomeSphere": {
+      "supported": true,
+      "version": ">=1.0.0",
+      "zelimFormat": true
+    },
+    "mbharataClient": {
+      "supported": true,
+      "version": ">=1.0.0"
+    },
+    "anantasound": {
+      "supported": true,
+      "quantumResonance": true
+    }
+  }
+}
+

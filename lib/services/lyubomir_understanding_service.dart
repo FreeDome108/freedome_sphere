@@ -29,12 +29,18 @@ class LyubomirUnderstandingService with ChangeNotifier {
         description: 'Анализ изображения кота',
         type: UnderstandingType.visual,
         status: UnderstandingStatus.completed,
+        confidence: 0.95,
+        metadata: {},
+        created: DateTime.now().subtract(const Duration(days: 1)),
+        updated: DateTime.now(),
         createdAt: DateTime.now().subtract(const Duration(days: 1)),
         lastAnalyzed: DateTime.now(),
         results: [
           UnderstandingResult(
+            id: 'result_1',
             confidence: 0.95,
             type: UnderstandingType.visual,
+            status: UnderstandingStatus.completed,
             timestamp: DateTime.now(),
             tags: ['кот', 'животное', 'милый'],
             data: {'box': [10, 20, 100, 120], 'class': 'cat'},
@@ -64,6 +70,10 @@ class LyubomirUnderstandingService with ChangeNotifier {
       description: description,
       type: type,
       status: UnderstandingStatus.idle,
+      confidence: 0.0,
+      metadata: {},
+      created: DateTime.now(),
+      updated: DateTime.now(),
       createdAt: DateTime.now(),
     );
     _understandings.add(newUnderstanding);
@@ -84,8 +94,12 @@ class LyubomirUnderstandingService with ChangeNotifier {
           name: understanding.name,
           description: understanding.description,
           type: understanding.type,
-          createdAt: understanding.createdAt,
           status: UnderstandingStatus.analyzing,
+          confidence: understanding.confidence,
+          metadata: understanding.metadata,
+          created: understanding.created,
+          updated: DateTime.now(),
+          createdAt: understanding.createdAt,
           lastAnalyzed: understanding.lastAnalyzed,
           results: understanding.results);
       notifyListeners();
@@ -93,8 +107,10 @@ class LyubomirUnderstandingService with ChangeNotifier {
       Future.delayed(const Duration(seconds: 2), () {
         final results = [
           UnderstandingResult(
+            id: 'result_${Random().nextInt(1000)}',
             confidence: Random().nextDouble() * 0.5 + 0.5,
             type: understanding.type,
+            status: UnderstandingStatus.completed,
             timestamp: DateTime.now(),
             tags: ['tag1', 'tag2', 'tag3'],
             data: {'random_data': Random().nextInt(100)},
@@ -105,8 +121,12 @@ class LyubomirUnderstandingService with ChangeNotifier {
             name: understanding.name,
             description: understanding.description,
             type: understanding.type,
-            createdAt: understanding.createdAt,
             status: UnderstandingStatus.completed,
+            confidence: results.first.confidence,
+            metadata: understanding.metadata,
+            created: understanding.created,
+            updated: DateTime.now(),
+            createdAt: understanding.createdAt,
             lastAnalyzed: DateTime.now(),
             results: results);
         _understandings[understandingIndex] = updatedUnderstanding;

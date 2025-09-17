@@ -38,6 +38,11 @@ class BorankoPage {
   final String id;
   final int pageNumber;
   final String imagePath;
+  final String fileName;
+  final String originalPath;
+  final double zDepth;
+  final bool domeOptimized;
+  final bool quantumCompatible;
   final String? text;
   final List<BorankoSound> sounds;
 
@@ -45,6 +50,11 @@ class BorankoPage {
     required this.id,
     required this.pageNumber,
     required this.imagePath,
+    required this.fileName,
+    required this.originalPath,
+    this.zDepth = 0.0,
+    this.domeOptimized = false,
+    this.quantumCompatible = false,
     this.text,
     this.sounds = const [],
   });
@@ -54,6 +64,11 @@ class BorankoPage {
       'id': id,
       'pageNumber': pageNumber,
       'imagePath': imagePath,
+      'fileName': fileName,
+      'originalPath': originalPath,
+      'zDepth': zDepth,
+      'domeOptimized': domeOptimized,
+      'quantumCompatible': quantumCompatible,
       'text': text,
       'sounds': sounds.map((s) => s.toJson()).toList(),
     };
@@ -64,6 +79,11 @@ class BorankoPage {
       id: json['id'],
       pageNumber: json['pageNumber'],
       imagePath: json['imagePath'],
+      fileName: json['fileName'] ?? json['imagePath'],
+      originalPath: json['originalPath'] ?? '',
+      zDepth: json['zDepth']?.toDouble() ?? 0.0,
+      domeOptimized: json['domeOptimized'] ?? false,
+      quantumCompatible: json['quantumCompatible'] ?? false,
       text: json['text'],
       sounds: (json['sounds'] as List?)
           ?.map((s) => BorankoSound.fromJson(s))

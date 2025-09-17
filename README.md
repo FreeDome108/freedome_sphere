@@ -157,8 +157,9 @@ flutter build --dart-define=MODE=classical
 
 ### Импорт:
 - **Комиксы**: 
-  - ⚠️ **.comics** - ТОЛЬКО в режиме ASIS для legacy mbharata (DEPRECATED, будет удален)
-  - .cbr, .cbz (устаревшие форматы, конвертируются в .boranko)
+  - **.comics** - Оригинальный формат Баранько (ZIP архив с изображениями + метаданные)
+  - **.boranko** - Современный формат с поддержкой Z-Depth и 3D эффектов
+  - .cbr, .cbz (стандартные форматы, конвертируются в .boranko)
 - **3D**: .blend, .fbx, .obj, .gltf, .glb, .uasset, .umap, .dae, .3ds, .max (конвертируются в .zelim)
 - **Аудио**: .wav, .mp3, .ogg, .flac, .aac (конвертируются в .daga)
 - **Видео**: .mp4, .mov, .avi

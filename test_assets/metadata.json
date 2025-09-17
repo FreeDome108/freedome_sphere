@@ -1,0 +1,22 @@
+{
+  "title": "Глава 1 - Книга 1",
+  "author": "Художники: Игорь Баранько, Алексей Чебыкин",
+  "description": "Первая глава Махабхараты - начало великой истории. История начинается с проклятия Амбы и её клятвы отомстить Бхишме.",
+  "duration": 300,
+  "audioFile": "assets/sounds/ch1_audio.mp3",
+  "pages": [
+    "page_001.jpg",
+    "page_002.jpg", 
+    "page_003.jpg",
+    "page_004.jpg",
+    "page_005.jpg"
+  ],
+  "metadata": {
+    "version": 1,
+    "created": "2024-01-01T00:00:00.000Z",
+    "language": "ru",
+    "format": "comics",
+    "domeOptimized": false,
+    "quantumCompatible": false
+  }
+}

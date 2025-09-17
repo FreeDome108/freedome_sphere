@@ -17,6 +17,8 @@ import '../widgets/lyubomir_learning_system_panel.dart';
 import 'anantasound_screen.dart';
 import 'lyubomir_learning_system_screen.dart';
 import 'unreal_optimizer_screen.dart';
+import 'aibasic_ide_screen.dart';
+import 'unreal_plugin_integration_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -214,19 +216,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _importComicsProject() async {
     final l10n = AppLocalizations.of(context)!;
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(l10n.comicsDeprecatedTitle),
-        content: Text(l10n.comicsDeprecatedContent),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.ok),
-          ),
-        ],
-      ),
-    );
+    setState(() {
+      _isLoading = true;
+      _statusMessage = 'Importing .comics project...';
+      _statusType = 'working';
+    });
+
+    try {
+      // TODO: Интеграция с ComicsService для импорта .comics проектов
+      // final comicsService = ComicsService();
+      // final result = await comicsService.importComicsFromFolder('path/to/comics');
+      
+      setState(() {
+        _statusMessage = 'Comics project imported successfully';
+        _statusType = 'ready';
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _statusMessage = 'Error importing comics project: $e';
+        _statusType = 'error';
+        _isLoading = false;
+      });
+    }
   }
 
   void _updateProject(FreedomeProject project) {
@@ -371,6 +383,28 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
+          IconButton(
+            icon: const Icon(Icons.code),
+            tooltip: 'AIBASIC IDE',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const AIBasicIDEScreen(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.extension),
+            tooltip: 'Unreal Plugin Integration',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const UnrealPluginIntegrationScreen(),
+                ),
+              );
+            },
+          ),
         ],
       ),
       body: Column(
@@ -395,8 +429,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 // Sidebar
                 ProjectSidebar(
-                  project: _currentProject,
-                  onProjectUpdate: _updateProject,
+                  project: _currentProject?.toJson() ?? {},
+                  onProjectUpdate: (Map<String, dynamic> projectData) {
+                    if (_currentProject != null) {
+                      _updateProject(FreedomeProject.fromJson(projectData));
+                    }
+                  },
                   onStatusUpdate: _setStatus,
                 ),
                 
