@@ -207,6 +207,12 @@ class LyubomirUnderstandingService extends ChangeNotifier {
         return 2500; // 2.5 секунды
       case UnderstandingType.interactive:
         return 3500; // 3.5 секунды
+      case UnderstandingType.emotional:
+        return 2000; // 2 секунды
+      case UnderstandingType.quantum:
+        return 5000; // 5 секунд
+      case UnderstandingType.holistic:
+        return 4500; // 4.5 секунды
     }
   }
 
@@ -239,6 +245,15 @@ class LyubomirUnderstandingService extends ChangeNotifier {
         break;
       case UnderstandingType.interactive:
         results.addAll(_generateInteractiveResults(random));
+        break;
+      case UnderstandingType.emotional:
+        results.addAll(_generateEmotionalResults(random));
+        break;
+      case UnderstandingType.quantum:
+        results.addAll(_generateQuantumResults(random));
+        break;
+      case UnderstandingType.holistic:
+        results.addAll(_generateHolisticResults(random));
         break;
     }
     
@@ -415,6 +430,63 @@ class LyubomirUnderstandingService extends ChangeNotifier {
         },
         timestamp: DateTime.now(),
         tags: ['interaction', 'ux', 'accessibility'],
+      ),
+    ];
+  }
+
+  /// Генерация эмоциональных результатов
+  List<UnderstandingResult> _generateEmotionalResults(Random random) {
+    return [
+      UnderstandingResult(
+        id: _generateId(),
+        type: UnderstandingType.emotional,
+        confidence: 0.8 + random.nextDouble() * 0.2,
+        data: {
+          'emotions': ['joy', 'excitement', 'curiosity'],
+          'intensity': 0.75,
+          'valence': 'positive',
+        },
+        status: UnderstandingStatus.completed,
+        timestamp: DateTime.now(),
+        tags: ['emotional', 'feelings'],
+      ),
+    ];
+  }
+
+  /// Генерация квантовых результатов
+  List<UnderstandingResult> _generateQuantumResults(Random random) {
+    return [
+      UnderstandingResult(
+        id: _generateId(),
+        type: UnderstandingType.quantum,
+        confidence: 0.9 + random.nextDouble() * 0.1,
+        data: {
+          'coherence': 0.95,
+          'entanglement': true,
+          'superposition': ['state1', 'state2'],
+        },
+        status: UnderstandingStatus.completed,
+        timestamp: DateTime.now(),
+        tags: ['quantum', 'physics'],
+      ),
+    ];
+  }
+
+  /// Генерация холистических результатов
+  List<UnderstandingResult> _generateHolisticResults(Random random) {
+    return [
+      UnderstandingResult(
+        id: _generateId(),
+        type: UnderstandingType.holistic,
+        confidence: 0.85 + random.nextDouble() * 0.15,
+        data: {
+          'wholeness': 0.9,
+          'interconnections': 15,
+          'emergent_properties': ['complexity', 'beauty'],
+        },
+        status: UnderstandingStatus.completed,
+        timestamp: DateTime.now(),
+        tags: ['holistic', 'whole'],
       ),
     ];
   }

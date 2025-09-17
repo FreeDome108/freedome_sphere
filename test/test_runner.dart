@@ -12,19 +12,19 @@ void main() {
     group('App Edition Tests', () {
       app_edition_test.main();
     });
-    
+
     group('Theme Service Tests', () {
       theme_service_test.main();
     });
-    
+
     group('Widget Tests', () {
       widget_test.main();
     });
-    
+
     group('Performance Tests', () {
       performance_test.main();
     });
-    
+
     group('Comics Import Tests', () {
       comics_import_test.main();
     });
