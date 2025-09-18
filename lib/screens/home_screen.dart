@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:freedome_sphere_flutter/screens/gif_screen.dart';
-import 'package:freedome_sphere_flutter/screens/jpg_screen.dart';
-import 'package:freedome_sphere_flutter/screens/video_screen.dart';
 import 'package:provider/provider.dart';
-import '../l10n/app_localizations.dart';
-import '../models/freedome_learning_complex/tutorials.dart';
-import '../screens/tutorials_screen.dart';
+import 'package:file_picker/file_picker.dart';
+import '../models/project.dart';
 import '../services/project_service.dart';
 import '../services/boranko_service.dart';
-import '../models/project.dart';
+import '../widgets/toolbar.dart';
 import '../widgets/project_sidebar.dart';
 import '../widgets/viewport_3d.dart';
-import '../widgets/toolbar.dart';
 import '../widgets/status_bar.dart';
-import '../widgets/lyubomir_learning_system_panel.dart';
-import 'anantasound_screen.dart';
-import 'lyubomir_learning_system_screen.dart';
-import 'unreal_optimizer_screen.dart';
 import 'aibasic_ide_screen.dart';
+import 'anantasound_screen.dart';
+import 'unreal_optimizer_screen.dart';
 import 'unreal_plugin_integration_screen.dart';
+import 'lyubomir_learning_system_screen.dart';
+import 'tutorials_screen.dart';
+import 'jpg_screen.dart';
+import 'gif_screen.dart';
+import 'video_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,131 +28,171 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   FreedomeProject? _currentProject;
   bool _isLoading = false;
-  String _statusMessage = '';
+  String _statusMessage = 'Готов к работе';
   String _statusType = 'ready';
+  bool _showSidebar = true;
+  double _sidebarWidth = 300.0;
+  bool _showStatusBar = true;
+  double _statusBarHeight = 45.0;
+
+  // Navigation state
+  List<String> _projectHistory = [];
+  int _currentProjectIndex = -1;
+
+  // Learning system state
+  bool _learningSystemActive = false;
+
+  // Plugin state
+  int _activePluginsCount = 0;
 
   @override
   void initState() {
     super.initState();
+    _loadCurrentProject();
+    _initializeServices();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_statusMessage.isEmpty) {
-      _loadCurrentProject();
+  Future<void> _initializeServices() async {
+    // Initialize learning system service
+    try {
+      // Check if learning system is active (placeholder logic)
+      _learningSystemActive = false;
+
+      // Count active plugins
+      _activePluginsCount = 2; // Placeholder: AIBASIC IDE + AnantaSound
+
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      print('Ошибка инициализации сервисов: $e');
     }
   }
 
   Future<void> _loadCurrentProject() async {
-    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _isLoading = true;
-      _statusMessage = l10n.loadingProject;
+      _statusMessage = 'Загрузка проекта...';
       _statusType = 'working';
     });
 
     try {
-      final projectService = Provider.of<ProjectService>(context, listen: false);
-      final project = await projectService.getCurrentProject();
-      
+      final projectService = context.read<ProjectService>();
+      final currentProject = await projectService.getCurrentProject();
+
+      if (currentProject == null) {
+        // Создаем новый проект по умолчанию
+        final newProject = await projectService.createNewProject(
+          name: 'Новый проект',
+          description: 'Проект FreeDome Sphere',
+          tags: ['default', 'new'],
+        );
+        await projectService.setCurrentProject(newProject.id);
+        setState(() {
+          _currentProject = newProject;
+        });
+      } else {
+        setState(() {
+          _currentProject = currentProject;
+        });
+      }
+
       setState(() {
-        _currentProject = project;
-        _statusMessage = project != null ? l10n.projectLoaded : l10n.noProject;
-        _statusType = 'ready';
         _isLoading = false;
+        _statusMessage = 'Проект загружен: ${_currentProject!.name}';
+        _statusType = 'ready';
       });
     } catch (e) {
       setState(() {
-        _statusMessage = l10n.errorLoadingProject(e.toString());
-        _statusType = 'error';
         _isLoading = false;
+        _statusMessage = 'Ошибка загрузки проекта: $e';
+        _statusType = 'error';
       });
     }
   }
 
   Future<void> _createNewProject() async {
-    final l10n = AppLocalizations.of(context)!;
-    final result = await showDialog<Map<String, dynamic>>(
-      context: context,
-      builder: (context) => const NewProjectDialog(),
-    );
-
+    final result = await _showNewProjectDialog();
     if (result != null) {
       setState(() {
         _isLoading = true;
-        _statusMessage = l10n.creatingNewProject;
+        _statusMessage = 'Создание нового проекта...';
         _statusType = 'working';
       });
 
       try {
-        final projectService = Provider.of<ProjectService>(context, listen: false);
-        final project = await projectService.createNewProject(
+        final projectService = context.read<ProjectService>();
+        final newProject = await projectService.createNewProject(
           name: result['name'],
           description: result['description'] ?? '',
           tags: result['tags'] ?? [],
         );
 
-        await projectService.setCurrentProject(project.id);
+        await projectService.setCurrentProject(newProject.id);
 
         setState(() {
-          _currentProject = project;
-          _statusMessage = l10n.newProjectCreated;
-          _statusType = 'ready';
+          _currentProject = newProject;
           _isLoading = false;
+          _statusMessage = 'Новый проект создан: ${newProject.name}';
+          _statusType = 'ready';
         });
       } catch (e) {
         setState(() {
-          _statusMessage = l10n.errorCreatingProject(e.toString());
-          _statusType = 'error';
           _isLoading = false;
+          _statusMessage = 'Ошибка создания проекта: $e';
+          _statusType = 'error';
         });
       }
     }
   }
 
   Future<void> _openProject() async {
-    final l10n = AppLocalizations.of(context)!;
-    
-    setState(() {
-      _statusMessage = l10n.openingProject;
-      _statusType = 'working';
-    });
-
     try {
-      final projectService = Provider.of<ProjectService>(context, listen: false);
-      final projects = await projectService.getAllProjects();
-      
-      if (projects.isEmpty) {
-        setState(() {
-          _statusMessage = l10n.noProject;
-          _statusType = 'ready';
-        });
-        return;
-      }
-
-      // Show project selection dialog
-      final selectedProject = await showDialog<FreedomeProject>(
-        context: context,
-        builder: (context) => ProjectSelectionDialog(projects: projects),
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['fsp', 'json'],
+        allowMultiple: false,
       );
 
-      if (selectedProject != null) {
-        await projectService.setCurrentProject(selectedProject.id);
+      if (result != null && result.files.isNotEmpty) {
         setState(() {
-          _currentProject = selectedProject;
-          _statusMessage = l10n.projectLoaded;
-          _statusType = 'ready';
+          _isLoading = true;
+          _statusMessage = 'Открытие проекта...';
+          _statusType = 'working';
         });
-      } else {
-        setState(() {
-          _statusMessage = l10n.ready;
-          _statusType = 'ready';
-        });
+
+        try {
+          final projectService = context.read<ProjectService>();
+          final filePath = result.files.first.path!;
+          final importedProject = await projectService.importProject(filePath);
+
+          if (importedProject != null) {
+            await projectService.setCurrentProject(importedProject.id);
+
+            setState(() {
+              _currentProject = importedProject;
+              _isLoading = false;
+              _statusMessage = 'Проект открыт: ${importedProject.name}';
+              _statusType = 'ready';
+            });
+          } else {
+            setState(() {
+              _isLoading = false;
+              _statusMessage = 'Ошибка импорта проекта';
+              _statusType = 'error';
+            });
+          }
+        } catch (e) {
+          setState(() {
+            _isLoading = false;
+            _statusMessage = 'Ошибка открытия проекта: $e';
+            _statusType = 'error';
+          });
+        }
       }
     } catch (e) {
       setState(() {
-        _statusMessage = l10n.errorLoadingProject(e.toString());
+        _statusMessage = 'Ошибка выбора файла: $e';
         _statusType = 'error';
       });
     }
@@ -162,373 +200,732 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _saveProject() async {
     if (_currentProject == null) return;
-    final l10n = AppLocalizations.of(context)!;
 
     setState(() {
-      _statusMessage = l10n.savingProject;
+      _isLoading = true;
+      _statusMessage = 'Сохранение проекта...';
       _statusType = 'working';
     });
 
     try {
-      final projectService = Provider.of<ProjectService>(context, listen: false);
+      final projectService = context.read<ProjectService>();
       final success = await projectService.saveProject(_currentProject!);
 
       setState(() {
-        _statusMessage = success ? l10n.projectSaved : l10n.saveFailed;
+        _isLoading = false;
+        _statusMessage = success
+            ? 'Проект сохранен: ${_currentProject!.name}'
+            : 'Ошибка сохранения проекта';
         _statusType = success ? 'ready' : 'error';
       });
     } catch (e) {
       setState(() {
-        _statusMessage = l10n.errorSavingProject(e.toString());
+        _isLoading = false;
+        _statusMessage = 'Ошибка сохранения: $e';
         _statusType = 'error';
       });
     }
   }
 
-  Future<void> _importBorankoProject() async {
-    final l10n = AppLocalizations.of(context)!;
+  void _updateProject(Map<String, dynamic> projectData) {
+    if (_currentProject == null) return;
+
+    // Обновляем проект с новыми данными
     setState(() {
-      _isLoading = true;
-      _statusMessage = l10n.importingBorankoProject;
-      _statusType = 'working';
+      _currentProject = _currentProject!.copyWith(
+        name: projectData['name'] ?? _currentProject!.name,
+        description: projectData['description'] ?? _currentProject!.description,
+        tags: projectData['tags'] ?? _currentProject!.tags,
+        dome: projectData['dome'] != null
+            ? _currentProject!.dome.copyWith(
+                resolution: projectData['domeResolution'] != null
+                    ? _parseResolution(projectData['domeResolution'])
+                    : _currentProject!.dome.resolution,
+                projectionType:
+                    projectData['projectionType'] ??
+                    _currentProject!.dome.projectionType,
+              )
+            : _currentProject!.dome,
+      );
     });
+  }
 
-    try {
-      final borankoService = Provider.of<BorankoService>(context, listen: false);
-      // TODO: Replace with actual file path
-      final borankoProject = await borankoService.importBorankoProject('dummy/path/project.boranko');
-      
-      // TODO: Integrate the imported Boranko project into the current project
-
-      setState(() {
-        _statusMessage = l10n.borankoImportSuccess;
-        _statusType = 'ready';
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _statusMessage = l10n.errorImportingBorankoProject(e.toString());
-        _statusType = 'error';
-        _isLoading = false;
-      });
+  Resolution _parseResolution(String resolution) {
+    switch (resolution) {
+      case '2K':
+        return Resolution(width: 2048, height: 1024);
+      case '4K':
+        return Resolution(width: 4096, height: 2048);
+      case '8K':
+        return Resolution(width: 8192, height: 4096);
+      default:
+        return Resolution(width: 4096, height: 2048);
     }
   }
 
-  Future<void> _importComicsProject() async {
-    final l10n = AppLocalizations.of(context)!;
-    setState(() {
-      _isLoading = true;
-      _statusMessage = 'Importing .comics project...';
-      _statusType = 'working';
-    });
-
-    try {
-      // TODO: Интеграция с ComicsService для импорта .comics проектов
-      // final comicsService = ComicsService();
-      // final result = await comicsService.importComicsFromFolder('path/to/comics');
-      
-      setState(() {
-        _statusMessage = 'Comics project imported successfully';
-        _statusType = 'ready';
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _statusMessage = 'Error importing comics project: $e';
-        _statusType = 'error';
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _updateProject(FreedomeProject project) {
-    setState(() {
-      _currentProject = project;
-    });
-  }
-
-  void _setStatus(String message, String type) {
+  void _updateStatus(String message, String type) {
     setState(() {
       _statusMessage = message;
       _statusType = type;
     });
   }
 
+  void _toggleSidebar() {
+    setState(() {
+      _showSidebar = !_showSidebar;
+    });
+  }
+
+  void _toggleStatusBar() {
+    setState(() {
+      _showStatusBar = !_showStatusBar;
+    });
+  }
+
+  void _playPreview() {
+    setState(() {
+      _statusMessage = 'Воспроизведение превью...';
+      _statusType = 'working';
+    });
+
+    // Симуляция воспроизведения
+    Future.delayed(const Duration(seconds: 2), () {
+      if (mounted) {
+        setState(() {
+          _statusMessage = 'Превью воспроизведено';
+          _statusType = 'ready';
+        });
+      }
+    });
+  }
+
+  void _stopPreview() {
+    setState(() {
+      _statusMessage = 'Превью остановлено';
+      _statusType = 'ready';
+    });
+  }
+
+  void _resetView() {
+    setState(() {
+      _statusMessage = 'Вид сброшен';
+      _statusType = 'ready';
+    });
+  }
+
+  void _importBoranko() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['boranko'],
+        allowMultiple: true,
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        setState(() {
+          _statusMessage = 'Импорт .boranko файлов...';
+          _statusType = 'working';
+        });
+
+        try {
+          final borankoService = context.read<BorankoService>();
+          int successCount = 0;
+
+          for (final file in result.files) {
+            try {
+              await borankoService.importBorankoProject(file.path!);
+              successCount++;
+              // Здесь можно добавить проект в текущий проект
+            } catch (e) {
+              print('Ошибка импорта ${file.name}: $e');
+            }
+          }
+
+          setState(() {
+            _statusMessage = 'Импортировано $successCount .boranko файлов';
+            _statusType = 'ready';
+          });
+        } catch (e) {
+          setState(() {
+            _statusMessage = 'Ошибка импорта .boranko: $e';
+            _statusType = 'error';
+          });
+        }
+      }
+    } catch (e) {
+      setState(() {
+        _statusMessage = 'Ошибка выбора .boranko файлов: $e';
+        _statusType = 'error';
+      });
+    }
+  }
+
+  void _importComics() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['comics', 'zip', 'rar', '7z', 'cbz', 'cbr'],
+        allowMultiple: true,
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        setState(() {
+          _statusMessage = 'Импорт .comics файлов...';
+          _statusType = 'working';
+        });
+
+        try {
+          final borankoService = context.read<BorankoService>();
+          int successCount = 0;
+
+          for (final file in result.files) {
+            try {
+              await borankoService.importComicsAsBoranko(file.path!);
+              successCount++;
+              // Здесь можно добавить проект в текущий проект
+            } catch (e) {
+              print('Ошибка импорта ${file.name}: $e');
+            }
+          }
+
+          setState(() {
+            _statusMessage = 'Импортировано $successCount .comics файлов';
+            _statusType = 'ready';
+          });
+        } catch (e) {
+          setState(() {
+            _statusMessage = 'Ошибка импорта .comics: $e';
+            _statusType = 'error';
+          });
+        }
+      }
+    } catch (e) {
+      setState(() {
+        _statusMessage = 'Ошибка выбора .comics файлов: $e';
+        _statusType = 'error';
+      });
+    }
+  }
+
+  void _openAIBasicIDE() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const AIBasicIDEScreen()));
+  }
+
+  void _openAnantaSound() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const AnantaSoundScreen()));
+  }
+
+  void _openUnrealOptimizer() {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (context) => const UnrealOptimizerScreen()),
+    );
+  }
+
+  void _openUnrealPluginIntegration() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const UnrealPluginIntegrationScreen(),
+      ),
+    );
+  }
+
+  void _openLyubomirLearningSystem() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LyubomirLearningSystemScreen(),
+      ),
+    );
+  }
+
+  void _openTutorials() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const TutorialsScreen(tutorials: []),
+      ),
+    );
+  }
+
+  void _openJpgScreen() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const JpgScreen()));
+  }
+
+  void _openGifScreen() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const GifScreen()));
+  }
+
+  void _openVideoScreen() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const VideoScreen()));
+  }
+
+  void _navigateToPreviousProject() {
+    if (_canNavigateBack()) {
+      setState(() {
+        _currentProjectIndex--;
+        _statusMessage = 'Переход к предыдущему проекту...';
+        _statusType = 'working';
+      });
+
+      // Simulate project loading
+      Future.delayed(const Duration(seconds: 1), () {
+        if (mounted) {
+          setState(() {
+            _statusMessage = 'Предыдущий проект загружен';
+            _statusType = 'ready';
+          });
+        }
+      });
+    }
+  }
+
+  void _navigateToNextProject() {
+    if (_canNavigateForward()) {
+      setState(() {
+        _currentProjectIndex++;
+        _statusMessage = 'Переход к следующему проекту...';
+        _statusType = 'working';
+      });
+
+      // Simulate project loading
+      Future.delayed(const Duration(seconds: 1), () {
+        if (mounted) {
+          setState(() {
+            _statusMessage = 'Следующий проект загружен';
+            _statusType = 'ready';
+          });
+        }
+      });
+    }
+  }
+
+  bool _canNavigateBack() {
+    return _currentProjectIndex > 0;
+  }
+
+  bool _canNavigateForward() {
+    return _currentProjectIndex < _projectHistory.length - 1;
+  }
+
+  void _openPluginManager() {
+    showDialog(
+      context: context,
+      builder: (context) => _PluginManagerDialog(
+        activePluginsCount: _activePluginsCount,
+        onPluginToggle: (pluginName, isActive) {
+          setState(() {
+            if (isActive) {
+              _activePluginsCount++;
+            } else {
+              _activePluginsCount--;
+            }
+          });
+        },
+      ),
+    );
+  }
+
+  Future<Map<String, dynamic>?> _showNewProjectDialog() async {
+    final nameController = TextEditingController();
+    final descriptionController = TextEditingController();
+    final tagsController = TextEditingController();
+
+    return showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Новый проект'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(
+                labelText: 'Название проекта',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Описание (необязательно)',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: tagsController,
+              decoration: const InputDecoration(
+                labelText: 'Теги (через запятую)',
+                border: OutlineInputBorder(),
+                hintText: '3d, dome, animation',
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Отмена'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              final name = nameController.text.trim();
+              if (name.isNotEmpty) {
+                final tags = tagsController.text
+                    .split(',')
+                    .map((tag) => tag.trim())
+                    .where((tag) => tag.isNotEmpty)
+                    .toList();
+
+                Navigator.of(context).pop({
+                  'name': name,
+                  'description': descriptionController.text.trim(),
+                  'tags': tags,
+                });
+              }
+            },
+            child: const Text('Создать'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.homeScreenTitle),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+        title: Row(
+          children: [
+            const Icon(Icons.threesixty, color: Colors.blue),
+            const SizedBox(width: 8),
+            Text('FreeDome Sphere'),
+            if (_currentProject != null) ...[
+              const SizedBox(width: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.blue.withOpacity(0.3)),
+                ),
+                child: Text(
+                  _currentProject!.name,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.blue,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
         actions: [
+          // Переключение боковой панели
+          IconButton(
+            icon: Icon(_showSidebar ? Icons.dock : Icons.dock_outlined),
+            onPressed: _toggleSidebar,
+            tooltip: _showSidebar
+                ? 'Скрыть боковую панель'
+                : 'Показать боковую панель',
+          ),
+          // Переключение статусной панели
+          IconButton(
+            icon: Icon(
+              _showStatusBar ? Icons.info_outline : Icons.info_outlined,
+            ),
+            onPressed: _toggleStatusBar,
+            tooltip: _showStatusBar
+                ? 'Скрыть статусную панель'
+                : 'Показать статусную панель',
+          ),
+          // Меню быстрого доступа к инструментам
           PopupMenuButton<String>(
-            icon: const Icon(Icons.import_export),
-            tooltip: l10n.import,
+            icon: const Icon(Icons.build),
+            tooltip: 'Инструменты',
             onSelected: (value) {
               switch (value) {
-                case 'gif':
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const GifScreen(),
-                    ),
-                  );
+                case 'aibasic':
+                  _openAIBasicIDE();
+                  break;
+                case 'anantasound':
+                  _openAnantaSound();
+                  break;
+                case 'unreal_optimizer':
+                  _openUnrealOptimizer();
+                  break;
+                case 'unreal_plugin':
+                  _openUnrealPluginIntegration();
+                  break;
+                case 'lyubomir':
+                  _openLyubomirLearningSystem();
+                  break;
+                case 'tutorials':
+                  _openTutorials();
                   break;
                 case 'jpg':
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const JpgScreen(),
-                    ),
-                  );
+                  _openJpgScreen();
+                  break;
+                case 'gif':
+                  _openGifScreen();
                   break;
                 case 'video':
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const VideoScreen(),
-                    ),
-                  );
-                  break;
-                case 'boranko':
-                  _importBorankoProject();
-                  break;
-                case 'comics':
-                  _importComicsProject();
+                  _openVideoScreen();
                   break;
               }
             },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              PopupMenuItem<String>(
-                value: 'gif',
-                child: Row(
-                  children: [
-                    const Icon(Icons.gif),
-                    const SizedBox(width: 8),
-                    Text(l10n.gifImporterTooltip),
-                  ],
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'aibasic',
+                child: ListTile(
+                  leading: Icon(Icons.code, size: 20),
+                  title: Text('AIBASIC IDE'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
-              PopupMenuItem<String>(
-                value: 'jpg',
-                child: Row(
-                  children: [
-                    const Icon(Icons.image),
-                    const SizedBox(width: 8),
-                    Text(l10n.jpgImporterTooltip),
-                  ],
+              const PopupMenuItem(
+                value: 'anantasound',
+                child: ListTile(
+                  leading: Icon(Icons.music_note, size: 20),
+                  title: Text('AnantaSound'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
-              PopupMenuItem<String>(
-                value: 'video',
-                child: Row(
-                  children: [
-                    const Icon(Icons.video_library),
-                    const SizedBox(width: 8),
-                    Text(l10n.videoImporterTooltip),
-                  ],
+              const PopupMenuItem(
+                value: 'unreal_optimizer',
+                child: ListTile(
+                  leading: Icon(Icons.analytics, size: 20),
+                  title: Text('Unreal Optimizer'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'unreal_plugin',
+                child: ListTile(
+                  leading: Icon(Icons.extension, size: 20),
+                  title: Text('Unreal Plugin'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'lyubomir',
+                child: ListTile(
+                  leading: Icon(Icons.psychology, size: 20),
+                  title: Text('Система Любомира'),
+                  contentPadding: EdgeInsets.zero,
                 ),
               ),
               const PopupMenuDivider(),
-              PopupMenuItem<String>(
-                value: 'boranko',
-                child: Text(l10n.importBoranko),
+              const PopupMenuItem(
+                value: 'tutorials',
+                child: ListTile(
+                  leading: Icon(Icons.school, size: 20),
+                  title: Text('Туториалы'),
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
-              PopupMenuItem<String>(
-                value: 'comics',
-                child: Text(l10n.importComics),
+              const PopupMenuItem(
+                value: 'jpg',
+                child: ListTile(
+                  leading: Icon(Icons.image, size: 20),
+                  title: Text('JPG Editor'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'gif',
+                child: ListTile(
+                  leading: Icon(Icons.gif, size: 20),
+                  title: Text('GIF Editor'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'video',
+                child: ListTile(
+                  leading: Icon(Icons.video_library, size: 20),
+                  title: Text('Video Editor'),
+                  contentPadding: EdgeInsets.zero,
+                ),
               ),
             ],
           ),
-          IconButton(
-            icon: const Icon(Icons.school),
-            tooltip: l10n.tutorialsTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => TutorialsScreen(tutorials: tutorials),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.psychology),
-            tooltip: l10n.lyubomirLearningSystemTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const LyubomirLearningSystemScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.radio_button_checked),
-            tooltip: l10n.anantaSoundTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AnantaSoundScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.auto_fix_high),
-            tooltip: l10n.unrealOptimizerTooltip,
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const UnrealOptimizerScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.code),
-            tooltip: 'AIBASIC IDE',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const AIBasicIDEScreen(),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.extension),
-            tooltip: 'Unreal Plugin Integration',
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const UnrealPluginIntegrationScreen(),
-                ),
-              );
-            },
-          ),
+          const SizedBox(width: 8),
         ],
       ),
       body: Column(
         children: [
-          // Toolbar
+          // Панель инструментов
           Toolbar(
             onNewProject: _createNewProject,
             onOpenProject: _openProject,
             onSaveProject: _saveProject,
-            onPlayPreview: () => _setStatus(l10n.playingPreview, 'working'),
-            onStopPreview: () => _setStatus(l10n.previewStopped, 'ready'),
-            onResetView: () => _setStatus(l10n.viewReset, 'ready'),
-            onImportBoranko: _importBorankoProject,
-            onImportComics: _importComicsProject,
+            onPlayPreview: _playPreview,
+            onStopPreview: _stopPreview,
+            onResetView: _resetView,
+            onImportBoranko: _importBoranko,
+            onImportComics: _importComics,
+            onPreviousProject: _navigateToPreviousProject,
+            onNextProject: _navigateToNextProject,
+            onOpenLearningSystem: _openLyubomirLearningSystem,
+            onOpenPluginManager: _openPluginManager,
+            onOpenAIBasicIDE: _openAIBasicIDE,
+            onOpenAnantaSound: _openAnantaSound,
             statusMessage: _statusMessage,
             statusType: _statusType,
+            canNavigateBack: _canNavigateBack(),
+            canNavigateForward: _canNavigateForward(),
+            learningSystemActive: _learningSystemActive,
+            activePluginsCount: _activePluginsCount,
           ),
-          
-          // Main content
+
+          // Основная рабочая область
           Expanded(
             child: Row(
               children: [
-                // Sidebar
-                ProjectSidebar(
-                  project: _currentProject?.toJson() ?? {},
-                  onProjectUpdate: (Map<String, dynamic> projectData) {
-                    if (_currentProject != null) {
-                      _updateProject(FreedomeProject.fromJson(projectData));
-                    }
-                  },
-                  onStatusUpdate: _setStatus,
-                ),
-                
-                // Main viewport
+                // Боковая панель
+                if (_showSidebar)
+                  SizedBox(
+                    width: _sidebarWidth,
+                    child: ProjectSidebar(
+                      project: _currentProject?.toJson() ?? {},
+                      onStatusUpdate: _updateStatus,
+                      onProjectUpdate: _updateProject,
+                    ),
+                  ),
+
+                // Главная область с 3D вьюпортом
                 Expanded(
-                  child: Column(
-                    children: [
-                      // Lyubomir Learning System Panel
-                      const LyubomirLearningSystemPanel(),
-                      
-                      // 3D Viewport
-                      Expanded(
-                        child: Viewport3D(
-                          project: _currentProject,
-                          isLoading: _isLoading,
-                        ),
-                      ),
-                    ],
+                  child: Viewport3D(
+                    project: _currentProject,
+                    isLoading: _isLoading,
                   ),
                 ),
               ],
             ),
           ),
-          
-          // Status bar
-          StatusBar(
-            message: _statusMessage,
-            type: _statusType,
-          ),
+
+          // Статусная панель
+          if (_showStatusBar)
+            SizedBox(
+              height: _statusBarHeight,
+              child: StatusBar(
+                message: _statusMessage,
+                type: _statusType,
+                progress: _isLoading ? null : 0.0,
+                systemInfo: {
+                  'memoryUsage': 512,
+                  'activePlugins': _activePluginsCount,
+                  'learningActive': _learningSystemActive,
+                },
+              ),
+            ),
         ],
       ),
     );
   }
 }
 
-class NewProjectDialog extends StatefulWidget {
-  const NewProjectDialog({super.key});
+/// Dialog for managing plugins
+class _PluginManagerDialog extends StatefulWidget {
+  final int activePluginsCount;
+  final Function(String pluginName, bool isActive) onPluginToggle;
+
+  const _PluginManagerDialog({
+    required this.activePluginsCount,
+    required this.onPluginToggle,
+  });
 
   @override
-  State<NewProjectDialog> createState() => _NewProjectDialogState();
+  State<_PluginManagerDialog> createState() => _PluginManagerDialogState();
 }
 
-class _NewProjectDialogState extends State<NewProjectDialog> {
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _descriptionController = TextEditingController();
-  final _tagsController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _descriptionController.dispose();
-    _tagsController.dispose();
-    super.dispose();
-  }
+class _PluginManagerDialogState extends State<_PluginManagerDialog> {
+  final Map<String, bool> _plugins = {
+    'AIBASIC IDE': true,
+    'AnantaSound': true,
+    'Unreal Optimizer': false,
+    'Unreal Plugin Integration': false,
+    'Video Editor': false,
+    'GIF Editor': false,
+    'JPG Editor': false,
+  };
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: Text(l10n.newProject),
-      content: Form(
-        key: _formKey,
+      title: Row(
+        children: [
+          const Icon(Icons.extension, color: Colors.blue),
+          const SizedBox(width: 8),
+          const Text('Менеджер плагинов'),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              'Активно: ${_plugins.values.where((active) => active).length}',
+              style: const TextStyle(fontSize: 12, color: Colors.blue),
+            ),
+          ),
+        ],
+      ),
+      content: SizedBox(
+        width: 400,
+        height: 300,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: l10n.projectName,
-                hintText: l10n.enterProjectName,
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return l10n.pleaseEnterProjectName;
-                }
-                return null;
-              },
+            const Text(
+              'Управляйте активными плагинами для оптимизации производительности',
+              style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              controller: _descriptionController,
-              decoration: InputDecoration(
-                labelText: l10n.descriptionOptional,
-                hintText: l10n.enterProjectDescription,
-              ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _tagsController,
-              decoration: InputDecoration(
-                labelText: l10n.tagsOptional,
-                hintText: l10n.enterTagsSeparatedByCommas,
+            Expanded(
+              child: ListView.builder(
+                itemCount: _plugins.length,
+                itemBuilder: (context, index) {
+                  final pluginName = _plugins.keys.elementAt(index);
+                  final isActive = _plugins[pluginName]!;
+
+                  return Card(
+                    child: ListTile(
+                      leading: Icon(
+                        _getPluginIcon(pluginName),
+                        color: isActive ? Colors.green : Colors.grey,
+                      ),
+                      title: Text(pluginName),
+                      subtitle: Text(
+                        isActive ? 'Активен' : 'Неактивен',
+                        style: TextStyle(
+                          color: isActive ? Colors.green : Colors.grey,
+                        ),
+                      ),
+                      trailing: Switch(
+                        value: isActive,
+                        onChanged: (value) {
+                          setState(() {
+                            _plugins[pluginName] = value;
+                          });
+                          widget.onPluginToggle(pluginName, value);
+                        },
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -537,83 +934,37 @@ class _NewProjectDialogState extends State<NewProjectDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          child: const Text('Закрыть'),
         ),
         ElevatedButton(
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
-              final tags = _tagsController.text
-                  .split(',')
-                  .map((tag) => tag.trim())
-                  .where((tag) => tag.isNotEmpty)
-                  .toList();
-
-              Navigator.of(context).pop({
-                'name': _nameController.text,
-                'description': _descriptionController.text,
-                'tags': tags,
-              });
-            }
+            // Apply plugin changes
+            Navigator.of(context).pop();
           },
-          child: Text(l10n.create),
-        ),
-      ],
-    );
-  }
-}
-
-class ProjectSelectionDialog extends StatelessWidget {
-  final List<FreedomeProject> projects;
-
-  const ProjectSelectionDialog({
-    super.key,
-    required this.projects,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    
-    return AlertDialog(
-      title: Text(l10n.open),
-      content: SizedBox(
-        width: 400,
-        height: 300,
-        child: ListView.builder(
-          itemCount: projects.length,
-          itemBuilder: (context, index) {
-            final project = projects[index];
-            return ListTile(
-              title: Text(project.name),
-              subtitle: Text(
-                '${l10n.modified(_formatDate(project.modified))}\n${project.description}',
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              trailing: project.tags.isNotEmpty
-                  ? Wrap(
-                      spacing: 4,
-                      children: project.tags.take(2).map((tag) => Chip(
-                        label: Text(tag, style: const TextStyle(fontSize: 10)),
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      )).toList(),
-                    )
-                  : null,
-              onTap: () => Navigator.of(context).pop(project),
-            );
-          },
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(l10n.cancel),
+          child: const Text('Применить'),
         ),
       ],
     );
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
+  IconData _getPluginIcon(String pluginName) {
+    switch (pluginName) {
+      case 'AIBASIC IDE':
+        return Icons.code;
+      case 'AnantaSound':
+        return Icons.music_note;
+      case 'Unreal Optimizer':
+        return Icons.analytics;
+      case 'Unreal Plugin Integration':
+        return Icons.extension;
+      case 'Video Editor':
+        return Icons.video_library;
+      case 'GIF Editor':
+        return Icons.gif;
+      case 'JPG Editor':
+        return Icons.image;
+      default:
+        return Icons.extension;
+    }
   }
 }

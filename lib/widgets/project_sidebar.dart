@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../l10n/app_localizations.dart';
+import 'plugin_status_panel.dart';
 
 class ProjectSidebar extends StatefulWidget {
   final Map<String, dynamic> project;
@@ -22,7 +23,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -35,9 +36,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             // Project Info
             _buildSection(
               title: l10n.project,
-              children: [
-                _buildProjectInfo(l10n),
-              ],
+              children: [_buildProjectInfo(l10n)],
             ),
 
             // Import File (consolidated)
@@ -50,6 +49,20 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
                   context: context,
                   l10n: l10n,
                 ),
+              ],
+            ),
+
+            // Learning System
+            _buildSection(
+              title: 'Система обучения "Любомир"',
+              children: [_buildLearningSystemPanel()],
+            ),
+
+            // Plugin Status
+            _buildSection(
+              title: 'Плагины',
+              children: [
+                PluginStatusPanel(onManagePlugins: () => _openPluginManager()),
               ],
             ),
 
@@ -137,9 +150,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             // Dome Settings
             _buildSection(
               title: l10n.domeSettings,
-              children: [
-                _buildDomeSettings(l10n),
-              ],
+              children: [_buildDomeSettings(l10n)],
             ),
 
             // Export
@@ -223,18 +234,12 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
           const SizedBox(height: 8),
           Text(
             '${l10n.created}: ${_formatDate(widget.project['created'])}',
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF888888),
-            ),
+            style: const TextStyle(fontSize: 12, color: Color(0xFF888888)),
           ),
           const SizedBox(height: 4),
           Text(
             '${l10n.modified}: ${_formatDate(widget.project['modified'])}',
-            style: const TextStyle(
-              fontSize: 12,
-              color: Color(0xFF888888),
-            ),
+            style: const TextStyle(fontSize: 12, color: Color(0xFF888888)),
           ),
         ],
       ),
@@ -254,18 +259,13 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
         style: OutlinedButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           side: const BorderSide(color: Color(0xFF555555)),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
         ),
         child: Row(
           children: [
             Icon(icon, size: 18, color: Colors.white),
             const SizedBox(width: 8),
-            Text(
-              label,
-              style: const TextStyle(color: Colors.white),
-            ),
+            Text(label, style: const TextStyle(color: Colors.white)),
           ],
         ),
       ),
@@ -352,19 +352,99 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             children: [
               Icon(icon, size: 18, color: Colors.white),
               const SizedBox(width: 8),
-              Text(
-                label,
-                style: const TextStyle(color: Colors.white),
-              ),
+              Text(label, style: const TextStyle(color: Colors.white)),
               const Spacer(),
-              const Icon(
-                Icons.arrow_drop_down,
-                color: Colors.white,
-                size: 18,
-              ),
+              const Icon(Icons.arrow_drop_down, color: Colors.white, size: 18),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLearningSystemPanel() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFF333333),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.psychology, color: Color(0xFF4A9EFF), size: 20),
+              const SizedBox(width: 8),
+              Text(
+                'Статус системы',
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF4A9EFF),
+                ),
+              ),
+              const Spacer(),
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Неактивна',
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => _activateLearningSystem(),
+                  icon: const Icon(Icons.play_arrow, size: 16),
+                  label: const Text('Активировать'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFF28A745),
+                    side: const BorderSide(color: Color(0xFF28A745)),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => _openLearningSettings(),
+                  icon: const Icon(Icons.settings, size: 16),
+                  label: const Text('Настройки'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.white,
+                    side: const BorderSide(color: Color(0xFF555555)),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const Text(
+            'Последние понимания:',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF888888),
+            ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            '• Пока нет данных',
+            style: TextStyle(color: Colors.grey, fontSize: 11),
+          ),
+        ],
       ),
     );
   }
@@ -393,10 +473,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             dropdownColor: const Color(0xFF333333),
             style: const TextStyle(color: Colors.white),
             items: ['2K', '4K', '8K'].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
+              return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),
             onChanged: (String? newValue) {
               if (newValue != null) {
@@ -420,10 +497,7 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             dropdownColor: const Color(0xFF333333),
             style: const TextStyle(color: Colors.white),
             items: ['Fulldome', 'Planetarium', 'Immersive'].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
+              return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),
             onChanged: (String? newValue) {
               if (newValue != null) {
@@ -448,10 +522,10 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
   // Import methods
   void _importFile(BuildContext context, AppLocalizations l10n) async {
     widget.onStatusUpdate('Importing files...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(allowMultiple: true);
-      
+
       if (result != null && result.files.isNotEmpty) {
         widget.onStatusUpdate('Imported ${result.files.length} files', 'ready');
       } else {
@@ -464,18 +538,18 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
   void _importComics(BuildContext context, AppLocalizations l10n) async {
     widget.onStatusUpdate('Importing Baranko Comics...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['comics', 'zip', 'rar', '7z', 'cbz', 'cbr'],
         allowMultiple: true,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
         int successCount = 0;
         int errorCount = 0;
-        
+
         for (final file in result.files) {
           try {
             if (file.extension == 'comics') {
@@ -492,11 +566,17 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
             errorCount++;
           }
         }
-        
+
         if (errorCount == 0) {
-          widget.onStatusUpdate('Imported $successCount comics successfully', 'ready');
+          widget.onStatusUpdate(
+            'Imported $successCount comics successfully',
+            'ready',
+          );
         } else {
-          widget.onStatusUpdate('Imported $successCount comics, $errorCount errors', 'warning');
+          widget.onStatusUpdate(
+            'Imported $successCount comics, $errorCount errors',
+            'warning',
+          );
         }
       } else {
         widget.onStatusUpdate(l10n.ready, 'ready');
@@ -523,16 +603,19 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
   void _importUnreal(BuildContext context, AppLocalizations l10n) async {
     widget.onStatusUpdate('Importing Unreal Engine scene...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['uasset', 'umap', 'fbx', 'obj', 'gltf'],
         allowMultiple: true,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
-        widget.onStatusUpdate('Imported ${result.files.length} Unreal files', 'ready');
+        widget.onStatusUpdate(
+          'Imported ${result.files.length} Unreal files',
+          'ready',
+        );
       } else {
         widget.onStatusUpdate(l10n.ready, 'ready');
       }
@@ -543,16 +626,19 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
   void _importBlender(BuildContext context, AppLocalizations l10n) async {
     widget.onStatusUpdate('Importing Blender model...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['blend', 'fbx', 'obj', 'dae', '3ds', 'ply', 'stl'],
         allowMultiple: true,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
-        widget.onStatusUpdate('Imported ${result.files.length} Blender models', 'ready');
+        widget.onStatusUpdate(
+          'Imported ${result.files.length} Blender models',
+          'ready',
+        );
       } else {
         widget.onStatusUpdate(l10n.ready, 'ready');
       }
@@ -607,14 +693,14 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
   void _loadDagaFile(BuildContext context) async {
     widget.onStatusUpdate('Loading DAGA file...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['daga'],
         allowMultiple: false,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
         final file = result.files.first;
         widget.onStatusUpdate('Loaded: ${file.name}', 'ready');
@@ -628,14 +714,14 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
 
   void _loadZelimFile(BuildContext context) async {
     widget.onStatusUpdate('Loading ZELIM file...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['zelim'],
         allowMultiple: false,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
         final file = result.files.first;
         widget.onStatusUpdate('Loaded: ${file.name}', 'ready');
@@ -650,14 +736,14 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
   // 3D Content methods
   void _loadModel(BuildContext context) async {
     widget.onStatusUpdate('Loading 3D model...', 'working');
-    
+
     try {
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['fbx', 'obj', 'gltf', 'glb', '3ds', 'dae'],
         allowMultiple: true,
       );
-      
+
       if (result != null && result.files.isNotEmpty) {
         widget.onStatusUpdate('Loaded ${result.files.length} models', 'ready');
       } else {
@@ -708,6 +794,28 @@ class _ProjectSidebarState extends State<ProjectSidebar> {
     widget.onStatusUpdate('Exporting project...', 'working');
     Future.delayed(const Duration(seconds: 2), () {
       widget.onStatusUpdate('Export complete', 'ready');
+    });
+  }
+
+  // Learning System methods
+  void _activateLearningSystem() {
+    widget.onStatusUpdate('Активация системы обучения "Любомир"...', 'working');
+    Future.delayed(const Duration(seconds: 2), () {
+      widget.onStatusUpdate('Система обучения "Любомир" активирована', 'ready');
+    });
+  }
+
+  void _openLearningSettings() {
+    widget.onStatusUpdate('Открытие настроек системы обучения...', 'working');
+    Future.delayed(const Duration(seconds: 1), () {
+      widget.onStatusUpdate('Настройки системы обучения открыты', 'ready');
+    });
+  }
+
+  void _openPluginManager() {
+    widget.onStatusUpdate('Открытие менеджера плагинов...', 'working');
+    Future.delayed(const Duration(seconds: 1), () {
+      widget.onStatusUpdate('Менеджер плагинов открыт', 'ready');
     });
   }
 }
