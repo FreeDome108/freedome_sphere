@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +13,7 @@ import 'services/unreal_optimizer_service.dart';
 import 'services/boranko_service.dart';
 import 'services/aibasic_ide_service.dart';
 import 'services/unreal_plugin_integration_service.dart';
+import 'services/freedome_integration_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,31 +24,34 @@ void main() async {
   final prefs = await SharedPreferences.getInstance();
   final seenOnboarding = prefs.getBool('seenOnboarding') ?? false;
 
-  runApp(FreedomeSphereApp(themeService: themeService, seenOnboarding: seenOnboarding));
+  runApp(
+    FreedomeSphereApp(
+      themeService: themeService,
+      seenOnboarding: seenOnboarding,
+    ),
+  );
 }
 
 class FreedomeSphereApp extends StatelessWidget {
   final ThemeService themeService;
   final bool seenOnboarding;
 
-  const FreedomeSphereApp({super.key, required this.themeService, required this.seenOnboarding});
+  const FreedomeSphereApp({
+    super.key,
+    required this.themeService,
+    required this.seenOnboarding,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ThemeService>.value(
-          value: themeService,
-        ),
+        ChangeNotifierProvider<ThemeService>.value(value: themeService),
         ChangeNotifierProvider<LocaleService>(
           create: (_) => LocaleService()..loadLocale(),
         ),
-        Provider<ProjectService>(
-          create: (_) => ProjectService(),
-        ),
-        Provider<BorankoService>(
-          create: (_) => BorankoService(),
-        ),
+        Provider<ProjectService>(create: (_) => ProjectService()),
+        Provider<BorankoService>(create: (_) => BorankoService()),
         ChangeNotifierProvider<AnantaSoundService>(
           create: (_) => AnantaSoundService(),
         ),
@@ -60,6 +63,9 @@ class FreedomeSphereApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<UnrealPluginIntegrationService>(
           create: (_) => UnrealPluginIntegrationService(),
+        ),
+        ChangeNotifierProvider<FreedomeIntegrationService>(
+          create: (_) => FreedomeIntegrationService(),
         ),
       ],
       child: Consumer2<ThemeService, LocaleService>(
@@ -75,7 +81,9 @@ class FreedomeSphereApp extends StatelessWidget {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: LocaleService.supportedLocales,
-            home: seenOnboarding ? const HomeScreen() : const OnboardingScreen(),
+            home: seenOnboarding
+                ? const HomeScreen()
+                : const OnboardingScreen(),
             debugShowCheckedModeBanner: false,
           );
         },

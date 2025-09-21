@@ -40,6 +40,13 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  
+  # FreeDome Ecosystem Libraries (using local stubs until packages are available)
+  # flutter_freedome: ^2.0.0
+  # flutter_freedome_calibration: ^1.0.0
+  # flutter_freedome_connectivity: ^1.0.0
+  
+  # Other dependencies
   flutter_3d_controller: ^2.2.0
   audioplayers: ^6.5.1
   file_picker: ^10.3.2

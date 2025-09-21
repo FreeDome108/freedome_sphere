@@ -17,6 +17,7 @@ import 'tutorials_screen.dart';
 import 'jpg_screen.dart';
 import 'gif_screen.dart';
 import 'video_screen.dart';
+import 'freedome_integration_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -467,6 +468,14 @@ class _HomeScreenState extends State<HomeScreen> {
     ).push(MaterialPageRoute(builder: (context) => const VideoScreen()));
   }
 
+  void _openFreedomeIntegration() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const FreedomeIntegrationScreen(),
+      ),
+    );
+  }
+
   void _navigateToPreviousProject() {
     if (_canNavigateBack()) {
       setState(() {
@@ -683,6 +692,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 case 'video':
                   _openVideoScreen();
                   break;
+                case 'freedome':
+                  _openFreedomeIntegration();
+                  break;
               }
             },
             itemBuilder: (context) => [
@@ -756,6 +768,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: ListTile(
                   leading: Icon(Icons.video_library, size: 20),
                   title: Text('Video Editor'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
+              const PopupMenuDivider(),
+              const PopupMenuItem(
+                value: 'freedome',
+                child: ListTile(
+                  leading: Icon(Icons.cable, size: 20, color: Colors.blue),
+                  title: Text('FreeDome Integration'),
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
