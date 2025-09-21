@@ -14,6 +14,7 @@ import 'services/boranko_service.dart';
 import 'services/aibasic_ide_service.dart';
 import 'services/unreal_plugin_integration_service.dart';
 import 'services/freedome_integration_service.dart';
+import 'services/lyubomir_understanding_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,6 +67,9 @@ class FreedomeSphereApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<FreedomeIntegrationService>(
           create: (_) => FreedomeIntegrationService(),
+        ),
+        ChangeNotifierProvider<LyubomirUnderstandingService>(
+          create: (_) => LyubomirUnderstandingService()..initialize(),
         ),
       ],
       child: Consumer2<ThemeService, LocaleService>(

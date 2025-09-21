@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/freedome_integration_service.dart';
+import '../services/freedome_api_stubs.dart';
 
 class FreedomeIntegrationScreen extends StatefulWidget {
   const FreedomeIntegrationScreen({super.key});

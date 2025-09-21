@@ -17,7 +17,7 @@ class FreedomeCore {
     if (!_isInitialized) {
       throw Exception('FreedomeCore не инициализирован');
     }
-    
+
     await Future.delayed(const Duration(milliseconds: 100));
     print('📤 Данные отправлены в FreedomeCore: $data');
   }
@@ -26,9 +26,9 @@ class FreedomeCore {
     if (!_isInitialized) {
       throw Exception('FreedomeCore не инициализирован');
     }
-    
+
     await Future.delayed(const Duration(milliseconds: 200));
-    
+
     return SystemStatus(
       isRunning: true,
       info: {
@@ -66,9 +66,9 @@ class FreedomeCalibration {
     }
 
     await Future.delayed(const Duration(seconds: 2));
-    
+
     print('🎵 Калибровка аудио завершена (заглушка)');
-    
+
     return CalibrationResult(
       success: true,
       status: 'Audio calibration completed successfully',
@@ -91,9 +91,9 @@ class FreedomeCalibration {
     }
 
     await Future.delayed(const Duration(seconds: 3));
-    
+
     print('📹 Калибровка видео завершена (заглушка)');
-    
+
     return CalibrationResult(
       success: true,
       status: 'Video calibration completed successfully',
@@ -114,7 +114,7 @@ class FreedomeCalibration {
     }
 
     await Future.delayed(const Duration(milliseconds: 500));
-    
+
     return [
       DeviceInfo(
         id: 'audio_device_1',
@@ -148,10 +148,11 @@ class FreedomeCalibration {
 class FreedomeConnectivity {
   bool _isInitialized = false;
   bool _isConnected = false;
-  final StreamController<ConnectionStatus> _statusController = 
+  final StreamController<ConnectionStatus> _statusController =
       StreamController<ConnectionStatus>.broadcast();
 
-  Stream<ConnectionStatus> get onConnectionStatusChanged => _statusController.stream;
+  Stream<ConnectionStatus> get onConnectionStatusChanged =>
+      _statusController.stream;
 
   Future<void> initialize() async {
     await Future.delayed(const Duration(milliseconds: 400));
@@ -169,16 +170,16 @@ class FreedomeConnectivity {
     }
 
     _statusController.add(ConnectionStatus.connecting);
-    
+
     // Имитация процесса подключения
     await Future.delayed(const Duration(seconds: 2));
-    
+
     // В заглушке всегда успешное подключение
     _isConnected = true;
     _statusController.add(ConnectionStatus.connected);
-    
+
     print('🔗 Подключение к $serverUrl:$port успешно (заглушка)');
-    
+
     return true;
   }
 
@@ -189,9 +190,9 @@ class FreedomeConnectivity {
 
     _statusController.add(ConnectionStatus.disconnected);
     _isConnected = false;
-    
+
     print('🔌 Отключение от FreeDome системы (заглушка)');
-    
+
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
@@ -201,12 +202,7 @@ class FreedomeConnectivity {
 }
 
 /// Статус подключения
-enum ConnectionStatus {
-  disconnected,
-  connecting,
-  connected,
-  error,
-}
+enum ConnectionStatus { disconnected, connecting, connected, error }
 
 /// Результат калибровки
 class CalibrationResult {

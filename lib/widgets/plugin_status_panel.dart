@@ -25,17 +25,25 @@ class PluginStatusPanel extends StatelessWidget {
             children: [
               const Icon(Icons.extension, color: Color(0xFF4A9EFF)),
               const SizedBox(width: 8),
-              const Text(
-                'Статус плагинов',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A9EFF),
+              const Expanded(
+                child: Text(
+                  'Статус плагинов',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF4A9EFF),
+                  ),
                 ),
               ),
-              const Spacer(),
               TextButton(
                 onPressed: onManagePlugins,
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  minimumSize: const Size(60, 32),
+                ),
                 child: const Text(
                   'Управление',
                   style: TextStyle(color: Colors.white, fontSize: 12),
