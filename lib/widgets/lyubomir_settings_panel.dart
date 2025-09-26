@@ -76,7 +76,9 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
               value: _currentSettings.autoAnalyze,
               onChanged: (value) {
                 setState(() {
-                  _currentSettings = _currentSettings.copyWith(autoAnalyze: value);
+                  _currentSettings = _currentSettings.copyWith(
+                    autoAnalyze: value,
+                  );
                   _hasChanges = true;
                 });
               },
@@ -101,7 +103,9 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
             const SizedBox(height: 16),
             ListTile(
               title: const Text('Чувствительность'),
-              subtitle: Text('${(_currentSettings.sensitivity * 100).toInt()}%'),
+              subtitle: Text(
+                '${(_currentSettings.sensitivity * 100).toInt()}%',
+              ),
               trailing: SizedBox(
                 width: 200,
                 child: Slider(
@@ -112,7 +116,9 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
                   label: '${(_currentSettings.sensitivity * 100).toInt()}%',
                   onChanged: (value) {
                     setState(() {
-                      _currentSettings = _currentSettings.copyWith(sensitivity: value);
+                      _currentSettings = _currentSettings.copyWith(
+                        sensitivity: value,
+                      );
                       _hasChanges = true;
                     });
                   },
@@ -156,13 +162,17 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
                 value: isEnabled,
                 onChanged: (value) {
                   setState(() {
-                    final newTypes = List<UnderstandingType>.from(_currentSettings.enabledTypes);
+                    final newTypes = List<UnderstandingType>.from(
+                      _currentSettings.enabledTypes,
+                    );
                     if (value == true) {
                       newTypes.add(type);
                     } else {
                       newTypes.remove(type);
                     }
-                    _currentSettings = _currentSettings.copyWith(enabledTypes: newTypes);
+                    _currentSettings = _currentSettings.copyWith(
+                      enabledTypes: newTypes,
+                    );
                     _hasChanges = true;
                   });
                 },
@@ -247,6 +257,8 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
         return 'Квантовое понимание';
       case UnderstandingType.holistic:
         return 'Холистическое понимание';
+      case UnderstandingType.threedimensional:
+        return 'Трехмерное понимание';
     }
   }
 
@@ -272,6 +284,8 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
         return 'Целостный анализ всех аспектов';
       case UnderstandingType.interactive:
         return 'Анализ взаимодействий и UX';
+      case UnderstandingType.threedimensional:
+        return 'Анализ 3D моделей и объемных объектов';
     }
   }
 
@@ -280,7 +294,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
     setState(() {
       _hasChanges = false;
     });
-    
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -304,7 +318,9 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Сбросить настройки?'),
-        content: const Text('Все настройки будут восстановлены к значениям по умолчанию.'),
+        content: const Text(
+          'Все настройки будут восстановлены к значениям по умолчанию.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -327,7 +343,9 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Очистить все данные?'),
-        content: const Text('Все понимания и результаты анализа будут удалены. Это действие нельзя отменить.'),
+        content: const Text(
+          'Все понимания и результаты анализа будут удалены. Это действие нельзя отменить.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -351,7 +369,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
       _currentSettings = service.settings;
       _hasChanges = false;
     });
-    
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -364,7 +382,7 @@ class _LyubomirSettingsPanelState extends State<LyubomirSettingsPanel> {
 
   void _clearAllData(LyubomirUnderstandingService service) async {
     await service.clearAllData();
-    
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

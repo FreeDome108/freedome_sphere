@@ -85,15 +85,19 @@ class FreedomeProject {
       modified: DateTime.parse(json['modified']),
       version: json['version'] ?? '1.0.0',
       dome: DomeSettings.fromJson(json['dome']),
-      scenes: (json['scenes'] as List?)
-          ?.map((s) => Scene.fromJson(s))
-          .toList() ?? [],
-      audioSources: (json['audioSources'] as List?)
-          ?.map((a) => AudioSource.fromJson(a))
-          .toList() ?? [],
-      comics: (json['comics'] as List?)
-          ?.map((c) => ComicContent.fromJson(c))
-          .toList() ?? [],
+      scenes:
+          (json['scenes'] as List?)?.map((s) => Scene.fromJson(s)).toList() ??
+          [],
+      audioSources:
+          (json['audioSources'] as List?)
+              ?.map((a) => AudioSource.fromJson(a))
+              .toList() ??
+          [],
+      comics:
+          (json['comics'] as List?)
+              ?.map((c) => ComicContent.fromJson(c))
+              .toList() ??
+          [],
       settings: ProjectSettings.fromJson(json['settings']),
     );
   }
@@ -154,17 +158,11 @@ class Resolution {
   Resolution({required this.width, required this.height});
 
   Map<String, dynamic> toJson() {
-    return {
-      'width': width,
-      'height': height,
-    };
+    return {'width': width, 'height': height};
   }
 
   factory Resolution.fromJson(Map<String, dynamic> json) {
-    return Resolution(
-      width: json['width'],
-      height: json['height'],
-    );
+    return Resolution(width: json['width'], height: json['height']);
   }
 }
 
@@ -175,7 +173,7 @@ class Scene {
   final String description;
   final List<Model3D> models;
   final List<Material> materials;
-  final List<Animation> animations;
+  final List<ProjectAnimation> animations;
   final List<Texture> textures;
 
   Scene({
@@ -205,18 +203,24 @@ class Scene {
       id: json['id'],
       name: json['name'],
       description: json['description'] ?? '',
-      models: (json['models'] as List?)
-          ?.map((m) => Model3D.fromJson(m))
-          .toList() ?? [],
-      materials: (json['materials'] as List?)
-          ?.map((m) => Material.fromJson(m))
-          .toList() ?? [],
-      animations: (json['animations'] as List?)
-          ?.map((a) => Animation.fromJson(a))
-          .toList() ?? [],
-      textures: (json['textures'] as List?)
-          ?.map((t) => Texture.fromJson(t))
-          .toList() ?? [],
+      models:
+          (json['models'] as List?)?.map((m) => Model3D.fromJson(m)).toList() ??
+          [],
+      materials:
+          (json['materials'] as List?)
+              ?.map((m) => Material.fromJson(m))
+              .toList() ??
+          [],
+      animations:
+          (json['animations'] as List?)
+              ?.map((a) => ProjectAnimation.fromJson(a))
+              .toList() ??
+          [],
+      textures:
+          (json['textures'] as List?)
+              ?.map((t) => Texture.fromJson(t))
+              .toList() ??
+          [],
     );
   }
 }
@@ -308,13 +312,13 @@ class Material {
 }
 
 /// Анимация
-class Animation {
+class ProjectAnimation {
   final String id;
   final String name;
   final double duration;
   final List<Keyframe> keyframes;
 
-  Animation({
+  ProjectAnimation({
     required this.id,
     required this.name,
     required this.duration,
@@ -330,14 +334,16 @@ class Animation {
     };
   }
 
-  factory Animation.fromJson(Map<String, dynamic> json) {
-    return Animation(
+  factory ProjectAnimation.fromJson(Map<String, dynamic> json) {
+    return ProjectAnimation(
       id: json['id'],
       name: json['name'],
       duration: json['duration']?.toDouble() ?? 0.0,
-      keyframes: (json['keyframes'] as List?)
-          ?.map((k) => Keyframe.fromJson(k))
-          .toList() ?? [],
+      keyframes:
+          (json['keyframes'] as List?)
+              ?.map((k) => Keyframe.fromJson(k))
+              .toList() ??
+          [],
     );
   }
 }
@@ -350,10 +356,7 @@ class Keyframe {
   Keyframe({required this.time, required this.transform});
 
   Map<String, dynamic> toJson() {
-    return {
-      'time': time,
-      'transform': transform.toJson(),
-    };
+    return {'time': time, 'transform': transform.toJson()};
   }
 
   factory Keyframe.fromJson(Map<String, dynamic> json) {
@@ -439,11 +442,7 @@ class Vector3 {
   const Vector3(this.x, this.y, this.z);
 
   Map<String, dynamic> toJson() {
-    return {
-      'x': x,
-      'y': y,
-      'z': z,
-    };
+    return {'x': x, 'y': y, 'z': z};
   }
 
   factory Vector3.fromJson(Map<String, dynamic> json) {
@@ -565,9 +564,11 @@ class ComicContent {
       name: json['name'],
       originalPath: json['originalPath'],
       format: json['format'],
-      pages: (json['pages'] as List?)
-          ?.map((p) => ComicPage.fromJson(p))
-          .toList() ?? [],
+      pages:
+          (json['pages'] as List?)
+              ?.map((p) => ComicPage.fromJson(p))
+              .toList() ??
+          [],
     );
   }
 }

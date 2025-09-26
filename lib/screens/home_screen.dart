@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:freedome_editor_comics/freedome_editor_comics.dart' as comics;
 import '../models/project.dart';
 import '../services/project_service.dart';
 import '../services/boranko_service.dart';
@@ -18,6 +19,7 @@ import 'jpg_screen.dart';
 import 'gif_screen.dart';
 import 'video_screen.dart';
 import 'freedome_integration_screen.dart';
+import '../pages/comics_editor_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,7 +28,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   FreedomeProject? _currentProject;
   bool _isLoading = false;
   String _statusMessage = 'Готов к работе';
@@ -46,11 +48,59 @@ class _HomeScreenState extends State<HomeScreen> {
   // Plugin state
   int _activePluginsCount = 0;
 
+  // Comics editor integration
+  late comics.ComicsViewModel _comicsViewModel;
+  bool _comicsEditorActive = false;
+  bool _isComicsInitialized = false;
+
+  // Animation controllers
+  late AnimationController _fadeController;
+  late AnimationController _slideController;
+  late Animation<double> _fadeAnimation;
+  late Animation<Offset> _slideAnimation;
+
   @override
   void initState() {
     super.initState();
+    _initializeAnimations();
+    _initializeComicsEditor();
     _loadCurrentProject();
     _initializeServices();
+  }
+
+  void _initializeAnimations() {
+    _fadeController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+    _slideController = AnimationController(
+      duration: const Duration(milliseconds: 400),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _fadeController, curve: Curves.easeInOut),
+    );
+
+    _slideAnimation =
+        Tween<Offset>(begin: const Offset(0, -1), end: Offset.zero).animate(
+          CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
+        );
+
+    _fadeController.forward();
+    _slideController.forward();
+  }
+
+  Future<void> _initializeComicsEditor() async {
+    try {
+      _comicsViewModel = comics.ComicsViewModel();
+      await _comicsViewModel.initializeComics(null);
+      setState(() {
+        _isComicsInitialized = true;
+      });
+    } catch (e) {
+      print('Ошибка инициализации редактора комиксов: $e');
+    }
   }
 
   Future<void> _initializeServices() async {
@@ -283,6 +333,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _toggleComicsEditor() {
+    setState(() {
+      _comicsEditorActive = !_comicsEditorActive;
+    });
+  }
+
   void _playPreview() {
     setState(() {
       _statusMessage = 'Воспроизведение превью...';
@@ -476,6 +532,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _openComicsEditor() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const ComicsEditorPage()));
+  }
+
   void _navigateToPreviousProject() {
     if (_canNavigateBack()) {
       setState(() {
@@ -611,6 +673,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    _fadeController.dispose();
+    _slideController.dispose();
+    if (_isComicsInitialized) {
+      _comicsViewModel.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -659,6 +731,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 ? 'Скрыть статусную панель'
                 : 'Показать статусную панель',
           ),
+          // Переключение редактора комиксов
+          IconButton(
+            icon: Icon(
+              _comicsEditorActive
+                  ? Icons.auto_stories
+                  : Icons.auto_stories_outlined,
+              color: _comicsEditorActive ? Colors.orange : null,
+            ),
+            onPressed: _toggleComicsEditor,
+            tooltip: _comicsEditorActive
+                ? 'Скрыть редактор комиксов'
+                : 'Показать редактор комиксов',
+          ),
           // Меню быстрого доступа к инструментам
           PopupMenuButton<String>(
             icon: const Icon(Icons.build),
@@ -694,6 +779,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   break;
                 case 'freedome':
                   _openFreedomeIntegration();
+                  break;
+                case 'comics':
+                  _openComicsEditor();
                   break;
               }
             },
@@ -780,81 +868,384 @@ class _HomeScreenState extends State<HomeScreen> {
                   contentPadding: EdgeInsets.zero,
                 ),
               ),
+              const PopupMenuItem(
+                value: 'comics',
+                child: ListTile(
+                  leading: Icon(
+                    Icons.auto_stories,
+                    size: 20,
+                    color: Colors.orange,
+                  ),
+                  title: Text('Comics Editor'),
+                  contentPadding: EdgeInsets.zero,
+                ),
+              ),
             ],
           ),
           const SizedBox(width: 8),
         ],
       ),
-      body: Column(
-        children: [
-          // Панель инструментов
-          Toolbar(
-            onNewProject: _createNewProject,
-            onOpenProject: _openProject,
-            onSaveProject: _saveProject,
-            onPlayPreview: _playPreview,
-            onStopPreview: _stopPreview,
-            onResetView: _resetView,
-            onImportBoranko: _importBoranko,
-            onImportComics: _importComics,
-            onPreviousProject: _navigateToPreviousProject,
-            onNextProject: _navigateToNextProject,
-            onOpenLearningSystem: _openLyubomirLearningSystem,
-            onOpenPluginManager: _openPluginManager,
-            onOpenAIBasicIDE: _openAIBasicIDE,
-            onOpenAnantaSound: _openAnantaSound,
-            statusMessage: _statusMessage,
-            statusType: _statusType,
-            canNavigateBack: _canNavigateBack(),
-            canNavigateForward: _canNavigateForward(),
-            learningSystemActive: _learningSystemActive,
-            activePluginsCount: _activePluginsCount,
-          ),
+      body: FadeTransition(
+        opacity: _fadeAnimation,
+        child: SlideTransition(
+          position: _slideAnimation,
+          child: Column(
+            children: [
+              // Панель инструментов
+              Toolbar(
+                onNewProject: _createNewProject,
+                onOpenProject: _openProject,
+                onSaveProject: _saveProject,
+                onPlayPreview: _playPreview,
+                onStopPreview: _stopPreview,
+                onResetView: _resetView,
+                onImportBoranko: _importBoranko,
+                onImportComics: _importComics,
+                onPreviousProject: _navigateToPreviousProject,
+                onNextProject: _navigateToNextProject,
+                onOpenLearningSystem: _openLyubomirLearningSystem,
+                onOpenPluginManager: _openPluginManager,
+                onOpenAIBasicIDE: _openAIBasicIDE,
+                onOpenAnantaSound: _openAnantaSound,
+                statusMessage: _statusMessage,
+                statusType: _statusType,
+                canNavigateBack: _canNavigateBack(),
+                canNavigateForward: _canNavigateForward(),
+                learningSystemActive: _learningSystemActive,
+                activePluginsCount: _activePluginsCount,
+              ),
 
-          // Основная рабочая область
-          Expanded(
+              // Основная рабочая область
+              Expanded(
+                child: Row(
+                  children: [
+                    // Боковая панель
+                    if (_showSidebar)
+                      SizedBox(
+                        width: _sidebarWidth,
+                        child: ProjectSidebar(
+                          project: _currentProject?.toJson() ?? {},
+                          onStatusUpdate: _updateStatus,
+                          onProjectUpdate: _updateProject,
+                        ),
+                      ),
+
+                    // Главная область с 3D вьюпортом и редактором комиксов
+                    Expanded(
+                      child: _comicsEditorActive && _isComicsInitialized
+                          ? _buildComicsEditorView()
+                          : Viewport3D(
+                              project: _currentProject,
+                              isLoading: _isLoading,
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Статусная панель
+              if (_showStatusBar)
+                SizedBox(
+                  height: _statusBarHeight,
+                  child: StatusBar(
+                    message: _statusMessage,
+                    type: _statusType,
+                    progress: _isLoading ? null : 0.0,
+                    systemInfo: {
+                      'memoryUsage': 512,
+                      'activePlugins': _activePluginsCount,
+                      'learningActive': _learningSystemActive,
+                      'comicsEditorActive': _comicsEditorActive,
+                    },
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildComicsEditorView() {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.orange.withOpacity(0.1),
+            Colors.blue.withOpacity(0.1),
+          ],
+        ),
+      ),
+      child: Column(
+        children: [
+          // Информационная панель редактора комиксов
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.orange.withOpacity(0.1),
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.orange.withOpacity(0.3),
+                  width: 1,
+                ),
+              ),
+            ),
             child: Row(
               children: [
-                // Боковая панель
-                if (_showSidebar)
-                  SizedBox(
-                    width: _sidebarWidth,
-                    child: ProjectSidebar(
-                      project: _currentProject?.toJson() ?? {},
-                      onStatusUpdate: _updateStatus,
-                      onProjectUpdate: _updateProject,
-                    ),
+                const Icon(Icons.auto_stories, color: Colors.orange),
+                const SizedBox(width: 8),
+                Text(
+                  'Редактор комиксов',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.orange,
+                    fontWeight: FontWeight.bold,
                   ),
-
-                // Главная область с 3D вьюпортом
-                Expanded(
-                  child: Viewport3D(
-                    project: _currentProject,
-                    isLoading: _isLoading,
-                  ),
+                ),
+                const Spacer(),
+                Text(
+                  'Слои: ${_comicsViewModel.layers.length}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  'Звуки: ${_comicsViewModel.sounds.length}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(width: 16),
+                Text(
+                  '${_comicsViewModel.width}x${_comicsViewModel.height}',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),
           ),
 
-          // Статусная панель
-          if (_showStatusBar)
-            SizedBox(
-              height: _statusBarHeight,
-              child: StatusBar(
-                message: _statusMessage,
-                type: _statusType,
-                progress: _isLoading ? null : 0.0,
-                systemInfo: {
-                  'memoryUsage': 512,
-                  'activePlugins': _activePluginsCount,
-                  'learningActive': _learningSystemActive,
-                },
-              ),
+          // Основная область редактора
+          Expanded(
+            child: Row(
+              children: [
+                // Панель управления
+                Container(
+                  width: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.1),
+                    border: Border(
+                      right: BorderSide(
+                        color: Colors.grey.withOpacity(0.3),
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      // Кнопки управления
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          children: [
+                            ElevatedButton.icon(
+                              onPressed: _addComicsLayer,
+                              icon: const Icon(Icons.add_photo_alternate),
+                              label: const Text('Добавить слой'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.orange,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton.icon(
+                              onPressed: _addComicsSound,
+                              icon: const Icon(Icons.audiotrack),
+                              label: const Text('Добавить звук'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            ElevatedButton.icon(
+                              onPressed: _saveComics,
+                              icon: const Icon(Icons.save),
+                              label: const Text('Сохранить'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green,
+                                foregroundColor: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      // Настройки
+                      Expanded(
+                        child: ListView(
+                          padding: const EdgeInsets.all(16),
+                          children: [
+                            // Скролл
+                            Text(
+                              'Прокрутка: ${_comicsViewModel.scroll.round()}',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            Slider(
+                              value: _comicsViewModel.scroll,
+                              min: 0,
+                              max: 1000,
+                              divisions: 100,
+                              onChanged: (value) {
+                                setState(() {
+                                  _comicsViewModel.scroll = value;
+                                });
+                              },
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Язык
+                            Text(
+                              'Язык:',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                            DropdownButton<comics.Cultures>(
+                              value: _comicsViewModel.culture,
+                              isExpanded: true,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  setState(() {
+                                    _comicsViewModel.culture = value;
+                                  });
+                                }
+                              },
+                              items: comics.CulturesHelper.all.map((culture) {
+                                return DropdownMenuItem(
+                                  value: culture,
+                                  child: Text(
+                                    culture
+                                        .toString()
+                                        .split('.')
+                                        .last
+                                        .toUpperCase(),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Отключить звук
+                            Row(
+                              children: [
+                                Text(
+                                  'Отключить звук:',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                const Spacer(),
+                                Switch(
+                                  value: _comicsViewModel.disableSound,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _comicsViewModel.disableSound = value;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Область предварительного просмотра
+                Expanded(
+                  child: Container(
+                    color: Colors.white,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.auto_stories,
+                            size: 64,
+                            color: Colors.orange.withOpacity(0.5),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            'Предварительный просмотр комикса',
+                            style: Theme.of(context).textTheme.headlineSmall
+                                ?.copyWith(color: Colors.orange),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Размер: ${_comicsViewModel.width}x${_comicsViewModel.height}',
+                            style: Theme.of(context).textTheme.bodyMedium
+                                ?.copyWith(color: Colors.grey),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> _addComicsLayer() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.image,
+        allowMultiple: false,
+      );
+
+      if (result != null && result.files.single.path != null) {
+        await _comicsViewModel.addLayer(result.files.single.path!);
+        setState(() {});
+        _updateStatus('Слой добавлен', 'ready');
+      }
+    } catch (e) {
+      _updateStatus('Ошибка добавления слоя: $e', 'error');
+    }
+  }
+
+  Future<void> _addComicsSound() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.audio,
+        allowMultiple: false,
+      );
+
+      if (result != null && result.files.single.path != null) {
+        await _comicsViewModel.addSound(result.files.single.path!);
+        setState(() {});
+        _updateStatus('Звук добавлен', 'ready');
+      }
+    } catch (e) {
+      _updateStatus('Ошибка добавления звука: $e', 'error');
+    }
+  }
+
+  Future<void> _saveComics() async {
+    try {
+      final result = await FilePicker.platform.saveFile(
+        dialogTitle: 'Сохранить комикс',
+        fileName: 'comics.comics',
+        type: FileType.custom,
+        allowedExtensions: ['comics'],
+      );
+
+      if (result != null) {
+        await _comicsViewModel.save(result);
+        _updateStatus('Комикс сохранен', 'ready');
+      }
+    } catch (e) {
+      _updateStatus('Ошибка сохранения комикса: $e', 'error');
+    }
   }
 }
 

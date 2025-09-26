@@ -42,12 +42,16 @@ class LyubomirSettings {
       parameters: Map<String, dynamic>.from(json['parameters'] ?? {}),
       autoAnalyze: json['autoAnalyze'] ?? true,
       sensitivity: json['sensitivity']?.toDouble() ?? 0.7,
-      enabledTypes: (json['enabledTypes'] as List?)
-          ?.map((e) => UnderstandingType.values.firstWhere(
-                (type) => type.name == e,
-                orElse: () => UnderstandingType.visual,
-              ))
-          .toList() ?? [],
+      enabledTypes:
+          (json['enabledTypes'] as List?)
+              ?.map(
+                (e) => UnderstandingType.values.firstWhere(
+                  (type) => type.name == e,
+                  orElse: () => UnderstandingType.visual,
+                ),
+              )
+              .toList() ??
+          [],
     );
   }
 
@@ -103,7 +107,8 @@ enum UnderstandingType {
   holistic,
   audio,
   text,
-  interactive
+  interactive,
+  threedimensional,
 }
 
 /// Статус понимания
@@ -116,7 +121,7 @@ enum UnderstandingStatus {
   idle,
   analyzing,
   error,
-  paused
+  paused,
 }
 
 /// Результат понимания
@@ -231,14 +236,20 @@ class LyubomirUnderstanding {
       ),
       confidence: json['confidence']?.toDouble() ?? 0.0,
       metadata: Map<String, dynamic>.from(json['metadata'] ?? {}),
-      results: (json['results'] as List?)
-          ?.map((r) => UnderstandingResult.fromJson(r))
-          .toList() ?? [],
+      results:
+          (json['results'] as List?)
+              ?.map((r) => UnderstandingResult.fromJson(r))
+              .toList() ??
+          [],
       created: DateTime.parse(json['created']),
       updated: DateTime.parse(json['updated']),
       description: json['description'] ?? '',
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      lastAnalyzed: json['lastAnalyzed'] != null ? DateTime.parse(json['lastAnalyzed']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+      lastAnalyzed: json['lastAnalyzed'] != null
+          ? DateTime.parse(json['lastAnalyzed'])
+          : null,
     );
   }
 

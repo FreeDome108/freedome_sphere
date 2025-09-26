@@ -9,10 +9,12 @@ class LyubomirLearningSystemScreen extends StatefulWidget {
   const LyubomirLearningSystemScreen({super.key});
 
   @override
-  State<LyubomirLearningSystemScreen> createState() => _LyubomirLearningSystemScreenState();
+  State<LyubomirLearningSystemScreen> createState() =>
+      _LyubomirLearningSystemScreenState();
 }
 
-class _LyubomirLearningSystemScreenState extends State<LyubomirLearningSystemScreen>
+class _LyubomirLearningSystemScreenState
+    extends State<LyubomirLearningSystemScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
   bool _isInitialized = false;
@@ -43,11 +45,7 @@ class _LyubomirLearningSystemScreenState extends State<LyubomirLearningSystemScr
   @override
   Widget build(BuildContext context) {
     if (!_isInitialized) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
@@ -57,18 +55,9 @@ class _LyubomirLearningSystemScreenState extends State<LyubomirLearningSystemScr
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
-            Tab(
-              icon: Icon(Icons.psychology),
-              text: 'Понимания',
-            ),
-            Tab(
-              icon: Icon(Icons.analytics),
-              text: 'Анализ',
-            ),
-            Tab(
-              icon: Icon(Icons.settings),
-              text: 'Настройки',
-            ),
+            Tab(icon: Icon(Icons.psychology), text: 'Понимания'),
+            Tab(icon: Icon(Icons.analytics), text: 'Анализ'),
+            Tab(icon: Icon(Icons.settings), text: 'Настройки'),
           ],
         ),
         actions: [
@@ -88,11 +77,7 @@ class _LyubomirLearningSystemScreenState extends State<LyubomirLearningSystemScr
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          _UnderstandingsTab(),
-          _AnalysisTab(),
-          _SettingsTab(),
-        ],
+        children: const [_UnderstandingsTab(), _AnalysisTab(), _SettingsTab()],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _showCreateUnderstandingDialog,
@@ -125,25 +110,16 @@ class _UnderstandingsTab extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.psychology_outlined,
-                  size: 64,
-                  color: Colors.grey,
-                ),
+                Icon(Icons.psychology_outlined, size: 64, color: Colors.grey),
                 SizedBox(height: 16),
                 Text(
                   'Нет пониманий',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
                 SizedBox(height: 8),
                 Text(
                   'Создайте новое понимание для анализа контента',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
@@ -184,7 +160,8 @@ class _UnderstandingsTab extends StatelessWidget {
                   ],
                 ),
                 trailing: PopupMenuButton<String>(
-                  onSelected: (value) => _handleMenuAction(context, understanding, value),
+                  onSelected: (value) =>
+                      _handleMenuAction(context, understanding, value),
                   itemBuilder: (context) => [
                     const PopupMenuItem(
                       value: 'analyze',
@@ -206,7 +183,10 @@ class _UnderstandingsTab extends StatelessWidget {
                       value: 'delete',
                       child: ListTile(
                         leading: Icon(Icons.delete, color: Colors.red),
-                        title: Text('Удалить', style: TextStyle(color: Colors.red)),
+                        title: Text(
+                          'Удалить',
+                          style: TextStyle(color: Colors.red),
+                        ),
                         contentPadding: EdgeInsets.zero,
                       ),
                     ),
@@ -243,6 +223,8 @@ class _UnderstandingsTab extends StatelessWidget {
         return Colors.cyan;
       case UnderstandingType.holistic:
         return Colors.amber;
+      case UnderstandingType.threedimensional:
+        return Colors.deepOrange;
     }
   }
 
@@ -268,6 +250,8 @@ class _UnderstandingsTab extends StatelessWidget {
         return Icons.auto_awesome;
       case UnderstandingType.holistic:
         return Icons.all_inclusive;
+      case UnderstandingType.threedimensional:
+        return Icons.view_in_ar;
     }
   }
 
@@ -297,7 +281,8 @@ class _UnderstandingsTab extends StatelessWidget {
   ) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => _UnderstandingDetailsScreen(understanding: understanding),
+        builder: (context) =>
+            _UnderstandingDetailsScreen(understanding: understanding),
       ),
     );
   }
@@ -311,7 +296,9 @@ class _UnderstandingsTab extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Удалить понимание?'),
-        content: Text('Вы уверены, что хотите удалить "${understanding.name}"?'),
+        content: Text(
+          'Вы уверены, что хотите удалить "${understanding.name}"?',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -413,25 +400,16 @@ class _AnalysisTab extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.analytics_outlined,
-                  size: 64,
-                  color: Colors.grey,
-                ),
+                Icon(Icons.analytics_outlined, size: 64, color: Colors.grey),
                 SizedBox(height: 16),
                 Text(
                   'Нет завершенных анализов',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
                 SizedBox(height: 8),
                 Text(
                   'Запустите анализ пониманий для просмотра результатов',
-                  style: TextStyle(
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(color: Colors.grey),
                 ),
               ],
             ),
@@ -451,7 +429,9 @@ class _AnalysisTab extends StatelessWidget {
                 children: understanding.results.map((result) {
                   return ListTile(
                     title: Text(result.type.toString()),
-                    subtitle: Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
+                    subtitle: Text(
+                      'Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%',
+                    ),
                     trailing: Text(
                       '${result.tags.length} тегов',
                       style: Theme.of(context).textTheme.bodySmall,
@@ -477,11 +457,16 @@ class _AnalysisTab extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
+              Text(
+                'Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%',
+              ),
               const SizedBox(height: 8),
               Text('Теги: ${result.tags.join(', ')}'),
               const SizedBox(height: 8),
-              const Text('Данные:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Данные:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 4),
               Text(
                 result.data.toString(),
@@ -520,10 +505,12 @@ class _CreateUnderstandingDialog extends StatefulWidget {
   const _CreateUnderstandingDialog();
 
   @override
-  State<_CreateUnderstandingDialog> createState() => _CreateUnderstandingDialogState();
+  State<_CreateUnderstandingDialog> createState() =>
+      _CreateUnderstandingDialogState();
 }
 
-class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> {
+class _CreateUnderstandingDialogState
+    extends State<_CreateUnderstandingDialog> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
@@ -632,6 +619,8 @@ class _CreateUnderstandingDialogState extends State<_CreateUnderstandingDialog> 
         return 'Квантовое';
       case UnderstandingType.holistic:
         return 'Холистическое';
+      case UnderstandingType.threedimensional:
+        return 'Трехмерное';
     }
   }
 
@@ -740,7 +729,9 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 8),
                   child: ListTile(
                     title: Text(result.type.toString()),
-                    subtitle: Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
+                    subtitle: Text(
+                      'Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%',
+                    ),
                     trailing: Text(
                       '${result.tags.length} тегов',
                       style: Theme.of(context).textTheme.bodySmall,
@@ -777,6 +768,8 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
         return 'Квантовое';
       case UnderstandingType.holistic:
         return 'Холистическое';
+      case UnderstandingType.threedimensional:
+        return 'Трехмерное';
     }
   }
 
@@ -794,11 +787,16 @@ class _UnderstandingDetailsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%'),
+              Text(
+                'Уверенность: ${(result.confidence * 100).toStringAsFixed(1)}%',
+              ),
               const SizedBox(height: 8),
               Text('Теги: ${result.tags.join(', ')}'),
               const SizedBox(height: 8),
-              const Text('Данные:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Данные:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 4),
               Text(
                 result.data.toString(),
