@@ -378,3 +378,4 @@ class _ComicsEditorPageState extends State<ComicsEditorPage> {
     );
   }
 }
+

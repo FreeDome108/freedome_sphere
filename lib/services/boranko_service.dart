@@ -4,11 +4,13 @@ import 'package:path/path.dart' as path;
 import '../models/boranko_project.dart';
 import 'comics_service.dart';
 import 'boranko_translation_service.dart';
+import 'boranko_layer_sound_mapper.dart';
 
 class BorankoService {
   final ComicsService _comicsService = ComicsService();
   final BorankoTranslationService _translationService =
       BorankoTranslationService();
+  final BorankoLayerSoundMapper _layerSoundMapper = BorankoLayerSoundMapper();
 
   /// Импорт BORANKO проекта
   ///
@@ -65,13 +67,13 @@ class BorankoService {
     }
   }
 
-  /// Импорт .comics файла с конвертацией в .boranko (полная спецификация V1)
+  /// Импорт .comics файла с конвертацией в .boranko (полная спецификация V1.1)
   ///
-  /// Согласно BORANKO_V1 спецификации:
-  /// 1. Все графические ассеты векторизуются и сохраняются в assets/
-  /// 2. Баллоны извлекаются и сохраняются в assets/balloons_original/
-  /// 3. Баллоны очищаются от текста и сохраняются в assets/balloons/
-  /// 4. Автоматический перевод на 108 языков
+  /// BORANKO V1.1:
+  /// 1. Извлечение layers/ и sounds/ из архива
+  /// 2. Создание маппинга между слоями и звуками
+  /// 3. Автоматический перевод на 108 языков
+  /// 4. Привязка звуков к конкретным слоям через layerId
   Future<BorankoProject> importComicsAsBoranko(
     String comicsPath, {
     String? outputDir,
@@ -79,7 +81,7 @@ class BorankoService {
     bool enableVectorization = true,
   }) async {
     try {
-      print('📂 Импорт .comics файла: $comicsPath');
+      print('📂 BORANKO V1.1: Импорт .comics файла: $comicsPath');
 
       // Импортируем .comics файл
       final importResult = await _comicsService.importComicsFile(comicsPath);
@@ -92,118 +94,218 @@ class BorankoService {
 
       // Определяем выходную директорию
       final baseOutputDir = outputDir ?? path.dirname(comicsPath);
-      final projectDir = path.join(
-        baseOutputDir,
-        '${comicsProject.name}_boranko',
-      );
-      final assetsDir = path.join(projectDir, 'assets');
-      final balloonsOriginalDir = path.join(assetsDir, 'balloons_original');
-      final balloonsCleanedDir = path.join(assetsDir, 'balloons');
+      final projectName = path.basenameWithoutExtension(comicsPath);
+      final projectDir = path.join(baseOutputDir, '${projectName}_boranko');
 
       // Создаем структуру директорий
-      await _createDirectoryStructure([
-        projectDir,
-        assetsDir,
-        balloonsOriginalDir,
-        balloonsCleanedDir,
-      ]);
+      await _createDirectoryStructure([projectDir]);
 
-      print('📁 Создана структура директорий');
-      print('   assets/');
-      print('   assets/balloons_original/');
-      print('   assets/balloons/');
+      print('📁 Структура проекта: $projectDir');
 
-      // Обрабатываем страницы
-      final pages = <BorankoPage>[];
-      final allBalloons = <BorankoBalloon>[];
-      final originalImages = <String>[];
-      final vectorizedImages = <String>[];
-
-      for (final page in comicsProject.pages) {
-        print('🔄 Обработка страницы ${page.pageNumber}...');
-
-        // Копируем оригинальное изображение
-        final originalImagePath = path.join(
-          assetsDir,
-          path.basename(page.fileName),
+      // BORANKO V1.1: Проверяем наличие layers и sounds
+      if (comicsProject.layers.isNotEmpty && comicsProject.sounds.isNotEmpty) {
+        print('✨ Обнаружен новый формат с layers и sounds!');
+        return await _importWithLayersAndSounds(
+          comicsProject,
+          comicsPath,
+          projectDir,
+          enableTranslation,
         );
-        originalImages.add(originalImagePath);
-
-        // Векторизация (если включена)
-        String? vectorizedPath;
-        if (enableVectorization) {
-          vectorizedPath = await _vectorizeImage(
-            page.originalPath,
-            path.join(assetsDir, 'vector_${path.basename(page.fileName)}'),
-          );
-          if (vectorizedPath != null) {
-            vectorizedImages.add(vectorizedPath);
-          }
-        }
-
-        // Извлечение и обработка баллонов
-        final pageBalloons = await _extractAndProcessBalloons(
-          page.originalPath,
-          page.pageNumber,
-          balloonsOriginalDir,
-          balloonsCleanedDir,
-        );
-        allBalloons.addAll(pageBalloons);
-
-        // Создаем BorankoPage
-        pages.add(
-          BorankoPage(
-            id: '${comicsProject.id}_page_${page.pageNumber}',
-            pageNumber: page.pageNumber,
-            imagePath: vectorizedPath ?? originalImagePath,
-            fileName: path.basename(vectorizedPath ?? originalImagePath),
-            originalPath: page.originalPath,
-            zDepth: 100.0, // По умолчанию 100 согласно спецификации
-            domeOptimized: false,
-            quantumCompatible: false,
-            balloons: pageBalloons,
-          ),
+      } else {
+        print('📦 Legacy формат без layers/sounds');
+        return await _importLegacyFormat(
+          comicsProject,
+          projectDir,
+          enableTranslation,
+          enableVectorization,
         );
       }
-
-      print('✅ Обработано страниц: ${pages.length}');
-      print('✅ Извлечено баллонов: ${allBalloons.length}');
-
-      // Автоматический перевод на 108 языков
-      Map<String, BorankoLocalization> localizations = {};
-      if (enableTranslation && allBalloons.isNotEmpty) {
-        print('🌐 Запуск автоматического перевода на 108 языков...');
-        localizations = await _translationService.translateBalloons(
-          allBalloons,
-          quantumMode: true, // Режим квантовой запутанности
-        );
-        print('✅ Перевод завершен: ${localizations.length} языков');
-      }
-
-      // Создаем структуру ассетов
-      final assets = BorankoAssets(
-        basePath: assetsDir,
-        originalImages: originalImages,
-        vectorizedImages: vectorizedImages,
-        balloonsOriginalPath: balloonsOriginalDir,
-        balloonsCleanedPath: balloonsCleanedDir,
-      );
-
-      // Создаем финальный BorankoProject
-      final borankoProject = BorankoProject(
-        id: comicsProject.id,
-        name: comicsProject.name,
-        version: '1.1.0', // V1.1: поддержка привязки звуков к layer id
-        pages: pages,
-        localizations: localizations,
-        assets: assets,
-      );
-
-      print('✅ Конвертация завершена успешно! (BORANKO V1.1)');
-      return borankoProject;
     } catch (e) {
       throw Exception('Ошибка конвертации .comics в .boranko: $e');
     }
+  }
+
+  /// Импорт с поддержкой layers и sounds (BORANKO V1.1)
+  Future<BorankoProject> _importWithLayersAndSounds(
+    dynamic comicsProject,
+    String comicsPath,
+    String projectDir,
+    bool enableTranslation,
+  ) async {
+    print('\n🎯 BORANKO V1.1: Импорт с layers и sounds');
+
+    // Извлекаем layers/ и sounds/ из архива
+    final extracted = await _comicsService.extractLayersAndSounds(
+      comicsPath,
+      projectDir,
+    );
+
+    final layersDir = extracted['layersDir']!;
+    final soundsDir = extracted['soundsDir']!;
+
+    // Создаем маппинг между слоями и звуками
+    print('\n🔗 Создание маппинга слоев и звуков...');
+    final mapping = _layerSoundMapper.mapSoundsToLayers(
+      comicsProject.layers,
+      comicsProject.sounds,
+    );
+
+    // Выводим статистику
+    _layerSoundMapper.printMappingStats(mapping, comicsProject.sounds);
+
+    // Создаем BorankoSound с привязкой к слоям
+    final borankoSounds = _layerSoundMapper.createBorankoSounds(
+      comicsProject.sounds,
+      mapping,
+      soundsDir,
+    );
+
+    // Создаем страницы с привязанными звуками
+    final pages = _layerSoundMapper.createBorankoPages(
+      comicsProject.layers,
+      borankoSounds,
+      mapping,
+      layersDir,
+    );
+
+    print('\n✅ Создано страниц: ${pages.length}');
+    print('✅ Создано звуков: ${borankoSounds.length}');
+
+    // Автоматический перевод (если есть баллоны)
+    Map<String, BorankoLocalization> localizations = {};
+    if (enableTranslation) {
+      // TODO: Извлечь баллоны из layers и перевести
+      print('⏭️  Перевод баллонов пропущен (требуется OCR)');
+    }
+
+    // Создаем структуру ассетов
+    final assets = BorankoAssets(
+      basePath: projectDir,
+      originalImages: [],
+      vectorizedImages: [],
+      balloonsOriginalPath: path.join(projectDir, 'balloons_original'),
+      balloonsCleanedPath: path.join(projectDir, 'balloons'),
+    );
+
+    // Создаем финальный BorankoProject
+    final borankoProject = BorankoProject(
+      id: comicsProject.id,
+      name: comicsProject.name,
+      version: '1.1.0', // V1.1: поддержка привязки звуков к layer id
+      pages: pages,
+      localizations: localizations,
+      assets: assets,
+    );
+
+    print('✅ BORANKO V1.1: Конвертация завершена успешно!');
+    return borankoProject;
+  }
+
+  /// Импорт legacy формата без layers/sounds
+  Future<BorankoProject> _importLegacyFormat(
+    dynamic comicsProject,
+    String projectDir,
+    bool enableTranslation,
+    bool enableVectorization,
+  ) async {
+    final assetsDir = path.join(projectDir, 'assets');
+    final balloonsOriginalDir = path.join(assetsDir, 'balloons_original');
+    final balloonsCleanedDir = path.join(assetsDir, 'balloons');
+
+    // Создаем структуру директорий
+    await _createDirectoryStructure([
+      assetsDir,
+      balloonsOriginalDir,
+      balloonsCleanedDir,
+    ]);
+
+    // Обрабатываем страницы
+    final pages = <BorankoPage>[];
+    final allBalloons = <BorankoBalloon>[];
+    final originalImages = <String>[];
+    final vectorizedImages = <String>[];
+
+    for (final page in comicsProject.pages) {
+      print('🔄 Обработка страницы ${page.pageNumber}...');
+
+      // Копируем оригинальное изображение
+      final originalImagePath = path.join(
+        assetsDir,
+        path.basename(page.fileName),
+      );
+      originalImages.add(originalImagePath);
+
+      // Векторизация (если включена)
+      String? vectorizedPath;
+      if (enableVectorization) {
+        vectorizedPath = await _vectorizeImage(
+          page.originalPath,
+          path.join(assetsDir, 'vector_${path.basename(page.fileName)}'),
+        );
+        if (vectorizedPath != null) {
+          vectorizedImages.add(vectorizedPath);
+        }
+      }
+
+      // Извлечение и обработка баллонов
+      final pageBalloons = await _extractAndProcessBalloons(
+        page.originalPath,
+        page.pageNumber,
+        balloonsOriginalDir,
+        balloonsCleanedDir,
+      );
+      allBalloons.addAll(pageBalloons);
+
+      // Создаем BorankoPage
+      pages.add(
+        BorankoPage(
+          id: '${comicsProject.id}_page_${page.pageNumber}',
+          pageNumber: page.pageNumber,
+          imagePath: vectorizedPath ?? originalImagePath,
+          fileName: path.basename(vectorizedPath ?? originalImagePath),
+          originalPath: page.originalPath,
+          zDepth: 100.0,
+          domeOptimized: false,
+          quantumCompatible: false,
+          balloons: pageBalloons,
+        ),
+      );
+    }
+
+    print('✅ Обработано страниц: ${pages.length}');
+
+    // Автоматический перевод на 108 языков
+    Map<String, BorankoLocalization> localizations = {};
+    if (enableTranslation && allBalloons.isNotEmpty) {
+      print('🌐 Запуск автоматического перевода на 108 языков...');
+      localizations = await _translationService.translateBalloons(
+        allBalloons,
+        quantumMode: true,
+      );
+      print('✅ Перевод завершен: ${localizations.length} языков');
+    }
+
+    // Создаем структуру ассетов
+    final assets = BorankoAssets(
+      basePath: assetsDir,
+      originalImages: originalImages,
+      vectorizedImages: vectorizedImages,
+      balloonsOriginalPath: balloonsOriginalDir,
+      balloonsCleanedPath: balloonsCleanedDir,
+    );
+
+    // Создаем финальный BorankoProject
+    final borankoProject = BorankoProject(
+      id: comicsProject.id,
+      name: comicsProject.name,
+      version: '1.0.0', // Legacy формат
+      pages: pages,
+      localizations: localizations,
+      assets: assets,
+    );
+
+    print('✅ Конвертация завершена (Legacy)');
+    return borankoProject;
   }
 
   /// Создание структуры директорий

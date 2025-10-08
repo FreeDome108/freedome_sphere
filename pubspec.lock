@@ -523,7 +523,7 @@ packages:
       path: "../freedome_editor_comics"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.1.0"
   frontend_server_client:
     dependency: transitive
     description:

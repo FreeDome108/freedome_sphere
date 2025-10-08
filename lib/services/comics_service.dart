@@ -26,19 +26,133 @@ class ComicsService {
 
       // Проверяем расширение файла
       if (!filePath.toLowerCase().endsWith('.comics')) {
-        return ComicsImportResult.error('Неверное расширение файла. Ожидается .comics');
+        return ComicsImportResult.error(
+          'Неверное расширение файла. Ожидается .comics',
+        );
       }
 
       // Читаем файл как ZIP архив
       final bytes = await file.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
 
+      // BORANKO V1.1: Ищем data.json в архиве
+      final dataJson = await _extractDataJson(archive);
+
+      if (dataJson != null) {
+        // Новый формат с data.json (поддерживает layers и sounds)
+        return await _importFromDataJson(archive, filePath, dataJson);
+      } else {
+        // Старый формат без data.json (legacy)
+        return await _importLegacyFormat(archive, filePath);
+      }
+    } catch (e) {
+      return ComicsImportResult.error('Ошибка импорта: $e');
+    }
+  }
+
+  /// Извлечение data.json из архива
+  Future<Map<String, dynamic>?> _extractDataJson(Archive archive) async {
+    try {
+      final dataFile = archive.files.firstWhere(
+        (file) => file.name == 'data.json' || file.name.endsWith('/data.json'),
+        orElse: () => throw Exception('data.json not found'),
+      );
+
+      final content = String.fromCharCodes(dataFile.content);
+      return jsonDecode(content) as Map<String, dynamic>;
+    } catch (e) {
+      return null; // data.json не найден - это нормально для старого формата
+    }
+  }
+
+  /// Импорт из нового формата с data.json
+  Future<ComicsImportResult> _importFromDataJson(
+    Archive archive,
+    String filePath,
+    Map<String, dynamic> dataJson,
+  ) async {
+    try {
+      print('📦 BORANKO V1.1: Обнаружен data.json в архиве');
+
+      // Парсим layers
+      final layers = <ComicsLayer>[];
+      if (dataJson['layers'] != null) {
+        for (int i = 0; i < (dataJson['layers'] as List).length; i++) {
+          final layerJson = dataJson['layers'][i];
+          layers.add(ComicsLayer.fromJson({'id': 'layer_$i', ...layerJson}));
+        }
+      }
+      print('   📁 Найдено слоев: ${layers.length}');
+
+      // Парсим sounds
+      final sounds = <ComicsSound>[];
+      if (dataJson['sounds'] != null) {
+        for (int i = 0; i < (dataJson['sounds'] as List).length; i++) {
+          final soundJson = dataJson['sounds'][i];
+          sounds.add(ComicsSound.fromJson({'id': 'sound_$i', ...soundJson}));
+        }
+      }
+      print('   🔊 Найдено звуков: ${sounds.length}');
+
+      // Создаем страницы на основе layers
+      final pages = <ComicsPage>[];
+      for (int i = 0; i < layers.length; i++) {
+        final layer = layers[i];
+        final imageFile = layer.mainImageFile;
+        if (imageFile != null) {
+          pages.add(
+            ComicsPage.fromFile(
+              fileName: imageFile,
+              originalPath: filePath,
+              pageNumber: i + 1,
+              properties: {'layerId': layer.id},
+            ),
+          );
+        }
+      }
+
       // Извлекаем метаданные
       final metadata = await _extractMetadata(archive);
-      
+
+      // Создаем проект с поддержкой layers и sounds
+      final project = ComicsProject(
+        id: _uuid.v4(),
+        name: metadata.title,
+        author: metadata.author,
+        description: metadata.description,
+        duration: metadata.duration,
+        audioFile: metadata.audioFile,
+        pages: pages,
+        metadata: metadata,
+        originalPath: filePath,
+        importedAt: DateTime.now(),
+        layers: layers,
+        sounds: sounds,
+        height: dataJson['height'],
+        width: dataJson['width'],
+      );
+
+      print('✅ BORANKO V1.1: Импорт завершен');
+      return ComicsImportResult.success(project);
+    } catch (e) {
+      return ComicsImportResult.error('Ошибка импорта data.json: $e');
+    }
+  }
+
+  /// Импорт из старого формата (legacy)
+  Future<ComicsImportResult> _importLegacyFormat(
+    Archive archive,
+    String filePath,
+  ) async {
+    try {
+      print('📦 Legacy: Импорт старого формата без data.json');
+
+      // Извлекаем метаданные
+      final metadata = await _extractMetadata(archive);
+
       // Извлекаем страницы
       final pages = await _extractPages(archive, filePath);
-      
+
       if (pages.isEmpty) {
         return ComicsImportResult.error('В архиве не найдено изображений');
       }
@@ -53,7 +167,7 @@ class ComicsService {
 
       return ComicsImportResult.success(project);
     } catch (e) {
-      return ComicsImportResult.error('Ошибка импорта: $e');
+      return ComicsImportResult.error('Ошибка импорта legacy формата: $e');
     }
   }
 
@@ -84,15 +198,19 @@ class ComicsService {
   }
 
   /// Извлечение страниц из архива
-  Future<List<ComicsPage>> _extractPages(Archive archive, String originalPath) async {
+  Future<List<ComicsPage>> _extractPages(
+    Archive archive,
+    String originalPath,
+  ) async {
     final pages = <ComicsPage>[];
     int pageNumber = 1;
 
     // Сортируем файлы по имени для правильного порядка страниц
-    final imageFiles = archive.files
-        .where((file) => file.isFile && _isImageFile(file.name))
-        .toList()
-      ..sort((a, b) => a.name.compareTo(b.name));
+    final imageFiles =
+        archive.files
+            .where((file) => file.isFile && _isImageFile(file.name))
+            .toList()
+          ..sort((a, b) => a.name.compareTo(b.name));
 
     for (final file in imageFiles) {
       final page = ComicsPage.fromFile(
@@ -101,7 +219,8 @@ class ComicsService {
         pageNumber: pageNumber++,
         properties: {
           'fileSize': file.size,
-          'compressedSize': file.size, // compressedSize не доступен в новой версии archive
+          'compressedSize':
+              file.size, // compressedSize не доступен в новой версии archive
         },
       );
       pages.add(page);
@@ -126,9 +245,11 @@ class ComicsService {
 
       final bytes = await file.readAsBytes();
       final archive = ZipDecoder().decodeBytes(bytes);
-      
+
       // Проверяем, что в архиве есть хотя бы одно изображение
-      return archive.files.any((file) => file.isFile && _isImageFile(file.name));
+      return archive.files.any(
+        (file) => file.isFile && _isImageFile(file.name),
+      );
     } catch (e) {
       return false;
     }
@@ -148,7 +269,9 @@ class ComicsService {
           .toList();
 
       final metadataFile = archive.files
-          .where((file) => file.name == 'metadata.json' || file.name == 'info.json')
+          .where(
+            (file) => file.name == 'metadata.json' || file.name == 'info.json',
+          )
           .firstOrNull;
 
       Map<String, dynamic>? metadata;
@@ -198,7 +321,11 @@ class ComicsService {
   }
 
   /// Создание превью для страницы
-  Future<String?> createPagePreview(String filePath, String pageName, {int maxSize = 200}) async {
+  Future<String?> createPagePreview(
+    String filePath,
+    String pageName, {
+    int maxSize = 200,
+  }) async {
     try {
       final imageData = await extractPageImage(filePath, pageName);
       if (imageData == null) return null;
@@ -213,7 +340,9 @@ class ComicsService {
   }
 
   /// Конвертация .comics в .boranko
-  Future<ComicsImportResult> convertToBoranko(ComicsProject comicsProject) async {
+  Future<ComicsImportResult> convertToBoranko(
+    ComicsProject comicsProject,
+  ) async {
     try {
       // TODO: Реализовать конвертацию в .boranko формат
       // Пока возвращаем исходный проект
@@ -224,9 +353,11 @@ class ComicsService {
   }
 
   /// Массовый импорт .comics файлов из папки
-  Future<List<ComicsImportResult>> importComicsFromFolder(String folderPath) async {
+  Future<List<ComicsImportResult>> importComicsFromFolder(
+    String folderPath,
+  ) async {
     final results = <ComicsImportResult>[];
-    
+
     try {
       final folder = Directory(folderPath);
       if (!await folder.exists()) {
@@ -235,7 +366,10 @@ class ComicsService {
 
       final files = await folder
           .list()
-          .where((entity) => entity is File && entity.path.toLowerCase().endsWith('.comics'))
+          .where(
+            (entity) =>
+                entity is File && entity.path.toLowerCase().endsWith('.comics'),
+          )
           .cast<File>()
           .toList();
 
@@ -258,13 +392,106 @@ class ComicsService {
 
       final files = await folder
           .list()
-          .where((entity) => entity is File && entity.path.toLowerCase().endsWith('.comics'))
+          .where(
+            (entity) =>
+                entity is File && entity.path.toLowerCase().endsWith('.comics'),
+          )
           .map((entity) => entity.path)
           .toList();
 
       return files;
     } catch (e) {
       return [];
+    }
+  }
+
+  /// Извлечение папок layers/ и sounds/ из архива
+  ///
+  /// BORANKO V1.1: Извлекает ассеты из архива в указанную директорию
+  Future<Map<String, String>> extractLayersAndSounds(
+    String comicsPath,
+    String outputDir,
+  ) async {
+    try {
+      final file = File(comicsPath);
+      if (!await file.exists()) {
+        throw Exception('Файл не найден: $comicsPath');
+      }
+
+      // Читаем архив
+      final bytes = await file.readAsBytes();
+      final archive = ZipDecoder().decodeBytes(bytes);
+
+      // Создаем выходные директории
+      final layersDir = path.join(outputDir, 'layers');
+      final soundsDir = path.join(outputDir, 'sounds');
+      await Directory(layersDir).create(recursive: true);
+      await Directory(soundsDir).create(recursive: true);
+
+      int layersCount = 0;
+      int soundsCount = 0;
+
+      // Извлекаем файлы
+      for (final file in archive.files) {
+        if (!file.isFile) continue;
+
+        // Проверяем, находится ли файл в layers/ или sounds/
+        if (file.name.startsWith('layers/') || file.name.contains('/layers/')) {
+          // Извлекаем файл слоя
+          final fileName = path.basename(file.name);
+          final targetPath = path.join(layersDir, fileName);
+          final targetFile = File(targetPath);
+          await targetFile.writeAsBytes(file.content);
+          layersCount++;
+        } else if (file.name.startsWith('sounds/') ||
+            file.name.contains('/sounds/')) {
+          // Извлекаем звуковой файл
+          final fileName = path.basename(file.name);
+          final targetPath = path.join(soundsDir, fileName);
+          final targetFile = File(targetPath);
+          await targetFile.writeAsBytes(file.content);
+          soundsCount++;
+        }
+      }
+
+      print('✅ Извлечено:');
+      print('   📁 Слоев (layers): $layersCount');
+      print('   🔊 Звуков (sounds): $soundsCount');
+
+      return {
+        'layersDir': layersDir,
+        'soundsDir': soundsDir,
+        'layersCount': layersCount.toString(),
+        'soundsCount': soundsCount.toString(),
+      };
+    } catch (e) {
+      throw Exception('Ошибка извлечения layers/sounds: $e');
+    }
+  }
+
+  /// Извлечение конкретного файла из архива
+  Future<Uint8List?> extractFileFromArchive(
+    String comicsPath,
+    String fileName,
+  ) async {
+    try {
+      final file = File(comicsPath);
+      if (!await file.exists()) return null;
+
+      final bytes = await file.readAsBytes();
+      final archive = ZipDecoder().decodeBytes(bytes);
+
+      for (final archiveFile in archive.files) {
+        if (archiveFile.isFile &&
+            (archiveFile.name == fileName ||
+                archiveFile.name.endsWith('/$fileName'))) {
+          return Uint8List.fromList(archiveFile.content);
+        }
+      }
+
+      return null;
+    } catch (e) {
+      return null;
     }
   }
 }
