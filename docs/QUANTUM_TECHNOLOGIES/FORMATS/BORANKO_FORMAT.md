@@ -21,6 +21,112 @@ V1
 
 <<< До сюда не редактировать
 
+
+# BORANKO V1.1
+
+## Основное изменение
+
+**Звук привязывается к конкретному layer id**
+
+## Технические детали
+
+### 1. Структура проекта
+
+Основной файл проекта называется **`data.json`**
+
+Структура директорий:
+```
+project_name_boranko/
+├── data.json                     # Основной файл проекта (V1.1)
+└── assets/
+    ├── original_image_*.png      # Оригинальные изображения
+    ├── vector_image_*.png        # Векторизованные версии
+    ├── balloons_original/        # Оригинальные баллоны
+    │   └── balloon_*.png
+    └── balloons/                 # Очищенные баллоны
+        └── balloon_*.png
+```
+
+### 2. Привязка звуков к слоям
+
+В BORANKO V1.1 каждый звук может быть привязан к конкретному слою (layer) через поле `layerId`.
+
+**Структура звука:**
+```json
+{
+  "id": "sound_1",
+  "soundPath": "sounds/audio.mp3",
+  "startTime": 0.0,
+  "volume": 1.0,
+  "layerId": "layer_123"  // V1.1: привязка к конкретному слою
+}
+```
+
+**Параметр `layerId`:**
+- Тип: `String?` (опциональный)
+- Назначение: Идентификатор слоя, к которому привязан звук
+- Если `null` - звук воспроизводится глобально для всей страницы
+- Если указан - звук воспроизводится только для конкретного слоя
+
+### 3. Обратная совместимость
+
+BORANKO V1.1 полностью обратно совместим с V1.0:
+
+- ✅ Проекты V1.0 открываются в V1.1
+- ✅ Поле `layerId` опциональное - старые проекты без него работают
+- ✅ Поддерживается загрузка из legacy `.boranko` файлов
+- ✅ Сохранение в новом формате `data.json`
+
+### 4. Версионирование
+
+- **V1.0**: Базовая версия, файл `.boranko`
+- **V1.1**: Привязка звуков к слоям, файл `data.json`
+
+### 5. Формат data.json
+
+```json
+{
+  "id": "project_123",
+  "name": "My Project",
+  "version": "1.1.0",
+  "pages": [
+    {
+      "id": "page_1",
+      "pageNumber": 1,
+      "imagePath": "assets/image.png",
+      "fileName": "image.png",
+      "originalPath": "original.png",
+      "zDepth": 100.0,
+      "domeOptimized": false,
+      "quantumCompatible": false,
+      "text": null,
+      "sounds": [
+        {
+          "id": "sound_1",
+          "soundPath": "sounds/ambient.mp3",
+          "startTime": 0.0,
+          "volume": 0.8,
+          "layerId": "layer_background"
+        },
+        {
+          "id": "sound_2",
+          "soundPath": "sounds/dialog.mp3",
+          "startTime": 2.5,
+          "volume": 1.0,
+          "layerId": "layer_character_1"
+        }
+      ],
+      "balloons": []
+    }
+  ],
+  "localizations": {},
+  "assets": {}
+}
+```
+
+
+<<< До сюда не редактировать
+
 Далее Boranko V2
 
 

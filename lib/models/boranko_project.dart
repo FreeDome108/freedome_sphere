@@ -1,4 +1,3 @@
-
 class BorankoProject {
   final String id;
   final String name;
@@ -10,7 +9,7 @@ class BorankoProject {
   BorankoProject({
     required this.id,
     required this.name,
-    this.version = '1.0.0',
+    this.version = '1.1.0', // V1.1: звук привязывается к конкретному layer id
     this.pages = const [],
     this.localizations = const {},
     this.assets,
@@ -22,7 +21,9 @@ class BorankoProject {
       'name': name,
       'version': version,
       'pages': pages.map((p) => p.toJson()).toList(),
-      'localizations': localizations.map((key, value) => MapEntry(key, value.toJson())),
+      'localizations': localizations.map(
+        (key, value) => MapEntry(key, value.toJson()),
+      ),
       'assets': assets?.toJson(),
     };
   }
@@ -32,14 +33,19 @@ class BorankoProject {
       id: json['id'],
       name: json['name'],
       version: json['version'] ?? '1.0.0',
-      pages: (json['pages'] as List?)
-          ?.map((p) => BorankoPage.fromJson(p))
-          .toList() ??
+      pages:
+          (json['pages'] as List?)
+              ?.map((p) => BorankoPage.fromJson(p))
+              .toList() ??
           [],
-      localizations: (json['localizations'] as Map<String, dynamic>?)?.map(
-        (key, value) => MapEntry(key, BorankoLocalization.fromJson(value)),
-      ) ?? {},
-      assets: json['assets'] != null ? BorankoAssets.fromJson(json['assets']) : null,
+      localizations:
+          (json['localizations'] as Map<String, dynamic>?)?.map(
+            (key, value) => MapEntry(key, BorankoLocalization.fromJson(value)),
+          ) ??
+          {},
+      assets: json['assets'] != null
+          ? BorankoAssets.fromJson(json['assets'])
+          : null,
     );
   }
 }
@@ -105,13 +111,15 @@ class BorankoPage {
       domeOptimized: json['domeOptimized'] ?? false,
       quantumCompatible: json['quantumCompatible'] ?? false,
       text: json['text'],
-      sounds: (json['sounds'] as List?)
-          ?.map((s) => BorankoSound.fromJson(s))
-          .toList() ??
+      sounds:
+          (json['sounds'] as List?)
+              ?.map((s) => BorankoSound.fromJson(s))
+              .toList() ??
           [],
-      balloons: (json['balloons'] as List?)
-          ?.map((b) => BorankoBalloon.fromJson(b))
-          .toList() ??
+      balloons:
+          (json['balloons'] as List?)
+              ?.map((b) => BorankoBalloon.fromJson(b))
+              .toList() ??
           [],
     );
   }
@@ -122,12 +130,14 @@ class BorankoSound {
   final String soundPath;
   final double startTime;
   final double volume;
+  final String? layerId; // BORANKO V1.1: Привязка звука к конкретному layer id
 
   BorankoSound({
     required this.id,
     required this.soundPath,
     this.startTime = 0.0,
     this.volume = 1.0,
+    this.layerId, // V1.1: опциональная привязка к слою
   });
 
   Map<String, dynamic> toJson() {
@@ -136,6 +146,8 @@ class BorankoSound {
       'soundPath': soundPath,
       'startTime': startTime,
       'volume': volume,
+      if (layerId != null)
+        'layerId': layerId, // V1.1: сохраняем только если есть
     };
   }
 
@@ -145,6 +157,7 @@ class BorankoSound {
       soundPath: json['soundPath'],
       startTime: json['startTime']?.toDouble() ?? 0.0,
       volume: json['volume']?.toDouble() ?? 1.0,
+      layerId: json['layerId'], // V1.1: загружаем layerId
     );
   }
 }
@@ -154,16 +167,10 @@ class BorankoLocalization {
   final String languageCode;
   final Map<String, String> texts; // balloonId -> translated text
 
-  BorankoLocalization({
-    required this.languageCode,
-    this.texts = const {},
-  });
+  BorankoLocalization({required this.languageCode, this.texts = const {}});
 
   Map<String, dynamic> toJson() {
-    return {
-      'languageCode': languageCode,
-      'texts': texts,
-    };
+    return {'languageCode': languageCode, 'texts': texts};
   }
 
   factory BorankoLocalization.fromJson(Map<String, dynamic> json) {
@@ -217,7 +224,8 @@ class BorankoBalloon {
         orElse: () => BalloonType.speech,
       ),
       aspectRatio: json['aspectRatio']?.toDouble() ?? 1.0,
-      analogDigitalCoefficient: json['analogDigitalCoefficient']?.toDouble() ?? 0.5,
+      analogDigitalCoefficient:
+          json['analogDigitalCoefficient']?.toDouble() ?? 0.5,
     );
   }
 }
@@ -262,7 +270,8 @@ class BorankoAssets {
       basePath: json['basePath'],
       originalImages: List<String>.from(json['originalImages'] ?? []),
       vectorizedImages: List<String>.from(json['vectorizedImages'] ?? []),
-      balloonsOriginalPath: json['balloonsOriginalPath'] ?? 'assets/balloons_original',
+      balloonsOriginalPath:
+          json['balloonsOriginalPath'] ?? 'assets/balloons_original',
       balloonsCleanedPath: json['balloonsCleanedPath'] ?? 'assets/balloons',
     );
   }

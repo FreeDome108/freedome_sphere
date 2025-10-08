@@ -7,27 +7,66 @@ import 'boranko_translation_service.dart';
 
 class BorankoService {
   final ComicsService _comicsService = ComicsService();
-  final BorankoTranslationService _translationService = BorankoTranslationService();
+  final BorankoTranslationService _translationService =
+      BorankoTranslationService();
 
-  /// Импорт .boranko проекта
-  Future<BorankoProject> importBorankoProject(String path) async {
+  /// Импорт BORANKO проекта
+  ///
+  /// Поддерживает:
+  /// - data.json (V1.1)
+  /// - .boranko файлы (legacy V1.0)
+  /// - директории проектов (ищет data.json внутри)
+  Future<BorankoProject> importBorankoProject(String importPath) async {
     try {
-      final file = File(path);
+      String dataJsonPath;
+
+      // Определяем путь к файлу данных
+      if (importPath.endsWith('data.json')) {
+        // Прямой путь к data.json
+        dataJsonPath = importPath;
+      } else if (importPath.endsWith('.boranko')) {
+        // Legacy формат - ищем data.json в папке или читаем как JSON файл
+        final file = File(importPath);
+        if (await file.exists()) {
+          // Это старый формат - один JSON файл
+          dataJsonPath = importPath;
+        } else {
+          // Проверяем директорию с _boranko
+          final dir = path.dirname(importPath);
+          final basename = path.basenameWithoutExtension(importPath);
+          final projectDir = path.join(dir, '${basename}_boranko');
+          dataJsonPath = path.join(projectDir, 'data.json');
+        }
+      } else {
+        // Считаем что это директория проекта
+        final dir = Directory(importPath);
+        if (await dir.exists()) {
+          dataJsonPath = path.join(importPath, 'data.json');
+        } else {
+          throw Exception('Директория не найдена: $importPath');
+        }
+      }
+
+      // Читаем файл
+      final file = File(dataJsonPath);
       if (!await file.exists()) {
-        throw Exception('Файл не найден: $path');
+        throw Exception('Файл data.json не найден: $dataJsonPath');
       }
 
       final jsonString = await file.readAsString();
       final jsonData = jsonDecode(jsonString) as Map<String, dynamic>;
 
-      return BorankoProject.fromJson(jsonData);
+      final project = BorankoProject.fromJson(jsonData);
+      print('✅ Загружен BORANKO V${project.version} проект из: $dataJsonPath');
+
+      return project;
     } catch (e) {
-      throw Exception('Ошибка импорта .boranko проекта: $e');
+      throw Exception('Ошибка импорта BORANKO проекта: $e');
     }
   }
 
   /// Импорт .comics файла с конвертацией в .boranko (полная спецификация V1)
-  /// 
+  ///
   /// Согласно BORANKO_V1 спецификации:
   /// 1. Все графические ассеты векторизуются и сохраняются в assets/
   /// 2. Баллоны извлекаются и сохраняются в assets/balloons_original/
@@ -41,7 +80,7 @@ class BorankoService {
   }) async {
     try {
       print('📂 Импорт .comics файла: $comicsPath');
-      
+
       // Импортируем .comics файл
       final importResult = await _comicsService.importComicsFile(comicsPath);
 
@@ -50,14 +89,17 @@ class BorankoService {
       }
 
       final comicsProject = importResult.project!;
-      
+
       // Определяем выходную директорию
       final baseOutputDir = outputDir ?? path.dirname(comicsPath);
-      final projectDir = path.join(baseOutputDir, '${comicsProject.name}_boranko');
+      final projectDir = path.join(
+        baseOutputDir,
+        '${comicsProject.name}_boranko',
+      );
       final assetsDir = path.join(projectDir, 'assets');
       final balloonsOriginalDir = path.join(assetsDir, 'balloons_original');
       final balloonsCleanedDir = path.join(assetsDir, 'balloons');
-      
+
       // Создаем структуру директорий
       await _createDirectoryStructure([
         projectDir,
@@ -79,11 +121,14 @@ class BorankoService {
 
       for (final page in comicsProject.pages) {
         print('🔄 Обработка страницы ${page.pageNumber}...');
-        
+
         // Копируем оригинальное изображение
-        final originalImagePath = path.join(assetsDir, path.basename(page.fileName));
+        final originalImagePath = path.join(
+          assetsDir,
+          path.basename(page.fileName),
+        );
         originalImages.add(originalImagePath);
-        
+
         // Векторизация (если включена)
         String? vectorizedPath;
         if (enableVectorization) {
@@ -106,17 +151,19 @@ class BorankoService {
         allBalloons.addAll(pageBalloons);
 
         // Создаем BorankoPage
-        pages.add(BorankoPage(
-          id: '${comicsProject.id}_page_${page.pageNumber}',
-          pageNumber: page.pageNumber,
-          imagePath: vectorizedPath ?? originalImagePath,
-          fileName: path.basename(vectorizedPath ?? originalImagePath),
-          originalPath: page.originalPath,
-          zDepth: 100.0, // По умолчанию 100 согласно спецификации
-          domeOptimized: false,
-          quantumCompatible: false,
-          balloons: pageBalloons,
-        ));
+        pages.add(
+          BorankoPage(
+            id: '${comicsProject.id}_page_${page.pageNumber}',
+            pageNumber: page.pageNumber,
+            imagePath: vectorizedPath ?? originalImagePath,
+            fileName: path.basename(vectorizedPath ?? originalImagePath),
+            originalPath: page.originalPath,
+            zDepth: 100.0, // По умолчанию 100 согласно спецификации
+            domeOptimized: false,
+            quantumCompatible: false,
+            balloons: pageBalloons,
+          ),
+        );
       }
 
       print('✅ Обработано страниц: ${pages.length}');
@@ -146,13 +193,13 @@ class BorankoService {
       final borankoProject = BorankoProject(
         id: comicsProject.id,
         name: comicsProject.name,
-        version: '1.0.0',
+        version: '1.1.0', // V1.1: поддержка привязки звуков к layer id
         pages: pages,
         localizations: localizations,
         assets: assets,
       );
 
-      print('✅ Конвертация завершена успешно!');
+      print('✅ Конвертация завершена успешно! (BORANKO V1.1)');
       return borankoProject;
     } catch (e) {
       throw Exception('Ошибка конвертации .comics в .boranko: $e');
@@ -170,7 +217,7 @@ class BorankoService {
   }
 
   /// Векторизация изображения
-  /// 
+  ///
   /// TODO: Реализовать реальную векторизацию
   /// Сейчас просто копируем изображение в .png формате
   Future<String?> _vectorizeImage(String sourcePath, String targetPath) async {
@@ -191,7 +238,7 @@ class BorankoService {
   }
 
   /// Извлечение и обработка баллонов из страницы
-  /// 
+  ///
   /// TODO: Реализовать реальное извлечение баллонов через CV/ML
   /// Сейчас это заглушка для демонстрации архитектуры
   Future<List<BorankoBalloon>> _extractAndProcessBalloons(
@@ -209,19 +256,21 @@ class BorankoService {
       // 3. Определение типа баллона
       // 4. Вычисление метаданных (соотношение сторон, форма)
       // 5. Очистка от текста
-      
+
       // Заглушка: создаем один демо-баллон
       final balloonId = 'balloon_page${pageNumber}_1';
-      
-      balloons.add(BorankoBalloon(
-        id: balloonId,
-        originalImagePath: path.join(balloonsOriginalDir, '$balloonId.png'),
-        cleanedImagePath: path.join(balloonsCleanedDir, '$balloonId.png'),
-        originalText: 'Demo text from page $pageNumber',
-        type: BalloonType.speech,
-        aspectRatio: 1.5,
-        analogDigitalCoefficient: 0.5,
-      ));
+
+      balloons.add(
+        BorankoBalloon(
+          id: balloonId,
+          originalImagePath: path.join(balloonsOriginalDir, '$balloonId.png'),
+          cleanedImagePath: path.join(balloonsCleanedDir, '$balloonId.png'),
+          originalText: 'Demo text from page $pageNumber',
+          type: BalloonType.speech,
+          aspectRatio: 1.5,
+          analogDigitalCoefficient: 0.5,
+        ),
+      );
     } catch (e) {
       print('⚠️ Ошибка обработки баллонов: $e');
     }
@@ -263,14 +312,34 @@ class BorankoService {
     }
   }
 
-  /// Сохранение .boranko проекта в файл
+  /// Сохранение BORANKO проекта
+  ///
+  /// В BORANKO V1.1 основной файл называется data.json
+  /// Структура: project_name_boranko/data.json
   Future<void> saveBorankoProject(
     BorankoProject project,
-    String filePath,
+    String outputPath,
   ) async {
     try {
+      // Определяем путь к data.json
+      String dataJsonPath;
+
+      if (outputPath.endsWith('.boranko')) {
+        // Если передан путь с расширением .boranko, преобразуем в структуру папок
+        final dir = path.dirname(outputPath);
+        final basename = path.basenameWithoutExtension(outputPath);
+        final projectDir = path.join(dir, '${basename}_boranko');
+        dataJsonPath = path.join(projectDir, 'data.json');
+      } else if (outputPath.endsWith('data.json')) {
+        // Если уже указан data.json, используем как есть
+        dataJsonPath = outputPath;
+      } else {
+        // Иначе считаем что это директория проекта
+        dataJsonPath = path.join(outputPath, 'data.json');
+      }
+
       // Создаем директорию если не существует
-      final file = File(filePath);
+      final file = File(dataJsonPath);
       final directory = file.parent;
       if (!await directory.exists()) {
         await directory.create(recursive: true);
@@ -280,9 +349,9 @@ class BorankoService {
       final jsonString = jsonEncode(project.toJson());
       await file.writeAsString(jsonString);
 
-      print('Boranko project saved to: $filePath');
+      print('✅ BORANKO V${project.version} project saved to: $dataJsonPath');
     } catch (e) {
-      throw Exception('Ошибка сохранения .boranko проекта: $e');
+      throw Exception('Ошибка сохранения BORANKO проекта: $e');
     }
   }
 }
