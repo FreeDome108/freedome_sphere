@@ -2,6 +2,8 @@
 /// Эти классы имитируют интерфейс реальных библиотек
 
 import 'dart:async';
+import 'calibration/audio_calibration_engine.dart';
+import 'calibration/video_calibration_engine.dart';
 
 /// Основной класс FreeDome Core
 class FreedomeCore {
@@ -50,11 +52,15 @@ class FreedomeCore {
 /// Класс калибровки FreeDome
 class FreedomeCalibration {
   bool _isInitialized = false;
+  
+  // Calibration engines
+  final AudioCalibrationEngine _audioEngine = AudioCalibrationEngine();
+  final VideoCalibrationEngine _videoEngine = VideoCalibrationEngine();
 
   Future<void> initialize() async {
     await Future.delayed(const Duration(milliseconds: 300));
     _isInitialized = true;
-    print('🎯 FreedomeCalibration инициализирован (заглушка)');
+    debugPrint('🎯 FreedomeCalibration инициализирован (заглушка)');
   }
 
   Future<CalibrationResult> calibrateAudio({
@@ -65,20 +71,12 @@ class FreedomeCalibration {
       throw Exception('FreedomeCalibration не инициализирован');
     }
 
-    await Future.delayed(const Duration(seconds: 2));
-
-    print('🎵 Калибровка аудио завершена (заглушка)');
-
-    return CalibrationResult(
-      success: true,
-      status: 'Audio calibration completed successfully',
-      data: {
-        'devices': devices ?? ['Default Audio Device'],
-        'sampleRate': 48000,
-        'channels': 8,
-        'latency': 12.5,
-        'calibratedAt': DateTime.now().toIso8601String(),
-      },
+    debugPrint('🎵 Начало аудио калибровки...');
+    
+    // Use enhanced audio calibration engine
+    return await _audioEngine.calibrate(
+      devices: devices,
+      options: options,
     );
   }
 
@@ -90,21 +88,12 @@ class FreedomeCalibration {
       throw Exception('FreedomeCalibration не инициализирован');
     }
 
-    await Future.delayed(const Duration(seconds: 3));
-
-    print('📹 Калибровка видео завершена (заглушка)');
-
-    return CalibrationResult(
-      success: true,
-      status: 'Video calibration completed successfully',
-      data: {
-        'resolution': settings?['resolution'] ?? '4096x2048',
-        'fps': settings?['fps'] ?? 60,
-        'projection': 'spherical',
-        'brightness': 0.85,
-        'contrast': 0.9,
-        'calibratedAt': DateTime.now().toIso8601String(),
-      },
+    debugPrint('📹 Начало видео калибровки...');
+    
+    // Use enhanced video calibration engine
+    return await _videoEngine.calibrate(
+      settings: settings,
+      options: options,
     );
   }
 
