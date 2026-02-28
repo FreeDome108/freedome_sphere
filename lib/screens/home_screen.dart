@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:freedome_editor_comics/freedome_editor_comics.dart' as comics;
+// import 'package:freedome_editor_comics/freedome_editor_comics.dart' as comics;
 import '../models/project.dart';
 import '../services/project_service.dart';
 import '../services/boranko_service.dart';
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int _activePluginsCount = 0;
 
   // Comics editor integration
-  late comics.ComicsViewModel _comicsViewModel;
+  // late comics.ComicsViewModel _comicsViewModel;
   bool _comicsEditorActive = false;
   bool _isComicsInitialized = false;
 
@@ -92,15 +92,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _initializeComicsEditor() async {
-    try {
-      _comicsViewModel = comics.ComicsViewModel();
-      await _comicsViewModel.initializeComics(null);
-      setState(() {
-        _isComicsInitialized = true;
-      });
-    } catch (e) {
-      print('Ошибка инициализации редактора комиксов: $e');
-    }
+    // Comics editor temporarily disabled
+    // try {
+    //   _comicsViewModel = comics.ComicsViewModel();
+    //   await _comicsViewModel.initializeComics(null);
+    //   setState(() {
+    //     _isComicsInitialized = true;
+    //   });
+    // } catch (e) {
+    //   print('Ошибка инициализации редактора комиксов: $e');
+    // }
   }
 
   Future<void> _initializeServices() async {
@@ -676,9 +677,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void dispose() {
     _fadeController.dispose();
     _slideController.dispose();
-    if (_isComicsInitialized) {
-      _comicsViewModel.dispose();
-    }
+    // if (_isComicsInitialized) {
+    //   _comicsViewModel.dispose();
+    // }
     super.dispose();
   }
 
@@ -1004,20 +1005,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  'Слои: ${_comicsViewModel.layers.length}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  'Звуки: ${_comicsViewModel.sounds.length}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(width: 16),
-                Text(
-                  '${_comicsViewModel.width}x${_comicsViewModel.height}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
+                // Comics editor stats temporarily disabled
+                // Text(
+                //   'Слои: ${_comicsViewModel.layers.length}',
+                //   style: Theme.of(context).textTheme.bodyMedium,
+                // ),
+                // const SizedBox(width: 16),
+                // Text(
+                //   'Звуки: ${_comicsViewModel.sounds.length}',
+                //   style: Theme.of(context).textTheme.bodyMedium,
+                // ),
+                // const SizedBox(width: 16),
+                // Text(
+                //   '${_comicsViewModel.width}x${_comicsViewModel.height}',
+                //   style: Theme.of(context).textTheme.bodyMedium,
+                // ),
               ],
             ),
           ),
@@ -1083,74 +1085,72 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: ListView(
                           padding: const EdgeInsets.all(16),
                           children: [
-                            // Скролл
-                            Text(
-                              'Прокрутка: ${_comicsViewModel.scroll.round()}',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            Slider(
-                              value: _comicsViewModel.scroll,
-                              min: 0,
-                              max: 1000,
-                              divisions: 100,
-                              onChanged: (value) {
-                                setState(() {
-                                  _comicsViewModel.scroll = value;
-                                });
-                              },
-                            ),
-
+                            // Скролл (Comics editor temporarily disabled)
+                            // Text(
+                            //   'Прокрутка: ${_comicsViewModel.scroll.round()}',
+                            //   style: Theme.of(context).textTheme.bodyMedium,
+                            // ),
+                            // Slider(
+                            //   value: _comicsViewModel.scroll,
+                            //   min: 0,
+                            //   max: 1000,
+                            //   divisions: 100,
+                            //   onChanged: (value) {
+                            //     setState(() {
+                            //       _comicsViewModel.scroll = value;
+                            //     });
+                            //   },
+                            // ),
                             const SizedBox(height: 16),
 
-                            // Язык
-                            Text(
-                              'Язык:',
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                            DropdownButton<comics.Cultures>(
-                              value: _comicsViewModel.culture,
-                              isExpanded: true,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  setState(() {
-                                    _comicsViewModel.culture = value;
-                                  });
-                                }
-                              },
-                              items: comics.CulturesHelper.all.map((culture) {
-                                return DropdownMenuItem(
-                                  value: culture,
-                                  child: Text(
-                                    culture
-                                        .toString()
-                                        .split('.')
-                                        .last
-                                        .toUpperCase(),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-
+                            // Язык (Comics editor temporarily disabled)
+                            // Text(
+                            //   'Язык:',
+                            //   style: Theme.of(context).textTheme.bodyMedium,
+                            // ),
+                            // DropdownButton<comics.Cultures>(
+                            //   value: _comicsViewModel.culture,
+                            //   isExpanded: true,
+                            //   onChanged: (value) {
+                            //     if (value != null) {
+                            //       setState(() {
+                            //         _comicsViewModel.culture = value;
+                            //       });
+                            //     }
+                            //   },
+                            //   items: comics.CulturesHelper.all.map((culture) {
+                            //     return DropdownMenuItem(
+                            //       value: culture,
+                            //       child: Text(
+                            //         culture
+                            //             .toString()
+                            //             .split('.')
+                            //             .last
+                            //             .toUpperCase(),
+                            //       ),
+                            //     );
+                            //   }).toList(),
+                            // ),
                             const SizedBox(height: 16),
 
-                            // Отключить звук
-                            Row(
-                              children: [
-                                Text(
-                                  'Отключить звук:',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                                const Spacer(),
-                                Switch(
-                                  value: _comicsViewModel.disableSound,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _comicsViewModel.disableSound = value;
-                                    });
-                                  },
-                                ),
-                              ],
-                            ),
+                            // Отключить звук (Comics editor temporarily disabled)
+                            // Row(
+                            //   children: [
+                            //     Text(
+                            //       'Отключить звук:',
+                            //       style: Theme.of(context).textTheme.bodyMedium,
+                            //     ),
+                            //     const Spacer(),
+                            //     Switch(
+                            //       value: _comicsViewModel.disableSound,
+                            //       onChanged: (value) {
+                            //         setState(() {
+                            //           _comicsViewModel.disableSound = value;
+                            //         });
+                            //       },
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),
@@ -1178,11 +1178,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ?.copyWith(color: Colors.orange),
                           ),
                           const SizedBox(height: 8),
-                          Text(
-                            'Размер: ${_comicsViewModel.width}x${_comicsViewModel.height}',
-                            style: Theme.of(context).textTheme.bodyMedium
-                                ?.copyWith(color: Colors.grey),
-                          ),
+                          // Text(
+                          //   'Размер: ${_comicsViewModel.width}x${_comicsViewModel.height}',
+                          //   style: Theme.of(context).textTheme.bodyMedium
+                          //       ?.copyWith(color: Colors.grey),
+                          // ),
                         ],
                       ),
                     ),
@@ -1197,55 +1197,61 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Future<void> _addComicsLayer() async {
-    try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.image,
-        allowMultiple: false,
-      );
-
-      if (result != null && result.files.single.path != null) {
-        await _comicsViewModel.addLayer(result.files.single.path!);
-        setState(() {});
-        _updateStatus('Слой добавлен', 'ready');
-      }
-    } catch (e) {
-      _updateStatus('Ошибка добавления слоя: $e', 'error');
-    }
+    // Comics editor temporarily disabled
+    _updateStatus('Comics Editor временно недоступен', 'error');
+    // try {
+    //   final result = await FilePicker.platform.pickFiles(
+    //     type: FileType.image,
+    //     allowMultiple: false,
+    //   );
+    //
+    //   if (result != null && result.files.single.path != null) {
+    //     await _comicsViewModel.addLayer(result.files.single.path!);
+    //     setState(() {});
+    //     _updateStatus('Слой добавлен', 'ready');
+    //   }
+    // } catch (e) {
+    //   _updateStatus('Ошибка добавления слоя: $e', 'error');
+    // }
   }
 
   Future<void> _addComicsSound() async {
-    try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.audio,
-        allowMultiple: false,
-      );
-
-      if (result != null && result.files.single.path != null) {
-        await _comicsViewModel.addSound(result.files.single.path!);
-        setState(() {});
-        _updateStatus('Звук добавлен', 'ready');
-      }
-    } catch (e) {
-      _updateStatus('Ошибка добавления звука: $e', 'error');
-    }
+    // Comics editor temporarily disabled
+    _updateStatus('Comics Editor временно недоступен', 'error');
+    // try {
+    //   final result = await FilePicker.platform.pickFiles(
+    //     type: FileType.audio,
+    //     allowMultiple: false,
+    //   );
+    //
+    //   if (result != null && result.files.single.path != null) {
+    //     await _comicsViewModel.addSound(result.files.single.path!);
+    //     setState(() {});
+    //     _updateStatus('Звук добавлен', 'ready');
+    //   }
+    // } catch (e) {
+    //   _updateStatus('Ошибка добавления звука: $e', 'error');
+    // }
   }
 
   Future<void> _saveComics() async {
-    try {
-      final result = await FilePicker.platform.saveFile(
-        dialogTitle: 'Сохранить комикс',
-        fileName: 'comics.comics',
-        type: FileType.custom,
-        allowedExtensions: ['comics'],
-      );
-
-      if (result != null) {
-        await _comicsViewModel.save(result);
-        _updateStatus('Комикс сохранен', 'ready');
-      }
-    } catch (e) {
-      _updateStatus('Ошибка сохранения комикса: $e', 'error');
-    }
+    // Comics editor temporarily disabled
+    _updateStatus('Comics Editor временно недоступен', 'error');
+    // try {
+    //   final result = await FilePicker.platform.saveFile(
+    //     dialogTitle: 'Сохранить комикс',
+    //     fileName: 'comics.comics',
+    //     type: FileType.custom,
+    //     allowedExtensions: ['comics'],
+    //   );
+    //
+    //   if (result != null) {
+    //     await _comicsViewModel.save(result);
+    //     _updateStatus('Комикс сохранен', 'ready');
+    //   }
+    // } catch (e) {
+    //   _updateStatus('Ошибка сохранения комикса: $e', 'error');
+    // }
   }
 }
 

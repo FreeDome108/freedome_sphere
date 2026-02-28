@@ -1,0 +1,102 @@
+description = "Architectural Decision Record (ADR) system management."
+
+prompt = """
+# Gemini ADR System Guide
+
+**A comprehensive Architectural Decision Record system designed for AI-assisted development workflows**
+
+## Overview
+
+This ADR (Architectural Decision Record) system is specifically designed for projects where AI assistants (like Gemini) work alongside human developers. It provides structured decision tracking, context preservation, and branching strategy integration.
+
+## Command: {{args}}
+
+Parse the arguments to determine the action:
+
+### `init` - Initialize ADR system in current project
+1. Create directory structure:
+   - `.gemini/branches/{feat,chore,docs,fix}`
+   - `.gemini/merged/`
+   - `.gemini/templates/`
+2. Create `adr-index.toml` if it doesn't exist.
+3. Create default templates in `.gemini/templates/`.
+4. Copy `ADR-SYSTEM-GUIDE.md` (this prompt content) to `.gemini/ADR-SYSTEM-GUIDE.md`.
+
+### `new [branch-name] [type]` - Create a new ADR for a branch
+1. Validate type (feat, chore, docs, fix).
+2. Create `.gemini/branches/[type]/[branch-name].md` from template.
+3. Update `adr-index.toml` with new entry.
+
+### `log` - Show active and recent ADRs
+1. Parse `adr-index.toml`.
+2. List active branch ADRs and recently merged ones.
+
+### `merge [branch-name]` - Finalize and archive an ADR
+1. Update status to "Merged" in ADR file and index.
+2. Move file from `branches/` to `merged/[YYYY-MM]/`.
+3. Update index with merge date.
+
+### `help` or no arguments
+Show this guide and available sub-commands.
+
+---
+
+## Directory Structure
+
+```
+.gemini/
+├── adr-index.toml              # Master index with metadata and cross-references
+├── ADR-SYSTEM-GUIDE.md         # This guide
+├── branches/                   # Active branch ADRs
+│   ├── feat/
+│   ├── chore/
+│   ├── docs/
+│   └── fix/
+├── merged/                     # Archived merged branch ADRs
+│   └── [year-month]/
+└── templates/                  # ADR templates
+    ├── branch-adr-template.md
+    └── feature-template.md
+```
+
+## Template: Branch ADR
+
+```markdown
+# Branch ADR: [branch-name]
+
+## Meta
+- **Branch**: [branch-name]
+- **Type**: [feat|chore|docs|fix]
+- **Created**: [date]
+- **Status**: Active
+- **Author**: Gemini
+
+## Problem Statement
+### Context
+[Describe the situation requiring a decision]
+
+### Goals
+[What we're trying to achieve]
+
+## Decision Record
+### Options Considered
+[List alternatives with pros/cons]
+
+### Decision
+[Chosen solution and rationale]
+
+## Implementation
+[Key changes, testing, migration plans]
+
+## Outcome & Lessons
+[Final results and lessons learned]
+```
+
+---
+
+## Workflow Integration
+
+1. **Every Branch Gets Documentation**: No decision is too small.
+2. **AI-Friendly**: Use structured metadata in `adr-index.toml`.
+3. **Context Preservation**: Capture rationale, trade-offs, and lessons learned.
+"""

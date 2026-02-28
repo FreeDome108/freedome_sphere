@@ -283,3 +283,4 @@ dart format lib/ test/
 - ✅ Обратная совместимость
 
 **FreeDome Project** - NativeMindNONC
+

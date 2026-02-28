@@ -47,8 +47,8 @@ dependencies:
   # flutter_freedome_connectivity: ^1.0.0
   
   # Comics Editor Library
-  freedome_editor_comics:
-    path: ../freedome_editor_comics
+  # freedome_editor_comics:
+  #   path: ../freedome_editor_comics
   
   # Other dependencies
   flutter_3d_controller: ^2.2.0

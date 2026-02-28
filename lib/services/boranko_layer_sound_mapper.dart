@@ -214,3 +214,4 @@ class TimeRange {
   @override
   String toString() => '[$start-$end]';
 }
+
